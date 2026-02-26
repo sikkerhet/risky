@@ -121,6 +121,16 @@
     vertical-align: top;
 }
 
+/* Vertikal sentrering for tallkolonner (K, I, T, K*, S, RN*) */
+.risks-table td:nth-child(6),
+.risks-table td:nth-child(7),
+.risks-table td:nth-child(8),
+.risks-table td:nth-child(9),
+.risks-table td:nth-child(10),
+.risks-table td:nth-child(11) {
+    vertical-align: middle;
+}
+
 .risks-table td:last-child {
     border-right: none;
 }

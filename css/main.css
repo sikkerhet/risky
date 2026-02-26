@@ -16,7 +16,7 @@ body {
 }
 
 .container {
-    max-width: 1200px;
+    max-width: 1500px;
     margin: 0 auto;
     background: white;
     padding: 40px 60px;
@@ -24,9 +24,9 @@ body {
     box-shadow: none;
 }
 
-@media (min-width: 1600px) {
+@media (min-width: 1800px) {
     .container {
-        max-width: 1400px;
+        max-width: 1700px;
     }
 }
 
