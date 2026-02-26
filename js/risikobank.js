@@ -325,8 +325,9 @@ function selectRisikoFromBank(bankRisiko) {
     // Oppdater analyse
     updateAnalysis(currentAnalysisId, { risikoer: currentAnalysis.risikoer });
 
-    // Lagre nåværende scroll-posisjon
-    const currentScrollPos = window.scrollY;
+    // Lagre scroll-posisjon og hindre auto-scroll under rendering
+    const scrollPos = window.scrollY;
+    document.body.style.overflow = 'hidden';
 
     // Re-render
     renderRisksTable();
@@ -334,9 +335,15 @@ function selectRisikoFromBank(bankRisiko) {
     renderStatistics();
     renderKITTable();
 
+    // Gjenopprett scroll umiddelbart for å forhindre hopp
+    window.scrollTo(0, scrollPos);
+
     // Scroll til og highlight den oppdaterte risikoen
     requestAnimationFrame(() => {
         requestAnimationFrame(() => {
+            // Re-aktiver scrolling
+            document.body.style.overflow = '';
+
             const updatedRow = document.querySelector(`tr[data-risk-id="${riskId}"]`);
             if (updatedRow) {
                 updatedRow.scrollIntoView({ behavior: 'smooth', block: 'center' });

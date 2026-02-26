@@ -595,6 +595,10 @@
                 foreslaatteTiltak: ''
             };
 
+            // Lagre scroll-posisjon og hindre auto-scroll under rendering
+            const scrollPos = window.scrollY;
+            document.body.style.overflow = 'hidden';
+
             currentAnalysis.risikoer.push(newRisk);
             updateAnalysis(currentAnalysisId, { risikoer: currentAnalysis.risikoer });
             renderRisksTable();
@@ -602,10 +606,15 @@
             renderStatistics();
             renderKITTable();
 
+            // Gjenopprett scroll umiddelbart for å forhindre hopp
+            window.scrollTo(0, scrollPos);
+
             // Scroll til og fokuser på den nye risikoen
-            // Bruk dobbel requestAnimationFrame for å vente til DOM er fullstendig rendret
             requestAnimationFrame(() => {
                 requestAnimationFrame(() => {
+                    // Re-aktiver scrolling
+                    document.body.style.overflow = '';
+
                     const newRow = document.querySelector(`tr[data-risk-id="${newRisk.id}"]`);
                     if (newRow) {
                         newRow.scrollIntoView({ behavior: 'smooth', block: 'center' });
