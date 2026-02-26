@@ -30,8 +30,8 @@
 
             <div class="form-grid">
                 <div class="form-group">
-                    <label for="dato">Dato:</label>
-                    <input type="date" id="dato" class="form-control">
+                    <label for="dato">Dato (ÅÅÅÅ-MM-DD):</label>
+                    <input type="text" id="dato" class="form-control" placeholder="2026-02-26" pattern="\d{4}-\d{2}-\d{2}">
                 </div>
 
                 <div class="form-group">
@@ -243,7 +243,7 @@
 
             // Metadata auto-save
             document.getElementById('analysisName').addEventListener('blur', saveMetadata);
-            document.getElementById('dato').addEventListener('change', saveMetadata);
+            document.getElementById('dato').addEventListener('blur', validateAndSaveDate);
             document.getElementById('tjeneste').addEventListener('change', saveMetadata);
             document.getElementById('utfortAv').addEventListener('change', saveMetadata);
             document.getElementById('deltakere').addEventListener('change', saveMetadata);
@@ -251,6 +251,35 @@
             document.getElementById('beskrivelse').addEventListener('change', saveMetadata);
             document.getElementById('commentsSectionTitle').addEventListener('blur', saveCommentsSectionTitle);
         });
+
+        function validateAndSaveDate() {
+            const datoInput = document.getElementById('dato');
+            const dato = datoInput.value.trim();
+
+            // Valider YYYY-MM-DD format
+            const datePattern = /^\d{4}-\d{2}-\d{2}$/;
+            if (dato && !datePattern.test(dato)) {
+                alert('Dato må være i format ÅÅÅÅ-MM-DD (f.eks. 2026-02-26)');
+                datoInput.focus();
+                return;
+            }
+
+            // Sjekk at datoen er gyldig
+            if (dato) {
+                const parts = dato.split('-');
+                const year = parseInt(parts[0]);
+                const month = parseInt(parts[1]);
+                const day = parseInt(parts[2]);
+
+                if (month < 1 || month > 12 || day < 1 || day > 31) {
+                    alert('Ugyldig dato');
+                    datoInput.focus();
+                    return;
+                }
+            }
+
+            saveMetadata();
+        }
 
         async function loadAnalysis() {
             // Last risikobank først

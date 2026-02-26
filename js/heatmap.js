@@ -99,54 +99,90 @@ function renderHeatmap() {
             const y = height - margin - (risk.konsekvens - 0.5) * cellHeight;
 
             if (risks.length === 1) {
-                // En risiko - vanlig visning
+                // En risiko - vanlig visning med skygge
+                ctx.shadowColor = 'rgba(0, 0, 0, 0.3)';
+                ctx.shadowBlur = 4;
+                ctx.shadowOffsetX = 1;
+                ctx.shadowOffsetY = 1;
+
                 ctx.fillStyle = '#fff';
                 ctx.beginPath();
-                ctx.arc(x, y + 30, 15, 0, 2 * Math.PI);
+                ctx.arc(x, y + 30, 16, 0, 2 * Math.PI);
                 ctx.fill();
-                ctx.strokeStyle = '#000';
+
+                ctx.shadowColor = 'transparent';
+                ctx.shadowBlur = 0;
+                ctx.shadowOffsetX = 0;
+                ctx.shadowOffsetY = 0;
+
+                ctx.strokeStyle = '#333';
                 ctx.lineWidth = 2;
                 ctx.stroke();
 
                 ctx.fillStyle = '#000';
-                ctx.font = 'bold 12px Arial';
+                ctx.font = 'bold 13px Arial';
                 ctx.textAlign = 'center';
                 ctx.textBaseline = 'middle';
                 ctx.fillText(risk.nr.toString(), x, y + 30);
             } else {
                 // Flere risikoer - større sirkel med antall
-                const radius = Math.min(20 + risks.length * 2, 30);
+                const radius = Math.min(18 + risks.length * 2.5, 32);
 
-                ctx.fillStyle = '#fff';
+                // Hovedsirkel med gradient
+                const gradient = ctx.createRadialGradient(x, y + 30, 0, x, y + 30, radius);
+                gradient.addColorStop(0, '#ffffff');
+                gradient.addColorStop(1, '#f0f0f0');
+
+                ctx.fillStyle = gradient;
                 ctx.beginPath();
                 ctx.arc(x, y + 30, radius, 0, 2 * Math.PI);
                 ctx.fill();
-                ctx.strokeStyle = '#000';
-                ctx.lineWidth = 2.5;
+                ctx.strokeStyle = '#333';
+                ctx.lineWidth = 3;
+                ctx.stroke();
+
+                // Indre sirkel for bedre lesbarhet
+                ctx.strokeStyle = '#999';
+                ctx.lineWidth = 1;
+                ctx.beginPath();
+                ctx.arc(x, y + 30, radius - 4, 0, 2 * Math.PI);
                 ctx.stroke();
 
                 // Tegn antall risikoer
                 ctx.fillStyle = '#000';
-                ctx.font = 'bold 14px Arial';
+                ctx.font = 'bold 15px Arial';
                 ctx.textAlign = 'center';
                 ctx.textBaseline = 'middle';
                 ctx.fillText(`${risks.length}×`, x, y + 30);
 
                 // Tegn små tall rundt sirkelen for risikonumrene
-                ctx.font = 'bold 10px Arial';
+                ctx.font = 'bold 11px Arial';
                 const angleStep = (2 * Math.PI) / risks.length;
+                const offset = radius + 14;
+
                 risks.forEach((r, i) => {
                     const angle = i * angleStep - Math.PI / 2;
-                    const tx = x + Math.cos(angle) * (radius + 12);
-                    const ty = y + 30 + Math.sin(angle) * (radius + 12);
+                    const tx = x + Math.cos(angle) * offset;
+                    const ty = y + 30 + Math.sin(angle) * offset;
 
-                    // Liten sirkel rundt tallet
+                    // Liten sirkel rundt tallet med skygge
+                    ctx.shadowColor = 'rgba(0, 0, 0, 0.3)';
+                    ctx.shadowBlur = 4;
+                    ctx.shadowOffsetX = 1;
+                    ctx.shadowOffsetY = 1;
+
                     ctx.fillStyle = '#fff';
                     ctx.beginPath();
-                    ctx.arc(tx, ty, 8, 0, 2 * Math.PI);
+                    ctx.arc(tx, ty, 9, 0, 2 * Math.PI);
                     ctx.fill();
-                    ctx.strokeStyle = '#666';
-                    ctx.lineWidth = 1;
+
+                    ctx.shadowColor = 'transparent';
+                    ctx.shadowBlur = 0;
+                    ctx.shadowOffsetX = 0;
+                    ctx.shadowOffsetY = 0;
+
+                    ctx.strokeStyle = '#555';
+                    ctx.lineWidth = 1.5;
                     ctx.stroke();
 
                     ctx.fillStyle = '#000';
