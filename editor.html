@@ -601,6 +601,26 @@
             renderHeatmap();
             renderStatistics();
             renderKITTable();
+
+            // Scroll til og fokuser på den nye risikoen
+            setTimeout(() => {
+                const newRow = document.querySelector(`tr[data-risk-id="${newRisk.id}"]`);
+                if (newRow) {
+                    newRow.scrollIntoView({ behavior: 'smooth', block: 'center' });
+
+                    // Fokuser på første input-felt (risikoelement)
+                    const firstInput = newRow.querySelector('textarea');
+                    if (firstInput) {
+                        firstInput.focus();
+                    }
+
+                    // Highlight rad i et par sekunder
+                    newRow.style.backgroundColor = '#e3f2fd';
+                    setTimeout(() => {
+                        newRow.style.backgroundColor = '';
+                    }, 2000);
+                }
+            }, 100);
         }
 
         function exportCurrentAnalysisJSON() {
