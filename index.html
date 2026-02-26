@@ -261,7 +261,10 @@
         }
 
         function formatDate(dateStr) {
-            return new Date(dateStr).toLocaleDateString('no-NO');
+            // Returner YYYY-MM-DD format direkte
+            if (!dateStr) return '';
+            // Hvis dateStr er ISO string, ta kun dato-delen
+            return dateStr.split('T')[0];
         }
     </script>
 </body>
