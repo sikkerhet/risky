@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ROS-Analyse Verktøy</title>
+    <link rel="stylesheet" href="css/main.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>ROS-ANALYSE VERKTØY</h1>
+            <p class="subtitle">Risiko- og sårbarhetsanalyse</p>
+        </header>
+
+        <div class="actions">
+            <button id="newAnalysisBtn" class="btn btn-primary">+ Ny analyse</button>
+            <button id="importJsonBtn" class="btn btn-secondary">📁 Importer JSON</button>
+            <button id="exportAllBtn" class="btn btn-secondary">💾 Eksporter alle</button>
+            <input type="file" id="jsonFileInput" accept=".json" style="display: none;">
+        </div>
+
+        <section class="analyses-section">
+            <h2>MINE ANALYSER</h2>
+            <div id="analysesList" class="analyses-list">
+                <!-- Analyser vil bli lagt til her dynamisk -->
+            </div>
+            <div id="emptyState" class="empty-state">
+                <p>Ingen analyser ennå. Klikk "Ny analyse" for å komme i gang.</p>
+            </div>
+        </section>
+    </div>
+
+    <script src="js/app.js"></script>
+    <script>
+        // Initialiser startskjerm
+        document.addEventListener('DOMContentLoaded', () => {
+            loadAnalysesList();
+
+            document.getElementById('newAnalysisBtn').addEventListener('click', createNewAnalysis);
+            document.getElementById('importJsonBtn').addEventListener('click', () => {
+                document.getElementById('jsonFileInput').click();
+            });
+            document.getElementById('jsonFileInput').addEventListener('change', importJSON);
+            document.getElementById('exportAllBtn').addEventListener('click', exportAllAnalyses);
+        });
+
+        function loadAnalysesList() {
+            const analyses = getAnalyses();
+            const listElement = document.getElementById('analysesList');
+            const emptyState = document.getElementById('emptyState');
+
+            if (analyses.length === 0) {
+                listElement.style.display = 'none';
+                emptyState.style.display = 'block';
+                return;
+            }
+
+            listElement.style.display = 'block';
+            emptyState.style.display = 'none';
+            listElement.textContent = '';
+
+            analyses
+                .sort((a, b) => new Date(b.lastModified) - new Date(a.lastModified))
+                .forEach(analysis => {
+                    const card = createAnalysisCard(analysis);
+                    listElement.appendChild(card);
+                });
+        }
+
+        function createAnalysisCard(analysis) {
+            const card = document.createElement('div');
+            card.className = 'analysis-card';
+
+            const title = document.createElement('h3');
+            title.textContent = analysis.name;
+            card.appendChild(title);
+
+            const meta = document.createElement('div');
+            meta.className = 'analysis-meta';
+            const created = document.createElement('span');
+            created.textContent = `Opprettet: ${formatDate(analysis.createdDate)}`;
+            const modified = document.createElement('span');
+            modified.textContent = `Sist endret: ${formatDate(analysis.lastModified)}`;
+            meta.appendChild(created);
+            meta.appendChild(modified);
+            card.appendChild(meta);
+
+            const info = document.createElement('div');
+            info.className = 'analysis-info';
+            const riskCount = document.createElement('span');
+            riskCount.textContent = `${analysis.risikoer.length} risikoer`;
+            info.appendChild(riskCount);
+            if (analysis.metadata.tjeneste) {
+                const service = document.createElement('span');
+                service.textContent = `Tjeneste: ${analysis.metadata.tjeneste}`;
+                info.appendChild(service);
+            }
+            card.appendChild(info);
+
+            const actions = document.createElement('div');
+            actions.className = 'analysis-actions';
+
+            const openBtn = document.createElement('button');
+            openBtn.className = 'btn btn-primary';
+            openBtn.textContent = 'Åpne';
+            openBtn.onclick = () => openAnalysis(analysis.id);
+            actions.appendChild(openBtn);
+
+            const exportBtn = document.createElement('button');
+            exportBtn.className = 'btn btn-secondary';
+            exportBtn.textContent = 'Eksporter JSON';
+            exportBtn.onclick = () => exportAnalysis(analysis.id);
+            actions.appendChild(exportBtn);
+
+            const deleteBtn = document.createElement('button');
+            deleteBtn.className = 'btn btn-danger';
+            deleteBtn.textContent = 'Slett';
+            deleteBtn.onclick = () => deleteAnalysis(analysis.id);
+            actions.appendChild(deleteBtn);
+
+            card.appendChild(actions);
+
+            return card;
+        }
+
+        function createNewAnalysis() {
+            const id = generateUUID();
+            const now = new Date().toISOString();
+            const newAnalysis = {
+                id: id,
+                name: 'Ny ROS-analyse',
+                createdDate: now.split('T')[0],
+                lastModified: now,
+                metadata: {
+                    dato: now.split('T')[0],
+                    tjeneste: '',
+                    utfortAv: '',
+                    deltakere: '',
+                    tjenesteeier: '',
+                    beskrivelse: ''
+                },
+                risikoer: []
+            };
+
+            const analyses = getAnalyses();
+            analyses.push(newAnalysis);
+            saveAnalyses(analyses);
+
+            window.location.href = `editor.html?id=${id}`;
+        }
+
+        function openAnalysis(id) {
+            window.location.href = `editor.html?id=${id}`;
+        }
+
+        function exportAnalysis(id) {
+            const analyses = getAnalyses();
+            const analysis = analyses.find(a => a.id === id);
+            if (!analysis) return;
+
+            const dataStr = JSON.stringify(analysis, null, 2);
+            const dataUri = 'data:application/json;charset=utf-8,'+ encodeURIComponent(dataStr);
+
+            const exportName = `ROS_${analysis.metadata.tjeneste || 'analyse'}_${analysis.createdDate}.json`;
+
+            const linkElement = document.createElement('a');
+            linkElement.setAttribute('href', dataUri);
+            linkElement.setAttribute('download', exportName);
+            linkElement.click();
+        }
+
+        function exportAllAnalyses() {
+            const analyses = getAnalyses();
+            if (analyses.length === 0) {
+                alert('Ingen analyser å eksportere');
+                return;
+            }
+
+            const dataStr = JSON.stringify(analyses, null, 2);
+            const dataUri = 'data:application/json;charset=utf-8,'+ encodeURIComponent(dataStr);
+
+            const exportName = `ROS_alle_analyser_${new Date().toISOString().split('T')[0]}.json`;
+
+            const linkElement = document.createElement('a');
+            linkElement.setAttribute('href', dataUri);
+            linkElement.setAttribute('download', exportName);
+            linkElement.click();
+        }
+
+        function deleteAnalysis(id) {
+            if (!confirm('Er du sikker på at du vil slette denne analysen?')) return;
+
+            const analyses = getAnalyses();
+            const filtered = analyses.filter(a => a.id !== id);
+            saveAnalyses(filtered);
+            loadAnalysesList();
+        }
+
+        function importJSON(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                try {
+                    const imported = JSON.parse(e.target.result);
+                    const analyses = getAnalyses();
+
+                    // Sjekk om det er én analyse eller flere
+                    if (Array.isArray(imported)) {
+                        // Flere analyser
+                        imported.forEach(analysis => {
+                            if (validateAnalysis(analysis)) {
+                                const existing = analyses.findIndex(a => a.id === analysis.id);
+                                if (existing >= 0) {
+                                    if (confirm(`Analyse "${analysis.name}" finnes allerede. Overskrive?`)) {
+                                        analyses[existing] = analysis;
+                                    }
+                                } else {
+                                    analyses.push(analysis);
+                                }
+                            }
+                        });
+                    } else {
+                        // Én analyse
+                        if (validateAnalysis(imported)) {
+                            const existing = analyses.findIndex(a => a.id === imported.id);
+                            if (existing >= 0) {
+                                if (confirm(`Analyse "${imported.name}" finnes allerede. Overskrive?`)) {
+                                    analyses[existing] = imported;
+                                }
+                            } else {
+                                analyses.push(imported);
+                            }
+                        } else {
+                            alert('Ugyldig analyse-fil');
+                            return;
+                        }
+                    }
+
+                    saveAnalyses(analyses);
+                    loadAnalysesList();
+                    alert('Import fullført!');
+                } catch (err) {
+                    alert('Feil ved import: ' + err.message);
+                }
+            };
+            reader.readAsText(file);
+
+            // Reset file input
+            event.target.value = '';
+        }
+
+        function validateAnalysis(analysis) {
+            return analysis &&
+                   analysis.id &&
+                   analysis.name &&
+                   analysis.metadata &&
+                   Array.isArray(analysis.risikoer);
+        }
+
+        function formatDate(dateStr) {
+            return new Date(dateStr).toLocaleDateString('no-NO');
+        }
+    </script>
+</body>
+</html>

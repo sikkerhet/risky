@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ROS-Analyse Editor</title>
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/heatmap.css">
+    <link rel="stylesheet" href="css/table.css">
+    <link rel="stylesheet" href="css/modal.css">
+    <link rel="stylesheet" href="css/comments.css">
+
+    <!-- PDF Export -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.31/jspdf.plugin.autotable.min.js"></script>
+
+    <!-- Excel Export -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+</head>
+<body>
+    <div class="container">
+        <div class="editor-header">
+            <button id="backBtn" class="btn btn-secondary">← Tilbake til oversikt</button>
+            <span id="savedIndicator" class="saved-indicator">Lagret ✓</span>
+        </div>
+
+        <!-- Metadata seksjon -->
+        <section class="metadata-section">
+            <h1 contenteditable="true" id="analysisName">Ny ROS-analyse</h1>
+
+            <div class="form-grid">
+                <div class="form-group">
+                    <label for="dato">Dato:</label>
+                    <input type="date" id="dato" class="form-control">
+                </div>
+
+                <div class="form-group">
+                    <label for="tjeneste">Tjeneste/system:</label>
+                    <input type="text" id="tjeneste" class="form-control">
+                </div>
+
+                <div class="form-group">
+                    <label for="utfortAv">Utført av:</label>
+                    <input type="text" id="utfortAv" class="form-control">
+                </div>
+
+                <div class="form-group">
+                    <label for="deltakere">Deltakere:</label>
+                    <input type="text" id="deltakere" class="form-control">
+                </div>
+
+                <div class="form-group">
+                    <label for="tjenesteeier">Tjenesteeier/systemeier:</label>
+                    <input type="text" id="tjenesteeier" class="form-control">
+                </div>
+
+                <div class="form-group full-width">
+                    <label for="beskrivelse">Beskrivelse:</label>
+                    <textarea id="beskrivelse" class="form-control" rows="3"></textarea>
+                </div>
+            </div>
+        </section>
+
+        <!-- Heatmap seksjon -->
+        <section class="heatmap-section sticky-heatmap">
+            <h2>RISIKO HEATMAP</h2>
+            <canvas id="heatmapCanvas" width="600" height="500"></canvas>
+            <div class="heatmap-legend">
+                <span class="legend-item"><span class="legend-color" style="background:#28a745"></span>Grønn (1-6)</span>
+                <span class="legend-item"><span class="legend-color" style="background:#ffc107"></span>Gul (7-12)</span>
+                <span class="legend-item"><span class="legend-color" style="background:#fd7e14"></span>Oransje (13-18)</span>
+                <span class="legend-item"><span class="legend-color" style="background:#dc3545"></span>Rød (19-25)</span>
+            </div>
+        </section>
+
+        <!-- Risikotabell -->
+        <section class="risks-section">
+            <h2>RISIKOER</h2>
+
+            <div class="table-container">
+                <table id="risksTable" class="risks-table">
+                    <thead>
+                        <tr>
+                            <th>Nr</th>
+                            <th>Risikoelement</th>
+                            <th>Sårbarhet/svakhet</th>
+                            <th>Eksisterende beskyttelse</th>
+                            <th>Eksisterende kontroll</th>
+                            <th>K</th>
+                            <th>I</th>
+                            <th>T</th>
+                            <th>K*</th>
+                            <th>S*</th>
+                            <th>RN*</th>
+                            <th>Foreslåtte tiltak</th>
+                            <th>Handlinger</th>
+                        </tr>
+                    </thead>
+                    <tbody id="risksTableBody">
+                        <!-- Risikoer vil bli lagt til her -->
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="add-risk-container">
+                <button id="addRiskBtn" class="btn btn-primary">+ Legg til risiko</button>
+            </div>
+        </section>
+
+        <!-- KIT-analyse -->
+        <section class="kit-section">
+            <h2>KIT-ANALYSE (Konfidensialitet, Integritet, Tilgjengelighet)</h2>
+            <table class="kit-table">
+                <thead>
+                    <tr>
+                        <th>Kombinasjon</th>
+                        <th>Antall risikoer</th>
+                    </tr>
+                </thead>
+                <tbody id="kitTableBody">
+                    <!-- KIT-data vil bli lagt til her -->
+                </tbody>
+            </table>
+        </section>
+
+        <!-- Tiltak og kommentarer -->
+        <section id="commentsSection" class="comments-section">
+            <div class="comments-section-header">
+                <h2 contenteditable="true" id="commentsSectionTitle" class="editable-title">TILTAK OG KOMMENTARER</h2>
+                <div class="comments-toggle-buttons">
+                    <button id="toggleTiltakBtn" class="btn-toggle-type active" onclick="toggleCommentType('tiltak')">Skjul tiltak</button>
+                    <button id="toggleKommentarBtn" class="btn-toggle-type active" onclick="toggleCommentType('kommentar')">Skjul kommentarer</button>
+                    <button id="toggleOppfolgingBtn" class="btn-toggle-type active" onclick="toggleCommentType('oppfolging')">Skjul oppfølging</button>
+                    <button id="toggleInternBtn" class="btn-toggle-type active" onclick="toggleCommentType('intern')">Skjul intern</button>
+                </div>
+            </div>
+            <div id="commentsContent" class="comments-content">
+                <!-- Kommentarer vil bli lagt til her -->
+            </div>
+        </section>
+
+        <!-- Eksport -->
+        <section class="export-section">
+            <h2>EKSPORT</h2>
+            <div class="export-buttons">
+                <button id="exportPdfBtn" class="btn btn-primary">📄 Eksporter PDF</button>
+                <button id="exportExcelBtn" class="btn btn-primary">📊 Eksporter Excel</button>
+                <button id="exportJsonBtn" class="btn btn-primary">💾 Eksporter JSON</button>
+            </div>
+        </section>
+    </div>
+
+    <!-- Risikobank Modal -->
+    <div id="risikobankModal" class="modal-overlay">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Velg fra risikobank</h2>
+                <button class="modal-close" onclick="closeRisikobankModal()">×</button>
+            </div>
+            <div class="modal-body">
+                <div id="bankSelector" class="bank-selector"></div>
+                <div id="kategoriSelector" class="kategori-selector"></div>
+                <div id="risikoListe" class="risiko-liste"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Kommentar Modal -->
+    <div id="commentModal" class="comment-modal">
+        <div class="comment-modal-content">
+            <div class="comment-modal-header">
+                <h3>Legg til tiltak/kommentar</h3>
+                <button class="modal-close" onclick="closeCommentModal()">×</button>
+            </div>
+            <div class="comment-modal-body">
+                <div class="comment-form">
+                    <div class="comment-form-group">
+                        <label for="commentType">Type:</label>
+                        <select id="commentType">
+                            <option value="tiltak">Tiltak</option>
+                            <option value="kommentar">Kommentar</option>
+                            <option value="oppfolging">Oppfølging</option>
+                            <option value="intern">Intern kommentar</option>
+                        </select>
+                    </div>
+
+                    <div class="comment-form-group">
+                        <label for="commentText">Beskrivelse:</label>
+                        <textarea id="commentText" placeholder="Beskriv tiltaket eller kommentaren..."></textarea>
+                    </div>
+
+                    <div class="comment-form-group">
+                        <label>Eksterne lenker (valgfritt):</label>
+                        <div id="commentLinksContainer"></div>
+                        <button type="button" class="btn-add-link" onclick="addLinkField()">+ Legg til lenke</button>
+                    </div>
+
+                    <button type="button" class="btn-save-comment" onclick="saveComment()">Lagre</button>
+                </div>
+
+                <div class="existing-comments">
+                    <h4>Eksisterende tiltak og kommentarer:</h4>
+                    <div id="existingCommentsContainer"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/app.js"></script>
+    <script src="js/risikobank.js"></script>
+    <script src="js/comments.js"></script>
+    <script src="js/heatmap.js"></script>
+    <script src="js/table.js"></script>
+    <script src="js/export-json.js"></script>
+    <script src="js/export-pdf.js"></script>
+    <script src="js/export-excel.js"></script>
+    <script>
+        let currentAnalysis = null;
+        let currentAnalysisId = null;
+
+        document.addEventListener('DOMContentLoaded', () => {
+            // Hent analyse-ID fra URL
+            const urlParams = new URLSearchParams(window.location.search);
+            currentAnalysisId = urlParams.get('id');
+
+            if (!currentAnalysisId) {
+                alert('Ingen analyse-ID funnet');
+                window.location.href = 'index.html';
+                return;
+            }
+
+            loadAnalysis();
+
+            // Event listeners
+            document.getElementById('backBtn').addEventListener('click', () => {
+                window.location.href = 'index.html';
+            });
+
+            document.getElementById('addRiskBtn').addEventListener('click', addNewRisk);
+            document.getElementById('exportJsonBtn').addEventListener('click', exportCurrentAnalysisJSON);
+            document.getElementById('exportPdfBtn').addEventListener('click', exportToPDF);
+            document.getElementById('exportExcelBtn').addEventListener('click', exportToExcel);
+
+            // Metadata auto-save
+            document.getElementById('analysisName').addEventListener('blur', saveMetadata);
+            document.getElementById('dato').addEventListener('change', saveMetadata);
+            document.getElementById('tjeneste').addEventListener('change', saveMetadata);
+            document.getElementById('utfortAv').addEventListener('change', saveMetadata);
+            document.getElementById('deltakere').addEventListener('change', saveMetadata);
+            document.getElementById('tjenesteeier').addEventListener('change', saveMetadata);
+            document.getElementById('beskrivelse').addEventListener('change', saveMetadata);
+            document.getElementById('commentsSectionTitle').addEventListener('blur', saveCommentsSectionTitle);
+        });
+
+        async function loadAnalysis() {
+            // Last risikobank først
+            await loadRisikobank();
+
+            // Setup modals
+            setupRisikobankModal();
+            setupCommentModal();
+
+            currentAnalysis = getAnalysisById(currentAnalysisId);
+            if (!currentAnalysis) {
+                alert('Analyse ikke funnet');
+                window.location.href = 'index.html';
+                return;
+            }
+
+            // Populer metadata
+            document.getElementById('analysisName').textContent = currentAnalysis.name;
+            document.getElementById('dato').value = currentAnalysis.metadata.dato || '';
+            document.getElementById('tjeneste').value = currentAnalysis.metadata.tjeneste || '';
+            document.getElementById('utfortAv').value = currentAnalysis.metadata.utfortAv || '';
+            document.getElementById('deltakere').value = currentAnalysis.metadata.deltakere || '';
+            document.getElementById('tjenesteeier').value = currentAnalysis.metadata.tjenesteeier || '';
+            document.getElementById('beskrivelse').value = currentAnalysis.metadata.beskrivelse || '';
+            document.getElementById('commentsSectionTitle').textContent =
+                currentAnalysis.metadata.commentsSectionTitle || 'TILTAK OG KOMMENTARER';
+
+            // Populer risikoer
+            renderRisksTable();
+            renderHeatmap();
+            renderKITTable();
+            renderComments();
+
+            // Aktiver heatmap klikk
+            setupHeatmapClick();
+        }
+
+        function saveMetadata() {
+            const updates = {
+                name: document.getElementById('analysisName').textContent,
+                metadata: {
+                    dato: document.getElementById('dato').value,
+                    tjeneste: document.getElementById('tjeneste').value,
+                    utfortAv: document.getElementById('utfortAv').value,
+                    deltakere: document.getElementById('deltakere').value,
+                    tjenesteeier: document.getElementById('tjenesteeier').value,
+                    beskrivelse: document.getElementById('beskrivelse').value
+                }
+            };
+
+            currentAnalysis = updateAnalysis(currentAnalysisId, updates);
+            showSavedIndicator();
+        }
+
+        function saveCommentsSectionTitle() {
+            const title = document.getElementById('commentsSectionTitle').textContent.trim();
+            // Oppdater metadata riktig
+            currentAnalysis.metadata.commentsSectionTitle = title;
+            currentAnalysis = updateAnalysis(currentAnalysisId, {
+                metadata: currentAnalysis.metadata
+            });
+            showSavedIndicator();
+        }
+
+        function addNewRisk() {
+            const newRisk = {
+                id: generateUUID(),
+                nr: currentAnalysis.risikoer.length + 1,
+                risikoelement: '',
+                saarbarhet: '',
+                eksisterendeBeskyttelse: '',
+                eksisterendeKontroll: '',
+                K: 0,
+                I: 0,
+                T: 0,
+                konsekvens: 0,
+                sannsynlighet: 0,
+                risikonivaa: 0,
+                foreslaatteTiltak: ''
+            };
+
+            currentAnalysis.risikoer.push(newRisk);
+            updateAnalysis(currentAnalysisId, { risikoer: currentAnalysis.risikoer });
+            renderRisksTable();
+            renderHeatmap();
+            renderKITTable();
+        }
+
+        function exportCurrentAnalysisJSON() {
+            const dataStr = JSON.stringify(currentAnalysis, null, 2);
+            const dataUri = 'data:application/json;charset=utf-8,'+ encodeURIComponent(dataStr);
+            const exportName = `ROS_${currentAnalysis.metadata.tjeneste || 'analyse'}_${currentAnalysis.createdDate}.json`;
+
+            const linkElement = document.createElement('a');
+            linkElement.setAttribute('href', dataUri);
+            linkElement.setAttribute('download', exportName);
+            linkElement.click();
+        }
+    </script>
+</body>
+</html>

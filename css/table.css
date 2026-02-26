@@ -1,0 +1,192 @@
+/* Tabell-styling */
+
+.risks-section {
+    margin-top: 30px;
+}
+
+.table-container {
+    overflow-x: auto;
+    margin-top: 20px;
+    margin-bottom: 15px;
+}
+
+.add-risk-container {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 5px;
+}
+
+#addRiskBtn {
+    margin: 5px 0 5px 5px !important;  /* Fjern kun høyre margin */
+}
+
+.add-risk-container #addRiskBtn {
+    margin-right: 0 !important;
+}
+
+.risks-table {
+    width: 100%;
+    border-collapse: collapse;
+    background: white;
+    font-size: 14px;
+}
+
+.risks-table thead {
+    background: #007bff;
+    color: white;
+    position: sticky;
+    top: 0;
+    z-index: 10;
+}
+
+.risks-table th {
+    padding: 12px 8px;
+    text-align: left;
+    font-weight: bold;
+    border: 1px solid #0056b3;
+}
+
+.risks-table td {
+    padding: 8px;
+    border: 1px solid #ddd;
+    vertical-align: top;
+}
+
+.risks-table tbody tr:hover {
+    background-color: #f8f9fa;
+}
+
+.risks-table textarea {
+    width: 100%;
+    min-width: 150px;
+    padding: 6px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-family: inherit;
+    font-size: 13px;
+    resize: vertical;
+}
+
+.risks-table textarea:focus {
+    outline: none;
+    border-color: #007bff;
+}
+
+.risks-table select {
+    width: 100%;
+    padding: 6px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 14px;
+}
+
+.risks-table select:focus {
+    outline: none;
+    border-color: #007bff;
+}
+
+.calculated-field {
+    font-weight: bold;
+    text-align: center;
+    background-color: #e9ecef;
+}
+
+/* KIT-tabell */
+.kit-section {
+    margin-top: 40px;
+    padding: 20px;
+    background: #f9f9f9;
+    border-radius: 8px;
+}
+
+.kit-table {
+    width: 100%;
+    max-width: 600px;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+.kit-table th,
+.kit-table td {
+    padding: 12px;
+    border: 1px solid #ddd;
+    text-align: left;
+}
+
+.kit-table thead {
+    background: #6c757d;
+    color: white;
+}
+
+.kit-table tbody tr:nth-child(even) {
+    background-color: #f8f9fa;
+}
+
+/* Risikobank styling */
+.kategori-select,
+.risiko-select {
+    width: 100%;
+    padding: 5px;
+    font-size: 12px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+
+.kategori-select:focus,
+.risiko-select:focus {
+    outline: none;
+    border-color: #007bff;
+}
+
+/* Responsive */
+@media (max-width: 1400px) {
+    .risks-table {
+        font-size: 12px;
+    }
+
+    .risks-table th,
+    .risks-table td {
+        padding: 6px 4px;
+    }
+
+    .risks-table textarea {
+        min-width: 120px;
+        font-size: 12px;
+    }
+}
+
+@media (max-width: 1200px) {
+    .risks-table {
+        font-size: 11px;
+    }
+
+    .risks-table th,
+    .risks-table td {
+        padding: 5px 3px;
+    }
+
+    .risks-table textarea {
+        min-width: 100px;
+        font-size: 11px;
+    }
+}
+
+@media (max-width: 768px) {
+    .table-container {
+        font-size: 10px;
+    }
+
+    .risks-table textarea {
+        min-width: 80px;
+    }
+
+    /* Stack metadata i én kolonne på mobil */
+    .form-grid {
+        grid-template-columns: 1fr !important;
+    }
+
+    /* Mindre heatmap på mobil */
+    #heatmapCanvas {
+        max-height: 300px;
+    }
+}

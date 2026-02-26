@@ -1,0 +1,157 @@
+{
+  "id": "demo-2026-02-26",
+  "name": "Webportal for studenter - ROS",
+  "createdDate": "2026-02-26",
+  "lastModified": "2026-02-26T15:00:00",
+  "metadata": {
+    "dato": "2026-02-26",
+    "tjeneste": "Studentwebportal",
+    "utfortAv": "Ola Nordmann",
+    "deltakere": "Kari Hansen, Per Olsen, Anne Berg",
+    "tjenesteeier": "IT-avdelingen",
+    "beskrivelse": "ROS-analyse for ny webportal for studenter. Portalen håndterer personopplysninger, karakterer og studieplan."
+  },
+  "risikoer": [
+    {
+      "id": "risk-1",
+      "nr": 1,
+      "risikoelement": "Bruker beholder tilgang etter at bruker har sluttet/endret stilling",
+      "saarbarhet": "Dårlige rutiner for avslutning av brukere, manglende automatikk",
+      "eksisterendeBeskyttelse": "Delvis HR-system integrasjon",
+      "eksisterendeKontroll": "Kvartalsvis tilgangsgjennomgang",
+      "K": 4,
+      "I": 3,
+      "T": 2,
+      "konsekvens": 4,
+      "sannsynlighet": 3,
+      "risikonivaa": 12,
+      "foreslaatteTiltak": "Automatisk deaktivering ved avslutning, full integrasjon med HR-system",
+      "comments": [
+        {
+          "id": "comment-1",
+          "type": "tiltak",
+          "text": "Implementere automatisk deaktivering via HR-system API. Estimert tid: 2 uker.",
+          "links": [
+            {
+              "url": "https://github.com/organization/repo/issues/42",
+              "title": "GitHub Issue #42 - HR Integration"
+            }
+          ],
+          "created": "2026-02-26T10:00:00"
+        },
+        {
+          "id": "comment-2",
+          "type": "kommentar",
+          "text": "Diskutert med IT-ansvarlig. Må koordinere med HR-avdelingen for API-tilgang.",
+          "links": [],
+          "created": "2026-02-26T11:30:00"
+        }
+      ]
+    },
+    {
+      "id": "risk-2",
+      "nr": 2,
+      "risikoelement": "Uvedkommende får tilgang pga. passord på avveie",
+      "saarbarhet": "Usikker oppbevaring av passord, passord som brukes på flere systemer, lite komplekse passord",
+      "eksisterendeBeskyttelse": "Passordpolicy med krav til kompleksitet",
+      "eksisterendeKontroll": "Tofaktorautentisering for admin",
+      "K": 5,
+      "I": 4,
+      "T": 2,
+      "konsekvens": 5,
+      "sannsynlighet": 2,
+      "risikonivaa": 10,
+      "foreslaatteTiltak": "Implementere passordløsning (passkeys/FIDO2), obligatorisk tofaktor for alle"
+    },
+    {
+      "id": "risk-3",
+      "nr": 3,
+      "risikoelement": "Systemet kan ikke gjenopprettes etter feil/krasj",
+      "saarbarhet": "Manglende backup av systemet, ikke testet backup",
+      "eksisterendeBeskyttelse": "Daglig backup til separate servere",
+      "eksisterendeKontroll": "Månedlig backup-test",
+      "K": 3,
+      "I": 4,
+      "T": 5,
+      "konsekvens": 5,
+      "sannsynlighet": 2,
+      "risikonivaa": 10,
+      "foreslaatteTiltak": "Implementere automatisk backup-testing, dokumentere gjenopprettingsprosedyrer, RTO/RPO"
+    },
+    {
+      "id": "risk-4",
+      "nr": 4,
+      "risikoelement": "SQL injection gir uautorisert tilgang til database",
+      "saarbarhet": "Manglende input-validering, dynamiske SQL-spørringer",
+      "eksisterendeBeskyttelse": "Noe parameterisering av queries",
+      "eksisterendeKontroll": "Årlig penetrasjonstest",
+      "K": 5,
+      "I": 5,
+      "T": 3,
+      "konsekvens": 5,
+      "sannsynlighet": 2,
+      "risikonivaa": 10,
+      "foreslaatteTiltak": "Implementere parameteriserte queries overalt, input-validering, WAF, SAST/DAST"
+    },
+    {
+      "id": "risk-5",
+      "nr": 5,
+      "risikoelement": "Data avlyttes under overføring",
+      "saarbarhet": "Manglende eller svak kryptering av nettverkstrafikk",
+      "eksisterendeBeskyttelse": "TLS 1.2+ for web-trafikk",
+      "eksisterendeKontroll": "Årlig sikkerhetsaudit av nettverkskonfigurasjon",
+      "K": 5,
+      "I": 3,
+      "T": 1,
+      "konsekvens": 5,
+      "sannsynlighet": 2,
+      "risikonivaa": 10,
+      "foreslaatteTiltak": "Implementere TLS 1.3, end-to-end kryptering, VPN, sertifikat-pinning"
+    },
+    {
+      "id": "risk-6",
+      "nr": 6,
+      "risikoelement": "Avhengigheter med kjente sårbarheter",
+      "saarbarhet": "Utdaterte biblioteker og pakker med sikkerhetshull",
+      "eksisterendeBeskyttelse": "Delvis oppdatering av avhengigheter",
+      "eksisterendeKontroll": "Kvartalsvis dependency scanning",
+      "K": 4,
+      "I": 4,
+      "T": 3,
+      "konsekvens": 4,
+      "sannsynlighet": 4,
+      "risikonivaa": 16,
+      "foreslaatteTiltak": "Automatisk dependency scanning i CI/CD, Dependabot, SCA-verktøy, patch innen 7 dager"
+    },
+    {
+      "id": "risk-7",
+      "nr": 7,
+      "risikoelement": "Systemet blir utilgjengelig pga. DDoS-angrep",
+      "saarbarhet": "Manglende DDoS-beskyttelse, ingen trafikkfiltrering",
+      "eksisterendeBeskyttelse": "Firewall, rate limiting",
+      "eksisterendeKontroll": "Overvåking av nettverkstrafikk",
+      "K": 1,
+      "I": 1,
+      "T": 5,
+      "konsekvens": 5,
+      "sannsynlighet": 2,
+      "risikonivaa": 10,
+      "foreslaatteTiltak": "Implementere DDoS-beskyttelse (CloudFlare/Akamai), lastbalansering, CDN, WAF"
+    },
+    {
+      "id": "risk-8",
+      "nr": 8,
+      "risikoelement": "Manglende sikkerhetskompetanse i utviklingsteamet",
+      "saarbarhet": "Ingen sikkerhetstrening, utviklere kjenner ikke OWASP Top 10",
+      "eksisterendeBeskyttelse": "Sikkerhetsteam gjennomgår kritiske endringer",
+      "eksisterendeKontroll": "Årlig sikkerhetspresentasjon",
+      "K": 4,
+      "I": 4,
+      "T": 2,
+      "konsekvens": 4,
+      "sannsynlighet": 4,
+      "risikonivaa": 16,
+      "foreslaatteTiltak": "Obligatorisk sikkerhetstrening, secure coding guidelines, security champions-program"
+    }
+  ]
+}
