@@ -6,12 +6,20 @@ Dette er systemets risikobanker - forhåndsdefinerte samlinger av risikoer som k
 
 Systemet kommer med følgende banker:
 
+### Teknologi og infrastruktur
 - **generell.json** - Generell IT-tjeneste (tilgangsstyring, drift, applikasjonssikkerhet, etc.)
 - **sky.json** - Skytjenester (AWS/Azure/GCP-spesifikke infrastruktur)
 - **onprem.json** - Lokal server/on-premise (fysisk sikkerhet, lokal drift)
-- **persondata.json** - Persondata/GDPR (behandlingsgrunnlag, registrertes rettigheter, etc.)
 - **ai-tjenester.json** - KI-tjenester og Agentic AI (LLM-sikkerhet, autonome agenter, ML-modeller, bias, governance)
 - **saas.json** - SaaS-tjenester (multi-tenancy, vendor management, integrasjoner, data governance)
+
+### Compliance og personvern
+- **persondata.json** - Persondata/GDPR (behandlingsgrunnlag, registrertes rettigheter, etc.)
+
+### Organisasjon og styring
+- **governance.json** - Governance og organisasjon (ledelsesforankring, styring, strategi, eierskap, compliance, leverandørstyring)
+- **personell.json** - Personell og menneskelige faktorer (HR-sikkerhet, insider threat, security awareness, BYOD, fjernarbeid)
+- **kontinuitet.json** - Business Continuity og resiliens (BCP/DR, krisehåndtering, gjenoppretting, tester, hendelseshåndtering)
 
 ## Egendefinerte banker
 

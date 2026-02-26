@@ -1,0 +1,391 @@
+{
+  "id": "governance",
+  "navn": "Governance og organisasjon",
+  "beskrivelse": "Ledelsesforankring, styring, strategi, eierskap, compliance og leverandørstyring",
+  "kategorier": [
+    {
+      "id": "ledelse-styring",
+      "navn": "Ledelse og styring",
+      "risikoer": [
+        {
+          "id": "ledelse-001",
+          "risikoelement": "Manglende ledelsesforankring av informasjonssikkerhet",
+          "saarbarhet": "Sikkerhet ikke prioritert av toppledelsen, ikke på agendaen i ledergruppe",
+          "eksisterendeBeskyttelse": "CISO rapporterer til CTO",
+          "eksisterendeKontroll": "Årlig sikkerhetspresentasjon for ledelsen",
+          "K": 3,
+          "I": 4,
+          "T": 3,
+          "sannsynlighet": 4,
+          "foreslaatteTiltak": "Sikkerhet fast på ledergruppens agenda, CISO i ledergruppen, styresrapportering, KPI-er for sikkerhet"
+        },
+        {
+          "id": "ledelse-002",
+          "risikoelement": "Ingen sikkerhetsstrategi eller overordnet plan",
+          "saarbarhet": "Ad-hoc sikkerhetstiltak, manglende helhetlig approach",
+          "eksisterendeBeskyttelse": "IT-strategi nevner sikkerhet",
+          "eksisterendeKontroll": "Årlig gjennomgang av sikkerhetstiltak",
+          "K": 3,
+          "I": 4,
+          "T": 3,
+          "sannsynlighet": 3,
+          "foreslaatteTiltak": "Utarbeide sikkerhetsstrategi godkjent av ledelsen, 3-årig roadmap, målsettinger og suksesskriterier"
+        },
+        {
+          "id": "ledelse-003",
+          "risikoelement": "Utilstrekkelig budsjett og ressurser til sikkerhet",
+          "saarbarhet": "Sikkerhetstiltak nedprioriteres pga. kostnad",
+          "eksisterendeBeskyttelse": "Noe budsjett allokert",
+          "eksisterendeKontroll": "Årlig budsjettgjennomgang",
+          "K": 4,
+          "I": 4,
+          "T": 4,
+          "sannsynlighet": 4,
+          "foreslaatteTiltak": "Risk-based budgettering, business case for sikkerhetsinvesteringer, sikkerhet som % av IT-budsjett"
+        },
+        {
+          "id": "ledelse-004",
+          "risikoelement": "Ingen sikkerhetsstyring / governance board",
+          "saarbarhet": "Ingen forum for sikkerhetsbeslutninger på tvers av org",
+          "eksisterendeBeskyttelse": "IT-styring dekker noe sikkerhet",
+          "eksisterendeKontroll": "Ad-hoc møter ved behov",
+          "K": 3,
+          "I": 4,
+          "T": 3,
+          "sannsynlighet": 3,
+          "foreslaatteTiltak": "Etablere Security Steering Committee, mandat og vedtaksmyndighet, fast møtefrekvens"
+        },
+        {
+          "id": "ledelse-005",
+          "risikoelement": "Sikkerhet ikke integrert i prosjekt- og endringsstyring",
+          "saarbarhet": "Sikkerhet kommer som etterpåklokskap i prosjekter",
+          "eksisterendeBeskyttelse": "Security review av store prosjekter",
+          "eksisterendeKontroll": "Gate reviews i prosjektmodell",
+          "K": 4,
+          "I": 4,
+          "T": 3,
+          "sannsynlighet": 4,
+          "foreslaatteTiltak": "Security by design, obligatorisk threat modeling, security champion i alle prosjekter, SSDLC"
+        }
+      ]
+    },
+    {
+      "id": "roller-ansvar",
+      "navn": "Roller, ansvar og eierskap",
+      "risikoer": [
+        {
+          "id": "roller-001",
+          "risikoelement": "Uklar eierskap av informasjonsverdier",
+          "saarbarhet": "Ingen vet hvem som er ansvarlig for datasett/systemer",
+          "eksisterendeBeskyttelse": "System owners dokumentert noen steder",
+          "eksisterendeKontroll": "Årlig review av system inventory",
+          "K": 4,
+          "I": 4,
+          "T": 3,
+          "sannsynlighet": 4,
+          "foreslaatteTiltak": "Data ownership model (data owners, data stewards, data custodians), RACI matrix, asset register"
+        },
+        {
+          "id": "roller-002",
+          "risikoelement": "Manglende segregation of duties (SoD)",
+          "saarbarhet": "Samme person kan initiere og godkjenne kritiske transaksjoner",
+          "eksisterendeBeskyttelse": "Noe rolleseparasjon",
+          "eksisterendeKontroll": "Kvartalsvis tilgangsgjennomgang",
+          "K": 3,
+          "I": 5,
+          "T": 2,
+          "sannsynlighet": 3,
+          "foreslaatteTiltak": "SoD matrix, automated SoD controls, maker-checker for kritiske operasjoner, SoD violation monitoring"
+        },
+        {
+          "id": "roller-003",
+          "risikoelement": "Uklare sikkerhetsroller og ansvar (RACI)",
+          "saarbarhet": "Overlapp eller gap i hvem som er ansvarlig for sikkerhet",
+          "eksisterendeBeskyttelse": "Generelle rollenbeskrivelser",
+          "eksisterendeKontroll": "Jobbeskrivelser nevner sikkerhet",
+          "K": 3,
+          "I": 4,
+          "T": 3,
+          "sannsynlighet": 4,
+          "foreslaatteTiltak": "Detaljert RACI for sikkerhetsprosesser, security roles in job descriptions, årlig RACI-review"
+        },
+        {
+          "id": "roller-004",
+          "risikoelement": "Ingen dedikert sikkerhetsressurs / CISO",
+          "saarbarhet": "Sikkerhet er en deltidsjobb for IT-ansatte",
+          "eksisterendeBeskyttelse": "IT-sjef har ansvar",
+          "eksisterendeKontroll": "Noe sikkerhetsfokus",
+          "K": 4,
+          "I": 4,
+          "T": 4,
+          "sannsynlighet": 3,
+          "foreslaatteTiltak": "Dedikert CISO eller security lead, security team, security champions program"
+        }
+      ]
+    },
+    {
+      "id": "policy-compliance",
+      "navn": "Policy og compliance",
+      "risikoer": [
+        {
+          "id": "policy-001",
+          "risikoelement": "Sikkerhetspolicyer mangler eller er utdaterte",
+          "saarbarhet": "Ingen klare regler for sikker oppførsel",
+          "eksisterendeBeskyttelse": "Noen gamle policies",
+          "eksisterendeKontroll": "Ad-hoc oppdateringer",
+          "K": 3,
+          "I": 3,
+          "T": 2,
+          "sannsynlighet": 4,
+          "foreslaatteTiltak": "Policy framework (hierarki: policy->standard->procedure), årlig review, versjonskontroll, godkjenningsprosess"
+        },
+        {
+          "id": "policy-002",
+          "risikoelement": "Policyer ikke kommunisert eller håndhevet",
+          "saarbarhet": "Ansatte kjenner ikke til eller følger ikke policies",
+          "eksisterendeBeskyttelse": "Policies publisert på intranett",
+          "eksisterendeKontroll": "Onboarding mention av policies",
+          "K": 3,
+          "I": 4,
+          "T": 2,
+          "sannsynlighet": 4,
+          "foreslaatteTiltak": "Policy acknowledgement (signering), awareness campaigns, konsekvenser ved brudd, spot-checks"
+        },
+        {
+          "id": "policy-003",
+          "risikoelement": "Manglende compliance-oversikt (regulatorisk)",
+          "saarbarhet": "Vet ikke hvilke lover/forskrifter som gjelder",
+          "eksisterendeBeskyttelse": "Juridisk avdeling konsulteres ved behov",
+          "eksisterendeKontroll": "Ad-hoc legal reviews",
+          "K": 4,
+          "I": 5,
+          "T": 2,
+          "sannsynlighet": 3,
+          "foreslaatteTiltak": "Compliance register, regulatory change monitoring, compliance impact assessments, legal counsel involvement"
+        },
+        {
+          "id": "policy-004",
+          "risikoelement": "Ingen systematisk compliance-testing",
+          "saarbarhet": "Vet ikke om vi faktisk følger krav og policyer",
+          "eksisterendeBeskyttelse": "Årlig ekstern audit",
+          "eksisterendeKontroll": "Leverandøraudit",
+          "K": 4,
+          "I": 5,
+          "T": 2,
+          "sannsynlighet": 3,
+          "foreslaatteTiltak": "Continuous compliance monitoring, internal audit program, compliance testing automation, control attestation"
+        },
+        {
+          "id": "policy-005",
+          "risikoelement": "Manglende risikoaksept-prosess",
+          "saarbarhet": "Risikoer aksepteres uten formell godkjenning på riktig nivå",
+          "eksisterendeBeskyttelse": "Prosjektledere tar beslutninger",
+          "eksisterendeKontroll": "Risk register",
+          "K": 4,
+          "I": 4,
+          "T": 3,
+          "sannsynlighet": 4,
+          "foreslaatteTiltak": "Formell risk acceptance framework, godkjenningsnivåer basert på risiko, risk register, time-boxed acceptances"
+        },
+        {
+          "id": "policy-006",
+          "risikoelement": "Informasjonsklassifisering ikke implementert",
+          "saarbarhet": "Ansatte vet ikke hva som er konfidensielt vs. public",
+          "eksisterendeBeskyttelse": "Noe generell forståelse",
+          "eksisterendeKontroll": "Ad-hoc vurderinger",
+          "K": 5,
+          "I": 4,
+          "T": 1,
+          "sannsynlighet": 4,
+          "foreslaatteTiltak": "Classification scheme (Public, Internal, Confidential, Restricted), labeling, handling requirements per class, DLP integration"
+        }
+      ]
+    },
+    {
+      "id": "leverandorstyring",
+      "navn": "Leverandørstyring",
+      "risikoer": [
+        {
+          "id": "vendor-001",
+          "risikoelement": "Ingen systematisk leverandørrisiko-vurdering",
+          "saarbarhet": "Leverandører ikke vurdert for sikkerhet før kontraktsinngåelse",
+          "eksisterendeBeskyttelse": "Innkjøpsprosess",
+          "eksisterendeKontroll": "Kontraktsgjennomgang",
+          "K": 4,
+          "I": 4,
+          "T": 3,
+          "sannsynlighet": 4,
+          "foreslaatteTiltak": "Vendor risk assessment framework, security questionnaires, tiering av leverandører, due diligence"
+        },
+        {
+          "id": "vendor-002",
+          "risikoelement": "Kritiske leverandører ikke identifisert",
+          "saarbarhet": "Single points of failure i leverandørkjeden ikke kartlagt",
+          "eksisterendeBeskyttelse": "Noe vendor management",
+          "eksisterendeKontroll": "Supplier reviews",
+          "K": 3,
+          "I": 3,
+          "T": 5,
+          "sannsynlighet": 3,
+          "foreslaatteTiltak": "Critical vendor identification, business impact analysis per vendor, alternative vendors, contingency plans"
+        },
+        {
+          "id": "vendor-003",
+          "risikoelement": "Manglende sikkerhetskrav i kontrakter",
+          "saarbarhet": "Leverandørkontrakter mangler security clauses",
+          "eksisterendeBeskyttelse": "Standard kontraktsmaler",
+          "eksisterendeKontroll": "Juridisk gjennomgang",
+          "K": 4,
+          "I": 4,
+          "T": 2,
+          "sannsynlighet": 4,
+          "foreslaatteTiltak": "Security addendum template, SLA for security, breach notification clauses, audit rights, liability terms"
+        },
+        {
+          "id": "vendor-004",
+          "risikoelement": "Ikke ongoing monitoring av leverandører",
+          "saarbarhet": "Leverandør-sikkerhet kun vurdert ved anskaffelse",
+          "eksisterendeBeskyttelse": "Initial vendor assessment",
+          "eksisterendeKontroll": "Årlige møter",
+          "K": 4,
+          "I": 4,
+          "T": 3,
+          "sannsynlighet": 3,
+          "foreslaatteTiltak": "Continuous vendor monitoring, periodic reassessments, breach notification tracking, performance reviews"
+        },
+        {
+          "id": "vendor-005",
+          "risikoelement": "Underleverandører (4th party) ikke styrt",
+          "saarbarhet": "Våre leverandører bruker underleverandører vi ikke har oversikt over",
+          "eksisterendeBeskyttelse": "Avtaleklausul om underleverandører",
+          "eksisterendeKontroll": "None",
+          "K": 4,
+          "I": 3,
+          "T": 2,
+          "sannsynlighet": 3,
+          "foreslaatteTiltak": "4th party risk management, approval rights for subcontractors, flow-down clauses, supply chain mapping"
+        },
+        {
+          "id": "vendor-006",
+          "risikoelement": "Ingen vendor offboarding-prosess",
+          "saarbarhet": "Data ikke returnert/slettet når kontrakt avsluttes",
+          "eksisterendeBeskyttelse": "Ad-hoc håndtering",
+          "eksisterendeKontroll": "Prosjektavslutning",
+          "K": 5,
+          "I": 4,
+          "T": 1,
+          "sannsynlighet": 3,
+          "foreslaatteTiltak": "Vendor offboarding checklist, data return/destruction verification, access revocation, contract closeout procedures"
+        }
+      ]
+    },
+    {
+      "id": "audit-tilsyn",
+      "navn": "Audit og tilsyn",
+      "risikoer": [
+        {
+          "id": "audit-001",
+          "risikoelement": "Ingen internrevisjon / internal audit",
+          "saarbarhet": "Kontroller ikke verifisert uavhengig",
+          "eksisterendeBeskyttelse": "Line manager reviews",
+          "eksisterendeKontroll": "Ekstern audit årlig",
+          "K": 3,
+          "I": 4,
+          "T": 2,
+          "sannsynlighet": 3,
+          "foreslaatteTiltak": "Internal audit function, risk-based audit plan, independence, audit committee reporting"
+        },
+        {
+          "id": "audit-002",
+          "risikoelement": "Audit findings ikke fulgt opp",
+          "saarbarhet": "Issues identifisert men ikke remediert",
+          "eksisterendeBeskyttelse": "Action items fra audit",
+          "eksisterendeKontroll": "Management response",
+          "K": 4,
+          "I": 4,
+          "T": 3,
+          "sannsynlighet": 4,
+          "foreslaatteTiltak": "Audit finding tracker, remediation deadlines, escalation for overdue items, periodic status reporting"
+        },
+        {
+          "id": "audit-003",
+          "risikoelement": "Manglende audit trail / sporbarhet",
+          "saarbarhet": "Kan ikke dokumentere hvem som gjorde hva når",
+          "eksisterendeBeskyttelse": "Noe logging",
+          "eksisterendeKontroll": "Log retention",
+          "K": 3,
+          "I": 5,
+          "T": 1,
+          "sannsynlighet": 3,
+          "foreslaatteTiltak": "Comprehensive audit logging, immutable logs, SIEM, long-term retention, log integrity protection"
+        },
+        {
+          "id": "audit-004",
+          "risikoelement": "Sertifiseringer ikke opprettholdt (ISO27001, SOC2)",
+          "saarbarhet": "Har sertifisering men ikke kontinuerlig compliance",
+          "eksisterendeBeskyttelse": "Årlig recertification",
+          "eksisterendeKontroll": "Surveillance audits",
+          "K": 2,
+          "I": 4,
+          "T": 2,
+          "sannsynlighet": 3,
+          "foreslaatteTiltak": "Continuous compliance program, control testing schedule, evidence collection automation, mock audits"
+        }
+      ]
+    },
+    {
+      "id": "dokumentasjon-kunnskap",
+      "navn": "Dokumentasjon og kunnskapsstyring",
+      "risikoer": [
+        {
+          "id": "dok-001",
+          "risikoelement": "Kritisk dokumentasjon mangler eller er utdatert",
+          "saarbarhet": "Prosedyrer, runbooks, arkitektur ikke dokumentert",
+          "eksisterendeBeskyttelse": "Noe wiki-dokumentasjon",
+          "eksisterendeKontroll": "Ad-hoc oppdateringer",
+          "K": 2,
+          "I": 3,
+          "T": 4,
+          "sannsynlighet": 4,
+          "foreslaatteTiltak": "Documentation standards, review cycles, version control, templates, documentation-as-code"
+        },
+        {
+          "id": "dok-002",
+          "risikoelement": "Ingen oversikt over informasjonsverdier / asset register",
+          "saarbarhet": "Vet ikke hva vi har av systemer, data, verdier",
+          "eksisterendeBeskyttelse": "CMDB for noe utstyr",
+          "eksisterendeKontroll": "Årlig inventory",
+          "K": 3,
+          "I": 3,
+          "T": 3,
+          "sannsynlighet": 4,
+          "foreslaatteTiltak": "Comprehensive asset register, automated discovery, data mapping, classification, owner attribution"
+        },
+        {
+          "id": "dok-003",
+          "risikoelement": "Intellectual property ikke beskyttet",
+          "saarbarhet": "Kildekode, forretningshemmeligheter, IP ikke sikret",
+          "eksisterendeBeskyttelse": "NDA med ansatte",
+          "eksisterendeKontroll": "Access controls",
+          "K": 5,
+          "I": 4,
+          "T": 3,
+          "sannsynlighet": 2,
+          "foreslaatteTiltak": "IP register, protective markings, DLP, repository access controls, invention assignment agreements"
+        },
+        {
+          "id": "dok-004",
+          "risikoelement": "Records management og arkivering ikke ivaretatt",
+          "saarbarhet": "Dokumenter ikke arkivert iht. lovkrav, retention ikke styrt",
+          "eksisterendeBeskyttelse": "Filserver backup",
+          "eksisterendeKontroll": "Noe retention policies",
+          "K": 3,
+          "I": 4,
+          "T": 3,
+          "sannsynlighet": 3,
+          "foreslaatteTiltak": "Records management policy, retention schedules, secure disposal, archive solution, legal hold procedures"
+        }
+      ]
+    }
+  ]
+}

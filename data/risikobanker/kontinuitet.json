@@ -1,0 +1,427 @@
+{
+  "id": "kontinuitet",
+  "navn": "Business Continuity og resiliens",
+  "beskrivelse": "BCP/DR, krisehåndtering, gjenoppretting, tester, leverandørresiliens og hendelseshåndtering",
+  "kategorier": [
+    {
+      "id": "bcp-planlegging",
+      "navn": "BCP/DR-planlegging",
+      "risikoer": [
+        {
+          "id": "bcp-001",
+          "risikoelement": "Manglende eller utdatert BCP/DR-plan",
+          "saarbarhet": "Planer eksisterer ikke, er ikke oppdatert eller dekker ikke aktuelle trusler og systemer",
+          "eksisterendeBeskyttelse": "Ad-hoc krisehåndtering, noen dokumenterte prosedyrer",
+          "eksisterendeKontroll": "Ingen formell plan eller kun grovt skissert plan",
+          "K": 4,
+          "I": 3,
+          "T": 4,
+          "sannsynlighet": 4,
+          "foreslaatteTiltak": "Utarbeide formell BCP/DR-plan med årlig revisjon, inkludere alle kritiske systemer og tjenester"
+        },
+        {
+          "id": "bcp-002",
+          "risikoelement": "Ukjente eller udokumenterte avhengigheter",
+          "saarbarhet": "Kritiske avhengigheter mellom systemer, leverandører eller prosesser er ikke kartlagt",
+          "eksisterendeBeskyttelse": "Noen kjente integrasjoner dokumentert",
+          "eksisterendeKontroll": "Sporadisk gjennomgang ved endringer",
+          "K": 4,
+          "I": 3,
+          "T": 3,
+          "sannsynlighet": 3,
+          "foreslaatteTiltak": "Gjennomføre Business Impact Analysis (BIA) med avhengighetskartlegging, vedlikeholde dependency map"
+        },
+        {
+          "id": "bcp-003",
+          "risikoelement": "Manglende RTO/RPO-definering",
+          "saarbarhet": "Recovery Time Objective og Recovery Point Objective ikke definert for kritiske systemer",
+          "eksisterendeBeskyttelse": "Generelle forventninger til oppetid",
+          "eksisterendeKontroll": "Ingen formaliserte krav",
+          "K": 3,
+          "I": 2,
+          "T": 3,
+          "sannsynlighet": 4,
+          "foreslaatteTiltak": "Definere RTO/RPO per system basert på BIA, forankre i SLA og backup-strategi"
+        },
+        {
+          "id": "bcp-004",
+          "risikoelement": "BCP dekker ikke alle kritiske tjenester",
+          "saarbarhet": "Nyere systemer eller shadow IT ikke inkludert i kontinuitetsplanlegging",
+          "eksisterendeBeskyttelse": "Plan dekker primære systemer",
+          "eksisterendeKontroll": "Årlig gjennomgang av plan",
+          "K": 3,
+          "I": 3,
+          "T": 3,
+          "sannsynlighet": 3,
+          "foreslaatteTiltak": "Regelmessig oppdatering av systemkatalog, inkludere nye systemer i BCP-prosess"
+        },
+        {
+          "id": "bcp-005",
+          "risikoelement": "Utilstrekkelig geografisk spredning",
+          "saarbarhet": "Primær og backup-lokasjon i samme geografiske område (felles risiko for naturkatastrofer, strømbrudd, etc.)",
+          "eksisterendeBeskyttelse": "Backup i annen availability zone",
+          "eksisterendeKontroll": "Sjekk av redundans ved design",
+          "K": 4,
+          "I": 4,
+          "T": 2,
+          "sannsynlighet": 2,
+          "foreslaatteTiltak": "Sikre geografisk spredning av kritisk infrastruktur over ulike regioner, multi-region strategi for skytjenester"
+        }
+      ]
+    },
+    {
+      "id": "backup-restore",
+      "navn": "Backup og gjenoppretting",
+      "risikoer": [
+        {
+          "id": "backup-001",
+          "risikoelement": "Backup feiler uten varsling",
+          "saarbarhet": "Automatiske backuper feiler, men ingen overvåker eller varsler om feil",
+          "eksisterendeBeskyttelse": "Automatiserte backup-jobber",
+          "eksisterendeKontroll": "Ukentlig manuell sjekk av logger",
+          "K": 5,
+          "I": 4,
+          "T": 4,
+          "sannsynlighet": 3,
+          "foreslaatteTiltak": "Implementere automatisk monitorering av backup-status med umiddelbar varsling ved feil, success/failure metrics"
+        },
+        {
+          "id": "backup-002",
+          "risikoelement": "Backup aldri testet for gjenoppretting",
+          "saarbarhet": "Ingen regelmessig test av restore-prosedyre, ukjent om backup faktisk fungerer",
+          "eksisterendeBeskyttelse": "Backup kjører daglig",
+          "eksisterendeKontroll": "Backup kun testet ved faktisk hendelse",
+          "K": 5,
+          "I": 5,
+          "T": 4,
+          "sannsynlighet": 4,
+          "foreslaatteTiltak": "Kvartalsvis restore-test i isolert miljø, dokumentere restore-tid og prosedyre"
+        },
+        {
+          "id": "backup-003",
+          "risikoelement": "Backup-retention oppfyller ikke krav",
+          "saarbarhet": "Backups slettes for raskt (compliance, legal hold) eller beholdes for lenge (lagringskostnad, GDPR)",
+          "eksisterendeBeskyttelse": "Standard 30-dagers retention",
+          "eksisterendeKontroll": "Ingen spesifikk policy",
+          "K": 3,
+          "I": 2,
+          "T": 4,
+          "sannsynlighet": 3,
+          "foreslaatteTiltak": "Definere retention-policy basert på compliance-krav, implementere lifecycle management"
+        },
+        {
+          "id": "backup-004",
+          "risikoelement": "Backup ikke kryptert eller utilstrekkelig beskyttet",
+          "saarbarhet": "Backup-data lagres ukryptert eller med svak kryptering, kan leses ved lekkasje",
+          "eksisterendeBeskyttelse": "Backup lagres på separat storage",
+          "eksisterendeKontroll": "Tilgangskontroll på backup-volume",
+          "K": 4,
+          "I": 5,
+          "T": 3,
+          "sannsynlighet": 3,
+          "foreslaatteTiltak": "Kryptere alle backups at-rest og in-transit, sikker nøkkelhåndtering, immutable backups mot ransomware"
+        },
+        {
+          "id": "backup-005",
+          "risikoelement": "Manglende offline/air-gapped backup",
+          "saarbarhet": "Alle backups er online og tilgjengelige for samme autentisering - sårbar for ransomware og malicious insiders",
+          "eksisterendeBeskyttelse": "Online backup til cloud storage",
+          "eksisterendeKontroll": "Tilgangskontroll og versjonering",
+          "K": 5,
+          "I": 4,
+          "T": 4,
+          "sannsynlighet": 2,
+          "foreslaatteTiltak": "Implementere 3-2-1 backup-strategi med offline eller air-gapped kopi, immutable backups"
+        },
+        {
+          "id": "backup-006",
+          "risikoelement": "Utilstrekkelig backup av konfigurasjoner og hemmeligheter",
+          "saarbarhet": "Infrastructure-as-Code, secrets, nøkler og konfigurasjoner ikke inkludert i backup",
+          "eksisterendeBeskyttelse": "Applikasjonsdata backed up",
+          "eksisterendeKontroll": "Git for IaC, manuell dokumentasjon",
+          "K": 4,
+          "I": 3,
+          "T": 4,
+          "sannsynlighet": 3,
+          "foreslaatteTiltak": "Inkludere konfigurasjoner, IaC state, secrets (kryptert) i backup-strategi, automatisere config backup"
+        }
+      ]
+    },
+    {
+      "id": "krisehandtering",
+      "navn": "Krisehåndtering og kommunikasjon",
+      "risikoer": [
+        {
+          "id": "krise-001",
+          "risikoelement": "Uklare roller i krisesituasjon",
+          "saarbarhet": "Ingen definert kriseteam, ansvar eller beslutningsstruktur ved alvorlige hendelser",
+          "eksisterendeBeskyttelse": "Nøkkelpersoner vet hvem de skal kontakte",
+          "eksisterendeKontroll": "Ad-hoc organisering ved hendelse",
+          "K": 4,
+          "I": 3,
+          "T": 3,
+          "sannsynlighet": 4,
+          "foreslaatteTiltak": "Etablere Crisis Management Team (CMT) med definerte roller (incident commander, kommunikasjon, teknisk), RACI for krisehåndtering"
+        },
+        {
+          "id": "krise-002",
+          "risikoelement": "Mangelfull eller forsinket intern kommunikasjon",
+          "saarbarhet": "Ansatte ikke informert om hendelser, usikkerhet og rykter sprer seg",
+          "eksisterendeBeskyttelse": "E-post til berørte team",
+          "eksisterendeKontroll": "Manuell vurdering av hvem som skal informeres",
+          "K": 2,
+          "I": 3,
+          "T": 2,
+          "sannsynlighet": 4,
+          "foreslaatteTiltak": "Etablere kommunikasjonsplan for kriser, definere eskaleringsnivåer og kommunikasjonskanaler, pre-approved meldingsmaler"
+        },
+        {
+          "id": "krise-003",
+          "risikoelement": "Uforberedt ekstern kommunikasjon",
+          "saarbarhet": "Ingen plan for kundekommunikasjon, pressehåndtering eller regulatormeldinger ved alvorlige hendelser",
+          "eksisterendeBeskyttelse": "Generell kommunikasjonsavdeling",
+          "eksisterendeKontroll": "Ad-hoc håndtering ved behov",
+          "K": 3,
+          "I": 4,
+          "T": 3,
+          "sannsynlighet": 3,
+          "foreslaatteTiltak": "Utarbeide kommunikasjonsmaler for ulike hendelsestyper, definere godkjenningsprosess, media training for nøkkelpersoner"
+        },
+        {
+          "id": "krise-004",
+          "risikoelement": "Manglende beslutningskompetanse utenfor arbeidstid",
+          "saarbarhet": "Kritiske beslutninger krever ledere som ikke er tilgjengelige kveld/helg",
+          "eksisterendeBeskyttelse": "Vaktordning for teknisk personell",
+          "eksisterendeKontroll": "Eskalering til ledelse ved arbeidstid",
+          "K": 3,
+          "I": 3,
+          "T": 3,
+          "sannsynlighet": 3,
+          "foreslaatteTiltak": "Etablere delegert beslutningskompetanse for vaktlag, definere hva som krever lederinvolvering, 24/7 kontaktliste"
+        },
+        {
+          "id": "krise-005",
+          "risikoelement": "Utilstrekkelig krisedokumentasjon",
+          "saarbarhet": "Mangelfull logging av beslutninger, tiltak og tidslinje under krise",
+          "eksisterendeBeskyttelse": "Incident tickets og meldinger",
+          "eksisterendeKontroll": "Sporadisk loggføring",
+          "K": 2,
+          "I": 2,
+          "T": 3,
+          "sannsynlighet": 4,
+          "foreslaatteTiltak": "Etablere strukturert loggføring under hendelser (timeline, beslutninger, ansvarlige), bruke dedikert incident management tool"
+        }
+      ]
+    },
+    {
+      "id": "testing-oving",
+      "navn": "Testing og øving",
+      "risikoer": [
+        {
+          "id": "test-001",
+          "risikoelement": "BCP/DR-plan aldri testet",
+          "saarbarhet": "Planen er kun teoretisk, ukjent om den faktisk fungerer i praksis",
+          "eksisterendeBeskyttelse": "Dokumentert plan eksisterer",
+          "eksisterendeKontroll": "Ingen strukturerte tester",
+          "K": 4,
+          "I": 4,
+          "T": 4,
+          "sannsynlighet": 4,
+          "foreslaatteTiltak": "Gjennomføre årlig fullskala DR-test, halvårlige desktop exercises, dokumentere funn og forbedre plan"
+        },
+        {
+          "id": "test-002",
+          "risikoelement": "Tabletop exercises aldri gjennomført",
+          "saarbarhet": "Kriseteam har ikke øvd på samarbeid og beslutningsprosesser i simulerte kriser",
+          "eksisterendeBeskyttelse": "Dokumenterte prosedyrer",
+          "eksisterendeKontroll": "Ingen øvelser",
+          "K": 3,
+          "I": 3,
+          "T": 3,
+          "sannsynlighet": 3,
+          "foreslaatteTiltak": "Gjennomføre kvartalsvise tabletop exercises med ulike scenarioer, involvere både teknisk og ledelse"
+        },
+        {
+          "id": "test-003",
+          "risikoelement": "Funn fra tester ikke fulgt opp",
+          "saarbarhet": "Svakheter identifiseres i tester, men ikke lukkes før neste test",
+          "eksisterendeBeskyttelse": "Tester gjennomføres sporadisk",
+          "eksisterendeKontroll": "Rapportering av funn",
+          "K": 3,
+          "I": 3,
+          "T": 3,
+          "sannsynlighet": 4,
+          "foreslaatteTiltak": "Etablere formell oppfølgingsprosess for testfunn, tildele ansvarlige og deadlines, verifisere lukking"
+        },
+        {
+          "id": "test-004",
+          "risikoelement": "Tester dekker ikke realistiske scenarioer",
+          "saarbarhet": "Øvelser fokuserer på enkle feil, ikke komplekse eller kaskadefeil",
+          "eksisterendeBeskyttelse": "Enkle failover-tester",
+          "eksisterendeKontroll": "Sjekkliste for standard scenarioer",
+          "K": 3,
+          "I": 3,
+          "T": 3,
+          "sannsynlighet": 3,
+          "foreslaatteTiltak": "Utvikle scenarioer basert på faktiske trusler (ransomware, leverandørbrudd, etc.), inkludere stress-testing av team"
+        },
+        {
+          "id": "test-005",
+          "risikoelement": "Nøkkelpersonell deltar ikke i øvelser",
+          "saarbarhet": "Kritiske roller (ledelse, kommunikasjon, tekniske eksperter) ikke involvert i testing",
+          "eksisterendeBeskyttelse": "Teknisk team tester failover",
+          "eksisterendeKontroll": "Driftsteam deltar",
+          "K": 3,
+          "I": 3,
+          "T": 3,
+          "sannsynlighet": 3,
+          "foreslaatteTiltak": "Sikre deltagelse fra alle roller i CMT, rotere deltagere for å bygge bredere kompetanse"
+        }
+      ]
+    },
+    {
+      "id": "leverandor-resiliens",
+      "navn": "Leverandør- og avhengighetsresiliens",
+      "risikoer": [
+        {
+          "id": "lev-res-001",
+          "risikoelement": "Single point of failure hos kritisk leverandør",
+          "saarbarhet": "Én leverandør for kritisk tjeneste uten redundans eller alternativ",
+          "eksisterendeBeskyttelse": "SLA med leverandør",
+          "eksisterendeKontroll": "Leverandørvurdering ved inngåelse",
+          "K": 5,
+          "I": 4,
+          "T": 4,
+          "sannsynlighet": 2,
+          "foreslaatteTiltak": "Identifisere kritiske leverandører, etablere redundans eller exit-strategi, multi-vendor for kritiske tjenester der mulig"
+        },
+        {
+          "id": "lev-res-002",
+          "risikoelement": "Leverandørs BCP/DR ukjent eller utilstrekkelig",
+          "saarbarhet": "Leverandørens egen beredskap ikke validert, ukjent hvordan de håndterer hendelser",
+          "eksisterendeBeskyttelse": "Generelle kontraktsvilkår",
+          "eksisterendeKontroll": "Ikke gjennomgått leverandørs BCP",
+          "K": 4,
+          "I": 3,
+          "T": 4,
+          "sannsynlighet": 3,
+          "foreslaatteTiltak": "Kreve BCP/DR-dokumentasjon fra kritiske leverandører, inkludere i vendor due diligence, årlig oppdatering"
+        },
+        {
+          "id": "lev-res-003",
+          "risikoelement": "Manglende varsling ved leverandørhendelser",
+          "saarbarhet": "Leverandør informerer ikke proaktivt om hendelser som påvirker tjenesten",
+          "eksisterendeBeskyttelse": "Support-kanaler tilgjengelig",
+          "eksisterendeKontroll": "Status-side for større leverandører",
+          "K": 3,
+          "I": 3,
+          "T": 3,
+          "sannsynlighet": 3,
+          "foreslaatteTiltak": "Kontraktsfeste varslingskrav, abonnere på status-varsler, etablere eskaleringspunkt hos leverandør"
+        },
+        {
+          "id": "lev-res-004",
+          "risikoelement": "Kaskadeeffekt fra underleverandør",
+          "saarbarhet": "Leverandørens underleverandører (4th party) påvirker vår tjeneste uten at vi er klar over avhengigheten",
+          "eksisterendeBeskyttelse": "Direkte leverandør-relasjon",
+          "eksisterendeKontroll": "Ikke kartlagt underleverandører",
+          "K": 4,
+          "I": 3,
+          "T": 3,
+          "sannsynlighet": 3,
+          "foreslaatteTiltak": "Kreve transparens om kritiske underleverandører, inkludere i vendor risk assessment, 4th party disclosure"
+        },
+        {
+          "id": "lev-res-005",
+          "risikoelement": "Leverandørkonkurs eller tjeneste nedlagt",
+          "saarbarhet": "Leverandør går konkurs eller legger ned tjeneste uten tilstrekkelig varsel",
+          "eksisterendeBeskyttelse": "Kontrakt med oppsigelsesfrist",
+          "eksisterendeKontroll": "Ikke overvåket leverandørs finansielle helse",
+          "K": 4,
+          "I": 3,
+          "T": 4,
+          "sannsynlighet": 2,
+          "foreslaatteTiltak": "Exit-strategi for kritiske leverandører, escrow-avtaler for kritisk kildekode, overvåke leverandørs finansielle situasjon"
+        }
+      ]
+    },
+    {
+      "id": "incident-response",
+      "navn": "Hendelseshåndtering og resiliens",
+      "risikoer": [
+        {
+          "id": "ir-001",
+          "risikoelement": "Manglende incident response plan",
+          "saarbarhet": "Ingen strukturert tilnærming til deteksjon, respons og recovery fra sikkerhetshendelser",
+          "eksisterendeBeskyttelse": "Teknisk team håndterer hendelser ad-hoc",
+          "eksisterendeKontroll": "Uformell prosess",
+          "K": 4,
+          "I": 4,
+          "T": 4,
+          "sannsynlighet": 4,
+          "foreslaatteTiltak": "Etablere formell Incident Response Plan (IRP) basert på NIST/SANS, definere faser: forberedelse, deteksjon, containment, eradication, recovery, lessons learned"
+        },
+        {
+          "id": "ir-002",
+          "risikoelement": "Langsom deteksjon av hendelser",
+          "saarbarhet": "Hendelser oppdages sent eller kun ved tilfeldighet, lang dwell time for angrep",
+          "eksisterendeBeskyttelse": "Noe logging og basic alerts",
+          "eksisterendeKontroll": "Manuell gjennomgang av logger ved mistanke",
+          "K": 4,
+          "I": 4,
+          "T": 4,
+          "sannsynlighet": 4,
+          "foreslaatteTiltak": "Implementere SIEM eller Security Analytics, definere use cases for deteksjon, etablere 24/7 monitoring eller SOC"
+        },
+        {
+          "id": "ir-003",
+          "risikoelement": "Utilstrekkelig forensics-beredskap",
+          "saarbarhet": "Manglende verktøy, kompetanse eller prosedyrer for digital etterforskning",
+          "eksisterendeBeskyttelse": "Teknisk team kan undersøke systemer",
+          "eksisterendeKontroll": "Ingen formell forensics-kompetanse",
+          "K": 3,
+          "I": 3,
+          "T": 4,
+          "sannsynlighet": 3,
+          "foreslaatteTiltak": "Etablere forensics-beredskap (verktøy, kompetanse eller retainer med ekstern), dokumentere chain of custody prosedyrer"
+        },
+        {
+          "id": "ir-004",
+          "risikoelement": "Manglende post-incident review",
+          "saarbarhet": "Hendelser håndteres men ingen strukturert læring, samme feil gjentas",
+          "eksisterendeBeskyttelse": "Incident tickets dokumenterer hendelse",
+          "eksisterendeKontroll": "Sporadisk diskusjon i team",
+          "K": 2,
+          "I": 2,
+          "T": 3,
+          "sannsynlighet": 4,
+          "foreslaatteTiltak": "Etablere obligatorisk post-incident review (PIR) for alle P1/P2 hendelser, blameless post-mortem kultur, trackable action items"
+        },
+        {
+          "id": "ir-005",
+          "risikoelement": "Ingen runbooks for vanlige hendelser",
+          "saarbarhet": "Team må 'finne ut' hvordan håndtere kjente hendelsestyper hver gang",
+          "eksisterendeBeskyttelse": "Erfarne team-medlemmer kjenner prosedyrer",
+          "eksisterendeKontroll": "Muntlig kunnskapsoverføring",
+          "K": 3,
+          "I": 2,
+          "T": 3,
+          "sannsynlighet": 4,
+          "foreslaatteTiltak": "Utvikle runbooks for vanlige hendelser (DDoS, ransomware, databrudd), inkludere playbooks i IRP, holde oppdatert"
+        },
+        {
+          "id": "ir-006",
+          "risikoelement": "Manglende kapasitet ved storskala hendelse",
+          "saarbarhet": "Team overveldes ved større hendelser, ikke skalert for langvarig respons",
+          "eksisterendeBeskyttelse": "Teknisk team kan mobiliseres",
+          "eksisterendeKontroll": "On-call rotation",
+          "K": 4,
+          "I": 3,
+          "T": 3,
+          "sannsynlighet": 3,
+          "foreslaatteTiltak": "Etablere surge capacity plan (ekstra ressurser, eksterne konsulenter), retainer med IR-firma, cross-training for bredere bemanning"
+        }
+      ]
+    }
+  ]
+}

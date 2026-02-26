@@ -1,0 +1,439 @@
+{
+  "id": "personell",
+  "navn": "Personell og menneskelige faktorer",
+  "beskrivelse": "HR-sikkerhet, insider threat, security awareness, BYOD, fjernarbeid og menneskelig faktor",
+  "kategorier": [
+    {
+      "id": "hr-livssyklus",
+      "navn": "HR-livssyklus sikkerhet",
+      "risikoer": [
+        {
+          "id": "hr-001",
+          "risikoelement": "Manglende background checks ved ansettelse",
+          "saarbarhet": "Kritiske roller ansatt uten screening",
+          "eksisterendeBeskyttelse": "Referansesjekk",
+          "eksisterendeKontroll": "HR standard prosess",
+          "K": 4,
+          "I": 4,
+          "T": 2,
+          "sannsynlighet": 3,
+          "foreslaatteTiltak": "Background screening policy, politiattest for sensitive roller, education verification, employment history check"
+        },
+        {
+          "id": "hr-002",
+          "risikoelement": "Utilstrekkelig sikkerhetsonboarding av nye ansatte",
+          "saarbarhet": "Nyansatte får tilganger før sikkerhetsopplæring",
+          "eksisterendeBeskyttelse": "Generell onboarding",
+          "eksisterendeKontroll": "Welcome email med policies",
+          "K": 3,
+          "I": 3,
+          "T": 2,
+          "sannsynlighet": 4,
+          "foreslaatteTiltak": "Mandatory security induction før systemtilgang, NDA signing, policy acknowledgement, security quiz"
+        },
+        {
+          "id": "hr-003",
+          "risikoelement": "Tilganger ikke fjernet ved offboarding",
+          "saarbarhet": "Tidligere ansatte beholder tilgang til systemer",
+          "eksisterendeBeskrettelse": "HR melder fra til IT",
+          "eksisterendeKontroll": "Monthly access review",
+          "K": 5,
+          "I": 5,
+          "T": 3,
+          "sannsynlighet": 3,
+          "foreslaatteTiltak": "Automated offboarding workflow, HR-system integration, exit checklist, immediate access revocation, asset return"
+        },
+        {
+          "id": "hr-004",
+          "risikoelement": "Ingen exit interviews eller offboarding-samtaler",
+          "saarbarhet": "Misfornøyde/truende ansatte ikke identifisert ved avgang",
+          "eksisterendeBeskyttelse": "HR exit procedure",
+          "eksisterendeKontroll": "Avsluttende samtale",
+          "K": 4,
+          "I": 4,
+          "T": 3,
+          "sannsynlighet": 2,
+          "foreslaatteTiltak": "Structured exit interview, threat assessment, graduated offboarding for high-risk terminations, monitoring post-termination"
+        },
+        {
+          "id": "hr-005",
+          "risikoelement": "Rolleendringer ikke reflektert i tilganger",
+          "saarbarhet": "Ansatte akkumulerer tilganger ved jobbytte internt",
+          "eksisterendeBeskyttelse": "Manager requests",
+          "eksisterendeKontroll": "Quarterly access reviews",
+          "K": 4,
+          "I": 4,
+          "T": 2,
+          "sannsynlighet": 4,
+          "foreslaatteTiltak": "HR trigger for access review ved rolleendring, birthright access per rolle, automated deprovisioning of old role"
+        },
+        {
+          "id": "hr-006",
+          "risikoelement": "Contractors/konsulenter styres ikke som ansatte",
+          "saarbarhet": "Eksterne konsulenter har for høy tilgang, manglende screening",
+          "eksisterendeBeskyttelse": "Vendor contracts",
+          "eksisterendeKontroll": "Manager oversight",
+          "K": 4,
+          "I": 4,
+          "T": 2,
+          "sannsynlighet": 3,
+          "foreslaatteTiltak": "Contractor management policy, same screening as employees, time-limited access, separate identity lifecycle, NDA requirements"
+        }
+      ]
+    },
+    {
+      "id": "insider-threat",
+      "navn": "Insider threat",
+      "risikoer": [
+        {
+          "id": "insider-001",
+          "risikoelement": "Ondsinnet innsider (malicious insider)",
+          "saarbarhet": "Ansatt med legitim tilgang misbruker den bevisst",
+          "eksisterendeBeskyttelse": "Access controls, logging",
+          "eksisterendeKontroll": "Periodic access reviews",
+          "K": 5,
+          "I": 5,
+          "T": 4,
+          "sannsynlighet": 1,
+          "foreslaatteTiltak": "User behavior analytics (UBA), anomaly detection, privileged access monitoring, psychological safety/reporting culture"
+        },
+        {
+          "id": "insider-002",
+          "risikoelement": "Data exfiltration av ansatt som skal slutte",
+          "saarbarhet": "Ansatt kopierer data før avgang",
+          "eksisterendeBeskyttelse": "DLP policies",
+          "eksisterendeKontroll": "Exit access revocation",
+          "K": 5,
+          "I": 3,
+          "T": 1,
+          "sannsynlighet": 2,
+          "foreslaatteTiltak": "Pre-termination monitoring, DLP alerts, USB blocking, cloud upload monitoring, graduated access removal"
+        },
+        {
+          "id": "insider-003",
+          "risikoelement": "Interessekonflikter ikke håndtert",
+          "saarbarhet": "Ansatt jobber for konkurrent eller har andre conflicts of interest",
+          "eksisterendeBeskyttelse": "Arbeidskontrakts eksklusivitet",
+          "eksisterendeKontroll": "None",
+          "K": 4,
+          "I": 5,
+          "T": 2,
+          "sannsynlighet": 2,
+          "foreslaatteTiltak": "Conflict of interest disclosure, periodic attestation, monitoring av sensitive roller, ethics training"
+        },
+        {
+          "id": "insider-004",
+          "risikoelement": "Privileged users ikke ekstra overvåket",
+          "saarbarhet": "Admins kan gjøre hva som helst uten deteksjon",
+          "eksisterendeBeskyttelse": "Admin activity logging",
+          "eksisterendeKontroll": "Log reviews",
+          "K": 5,
+          "I": 5,
+          "T": 4,
+          "sannsynlighet": 2,
+          "foreslaatteTiltak": "Privileged Access Management (PAM), session recording, dual control for sensitive ops, continuous monitoring"
+        },
+        {
+          "id": "insider-005",
+          "risikoelement": "Ukultur eller mistrivsel skaper insider-risiko",
+          "saarbarhet": "Dårlig arbeidsmiljø øker motivasjon for sabotasje",
+          "eksisterendeBeskyttelse": "HR policies",
+          "eksisterendeKontroll": "Medarbeiderundersøkelse",
+          "K": 3,
+          "I": 4,
+          "T": 4,
+          "sannsynlighet": 2,
+          "foreslaatteTiltak": "Positive security culture, whistleblower mechanisms, HR risk indicators, psychological safety, exit interview analysis"
+        }
+      ]
+    },
+    {
+      "id": "awareness-trening",
+      "navn": "Security awareness og trening",
+      "risikoer": [
+        {
+          "id": "aware-001",
+          "risikoelement": "Manglende generell security awareness",
+          "saarbarhet": "Ansatte kjenner ikke grunnleggende sikkerhetsprinsipper",
+          "eksisterendeBeskyttelse": "Årlig e-learning",
+          "eksisterendeKontroll": "Completion tracking",
+          "K": 4,
+          "I": 3,
+          "T": 2,
+          "sannsynlighet": 4,
+          "foreslaatteTiltak": "Continuous awareness program, micro-learning, gamification, role-based training, security champions"
+        },
+        {
+          "id": "aware-002",
+          "risikoelement": "Ansatte faller for phishing-angrep",
+          "saarbarhet": "Klikker på phishing-linker, oppgir credentials",
+          "eksisterendeBeskyttelse": "Email filtering",
+          "eksisterendeKontroll": "Phishing simulations årlig",
+          "K": 5,
+          "I": 4,
+          "T": 2,
+          "sannsynlighet": 4,
+          "foreslaatteTiltak": "Frequent phishing simulations, immediate feedback, targeted training for clickers, reporting mechanisms, MFA"
+        },
+        {
+          "id": "aware-003",
+          "risikoelement": "Social engineering og pretexting",
+          "saarbarhet": "Ansatte manipuleres til å utlevere informasjon eller utføre handlinger",
+          "eksisterendeBeskyttelse": "General awareness",
+          "eksisterendeKontroll": "None",
+          "K": 5,
+          "I": 4,
+          "T": 2,
+          "sannsynlighet": 3,
+          "foreslaatteTiltak": "Social engineering awareness, verification procedures, challenge culture, callback verification for sensitive requests"
+        },
+        {
+          "id": "aware-004",
+          "risikoelement": "Svake passord og gjenbruk",
+          "saarbarhet": "Ansatte bruker svake eller gjenbrukte passord",
+          "eksisterendeBeskyttelse": "Password policy, complexity krav",
+          "eksisterendeKontroll": "Password strength meter",
+          "K": 5,
+          "I": 4,
+          "T": 2,
+          "sannsynlighet": 4,
+          "foreslaatteTiltak": "Passordmanager, passkeys/FIDO2, MFA enforcement, compromised password detection, passwordless authentication"
+        },
+        {
+          "id": "aware-005",
+          "risikoelement": "Ansatte rapporterer ikke sikkerhetshendelser",
+          "saarbarhet": "Fear of blame culture, ikke tydelige rapporteringskanaler",
+          "eksisterendeBeskyttelse": "Helpdesk support",
+          "eksisterendeKontroll": "Incident tracking",
+          "K": 3,
+          "I": 4,
+          "T": 3,
+          "sannsynlighet": 4,
+          "foreslaatteTiltak": "No-blame reporting culture, easy reporting mechanisms, phish report button, recognition for reporting, transparency"
+        }
+      ]
+    },
+    {
+      "id": "fjernarbeid-byod",
+      "navn": "Fjernarbeid og BYOD",
+      "risikoer": [
+        {
+          "id": "remote-001",
+          "risikoelement": "Usikrede hjemmekontor / remote work",
+          "saarbarhet": "Svak hjemme-wifi, familie bruker jobbmaskin, manglende fysisk sikkerhet",
+          "eksisterendeBeskyttelse": "VPN required",
+          "eksisterendeKontroll": "Remote work policy",
+          "K": 4,
+          "I": 3,
+          "T": 2,
+          "sannsynlighet": 4,
+          "foreslaatteTiltak": "Home office security guidelines, VPN, zero trust, device management, security assessments for home office"
+        },
+        {
+          "id": "remote-002",
+          "risikoelement": "BYOD (Bring Your Own Device) ikke styrt",
+          "saarbarhet": "Private enheter brukes til jobbdata uten kontroll",
+          "eksisterendeBeskyttelse": "Policy mot BYOD",
+          "eksisterendeKontroll": "None",
+          "K": 5,
+          "I": 4,
+          "T": 2,
+          "sannsynlighet": 4,
+          "foreslaatteTiltak": "MDM/MAM for BYOD, containerization, conditional access, app-based access (not device), data separation"
+        },
+        {
+          "id": "remote-003",
+          "risikoelement": "Offentlige wifi-nettverk kompromitterer data",
+          "saarbarhet": "Ansatte jobber fra kafé, fly, hotell uten VPN",
+          "eksisterendeBeskyttelse": "VPN anbefalt",
+          "eksisterendeKontroll": "Training",
+          "K": 5,
+          "I": 4,
+          "T": 1,
+          "sannsynlighet": 4,
+          "foreslaatteTiltak": "Always-on VPN, zero trust network access (ZTNA), HTTPS everywhere, public wifi awareness"
+        },
+        {
+          "id": "remote-004",
+          "risikoelement": "Arbeidsenheter deles med familie",
+          "saarbarhet": "Familie bruker jobbmaskin, barn installerer spill, etc.",
+          "eksisterendeBeskyttelse": "Policy mot deling",
+          "eksisterendeKontroll": "Trust-based",
+          "K": 4,
+          "I": 4,
+          "T": 3,
+          "sannsynlighet": 3,
+          "foreslaatteTiltak": "Device assignment policy, separate user accounts, awareness, technical controls (no admin rights), MDM enforcement"
+        },
+        {
+          "id": "remote-005",
+          "risikoelement": "Manglende physical security ved remote work",
+          "saarbarhet": "Skjerm synlig for andre, dokumenter liggende ute, device theft",
+          "eksisterendeBeskyttelse": "Privacy screen anbefalt",
+          "eksisterendeKontroll": "General guidance",
+          "K": 4,
+          "I": 2,
+          "T": 2,
+          "sannsynlighet": 3,
+          "foreslaatteTiltak": "Privacy screens, screen timeout, encryption, cable locks, clear desk for home office, camera covers"
+        },
+        {
+          "id": "remote-006",
+          "risikoelement": "Hybridkontor skaper sikkerhetsgap",
+          "saarbarhet": "Rotasjonsordninger gjør sikkerhetstiltak inkonsistente",
+          "eksisterendeBeskyttelse": "Same policies for all",
+          "eksisterendeKontroll": "Location-agnostic security",
+          "K": 3,
+          "I": 3,
+          "T": 2,
+          "sannsynlighet": 3,
+          "foreslaatteTiltak": "Zero trust architecture, device-based security (not location), consistent policies, hot-desking guidelines"
+        }
+      ]
+    },
+    {
+      "id": "fysisk-personell",
+      "navn": "Fysisk sikkerhet - kontormiljø",
+      "risikoer": [
+        {
+          "id": "fysisk-001",
+          "risikoelement": "Clean desk / clear screen ikke praktisert",
+          "saarbarhet": "Sensitive dokumenter/skjermer synlige for besøkende/renhold",
+          "eksisterendeBeskyttelse": "Clean desk policy",
+          "eksisterendeKontroll": "Random spot checks",
+          "K": 4,
+          "I": 2,
+          "T": 1,
+          "sannsynlighet": 4,
+          "foreslaatteTiltak": "Enforcement, shredders tilgjengelig, auto screen lock (3 min), locked drawers, security reminders"
+        },
+        {
+          "id": "fysisk-002",
+          "risikoelement": "Besøkende ikke eskorter eller overvåket",
+          "saarbarhet": "Eksterne personer kan bevege seg fritt og få tilgang til sensitive områder",
+          "eksisterendeBeskyttelse": "Visitor badges",
+          "eksisterendeKontroll": "Reception check-in",
+          "K": 4,
+          "I": 3,
+          "T": 2,
+          "sannsynlighet": 3,
+          "foreslaatteTiltak": "Mandatory escort policy, visible visitor badges, access restrictions for visitors, photo ID requirement, logbook"
+        },
+        {
+          "id": "fysisk-003",
+          "risikoelement": "Tailgating / piggy-backing inn i sikrede områder",
+          "saarbarhet": "Ansatte holder døren for andre uten ID-sjekk",
+          "eksisterendeBeskyttelse": "Access card system",
+          "eksisterendeKontroll": "Security awareness",
+          "K": 4,
+          "I": 3,
+          "T": 2,
+          "sannsynlighet": 4,
+          "foreslaatteTiltak": "Anti-tailgating awareness, mantraps for high-security areas, badge challenge culture, security signage"
+        },
+        {
+          "id": "fysisk-004",
+          "risikoelement": "Møteromssikkerhet - sensitive diskusjoner overhøres",
+          "saarbarhet": "Strategiske møter i usikrede rom, whiteboards ikke slettet",
+          "eksisterendeBeskyttelse": "Dedicated meeting rooms",
+          "eksisterendeKontroll": "Booking system",
+          "K": 5,
+          "I": 2,
+          "T": 1,
+          "sannsynlighet": 3,
+          "foreslaatteTiltak": "Classified meeting room ratings, soundproofing, whiteboard protocols, confidential waste bins, room sweeps"
+        },
+        {
+          "id": "fysisk-005",
+          "risikoelement": "USB drops / baiting attacks",
+          "saarbarhet": "Ansatte plugger inn funnet USB uten sjekk",
+          "eksisterendeBeskyttelse": "USB policy",
+          "eksisterendeKontroll": "Endpoint protection",
+          "K": 5,
+          "I": 5,
+          "T": 4,
+          "sannsynlighet": 2,
+          "foreslaatteTiltak": "USB blocking (technical), awareness training, safe USB check procedures, alternative sharing methods"
+        },
+        {
+          "id": "fysisk-006",
+          "risikoelement": "Dumpster diving - sensitive dokumenter ikke destruert",
+          "saarbarhet": "Papir kastes i vanlig søppel uten makulering",
+          "eksisterendeBeskyttelse": "Shredders available",
+          "eksisterendeKontroll": "Policy on document disposal",
+          "K": 4,
+          "I": 2,
+          "T": 1,
+          "sannsynlighet": 3,
+          "foreslaatteTiltak": "Mandatory shredding for confidential, secure disposal bins, certified destruction service, digital-first policies"
+        }
+      ]
+    },
+    {
+      "id": "menneskelig-faktor",
+      "navn": "Menneskelig faktor og feil",
+      "risikoer": [
+        {
+          "id": "human-001",
+          "risikoelement": "Utilsiktet datalekkasje (human error)",
+          "saarbarhet": "Email til feil mottaker, feil vedlegg, public sharing ved uhell",
+          "eksisterendeBeskyttelse": "'Undo send' i email",
+          "eksisterendeKontroll": "User awareness",
+          "K": 5,
+          "I": 3,
+          "T": 1,
+          "sannsynlighet": 4,
+          "foreslaatteTiltak": "DLP warnings, external email banners, sharing confirmations, classification labels, double-check culture"
+        },
+        {
+          "id": "human-002",
+          "risikoelement": "Feilkonfigurasjoner av sikkerhetskontroller",
+          "saarbarhet": "Ansatte konfigurerer systemer feil, skaper sårbarheter",
+          "eksisterendeBeskyttelse": "Change approval",
+          "eksisterendeKontroll": "Peer review",
+          "K": 4,
+          "I": 4,
+          "T": 4,
+          "sannsynlighet": 3,
+          "foreslaatteTiltak": "Infrastructure-as-code, config validation, security linting, change testing, rollback procedures, config baselines"
+        },
+        {
+          "id": "human-003",
+          "risikoelement": "Stress og tidspress gir snarveier",
+          "saarbarhet": "Under press hoppes sikkerhetsprosedyrer over",
+          "eksisterendeBeskyttelse": "Process documentation",
+          "eksisterendeKontroll": "Management oversight",
+          "K": 3,
+          "I": 4,
+          "T": 3,
+          "sannsynlighet": 4,
+          "foreslaatteTiltak": "Automated controls (not manual), realistic deadlines, psychological safety to raise concerns, technical debt tracking"
+        },
+        {
+          "id": "human-004",
+          "risikoelement": "Manglende sikkerhetskompetanse i utviklingsteam",
+          "saarbarhet": "Utviklere kjenner ikke secure coding practices",
+          "eksisterendeBeskyttelse": "Security team review",
+          "eksisterendeKontroll": "Code review",
+          "K": 4,
+          "I": 4,
+          "T": 2,
+          "sannsynlighet": 4,
+          "foreslaatteTiltak": "Secure coding training, OWASP Top 10 awareness, security champions, SAST tools, threat modeling training"
+        },
+        {
+          "id": "human-005",
+          "risikoelement": "Alert fatigue - sikkerhetsvarsler ignoreres",
+          "saarbarhet": "For mange false positives gjør at folk ignorerer varsler",
+          "eksisterendeBeskyttelse": "SIEM alerts",
+          "eksisterendeKontroll": "SOC monitoring",
+          "K": 4,
+          "I": 4,
+          "T": 4,
+          "sannsynlighet": 4,
+          "foreslaatteTiltak": "Alert tuning, reducing false positives, risk-based prioritization, automation, meaningful alert context"
+        }
+      ]
+    }
+  ]
+}

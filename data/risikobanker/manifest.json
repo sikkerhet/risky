@@ -30,6 +30,21 @@
       "id": "saas",
       "fil": "saas.json",
       "aktiv": true
+    },
+    {
+      "id": "governance",
+      "fil": "governance.json",
+      "aktiv": true
+    },
+    {
+      "id": "personell",
+      "fil": "personell.json",
+      "aktiv": true
+    },
+    {
+      "id": "kontinuitet",
+      "fil": "kontinuitet.json",
+      "aktiv": true
     }
   ]
 }
