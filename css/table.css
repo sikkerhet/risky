@@ -1,7 +1,9 @@
 /* Tabell-styling */
 
 .risks-section {
-    margin-top: 30px;
+    margin-top: 50px;
+    padding-bottom: 30px;
+    border-bottom: 1px solid #e8e8e8;
 }
 
 .table-container {
@@ -32,28 +34,41 @@
 }
 
 .risks-table thead {
-    background: #007bff;
-    color: white;
+    background: #f8f8f8;
+    color: #222;
     position: sticky;
     top: 0;
     z-index: 10;
+    border-bottom: 2px solid #ddd;
 }
 
 .risks-table th {
-    padding: 12px 8px;
+    padding: 14px 10px;
     text-align: left;
-    font-weight: bold;
-    border: 1px solid #0056b3;
+    font-weight: 600;
+    border: none;
+    border-right: 1px solid #e0e0e0;
+    font-size: 14px;
+}
+
+.risks-table th:last-child {
+    border-right: none;
 }
 
 .risks-table td {
-    padding: 8px;
-    border: 1px solid #ddd;
+    padding: 12px 10px;
+    border: none;
+    border-bottom: 1px solid #e8e8e8;
+    border-right: 1px solid #f0f0f0;
     vertical-align: top;
 }
 
+.risks-table td:last-child {
+    border-right: none;
+}
+
 .risks-table tbody tr:hover {
-    background-color: #f8f9fa;
+    background-color: #fafafa;
 }
 
 .risks-table textarea {

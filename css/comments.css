@@ -169,11 +169,12 @@
 }
 
 .comment-item {
-    background: #f8f9fa;
-    border-left: 4px solid #007bff;
-    padding: 12px;
-    margin-bottom: 10px;
-    border-radius: 4px;
+    background: #fafafa;
+    border-left: 3px solid #007bff;
+    padding: 15px;
+    margin-bottom: 15px;
+    border-radius: 2px;
+    border: 1px solid #e8e8e8;
 }
 
 .comment-item.type-tiltak {
@@ -309,11 +310,12 @@
 
 /* Kommentar-seksjon i editor */
 .comments-section {
-    margin-top: 30px;
-    padding: 20px;
-    background: #f9f9f9;
-    border-radius: 8px;
-    border: 2px solid #ddd;
+    margin-top: 50px;
+    padding: 30px 0;
+    background: transparent;
+    border-radius: 0;
+    border-top: 1px solid #e8e8e8;
+    border-bottom: none;
 }
 
 .comments-section-header {
