@@ -211,3 +211,91 @@
         flex-wrap: nowrap;
     }
 }
+
+/* Import Risks Modal */
+.analysis-import-list {
+    max-height: 400px;
+    overflow-y: auto;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 10px;
+}
+
+.analysis-import-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 15px;
+    padding: 15px;
+    border: 2px solid #e8e8e8;
+    border-radius: 8px;
+    margin-bottom: 10px;
+    cursor: pointer;
+    transition: all 0.2s;
+    background: white;
+}
+
+.analysis-import-item:hover {
+    border-color: #2e5f8e;
+    background: #f0f7ff;
+}
+
+.analysis-import-item input[type="radio"] {
+    margin-top: 3px;
+    cursor: pointer;
+    width: 18px;
+    height: 18px;
+    flex-shrink: 0;
+}
+
+.analysis-import-item input[type="radio"]:checked + .analysis-import-content {
+    opacity: 1;
+}
+
+.analysis-import-content {
+    flex: 1;
+}
+
+.analysis-import-item h4 {
+    margin: 0 0 8px 0;
+    color: #2e5f8e;
+}
+
+.analysis-import-item p {
+    margin: 4px 0;
+    font-size: 14px;
+    color: #666;
+}
+
+.analysis-import-item .risk-count {
+    display: inline-block;
+    background: #2e5f8e;
+    color: white;
+    padding: 2px 8px;
+    border-radius: 12px;
+    font-size: 12px;
+    font-weight: 600;
+    margin-left: 10px;
+}
+
+.import-options {
+    padding: 15px;
+    background: #f9f9f9;
+    border-radius: 8px;
+}
+
+.import-options label {
+    display: block;
+    padding: 10px;
+    margin: 5px 0;
+    cursor: pointer;
+    border-radius: 4px;
+    transition: background 0.2s;
+}
+
+.import-options label:hover {
+    background: #e8e8e8;
+}
+
+.import-options input[type="radio"] {
+    margin-right: 10px;
+}

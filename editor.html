@@ -107,6 +107,7 @@
 
             <div class="add-risk-container">
                 <button id="addRiskBtn" class="btn btn-primary">+ Legg til risiko</button>
+                <button id="importRisksBtn" class="btn btn-secondary">📥 Importer risikoer fra analyse</button>
             </div>
         </section>
 
@@ -226,6 +227,39 @@
         </div>
     </div>
 
+    <!-- Import Risks Modal -->
+    <div id="importRisksModal" class="modal-overlay" style="display: none;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Importer risikoer fra analyse</h3>
+                <button class="modal-close" onclick="closeImportRisksModal()">×</button>
+            </div>
+            <div class="modal-body">
+                <p>Velg en analyse å importere risikoer fra:</p>
+
+                <div id="analysisListForImport" class="analysis-import-list">
+                    <!-- Analyser vil bli lagt til her -->
+                </div>
+
+                <div class="import-options" style="margin-top: 20px;">
+                    <label>
+                        <input type="radio" name="importMode" value="replace" checked>
+                        <strong>Erstatt</strong> - Fjern eksisterende risikoer og importer nye
+                    </label>
+                    <label>
+                        <input type="radio" name="importMode" value="append">
+                        <strong>Legg til</strong> - Behold eksisterende og legg til importerte risikoer
+                    </label>
+                </div>
+
+                <div style="margin-top: 20px; text-align: right; display: flex; gap: 10px; justify-content: flex-end;">
+                    <button class="btn btn-secondary" onclick="closeImportRisksModal()">Avbryt</button>
+                    <button id="confirmImportBtn" class="btn btn-primary" onclick="confirmImportRisks()">Importer risikoer</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <script src="js/app.js"></script>
     <script src="js/risikobank.js"></script>
     <script src="js/comments.js"></script>
@@ -258,6 +292,7 @@
             });
 
             document.getElementById('addRiskBtn').addEventListener('click', addNewRisk);
+            document.getElementById('importRisksBtn').addEventListener('click', openImportRisksModal);
             document.getElementById('exportJsonBtn').addEventListener('click', exportCurrentAnalysisJSON);
             document.getElementById('exportPdfBtn').addEventListener('click', exportToPDF);
             document.getElementById('exportExcelBtn').addEventListener('click', exportToExcel);
@@ -369,6 +404,230 @@
             linkElement.setAttribute('href', dataUri);
             linkElement.setAttribute('download', exportName);
             linkElement.click();
+        }
+
+        // Import risks from another analysis
+        async function openImportRisksModal() {
+            const modal = document.getElementById('importRisksModal');
+            const listContainer = document.getElementById('analysisListForImport');
+
+            listContainer.innerHTML = '<p style="text-align: center; color: #666;">Laster...</p>';
+            modal.style.display = 'flex';
+
+            try {
+                // Load baseline analyses
+                const baselineFiles = ['baseline-it-tjeneste.json', 'baseline-sky.json', 'baseline-persondata.json'];
+                const baselinePromises = baselineFiles.map(file =>
+                    fetch(`data/baselines/${file}`).then(r => r.json()).catch(() => null)
+                );
+                const baselines = (await Promise.all(baselinePromises)).filter(b => b !== null);
+
+                // Get user's own analyses
+                const allAnalyses = getAnalyses();
+                const otherAnalyses = allAnalyses.filter(a => a.id !== currentAnalysis.id);
+
+                // Store all sources for later retrieval
+                window._importSources = {
+                    baselines: baselines,
+                    userAnalyses: otherAnalyses
+                };
+
+                // Render analysis list
+                listContainer.innerHTML = '';
+
+                // Add baselines section
+                if (baselines.length > 0) {
+                    const baselinesHeader = document.createElement('h4');
+                    baselinesHeader.textContent = '📚 Forhåndsdefinerte maler';
+                    baselinesHeader.style.cssText = 'margin: 10px 0; padding: 10px; background: #f0f7ff; border-radius: 4px; color: #2e5f8e;';
+                    listContainer.appendChild(baselinesHeader);
+
+                    baselines.forEach((baseline, index) => {
+                        const label = createAnalysisImportItem(baseline, `baseline-${baseline.id}`, index === 0);
+                        listContainer.appendChild(label);
+                    });
+                }
+
+                // Add user analyses section
+                if (otherAnalyses.length > 0) {
+                    const userHeader = document.createElement('h4');
+                    userHeader.textContent = '📋 Mine analyser';
+                    userHeader.style.cssText = 'margin: 20px 0 10px 0; padding: 10px; background: #f0f7ff; border-radius: 4px; color: #2e5f8e;';
+                    listContainer.appendChild(userHeader);
+
+                    otherAnalyses.forEach((analysis) => {
+                        const label = createAnalysisImportItem(analysis, `user-${analysis.id}`, false);
+                        listContainer.appendChild(label);
+                    });
+                }
+
+                // If no options available
+                if (baselines.length === 0 && otherAnalyses.length === 0) {
+                    listContainer.innerHTML = '<p style="text-align: center; color: #666;">Ingen analyser tilgjengelig for import.</p>';
+                }
+
+            } catch (error) {
+                console.error('Error loading baselines:', error);
+                listContainer.innerHTML = '<p style="text-align: center; color: #dc3545;">Kunne ikke laste maler. Prøv igjen.</p>';
+            }
+        }
+
+        function createAnalysisImportItem(analysis, valueId, isChecked) {
+            const label = document.createElement('label');
+            label.className = 'analysis-import-item';
+
+            const riskCount = analysis.risikoer ? analysis.risikoer.length : 0;
+            const date = analysis.metadata.dato || analysis.createdDate || '';
+            const tjeneste = analysis.metadata.tjeneste || analysis.name || 'Uten navn';
+            const beskrivelse = analysis.metadata.beskrivelse || '';
+
+            label.innerHTML = `
+                <input type="radio" name="selectedAnalysis" value="${valueId}" ${isChecked ? 'checked' : ''}>
+                <div class="analysis-import-content">
+                    <h4>${tjeneste} <span class="risk-count">${riskCount} risikoer</span></h4>
+                    <p><strong>Dato:</strong> ${date}</p>
+                    ${analysis.metadata.utfortAv ? `<p><strong>Utført av:</strong> ${analysis.metadata.utfortAv}</p>` : ''}
+                    ${beskrivelse ? `<p style="font-size: 13px; color: #666; font-style: italic;">${beskrivelse}</p>` : ''}
+                </div>
+            `;
+
+            return label;
+        }
+
+        function confirmImportRisks() {
+            const selectedRadio = document.querySelector('input[name="selectedAnalysis"]:checked');
+            if (!selectedRadio) {
+                alert('Vennligst velg en analyse å importere fra.');
+                return;
+            }
+
+            const valueId = selectedRadio.value;
+            let sourceAnalysis = null;
+
+            // Check if it's a baseline or user analysis
+            if (valueId.startsWith('baseline-')) {
+                const baselineId = valueId.replace('baseline-', '');
+                sourceAnalysis = window._importSources.baselines.find(b => b.id === baselineId);
+            } else if (valueId.startsWith('user-')) {
+                const userId = valueId.replace('user-', '');
+                sourceAnalysis = window._importSources.userAnalyses.find(a => a.id === userId);
+            }
+
+            if (!sourceAnalysis) {
+                alert('Kunne ikke finne valgt analyse.');
+                return;
+            }
+
+            importRisksFromAnalysis(sourceAnalysis);
+        }
+
+        function closeImportRisksModal() {
+            const modal = document.getElementById('importRisksModal');
+            modal.style.display = 'none';
+        }
+
+        function importRisksFromAnalysis(sourceAnalysis) {
+            try {
+                console.log('Import started', sourceAnalysis);
+
+                if (!sourceAnalysis.risikoer || sourceAnalysis.risikoer.length === 0) {
+                    alert('Denne analysen har ingen risikoer å importere.');
+                    closeImportRisksModal();
+                    return;
+                }
+
+                const importMode = document.querySelector('input[name="importMode"]:checked').value;
+                const sourceName = sourceAnalysis.metadata.tjeneste || sourceAnalysis.name || 'analysen';
+                const riskCount = sourceAnalysis.risikoer.length;
+
+                let message = '';
+                if (importMode === 'replace') {
+                    message = `Dette vil erstatte alle eksisterende risikoer med ${riskCount} risikoer fra "${sourceName}".\n\nEr du sikker?`;
+                } else {
+                    message = `Dette vil legge til ${riskCount} risikoer fra "${sourceName}" til de eksisterende.\n\nFortsette?`;
+                }
+
+                if (!confirm(message)) {
+                    closeImportRisksModal();
+                    return;
+                }
+
+                // Deep copy the risks to avoid reference issues
+                const importedRisks = JSON.parse(JSON.stringify(sourceAnalysis.risikoer));
+                console.log('Imported risks:', importedRisks);
+
+                // Ensure currentAnalysis.risikoer is an array
+                if (!Array.isArray(currentAnalysis.risikoer)) {
+                    currentAnalysis.risikoer = [];
+                }
+
+                const previousCount = currentAnalysis.risikoer.length;
+
+                // Generate new IDs and ensure all required fields exist
+                importedRisks.forEach((risk, index) => {
+                    risk.id = 'risk_' + Date.now() + '_' + index + '_' + Math.random().toString(36).substr(2, 9);
+
+                    // Ensure all required fields exist with proper defaults
+                    risk.risikoelement = risk.risikoelement || '';
+                    risk.saarbarhet = risk.saarbarhet || '';
+                    risk.eksisterendeBeskyttelse = risk.eksisterendeBeskyttelse || '';
+                    risk.eksisterendeKontroll = risk.eksisterendeKontroll || '';
+                    risk.K = risk.K || 0;
+                    risk.I = risk.I || 0;
+                    risk.T = risk.T || 0;
+                    risk.konsekvens = risk.konsekvens || 0;
+                    risk.sannsynlighet = risk.sannsynlighet || 0;
+                    risk.risikonivaa = risk.risikonivaa || 0;
+                    risk.foreslaatteTiltak = risk.foreslaatteTiltak || '';
+                    risk.kommentarer = Array.isArray(risk.kommentarer) ? risk.kommentarer : [];
+
+                    // Set nr field based on mode
+                    if (importMode === 'replace') {
+                        risk.nr = index + 1;
+                    } else {
+                        risk.nr = previousCount + index + 1;
+                    }
+                });
+
+                if (importMode === 'replace') {
+                    currentAnalysis.risikoer = importedRisks;
+                } else {
+                    currentAnalysis.risikoer = [...currentAnalysis.risikoer, ...importedRisks];
+                }
+
+                // Renumber ALL risks (in case of replace mode or to fix existing)
+                currentAnalysis.risikoer.forEach((risk, index) => {
+                    risk.nr = index + 1;
+                });
+
+                console.log('New risk count:', currentAnalysis.risikoer.length);
+                console.log('First 3 risks nr before save:', currentAnalysis.risikoer.slice(0, 3).map(r => `id:${r.id.slice(0,10)} nr:${r.nr}`));
+
+                // Save to localStorage
+                const updatedAnalysis = updateAnalysis(currentAnalysisId, { risikoer: currentAnalysis.risikoer });
+                if (updatedAnalysis) {
+                    currentAnalysis = updatedAnalysis;
+                    console.log('Updated from localStorage, first 3 risks nr:', currentAnalysis.risikoer.slice(0, 3).map(r => `id:${r.id.slice(0,10)} nr:${r.nr}`));
+                } else {
+                    console.error('updateAnalysis returned null!');
+                }
+
+                // Update UI
+                renderRisksTable();
+                console.log('Table rendered, tbody has', document.getElementById('risksTableBody').children.length, 'rows');
+
+                renderHeatmap();
+                console.log('Heatmap rendered');
+
+                closeImportRisksModal();
+
+                const action = importMode === 'replace' ? 'erstattet med' : 'lagt til';
+                alert(`${riskCount} risikoer ${action} fra "${sourceName}"\n\nTotalt nå: ${currentAnalysis.risikoer.length} risikoer`);
+            } catch (error) {
+                console.error('Error importing risks:', error);
+                alert('Det oppsto en feil ved import: ' + error.message);
+                closeImportRisksModal();
+            }
         }
 
         // Bank upload handling
