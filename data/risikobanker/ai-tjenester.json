@@ -1,0 +1,451 @@
+{
+  "id": "ai-tjenester",
+  "navn": "KI-tjenester og Agentic AI",
+  "beskrivelse": "Risikoer spesifikke for AI/ML-tjenester, LLM-applikasjoner og autonome AI-agenter",
+  "kategorier": [
+    {
+      "id": "llm-sikkerhet",
+      "navn": "LLM-sikkerhet",
+      "risikoer": [
+        {
+          "id": "llm-001",
+          "risikoelement": "Prompt injection - bruker manipulerer AI til uønsket oppførsel",
+          "saarbarhet": "Manglende sanitering av brukerinput, direkte konkatenering i prompts",
+          "eksisterendeBeskyttelse": "Input-validering, content filters",
+          "eksisterendeKontroll": "Logging av prompts, manuell review av outputs",
+          "K": 4,
+          "I": 5,
+          "T": 2,
+          "sannsynlighet": 4,
+          "foreslaatteTiltak": "Prompt templating, input sanitization, separate user/system contexts, output validation"
+        },
+        {
+          "id": "llm-002",
+          "risikoelement": "Sensitive data leakage via training eller context",
+          "saarbarhet": "PII eller confidential data i training set eller prompt context",
+          "eksisterendeBeskyttelse": "Data masking policies",
+          "eksisterendeKontroll": "Kvartalsvis audit av training data",
+          "K": 5,
+          "I": 3,
+          "T": 1,
+          "sannsynlighet": 3,
+          "foreslaatteTiltak": "PII detection/redaction, data minimization, separate models per sensitivity level"
+        },
+        {
+          "id": "llm-003",
+          "risikoelement": "Hallucinations - AI genererer falsk eller misvisende informasjon",
+          "saarbarhet": "LLM-er genererer plausibel men feil informasjon",
+          "eksisterendeBeskyttelse": "Disclaimer om at AI kan ta feil",
+          "eksisterendeKontroll": "Spot-checking av outputs",
+          "K": 2,
+          "I": 5,
+          "T": 1,
+          "sannsynlighet": 5,
+          "foreslaatteTiltak": "Retrieval-Augmented Generation (RAG), fact-checking layer, confidence scores, human-in-the-loop for kritiske beslutninger"
+        },
+        {
+          "id": "llm-004",
+          "risikoelement": "Model inversion - ekstraksjon av training data",
+          "saarbarhet": "Adversarial queries kan ekstraktere memorized training data",
+          "eksisterendeBeskyttelse": "Rate limiting, query monitoring",
+          "eksisterendeKontroll": "Logging av unusual queries",
+          "K": 5,
+          "I": 2,
+          "T": 1,
+          "sannsynlighet": 2,
+          "foreslaatteTiltak": "Differential privacy i training, output filtering, memorization testing"
+        },
+        {
+          "id": "llm-005",
+          "risikoelement": "Indirect prompt injection via external content",
+          "saarbarhet": "AI behandler untrusted content (emails, PDFs, web) som instructions",
+          "eksisterendeBeskyttelse": "Content type restrictions",
+          "eksisterendeKontroll": "Manual review av integrasjoner",
+          "K": 4,
+          "I": 5,
+          "T": 2,
+          "sannsynlighet": 3,
+          "foreslaatteTiltak": "Isolate external content, privilege separation, action confirmation for sensitive operations"
+        },
+        {
+          "id": "llm-006",
+          "risikoelement": "Model theft via API queries",
+          "saarbarhet": "Adversary kan recreate model gjennom API-tilgang",
+          "eksisterendeBeskyttelse": "API rate limiting",
+          "eksisterendeKontroll": "Usage analytics",
+          "K": 3,
+          "I": 2,
+          "T": 1,
+          "sannsynlighet": 2,
+          "foreslaatteTiltak": "Query pattern detection, output perturbation, watermarking, strict rate limits"
+        },
+        {
+          "id": "llm-007",
+          "risikoelement": "Insecure output handling - XSS/injection via AI output",
+          "saarbarhet": "AI-generert output ikke sanitert før rendering",
+          "eksisterendeBeskyttelse": "Some output escaping",
+          "eksisterendeKontroll": "Security testing",
+          "K": 3,
+          "I": 4,
+          "T": 2,
+          "sannsynlighet": 3,
+          "foreslaatteTiltak": "Output sanitization, CSP headers, treat AI output as untrusted, markdown/HTML parsing security"
+        }
+      ]
+    },
+    {
+      "id": "agentic-ai",
+      "navn": "Agentic AI og autonome systemer",
+      "risikoer": [
+        {
+          "id": "agent-001",
+          "risikoelement": "Ukontrollerte handlinger - agent utfører destruktive operasjoner",
+          "saarbarhet": "Agent har tool access uten tilstrekkelige guardrails",
+          "eksisterendeBeskyttelse": "Read-only tools der mulig",
+          "eksisterendeKontroll": "Logging av alle agent actions",
+          "K": 3,
+          "I": 5,
+          "T": 5,
+          "sannsynlighet": 3,
+          "foreslaatteTiltak": "Human-in-the-loop for destructive ops, action whitelist/blacklist, dry-run mode, undo capability"
+        },
+        {
+          "id": "agent-002",
+          "risikoelement": "Privilege escalation - agent får mer tilgang enn tiltenkt",
+          "saarbarhet": "Tool permissions ikke granulære nok, chaining av tools",
+          "eksisterendeBeskyttelse": "Role-based tool access",
+          "eksisterendeKontroll": "Audit av tool permissions",
+          "K": 5,
+          "I": 5,
+          "T": 3,
+          "sannsynlighet": 3,
+          "foreslaatteTiltak": "Least privilege per tool, capability-based security, sandbox execution, action budgets"
+        },
+        {
+          "id": "agent-003",
+          "risikoelement": "Uendelige loops og resource exhaustion",
+          "saarbarhet": "Agent kan gå i loop eller bruke excessive ressurser",
+          "eksisterendeBeskyttelse": "General timeout på requests",
+          "eksisterendeKontroll": "Resource monitoring",
+          "K": 1,
+          "I": 1,
+          "T": 5,
+          "sannsynlighet": 4,
+          "foreslaatteTiltak": "Max iterations limit, step budget, circuit breakers, cost caps, loop detection"
+        },
+        {
+          "id": "agent-004",
+          "risikoelement": "Goal misalignment - agent optimerer feil metrikk",
+          "saarbarhet": "Reward function ikke aligned med intended outcome",
+          "eksisterendeBeskyttelse": "Manual review av agent outputs",
+          "eksisterendeKontroll": "Success metrics tracking",
+          "K": 3,
+          "I": 4,
+          "T": 3,
+          "sannsynlighet": 4,
+          "foreslaatteTiltak": "Inverse reward learning, multi-objective optimization, human feedback, constitutional AI principles"
+        },
+        {
+          "id": "agent-005",
+          "risikoelement": "Information leakage via tool use",
+          "saarbarhet": "Agent sender sensitive data til eksterne APIs/tools",
+          "eksisterendeBeskyttelse": "Policy mot eksterne API-kall",
+          "eksisterendeKontroll": "Network monitoring",
+          "K": 5,
+          "I": 3,
+          "T": 1,
+          "sannsynlighet": 3,
+          "foreslaatteTiltak": "Data loss prevention på tool inputs, allowlist av external tools, audit all external calls"
+        },
+        {
+          "id": "agent-006",
+          "risikoelement": "Agent-to-agent attacks via compromised agents",
+          "saarbarhet": "Agents kommuniserer uten tilstrekkelig trust verification",
+          "eksisterendeBeskyttelse": "Agent authentication",
+          "eksisterendeKontroll": "Inter-agent communication logging",
+          "K": 4,
+          "I": 5,
+          "T": 3,
+          "sannsynlighet": 2,
+          "foreslaatteTiltak": "Agent identity verification, message signing, capability tokens, zero-trust architecture"
+        },
+        {
+          "id": "agent-007",
+          "risikoelement": "Emergent adversarial behavior",
+          "saarbarhet": "Multi-agent systems utvikler uønsket samarbeid/konkuranse",
+          "eksisterendeBeskyttelse": "Single-agent deployment",
+          "eksisterendeKontroll": "Behavioral monitoring",
+          "K": 3,
+          "I": 4,
+          "T": 4,
+          "sannsynlighet": 2,
+          "foreslaatteTiltak": "Multi-agent simulation/testing, behavioral constraints, coordination protocols, kill switches"
+        },
+        {
+          "id": "agent-008",
+          "risikoelement": "Jailbreaking via chain-of-thought manipulation",
+          "saarbarhet": "Agent's reasoning kan manipuleres via clever prompting",
+          "eksisterendeBeskyttelse": "System prompts med safety instructions",
+          "eksisterendeKontroll": "Red-teaming av agent behavior",
+          "K": 4,
+          "I": 5,
+          "T": 2,
+          "sannsynlighet": 3,
+          "foreslaatteTiltak": "Constitutional AI, reflection mechanisms, step-by-step safety validation, critique layers"
+        }
+      ]
+    },
+    {
+      "id": "ml-model-sikkerhet",
+      "navn": "ML-modell sikkerhet",
+      "risikoer": [
+        {
+          "id": "model-001",
+          "risikoelement": "Adversarial examples - crafted input feiler modellen",
+          "saarbarhet": "Modell ikke robust mot adversarial perturbations",
+          "eksisterendeBeskyttelse": "Input validation",
+          "eksisterendeKontroll": "Accuracy monitoring i prod",
+          "K": 2,
+          "I": 4,
+          "T": 2,
+          "sannsynlighet": 3,
+          "foreslaatteTiltak": "Adversarial training, input preprocessing, ensemble methods, anomaly detection"
+        },
+        {
+          "id": "model-002",
+          "risikoelement": "Data poisoning - training data kompromittert",
+          "saarbarhet": "Untrusted eller uvalidert data i training set",
+          "eksisterendeBeskyttelse": "Data source restrictions",
+          "eksisterendeKontroll": "Manual data inspection",
+          "K": 3,
+          "I": 5,
+          "T": 3,
+          "sannsynlighet": 2,
+          "foreslaatteTiltak": "Data provenance tracking, outlier detection, robust training, data validation pipelines"
+        },
+        {
+          "id": "model-003",
+          "risikoelement": "Model drift - accuracy degraderer over tid",
+          "saarbarhet": "Distribution shift mellom training og production data",
+          "eksisterendeBeskyttelse": "Quarterly retraining",
+          "eksisterendeKontroll": "Accuracy dashboards",
+          "K": 2,
+          "I": 4,
+          "T": 3,
+          "sannsynlighet": 4,
+          "foreslaatteTiltak": "Continuous monitoring, drift detection, automated retraining, A/B testing, canary deployments"
+        },
+        {
+          "id": "model-004",
+          "risikoelement": "Supply chain attacks via ML dependencies",
+          "saarbarhet": "Kompromitterte ML-biblioteker, pre-trained models",
+          "eksisterendeBeskyttelse": "Dependency scanning",
+          "eksisterendeKontroll": "Quarterly dependency review",
+          "K": 5,
+          "I": 5,
+          "T": 4,
+          "sannsynlighet": 2,
+          "foreslaatteTiltak": "Model provenance verification, SBOM for ML, trusted model registries, checksum validation"
+        },
+        {
+          "id": "model-005",
+          "risikoelement": "Model serving infrastructure kompromittert",
+          "saarbarhet": "Inference endpoints ikke tilstrekkelig sikret",
+          "eksisterendeBeskyttelse": "API authentication",
+          "eksisterendeKontroll": "Infrastructure monitoring",
+          "K": 4,
+          "I": 5,
+          "T": 4,
+          "sannsynlighet": 2,
+          "foreslaatteTiltak": "Model encryption at rest/transit, secure enclaves (TEE), access controls, immutable deployments"
+        }
+      ]
+    },
+    {
+      "id": "ai-data-privacy",
+      "navn": "AI-spesifikk datahåndtering",
+      "risikoer": [
+        {
+          "id": "data-001",
+          "risikoelement": "Memorization av sensitive treningsdata",
+          "saarbarhet": "Modell memorerer verbatim training examples",
+          "eksisterendeBeskyttelse": "PII removal fra training data",
+          "eksisterendeKontroll": "Extraction attacks testing",
+          "K": 5,
+          "I": 3,
+          "T": 1,
+          "sannsynlighet": 3,
+          "foreslaatteTiltak": "Differential privacy, data deduplication, memorization metrics, canary tokens"
+        },
+        {
+          "id": "data-002",
+          "risikoelement": "Re-identification via model outputs",
+          "saarbarhet": "Aggregated/anonymized data kan re-identifiseres",
+          "eksisterendeBeskyttelse": "K-anonymity i outputs",
+          "eksisterendeKontroll": "Privacy impact assessments",
+          "K": 5,
+          "I": 4,
+          "T": 1,
+          "sannsynlighet": 2,
+          "foreslaatteTiltak": "Formal privacy guarantees, output perturbation, aggregation thresholds, GDPR compliance by design"
+        },
+        {
+          "id": "data-003",
+          "risikoelement": "Membership inference - avdekke hvem som var i training set",
+          "saarbarhet": "Adversary kan dedusere om et individ var i training data",
+          "eksisterendeBeskyttelse": "Aggregate model outputs",
+          "eksisterendeKontroll": "Membership inference testing",
+          "K": 5,
+          "I": 3,
+          "T": 1,
+          "sannsynlighet": 2,
+          "foreslaatteTiltak": "Differential privacy, regularization, query budget limits, confidence thresholds"
+        },
+        {
+          "id": "data-004",
+          "risikoelement": "Training data ikke slettet på forespørsel (GDPR)",
+          "saarbarhet": "Kan ikke oppfylle 'right to be forgotten' for training data",
+          "eksisterendeBeskyttelse": "Data retention policies",
+          "eksisterendeKontroll": "DPIA for AI systems",
+          "K": 5,
+          "I": 4,
+          "T": 2,
+          "sannsynlighet": 3,
+          "foreslaatteTiltak": "Machine unlearning techniques, modular training, data lineage tracking, retraining procedures"
+        },
+        {
+          "id": "data-005",
+          "risikoelement": "Cross-border data transfer via AI service",
+          "saarbarhet": "Data prosessert i jurisdiksjoner uten adequate protection",
+          "eksisterendeBeskyttelse": "EU-based model hosting",
+          "eksisterendeKontroll": "Data residency audit",
+          "K": 5,
+          "I": 3,
+          "T": 1,
+          "sannsynlighet": 3,
+          "foreslaatteTiltak": "Data localization, on-premise deployment options, SCCs, privacy-preserving ML (federated learning)"
+        }
+      ]
+    },
+    {
+      "id": "ai-bias-fairness",
+      "navn": "Bias og rettferdighet",
+      "risikoer": [
+        {
+          "id": "bias-001",
+          "risikoelement": "Diskriminerende beslutninger pga. biased training data",
+          "saarbarhet": "Training data reflekterer historisk bias/diskriminering",
+          "eksisterendeBeskyttelse": "Diversity i training data",
+          "eksisterendeKontroll": "Annual fairness audit",
+          "K": 2,
+          "I": 5,
+          "T": 1,
+          "sannsynlighet": 4,
+          "foreslaatteTiltak": "Fairness metrics (demographic parity, equalized odds), bias mitigation techniques, diverse datasets"
+        },
+        {
+          "id": "bias-002",
+          "risikoelement": "Feedback loops forsterker eksisterende bias",
+          "saarbarhet": "Model predictions påvirker future data som reinforcer bias",
+          "eksisterendeBeskyttelse": "Diverse training sources",
+          "eksisterendeKontroll": "Outcome monitoring across demographics",
+          "K": 2,
+          "I": 5,
+          "T": 2,
+          "sannsynlighet": 4,
+          "foreslaatteTiltak": "Counterfactual fairness, intervention strategies, regular retraining with corrected data"
+        },
+        {
+          "id": "bias-003",
+          "risikoelement": "Manglende representasjon av minoritetsgrupper",
+          "saarbarhet": "Subgrupper underrepresentert i training/test data",
+          "eksisterendeBeskyttelse": "Minimum sample sizes",
+          "eksisterendeKontroll": "Subgroup performance analysis",
+          "K": 2,
+          "I": 4,
+          "T": 1,
+          "sannsynlighet": 4,
+          "foreslaatteTiltak": "Stratified sampling, synthetic minority oversampling, disaggregated evaluation, group fairness constraints"
+        },
+        {
+          "id": "bias-004",
+          "risikoelement": "Manglende transparency om AI-beslutninger",
+          "saarbarhet": "Brukere kan ikke forstå eller utfordre AI-beslutninger",
+          "eksisterendeBeskyttelse": "Disclaimer om AI-bruk",
+          "eksisterendeKontroll": "Quarterly review av decisions",
+          "K": 1,
+          "I": 4,
+          "T": 1,
+          "sannsynlighet": 4,
+          "foreslaatteTiltak": "Explainable AI (SHAP, LIME), decision justifications, appeal mechanisms, model cards"
+        }
+      ]
+    },
+    {
+      "id": "ai-governance",
+      "navn": "AI-governance og compliance",
+      "risikoer": [
+        {
+          "id": "gov-001",
+          "risikoelement": "Non-compliance med EU AI Act",
+          "saarbarhet": "High-risk AI system uten required safeguards",
+          "eksisterendeBeskyttelse": "Risk assessment av AI systems",
+          "eksisterendeKontroll": "Legal review av AI deployments",
+          "K": 2,
+          "I": 3,
+          "T": 2,
+          "sannsynlighet": 3,
+          "foreslaatteTiltak": "AI Act compliance framework, impact assessments, documentation requirements, conformity assessment"
+        },
+        {
+          "id": "gov-002",
+          "risikoelement": "Manglende AI model documentation",
+          "saarbarhet": "Insufficient documentation av model capabilities/limitations",
+          "eksisterendeBeskyttelse": "README files",
+          "eksisterendeKontroll": "Code review requirements",
+          "K": 1,
+          "I": 3,
+          "T": 2,
+          "sannsynlighet": 4,
+          "foreslaatteTiltak": "Model cards, datasheets for datasets, system cards, versioning, audit trails"
+        },
+        {
+          "id": "gov-003",
+          "risikoelement": "Uklar ansvar og accountability for AI-beslutninger",
+          "saarbarhet": "Ingen clear ownership når AI feiler",
+          "eksisterendeBeskyttelse": "Product ownership defined",
+          "eksisterendeKontroll": "Incident review process",
+          "K": 2,
+          "I": 4,
+          "T": 3,
+          "sannsynlighet": 3,
+          "foreslaatteTiltak": "AI governance board, clear RACI matrix, incident response procedures, human oversight requirements"
+        },
+        {
+          "id": "gov-004",
+          "risikoelement": "Insufficient testing av AI systems før deployment",
+          "saarbarhet": "Manglende adversarial testing, edge case validation",
+          "eksisterendeBeskyttelse": "Standard QA process",
+          "eksisterendeKontroll": "User acceptance testing",
+          "K": 3,
+          "I": 4,
+          "T": 3,
+          "sannsynlighet": 4,
+          "foreslaatteTiltak": "AI-specific testing frameworks, red-teaming, chaos engineering for AI, staged rollouts"
+        },
+        {
+          "id": "gov-005",
+          "risikoelement": "Vendor lock-in til proprietary AI platform",
+          "saarbarhet": "Avhengighet av spesifikk LLM provider eller AI platform",
+          "eksisterendeBeskyttelse": "Contract negotiations",
+          "eksisterendeKontroll": "Yearly vendor reviews",
+          "K": 2,
+          "I": 2,
+          "T": 4,
+          "sannsynlighet": 3,
+          "foreslaatteTiltak": "Multi-model strategy, abstraction layers, open-source alternatives, portability testing, exit strategies"
+        }
+      ]
+    }
+  ]
+}

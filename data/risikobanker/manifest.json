@@ -20,6 +20,11 @@
       "id": "persondata",
       "fil": "persondata.json",
       "aktiv": true
+    },
+    {
+      "id": "ai-tjenester",
+      "fil": "ai-tjenester.json",
+      "aktiv": true
     }
   ]
 }

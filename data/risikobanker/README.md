@@ -10,6 +10,7 @@ Systemet kommer med følgende banker:
 - **sky.json** - Skytjenester (AWS/Azure/GCP-spesifikke risikoer)
 - **onprem.json** - Lokal server/on-premise (fysisk sikkerhet, lokal drift)
 - **persondata.json** - Persondata/GDPR (behandlingsgrunnlag, registrertes rettigheter, etc.)
+- **ai-tjenester.json** - KI-tjenester og Agentic AI (LLM-sikkerhet, autonome agenter, ML-modeller, bias, governance)
 
 ## Egendefinerte banker
 
