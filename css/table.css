@@ -61,7 +61,6 @@
     border-bottom: 1px solid #e8e8e8;
     border-right: 1px solid #f5f5f5;
     vertical-align: top;
-    background-color: #fff;
 }
 
 .risks-table td:last-child {
@@ -78,8 +77,17 @@
     transition: background-color 0.15s;
 }
 
+/* Zebra-striping for bedre lesbarhet */
+.risks-table tbody tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+.risks-table tbody tr:nth-child(odd) {
+    background-color: #fff;
+}
+
 .risks-table tbody tr:hover {
-    background-color: #fafafa;
+    background-color: #f0f0f0 !important;
 }
 
 /* Tomme felt med italic placeholder-hint */
@@ -90,16 +98,18 @@
 .risks-table textarea {
     width: 100%;
     min-width: 150px;
-    padding: 4px 8px;
+    padding: 6px 8px;
     border: 1px solid transparent;
     border-radius: 2px;
     font-family: inherit;
     font-size: 14px;
-    resize: vertical;
+    resize: none;
+    overflow: hidden;
     background-color: transparent;
     transition: all 0.15s;
     line-height: 1.6;
     color: #222;
+    min-height: 22px;
 }
 
 /* Standard tilstand - ser ut som ren tekst */
@@ -107,11 +117,12 @@
     border-color: transparent;
     background-color: transparent;
     cursor: default;
+    overflow: hidden;
 }
 
 .risks-table textarea:hover {
-    background-color: #f9f9f9;
-    border-color: #e8e8e8;
+    background-color: rgba(0, 0, 0, 0.02);
+    border-color: #e0e0e0;
     cursor: text;
 }
 
@@ -121,6 +132,8 @@
     background-color: #fff;
     box-shadow: 0 0 0 2px rgba(46, 95, 142, 0.1);
     cursor: text;
+    resize: vertical;
+    overflow: auto;
 }
 
 /* Placeholder styling */
@@ -136,29 +149,30 @@
 
 .risks-table select {
     width: 100%;
-    padding: 4px 6px;
+    padding: 6px;
     border: 1px solid transparent;
     border-radius: 2px;
-    font-size: 14px;
+    font-size: 15px;
     background-color: transparent;
-    transition: all 0.2s;
+    transition: all 0.15s;
     cursor: pointer;
-    color: #222;
-    font-weight: 500;
+    color: #000;
+    font-weight: 600;
     -webkit-appearance: none;
     -moz-appearance: none;
     appearance: none;
     text-align: center;
 }
 
-/* Fjern dropdown-pil når ikke hoveret/fokusert */
+/* Alltid vis verdien tydelig */
 .risks-table select:not(:hover):not(:focus) {
     background-image: none;
+    cursor: default;
 }
 
 .risks-table select:hover {
-    background-color: #fafafa;
-    border-color: #e0e0e0;
+    background-color: #f5f5f5;
+    border-color: #d0d0d0;
     background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
     background-repeat: no-repeat;
     background-position: right 2px center;

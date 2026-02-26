@@ -37,7 +37,7 @@ function createRiskRow(risk, index) {
     const elementCell = document.createElement('td');
     const elementInput = document.createElement('textarea');
     elementInput.value = risk.risikoelement || '';
-    elementInput.rows = 2;
+    elementInput.placeholder = 'Beskriv risikoelement...';
     elementInput.addEventListener('blur', () => updateRisk(risk.id, 'risikoelement', elementInput.value));
     elementCell.appendChild(elementInput);
     row.appendChild(elementCell);
@@ -46,7 +46,7 @@ function createRiskRow(risk, index) {
     const saarbarhetCell = document.createElement('td');
     const saarbarhetInput = document.createElement('textarea');
     saarbarhetInput.value = risk.saarbarhet || '';
-    saarbarhetInput.rows = 2;
+    saarbarhetInput.placeholder = 'Beskriv sårbarhet...';
     saarbarhetInput.addEventListener('blur', () => updateRisk(risk.id, 'saarbarhet', saarbarhetInput.value));
     saarbarhetCell.appendChild(saarbarhetInput);
     row.appendChild(saarbarhetCell);
@@ -55,7 +55,7 @@ function createRiskRow(risk, index) {
     const beskyttelseCell = document.createElement('td');
     const beskyttelseInput = document.createElement('textarea');
     beskyttelseInput.value = risk.eksisterendeBeskyttelse || '';
-    beskyttelseInput.rows = 2;
+    beskyttelseInput.placeholder = 'Beskriv beskyttelse...';
     beskyttelseInput.addEventListener('blur', () => updateRisk(risk.id, 'eksisterendeBeskyttelse', beskyttelseInput.value));
     beskyttelseCell.appendChild(beskyttelseInput);
     row.appendChild(beskyttelseCell);
@@ -64,7 +64,7 @@ function createRiskRow(risk, index) {
     const kontrollCell = document.createElement('td');
     const kontrollInput = document.createElement('textarea');
     kontrollInput.value = risk.eksisterendeKontroll || '';
-    kontrollInput.rows = 2;
+    kontrollInput.placeholder = 'Beskriv kontroll...';
     kontrollInput.addEventListener('blur', () => updateRisk(risk.id, 'eksisterendeKontroll', kontrollInput.value));
     kontrollCell.appendChild(kontrollInput);
     row.appendChild(kontrollCell);
@@ -124,7 +124,7 @@ function createRiskRow(risk, index) {
     const tiltakCell = document.createElement('td');
     const tiltakInput = document.createElement('textarea');
     tiltakInput.value = risk.foreslaatteTiltak || '';
-    tiltakInput.rows = 2;
+    tiltakInput.placeholder = 'Beskriv tiltak...';
     tiltakInput.addEventListener('blur', () => updateRisk(risk.id, 'foreslaatteTiltak', tiltakInput.value));
     tiltakCell.appendChild(tiltakInput);
     row.appendChild(tiltakCell);
@@ -288,3 +288,33 @@ function renderKITTable() {
 
     tbody.appendChild(totalRow);
 }
+
+// Auto-resize textarea basert på innhold
+function autoResizeTextarea(textarea) {
+    // Reset height for å få riktig scrollHeight
+    textarea.style.height = 'auto';
+    // Sett ny height basert på innhold
+    const newHeight = Math.max(22, textarea.scrollHeight);
+    textarea.style.height = newHeight + 'px';
+}
+
+// Setup auto-resize for alle textareas i tabellen
+function setupTextareaAutoResize() {
+    const textareas = document.querySelectorAll('.risks-table textarea');
+    textareas.forEach(textarea => {
+        // Resize ved input
+        textarea.addEventListener('input', function() {
+            autoResizeTextarea(this);
+        });
+        // Initial resize
+        autoResizeTextarea(textarea);
+    });
+}
+
+// Kall setupTextareaAutoResize når tabellen rendres
+const originalRenderRisksTable = renderRisksTable;
+renderRisksTable = function() {
+    originalRenderRisksTable();
+    // Delay for å sikre at DOM er oppdatert
+    setTimeout(setupTextareaAutoResize, 0);
+};
