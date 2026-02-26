@@ -148,6 +148,22 @@
                 <button id="exportJsonBtn" class="btn btn-primary">💾 Eksporter JSON</button>
             </div>
         </section>
+
+        <!-- Risikobank administrasjon -->
+        <section class="bank-admin-section">
+            <h2>RISIKOBANK ADMINISTRASJON</h2>
+            <p class="section-description">Last opp egne risikobanker i JSON-format. Disse vil være tilgjengelige når du legger til nye risikoer.</p>
+
+            <div class="bank-upload">
+                <input type="file" id="bankFileInput" accept=".json" style="display: none;">
+                <button id="uploadBankBtn" class="btn btn-primary">📁 Last opp risikobank</button>
+                <span id="uploadStatus" class="upload-status"></span>
+            </div>
+
+            <div id="customBanksList" class="custom-banks-list">
+                <!-- Custom banker vil bli vist her -->
+            </div>
+        </section>
     </div>
 
     <!-- Risikobank Modal -->
@@ -241,6 +257,12 @@
             document.getElementById('exportPdfBtn').addEventListener('click', exportToPDF);
             document.getElementById('exportExcelBtn').addEventListener('click', exportToExcel);
 
+            // Risikobank upload
+            document.getElementById('uploadBankBtn').addEventListener('click', () => {
+                document.getElementById('bankFileInput').click();
+            });
+            document.getElementById('bankFileInput').addEventListener('change', handleBankUpload);
+
             // Metadata auto-save
             document.getElementById('analysisName').addEventListener('blur', saveMetadata);
             document.getElementById('dato').addEventListener('blur', validateAndSaveDate);
@@ -279,42 +301,6 @@
             }
 
             saveMetadata();
-        }
-
-        async function loadAnalysis() {
-            // Last risikobank først
-            await loadRisikobank();
-
-            // Setup modals
-            setupRisikobankModal();
-            setupCommentModal();
-
-            currentAnalysis = getAnalysisById(currentAnalysisId);
-            if (!currentAnalysis) {
-                alert('Analyse ikke funnet');
-                window.location.href = 'index.html';
-                return;
-            }
-
-            // Populer metadata
-            document.getElementById('analysisName').textContent = currentAnalysis.name;
-            document.getElementById('dato').value = currentAnalysis.metadata.dato || '';
-            document.getElementById('tjeneste').value = currentAnalysis.metadata.tjeneste || '';
-            document.getElementById('utfortAv').value = currentAnalysis.metadata.utfortAv || '';
-            document.getElementById('deltakere').value = currentAnalysis.metadata.deltakere || '';
-            document.getElementById('tjenesteeier').value = currentAnalysis.metadata.tjenesteeier || '';
-            document.getElementById('beskrivelse').value = currentAnalysis.metadata.beskrivelse || '';
-            document.getElementById('commentsSectionTitle').textContent =
-                currentAnalysis.metadata.commentsSectionTitle || 'TILTAK OG KOMMENTARER';
-
-            // Populer risikoer
-            renderRisksTable();
-            renderHeatmap();
-            renderKITTable();
-            renderComments();
-
-            // Aktiver heatmap klikk
-            setupHeatmapClick();
         }
 
         function saveMetadata() {
@@ -377,6 +363,136 @@
             linkElement.setAttribute('href', dataUri);
             linkElement.setAttribute('download', exportName);
             linkElement.click();
+        }
+
+        // Bank upload handling
+        async function handleBankUpload(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+
+            const statusEl = document.getElementById('uploadStatus');
+            statusEl.textContent = 'Laster opp...';
+            statusEl.style.color = '#666';
+
+            try {
+                const bank = await uploadCustomBank(file);
+                statusEl.textContent = `✓ ${bank.navn} lastet opp!`;
+                statusEl.style.color = '#28a745';
+
+                // Refresh custom banks list
+                renderCustomBanks();
+
+                // Clear file input
+                event.target.value = '';
+
+                setTimeout(() => {
+                    statusEl.textContent = '';
+                }, 3000);
+            } catch (err) {
+                statusEl.textContent = `✗ Feil: ${err.message}`;
+                statusEl.style.color = '#dc3545';
+            }
+        }
+
+        function renderCustomBanks() {
+            const container = document.getElementById('customBanksList');
+            if (!container) return;
+
+            const customBanks = getCustomBanks();
+
+            // Clear container
+            container.textContent = '';
+
+            if (customBanks.length === 0) {
+                const p = document.createElement('p');
+                p.className = 'no-banks';
+                p.textContent = 'Ingen egendefinerte risikobanker lastet opp.';
+                container.appendChild(p);
+                return;
+            }
+
+            const h3 = document.createElement('h3');
+            h3.textContent = 'Egendefinerte risikobanker:';
+            container.appendChild(h3);
+
+            customBanks.forEach(bank => {
+                const bankCard = document.createElement('div');
+                bankCard.className = 'bank-card';
+
+                const info = document.createElement('div');
+                info.className = 'bank-info';
+
+                const name = document.createElement('strong');
+                name.textContent = bank.navn;
+                info.appendChild(name);
+
+                if (bank.beskrivelse) {
+                    const desc = document.createElement('p');
+                    desc.textContent = bank.beskrivelse;
+                    info.appendChild(desc);
+                }
+
+                const meta = document.createElement('small');
+                const numKat = bank.kategorier ? bank.kategorier.length : 0;
+                const numRisk = bank.kategorier ? bank.kategorier.reduce((sum, k) => sum + (k.risikoer ? k.risikoer.length : 0), 0) : 0;
+                meta.textContent = `${numKat} kategorier, ${numRisk} risikoer`;
+                info.appendChild(meta);
+
+                const deleteBtn = document.createElement('button');
+                deleteBtn.textContent = '×';
+                deleteBtn.className = 'btn btn-danger btn-icon';
+                deleteBtn.title = 'Slett';
+                deleteBtn.onclick = async () => {
+                    if (confirm(`Er du sikker på at du vil slette "${bank.navn}"?`)) {
+                        await deleteCustomBank(bank.id);
+                        renderCustomBanks();
+                    }
+                };
+
+                bankCard.appendChild(info);
+                bankCard.appendChild(deleteBtn);
+                container.appendChild(bankCard);
+            });
+        }
+
+        // Override loadAnalysis to include custom banks rendering
+        async function loadAnalysis() {
+            // Last risikobank først
+            await loadRisikobank();
+
+            // Setup modals
+            setupRisikobankModal();
+            setupCommentModal();
+
+            currentAnalysis = getAnalysisById(currentAnalysisId);
+            if (!currentAnalysis) {
+                alert('Analyse ikke funnet');
+                window.location.href = 'index.html';
+                return;
+            }
+
+            // Populer metadata
+            document.getElementById('analysisName').textContent = currentAnalysis.name;
+            document.getElementById('dato').value = currentAnalysis.metadata.dato || '';
+            document.getElementById('tjeneste').value = currentAnalysis.metadata.tjeneste || '';
+            document.getElementById('utfortAv').value = currentAnalysis.metadata.utfortAv || '';
+            document.getElementById('deltakere').value = currentAnalysis.metadata.deltakere || '';
+            document.getElementById('tjenesteeier').value = currentAnalysis.metadata.tjenesteeier || '';
+            document.getElementById('beskrivelse').value = currentAnalysis.metadata.beskrivelse || '';
+            document.getElementById('commentsSectionTitle').textContent =
+                currentAnalysis.metadata.commentsSectionTitle || 'TILTAK OG KOMMENTARER';
+
+            // Populer risikoer
+            renderRisksTable();
+            renderHeatmap();
+            renderKITTable();
+            renderComments();
+
+            // Aktiver heatmap klikk
+            setupHeatmapClick();
+
+            // Render custom banks
+            renderCustomBanks();
         }
     </script>
 </body>

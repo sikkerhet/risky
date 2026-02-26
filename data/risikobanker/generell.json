@@ -1,0 +1,415 @@
+{
+  "id": "generell",
+  "navn": "Generell IT-tjeneste",
+  "beskrivelse": "Risikoer som gjelder for de fleste IT-tjenester",
+  "kategorier": [
+    {
+      "id": "tilgangsstyring",
+      "navn": "Tilgangsstyring",
+      "risikoer": [
+        {
+          "id": "tilgang-001",
+          "risikoelement": "Brukere får ikke tilgang til systemet",
+          "saarbarhet": "Manuelle rutiner for vedlikehold av admin/superbrukere",
+          "eksisterendeBeskyttelse": "FEIDE autentisering, weblogin med tofaktor",
+          "eksisterendeKontroll": "Månedlig gjennomgang av brukerrettigheter",
+          "K": 2,
+          "I": 1,
+          "T": 4,
+          "sannsynlighet": 2,
+          "foreslaatteTiltak": "Automatisere brukeradministrasjon, implementere selvbetjeningsportal"
+        },
+        {
+          "id": "tilgang-002",
+          "risikoelement": "Bruker beholder tilgang etter at bruker har sluttet/endret stilling",
+          "saarbarhet": "Dårlige rutiner for avslutning av brukere, manglende automatikk",
+          "eksisterendeBeskyttelse": "Delvis HR-system integrasjon",
+          "eksisterendeKontroll": "Kvartalsvis tilgangsgjennomgang",
+          "K": 4,
+          "I": 3,
+          "T": 2,
+          "sannsynlighet": 3,
+          "foreslaatteTiltak": "Automatisk deaktivering ved avslutning, full integrasjon med HR-system"
+        },
+        {
+          "id": "tilgang-003",
+          "risikoelement": "Bruker får flere tilganger enn nødvendig",
+          "saarbarhet": "Lite granulerte tilganger, vanskelig å vurdere hva en bruker skal ha",
+          "eksisterendeBeskyttelse": "Godkjenning av leder ved tildeling",
+          "eksisterendeKontroll": "Årlig tilgangsgjennomgang",
+          "K": 3,
+          "I": 3,
+          "T": 1,
+          "sannsynlighet": 3,
+          "foreslaatteTiltak": "Implementere roller-basert tilgangsstyring (RBAC), minste privilegium"
+        },
+        {
+          "id": "tilgang-004",
+          "risikoelement": "Uvedkommende får tilgang pga. passord på avveie",
+          "saarbarhet": "Usikker oppbevaring av passord, passord som brukes på flere systemer",
+          "eksisterendeBeskyttelse": "Passordpolicy med krav til kompleksitet",
+          "eksisterendeKontroll": "Tofaktorautentisering for admin",
+          "K": 5,
+          "I": 4,
+          "T": 2,
+          "sannsynlighet": 2,
+          "foreslaatteTiltak": "Passkeys/FIDO2, obligatorisk tofaktor for alle"
+        },
+        {
+          "id": "tilgang-005",
+          "risikoelement": "Delte brukerkontoer gjør sporing umulig",
+          "saarbarhet": "Generiske admin-kontoer, delte funksjonskontoer",
+          "eksisterendeBeskyttelse": "Policy mot deling",
+          "eksisterendeKontroll": "Logggjennomgang",
+          "K": 3,
+          "I": 5,
+          "T": 1,
+          "sannsynlighet": 3,
+          "foreslaatteTiltak": "Personlige kontoer for alle, PAM-løsning, sporbarhet i logger"
+        },
+        {
+          "id": "tilgang-006",
+          "risikoelement": "Service accounts med permanente credentials",
+          "saarbarhet": "Hardkodede passord, ingen rotasjon av secrets",
+          "eksisterendeBeskyttelse": "Krypterte konfig-filer",
+          "eksisterendeKontroll": "Årlig review av service accounts",
+          "K": 4,
+          "I": 3,
+          "T": 2,
+          "sannsynlighet": 3,
+          "foreslaatteTiltak": "Secrets management (Vault), automatisk rotasjon, short-lived tokens"
+        },
+        {
+          "id": "tilgang-007",
+          "risikoelement": "API-nøkler eksponert i kode eller logger",
+          "saarbarhet": "Secrets i git history, klartekst-logging",
+          "eksisterendeBeskyttelse": ".gitignore for secrets",
+          "eksisterendeKontroll": "Code review",
+          "K": 5,
+          "I": 3,
+          "T": 2,
+          "sannsynlighet": 3,
+          "foreslaatteTiltak": "Secret scanning (TruffleHog), secrets manager, pre-commit hooks"
+        }
+      ]
+    },
+    {
+      "id": "teknisk-drift",
+      "navn": "Teknisk drift",
+      "risikoer": [
+        {
+          "id": "drift-001",
+          "risikoelement": "Systemet kan ikke gjenopprettes etter feil/krasj",
+          "saarbarhet": "Manglende backup av systemet, ikke testet backup",
+          "eksisterendeBeskyttelse": "Daglig backup til separate servere",
+          "eksisterendeKontroll": "Månedlig backup-test",
+          "K": 3,
+          "I": 4,
+          "T": 5,
+          "sannsynlighet": 2,
+          "foreslaatteTiltak": "Automatisk backup-testing, dokumentere gjenopprettingsprosedyrer"
+        },
+        {
+          "id": "drift-002",
+          "risikoelement": "Kritisk programvare blir utdatert og usikker",
+          "saarbarhet": "Manglende patch-management, forsinkelser i oppdatering",
+          "eksisterendeBeskyttelse": "Månedlig oppdateringsvindu",
+          "eksisterendeKontroll": "Sårbarhetsskanning",
+          "K": 4,
+          "I": 4,
+          "T": 3,
+          "sannsynlighet": 3,
+          "foreslaatteTiltak": "Automatisert patch-management, kritiske oppdateringer innen 24t"
+        },
+        {
+          "id": "drift-003",
+          "risikoelement": "Backup feiler uten at noen oppdager det",
+          "saarbarhet": "Manglende overvåking av backup-jobber",
+          "eksisterendeBeskyttelse": "Ukentlig manuell sjekk",
+          "eksisterendeKontroll": "Månedlig test-restore",
+          "K": 3,
+          "I": 4,
+          "T": 5,
+          "sannsynlighet": 2,
+          "foreslaatteTiltak": "Automatisk overvåking, varsling ved feil, backup verification"
+        },
+        {
+          "id": "drift-004",
+          "risikoelement": "Lang downtime ved gjenoppretting",
+          "saarbarhet": "Backup ikke tilpasset RTO/RPO-krav",
+          "eksisterendeBeskyttelse": "Dokumentert prosedyre",
+          "eksisterendeKontroll": "Kvartalsvis DR-test",
+          "K": 2,
+          "I": 3,
+          "T": 5,
+          "sannsynlighet": 2,
+          "foreslaatteTiltak": "Inkrementell backup, hot standby, redusere RTO/RPO"
+        },
+        {
+          "id": "drift-005",
+          "risikoelement": "Nøkkelpersoner slutter - kunnskapstap",
+          "saarbarhet": "Manglende dokumentasjon, kunnskapssiloer",
+          "eksisterendeBeskyttelse": "Noe dokumentasjon",
+          "eksisterendeKontroll": "Knowledge sharing møter",
+          "K": 2,
+          "I": 3,
+          "T": 5,
+          "sannsynlighet": 2,
+          "foreslaatteTiltak": "Runbooks, cross-training, dokumentasjonsstandarder"
+        }
+      ]
+    },
+    {
+      "id": "applikasjon",
+      "navn": "Applikasjonssikkerhet",
+      "risikoer": [
+        {
+          "id": "app-001",
+          "risikoelement": "SQL injection gir uautorisert tilgang til database",
+          "saarbarhet": "Manglende input-validering, dynamiske SQL-spørringer",
+          "eksisterendeBeskyttelse": "Noe parameterisering av queries",
+          "eksisterendeKontroll": "Årlig penetrasjonstest",
+          "K": 5,
+          "I": 5,
+          "T": 3,
+          "sannsynlighet": 2,
+          "foreslaatteTiltak": "Parameteriserte queries overalt, input-validering, WAF"
+        },
+        {
+          "id": "app-002",
+          "risikoelement": "Cross-Site Scripting (XSS) angrep",
+          "saarbarhet": "Manglende output encoding, tillater bruker-generert HTML",
+          "eksisterendeBeskyttelse": "Noe input-sanitering",
+          "eksisterendeKontroll": "Kvartalsvis sårbarhetsscanning",
+          "K": 3,
+          "I": 4,
+          "T": 2,
+          "sannsynlighet": 3,
+          "foreslaatteTiltak": "Content Security Policy (CSP), output encoding"
+        },
+        {
+          "id": "app-003",
+          "risikoelement": "Avhengigheter med kjente sårbarheter",
+          "saarbarhet": "Utdaterte biblioteker og pakker med sikkerhetshull",
+          "eksisterendeBeskyttelse": "Delvis oppdatering av avhengigheter",
+          "eksisterendeKontroll": "Kvartalsvis dependency scanning",
+          "K": 4,
+          "I": 4,
+          "T": 3,
+          "sannsynlighet": 4,
+          "foreslaatteTiltak": "Automatisk dependency scanning i CI/CD, patch innen 7 dager"
+        },
+        {
+          "id": "app-004",
+          "risikoelement": "Broken Access Control - horisontalt (IDOR)",
+          "saarbarhet": "Manglende objekt-nivå autorisasjon",
+          "eksisterendeBeskyttelse": "Autentisering",
+          "eksisterendeKontroll": "Manuell testing",
+          "K": 5,
+          "I": 4,
+          "T": 1,
+          "sannsynlighet": 3,
+          "foreslaatteTiltak": "Autorisasjon på alle endepunkter, IDOR-testing, session-based access"
+        },
+        {
+          "id": "app-005",
+          "risikoelement": "Cross-Site Request Forgery (CSRF)",
+          "saarbarhet": "Manglende CSRF-tokens",
+          "eksisterendeBeskyttelse": "SameSite cookies",
+          "eksisterendeKontroll": "Code review",
+          "K": 3,
+          "I": 5,
+          "T": 2,
+          "sannsynlighet": 2,
+          "foreslaatteTiltak": "CSRF tokens, SameSite=Strict, double submit pattern"
+        },
+        {
+          "id": "app-006",
+          "risikoelement": "Sensitive data i error messages",
+          "saarbarhet": "Stack traces, SQL errors sendt til klient",
+          "eksisterendeBeskyttelse": "Production error handling",
+          "eksisterendeKontroll": "Code review",
+          "K": 4,
+          "I": 2,
+          "T": 1,
+          "sannsynlighet": 3,
+          "foreslaatteTiltak": "Generiske error messages, detaljert logging kun server-side"
+        },
+        {
+          "id": "app-007",
+          "risikoelement": "Manglende rate limiting på API",
+          "saarbarhet": "Ubegrensede requests, ingen throttling",
+          "eksisterendeBeskyttelse": "API gateway",
+          "eksisterendeKontroll": "Monitoring",
+          "K": 2,
+          "I": 2,
+          "T": 5,
+          "sannsynlighet": 3,
+          "foreslaatteTiltak": "Rate limiting per bruker/IP, CAPTCHA ved misbruk, WAF"
+        }
+      ]
+    },
+    {
+      "id": "logging",
+      "navn": "Logging og overvåking",
+      "risikoer": [
+        {
+          "id": "log-001",
+          "risikoelement": "Sensitive data logges i klartekst",
+          "saarbarhet": "Passord, PII, tokens i logger",
+          "eksisterendeBeskyttelse": "Begrenset log-tilgang",
+          "eksisterendeKontroll": "Log review",
+          "K": 5,
+          "I": 2,
+          "T": 1,
+          "sannsynlighet": 3,
+          "foreslaatteTiltak": "Log sanitering, maskering av sensitive felt, kryptering"
+        },
+        {
+          "id": "log-002",
+          "risikoelement": "Utilstrekkelig logging av sikkerhetshendelser",
+          "saarbarhet": "Mangler logging av failed login, privilege escalation",
+          "eksisterendeBeskyttelse": "Noe security logging",
+          "eksisterendeKontroll": "SIEM",
+          "K": 2,
+          "I": 4,
+          "T": 2,
+          "sannsynlighet": 3,
+          "foreslaatteTiltak": "Comprehensive audit logging, SIEM correlation, alerting"
+        },
+        {
+          "id": "log-003",
+          "risikoelement": "Logger kan slettes eller manipuleres",
+          "saarbarhet": "Skrivbare logger, ingen integritetssjekk",
+          "eksisterendeBeskyttelse": "Log aggregering",
+          "eksisterendeKontroll": "Backup av logger",
+          "K": 2,
+          "I": 5,
+          "T": 1,
+          "sannsynlighet": 2,
+          "foreslaatteTiltak": "Immutable logs, write-once storage, log signing"
+        }
+      ]
+    },
+    {
+      "id": "nettverk",
+      "navn": "Nettverk og kommunikasjon",
+      "risikoer": [
+        {
+          "id": "net-001",
+          "risikoelement": "Data avlyttes under overføring",
+          "saarbarhet": "Manglende eller svak kryptering av trafikk",
+          "eksisterendeBeskyttelse": "TLS 1.2 for web-trafikk",
+          "eksisterendeKontroll": "SSL Labs scanning",
+          "K": 5,
+          "I": 3,
+          "T": 1,
+          "sannsynlighet": 2,
+          "foreslaatteTiltak": "TLS 1.3, end-to-end encryption, VPN for sensitiv trafikk"
+        },
+        {
+          "id": "net-002",
+          "risikoelement": "DDoS-angrep gjør tjenesten utilgjengelig",
+          "saarbarhet": "Manglende DDoS-beskyttelse",
+          "eksisterendeBeskyttelse": "Firewall, rate limiting",
+          "eksisterendeKontroll": "Traffic monitoring",
+          "K": 1,
+          "I": 1,
+          "T": 5,
+          "sannsynlighet": 2,
+          "foreslaatteTiltak": "DDoS protection (CloudFlare/Akamai), CDN, auto-scaling"
+        },
+        {
+          "id": "net-003",
+          "risikoelement": "Man-in-the-Middle angrep",
+          "saarbarhet": "Svak sertifikatvalidering, tillater downgrades",
+          "eksisterendeBeskyttelse": "HTTPS",
+          "eksisterendeKontroll": "Annual security audit",
+          "K": 5,
+          "I": 4,
+          "T": 1,
+          "sannsynlighet": 1,
+          "foreslaatteTiltak": "Certificate pinning, HSTS, mutual TLS"
+        },
+        {
+          "id": "net-004",
+          "risikoelement": "DNS hijacking/poisoning",
+          "saarbarhet": "Manglende DNSSEC",
+          "eksisterendeBeskyttelse": "Trusted DNS provider",
+          "eksisterendeKontroll": "Monthly DNS verification",
+          "K": 4,
+          "I": 5,
+          "T": 3,
+          "sannsynlighet": 1,
+          "foreslaatteTiltak": "DNSSEC, registrar 2FA, DNS monitoring"
+        },
+        {
+          "id": "net-005",
+          "risikoelement": "Nettverkssegmentering mangler - lateral movement",
+          "saarbarhet": "Flat nettverksarkitektur",
+          "eksisterendeBeskyttelse": "Perimeter firewall",
+          "eksisterendeKontroll": "Network scanning",
+          "K": 5,
+          "I": 4,
+          "T": 3,
+          "sannsynlighet": 2,
+          "foreslaatteTiltak": "Mikrosegmentering, VLAN separation, zero trust, IDS/IPS"
+        }
+      ]
+    },
+    {
+      "id": "organisatorisk",
+      "navn": "Organisatoriske forhold",
+      "risikoer": [
+        {
+          "id": "org-001",
+          "risikoelement": "Manglende sikkerhetskompetanse i teamet",
+          "saarbarhet": "Ingen sikkerhetstrening, kjenner ikke OWASP Top 10",
+          "eksisterendeBeskyttelse": "Security team review av kritiske endringer",
+          "eksisterendeKontroll": "Årlig sikkerhetspresentasjon",
+          "K": 4,
+          "I": 4,
+          "T": 2,
+          "sannsynlighet": 4,
+          "foreslaatteTiltak": "Obligatorisk sikkerhetstrening, secure coding guidelines, security champions"
+        },
+        {
+          "id": "org-002",
+          "risikoelement": "Ingen incident response plan",
+          "saarbarhet": "Uklare roller ved sikkerhetsincident",
+          "eksisterendeBeskyttelse": "Generell IT-beredskapsplan",
+          "eksisterendeKontroll": "Ingen IR-øvelser",
+          "K": 3,
+          "I": 3,
+          "T": 4,
+          "sannsynlighet": 3,
+          "foreslaatteTiltak": "IR-team, playbooks, tabletop exercises, eskaleringsprosedyrer"
+        },
+        {
+          "id": "org-003",
+          "risikoelement": "Manglende security awareness hos ansatte",
+          "saarbarhet": "Faller for phishing, svake passord",
+          "eksisterendeBeskyttelse": "Årlig e-learning",
+          "eksisterendeKontroll": "Phishing simulations",
+          "K": 4,
+          "I": 3,
+          "T": 2,
+          "sannsynlighet": 4,
+          "foreslaatteTiltak": "Regelmessig awareness training, phishing testing, security culture"
+        },
+        {
+          "id": "org-004",
+          "risikoelement": "Shadow IT - uautoriserte tjenester",
+          "saarbarhet": "Ansatte bruker ikke-godkjente cloud-tjenester",
+          "eksisterendeBeskyttelse": "IT policy",
+          "eksisterendeKontroll": "Network monitoring",
+          "K": 4,
+          "I": 3,
+          "T": 2,
+          "sannsynlighet": 3,
+          "foreslaatteTiltak": "CASB, approved SaaS catalog, DLP, user education"
+        }
+      ]
+    }
+  ]
+}

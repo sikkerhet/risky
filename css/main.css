@@ -319,6 +319,90 @@ section h2 {
     flex-wrap: wrap;
 }
 
+/* Bank administrasjon */
+.bank-admin-section {
+    margin-top: 50px;
+    padding: 30px 0;
+    border-top: 1px solid #e8e8e8;
+}
+
+.bank-admin-section h2 {
+    margin-bottom: 15px;
+}
+
+.section-description {
+    color: #666;
+    margin-bottom: 20px;
+    line-height: 1.6;
+}
+
+.bank-upload {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 30px;
+    flex-wrap: wrap;
+}
+
+.upload-status {
+    font-size: 14px;
+    font-weight: 500;
+}
+
+.custom-banks-list {
+    margin-top: 20px;
+}
+
+.custom-banks-list h3 {
+    margin-top: 0;
+    margin-bottom: 15px;
+    font-size: 1.2em;
+}
+
+.no-banks {
+    color: #999;
+    font-style: italic;
+    padding: 15px;
+}
+
+.bank-card {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 20px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    margin-bottom: 10px;
+    background: #fff;
+    transition: box-shadow 0.2s;
+}
+
+.bank-card:hover {
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.bank-info {
+    flex: 1;
+}
+
+.bank-info strong {
+    display: block;
+    font-size: 16px;
+    margin-bottom: 5px;
+    color: #222;
+}
+
+.bank-info p {
+    margin: 5px 0;
+    color: #666;
+    font-size: 14px;
+}
+
+.bank-info small {
+    color: #999;
+    font-size: 13px;
+}
+
 /* Responsive */
 @media (max-width: 768px) {
     .form-grid {

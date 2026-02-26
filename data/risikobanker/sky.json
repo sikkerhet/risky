@@ -1,0 +1,193 @@
+{
+  "id": "skytjeneste",
+  "navn": "Skytjeneste (AWS/Azure/GCP)",
+  "beskrivelse": "Spesifikke risikoer for skytjenester",
+  "kategorier": [
+    {
+      "id": "sky-tilgang",
+      "navn": "Sky-tilgangsstyring",
+      "risikoer": [
+        {
+          "id": "sky-001",
+          "risikoelement": "Feilkonfigurerte IAM-roller gir for omfattende tilgang",
+          "saarbarhet": "Kompleks IAM-policy struktur, manglende oversikt",
+          "eksisterendeBeskyttelse": "IAM-policies etter beste praksis",
+          "eksisterendeKontroll": "Kvartalsvis gjennomgang av IAM-roller",
+          "K": 5,
+          "I": 4,
+          "T": 3,
+          "sannsynlighet": 3,
+          "foreslaatteTiltak": "Policy-as-code, automated compliance scanning, minste privilegium"
+        },
+        {
+          "id": "sky-002",
+          "risikoelement": "Rot-kontoer/admin-tilgang kompromittert",
+          "saarbarhet": "Manglende MFA på rot-konto, delte admin-tilganger",
+          "eksisterendeBeskyttelse": "MFA aktivert",
+          "eksisterendeKontroll": "Logging av rot-konto aktivitet",
+          "K": 5,
+          "I": 5,
+          "T": 4,
+          "sannsynlighet": 1,
+          "foreslaatteTiltak": "Hardware MFA for rot-konto, begrenset bruk, break-glass prosedyrer"
+        },
+        {
+          "id": "sky-003",
+          "risikoelement": "Utilsiktet offentlig eksponering av ressurser (S3, storage)",
+          "saarbarhet": "Default public settings, manglende block public access",
+          "eksisterendeBeskyttelse": "Policy mot public buckets",
+          "eksisterendeKontroll": "Automatisk skanning for public resources",
+          "K": 5,
+          "I": 3,
+          "T": 2,
+          "sannsynlighet": 3,
+          "foreslaatteTiltak": "Block public access som standard, automated remediation"
+        },
+        {
+          "id": "sky-004",
+          "risikoelement": "Credential stuffing på cloud admin accounts",
+          "saarbarhet": "Gjenbrukte passord, svak MFA",
+          "eksisterendeBeskyttelse": "Password policy",
+          "eksisterendeKontroll": "Failed login monitoring",
+          "K": 5,
+          "I": 5,
+          "T": 4,
+          "sannsynlighet": 2,
+          "foreslaatteTiltak": "Hardware MFA, conditional access, passwordless authentication"
+        }
+      ]
+    },
+    {
+      "id": "sky-nettverk",
+      "navn": "Sky-nettverk",
+      "risikoer": [
+        {
+          "id": "sky-net-001",
+          "risikoelement": "Feilkonfigurerte security groups/firewalls",
+          "saarbarhet": "For åpne regler (0.0.0.0/0), manglende segmentering",
+          "eksisterendeBeskyttelse": "Security groups per tjeneste",
+          "eksisterendeKontroll": "Månedlig review av security groups",
+          "K": 4,
+          "I": 3,
+          "T": 3,
+          "sannsynlighet": 3,
+          "foreslaatteTiltak": "Automatisk deteksjon av for åpne regler, mikrosegmentering"
+        },
+        {
+          "id": "sky-net-002",
+          "risikoelement": "Manglende kryptering av data i transit mellom tjenester",
+          "saarbarhet": "Ukryptert intern kommunikasjon, manglende TLS",
+          "eksisterendeBeskyttelse": "HTTPS for eksterne endepunkter",
+          "eksisterendeKontroll": "Årlig sikkerhetsaudit",
+          "K": 4,
+          "I": 3,
+          "T": 1,
+          "sannsynlighet": 2,
+          "foreslaatteTiltak": "mTLS for all intern kommunikasjon, service mesh"
+        },
+        {
+          "id": "sky-net-003",
+          "risikoelement": "Ukryptert inter-service kommunikasjon",
+          "saarbarhet": "Manglende mTLS mellom mikrotjenester",
+          "eksisterendeBeskyttelse": "Private VPC",
+          "eksisterendeKontroll": "Network monitoring",
+          "K": 4,
+          "I": 3,
+          "T": 1,
+          "sannsynlighet": 2,
+          "foreslaatteTiltak": "Service mesh (Istio), mTLS enforcement, zero trust"
+        }
+      ]
+    },
+    {
+      "id": "sky-data",
+      "navn": "Sky-datalagring",
+      "risikoer": [
+        {
+          "id": "sky-data-001",
+          "risikoelement": "Ukrypterte databaser/lagringstjenester",
+          "saarbarhet": "Kryptering ikke aktivert som standard",
+          "eksisterendeBeskyttelse": "Kryptering på kritiske databaser",
+          "eksisterendeKontroll": "Kvartalsvis audit av krypteringsstatus",
+          "K": 5,
+          "I": 3,
+          "T": 1,
+          "sannsynlighet": 2,
+          "foreslaatteTiltak": "Encryption-at-rest som standard, KMS key management"
+        },
+        {
+          "id": "sky-data-002",
+          "risikoelement": "Manglende backup eller gjenoppretting i sky",
+          "saarbarhet": "Avhengighet av single region, ingen backup-strategi",
+          "eksisterendeBeskyttelse": "Snapshot av kritiske ressurser",
+          "eksisterendeKontroll": "Månedlig backup-test",
+          "K": 3,
+          "I": 4,
+          "T": 5,
+          "sannsynlighet": 2,
+          "foreslaatteTiltak": "Multi-region backup, automated disaster recovery testing"
+        },
+        {
+          "id": "sky-data-003",
+          "risikoelement": "Data residency krav ikke oppfylt",
+          "saarbarhet": "Data lagres i feil region/jurisdiksjon",
+          "eksisterendeBeskyttelse": "Dokumentert data lokasjon",
+          "eksisterendeKontroll": "Årlig audit",
+          "K": 5,
+          "I": 3,
+          "T": 2,
+          "sannsynlighet": 2,
+          "foreslaatteTiltak": "Region locks, data residency policies, GDPR compliance"
+        }
+      ]
+    },
+    {
+      "id": "sky-kostnad",
+      "navn": "Sky-kostnader og ressursstyring",
+      "risikoer": [
+        {
+          "id": "sky-cost-001",
+          "risikoelement": "Ukontrollert ressurs-forbruk fører til høye kostnader",
+          "saarbarhet": "Manglende budsjett-alarmer, auto-scaling uten grenser",
+          "eksisterendeBeskyttelse": "Månedlig kostnadsrapportering",
+          "eksisterendeKontroll": "Kvartalsvis kostnadsgjennomgang",
+          "K": 1,
+          "I": 1,
+          "T": 3,
+          "sannsynlighet": 3,
+          "foreslaatteTiltak": "Budget alerts, resource quotas, auto-shutdown av dev/test"
+        }
+      ]
+    },
+    {
+      "id": "sky-compliance",
+      "navn": "Sky-compliance og governance",
+      "risikoer": [
+        {
+          "id": "sky-comp-001",
+          "risikoelement": "Manglende oversikt over alle cloud-ressurser",
+          "saarbarhet": "Sprawl, zombie resources, manglende tagging",
+          "eksisterendeBeskyttelse": "Monthly inventory",
+          "eksisterendeKontroll": "Cost reports",
+          "K": 3,
+          "I": 2,
+          "T": 2,
+          "sannsynlighet": 4,
+          "foreslaatteTiltak": "Resource tagging policy, automated discovery, CMDB"
+        },
+        {
+          "id": "sky-comp-002",
+          "risikoelement": "Compliance violations ikke oppdaget",
+          "saarbarhet": "Manglende continuous compliance monitoring",
+          "eksisterendeBeskyttelse": "Annual audit",
+          "eksisterendeKontroll": "Manual checks",
+          "K": 4,
+          "I": 4,
+          "T": 2,
+          "sannsynlighet": 3,
+          "foreslaatteTiltak": "Cloud Security Posture Management (CSPM), automated remediation"
+        }
+      ]
+    }
+  ]
+}

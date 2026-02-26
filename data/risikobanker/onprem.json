@@ -1,0 +1,145 @@
+{
+  "id": "lokal-server",
+  "navn": "Lokal server/on-premise",
+  "beskrivelse": "Risikoer spesifikke for lokale servere",
+  "kategorier": [
+    {
+      "id": "lokal-fysisk",
+      "navn": "Fysisk sikkerhet",
+      "risikoer": [
+        {
+          "id": "lokal-fys-001",
+          "risikoelement": "Uvedkommende får fysisk tilgang til servere",
+          "saarbarhet": "Utilstrekkelig fysisk sikring av serverrom",
+          "eksisterendeBeskyttelse": "Adgangskortleser, låste dører",
+          "eksisterendeKontroll": "Loggføring av adgang, overvåkningskamera",
+          "K": 4,
+          "I": 5,
+          "T": 4,
+          "sannsynlighet": 1,
+          "foreslaatteTiltak": "Biometrisk tilgangskontroll, alarmsystem, disk-kryptering"
+        },
+        {
+          "id": "lokal-fys-002",
+          "risikoelement": "Servere ødelagt av brann/vann/strømbrudd",
+          "saarbarhet": "Ingen redundans, sårbart for lokale hendelser",
+          "eksisterendeBeskyttelse": "UPS, brannslukningsanlegg",
+          "eksisterendeKontroll": "Årlig inspeksjon av serverrom",
+          "K": 2,
+          "I": 3,
+          "T": 5,
+          "sannsynlighet": 1,
+          "foreslaatteTiltak": "Geografisk redundans, offsite backup, DR-plan"
+        },
+        {
+          "id": "lokal-fys-003",
+          "risikoelement": "Servere/utstyr blir stjålet",
+          "saarbarhet": "Manglende fysisk sikring, ingen disk-kryptering",
+          "eksisterendeBeskyttelse": "Låst serverrom",
+          "eksisterendeKontroll": "Inventarliste, adgangskontroll",
+          "K": 5,
+          "I": 3,
+          "T": 4,
+          "sannsynlighet": 1,
+          "foreslaatteTiltak": "Full disk-kryptering, GPS-tracking, bedre fysisk sikring"
+        },
+        {
+          "id": "lokal-fys-004",
+          "risikoelement": "Uvedkommende får tilgang via dumpster diving",
+          "saarbarhet": "Utskrifter, old hard drives kastes usikret",
+          "eksisterendeBeskyttelse": "Låst søppel",
+          "eksisterendeKontroll": "Sikker destruksjonspolicy",
+          "K": 4,
+          "I": 2,
+          "T": 1,
+          "sannsynlighet": 2,
+          "foreslaatteTiltak": "Sertifisert destruksjon, shredding, disk wiping"
+        }
+      ]
+    },
+    {
+      "id": "lokal-drift",
+      "navn": "Lokal drift",
+      "risikoer": [
+        {
+          "id": "lokal-drift-001",
+          "risikoelement": "Manglende kapasitet/vedlikehold av hardware",
+          "saarbarhet": "Aldring av hardware, ingen lifecycle management",
+          "eksisterendeBeskyttelse": "Preventivt vedlikehold",
+          "eksisterendeKontroll": "Årlig hardwaregjennomgang",
+          "K": 2,
+          "I": 3,
+          "T": 5,
+          "sannsynlighet": 3,
+          "foreslaatteTiltak": "Hardware refresh-syklus, redundante komponenter, monitorering"
+        },
+        {
+          "id": "lokal-drift-002",
+          "risikoelement": "Data kommer på avveie via gammel hardware",
+          "saarbarhet": "Manglende destruksjon av utrangert utstyr",
+          "eksisterendeBeskyttelse": "Policy for destruksjon",
+          "eksisterendeKontroll": "Årlig gjennomgang av destruksjonsprosess",
+          "K": 4,
+          "I": 3,
+          "T": 1,
+          "sannsynlighet": 2,
+          "foreslaatteTiltak": "Sertifisert destruksjon av disker, disk-kryptering, logging"
+        },
+        {
+          "id": "lokal-drift-003",
+          "risikoelement": "Manglende kapasitetsplanlegging",
+          "saarbarhet": "Aldring av hardware, ingen lifecycle management",
+          "eksisterendeBeskyttelse": "Preventivt vedlikehold",
+          "eksisterendeKontroll": "Årlig hardwaregjennomgang",
+          "K": 2,
+          "I": 3,
+          "T": 5,
+          "sannsynlighet": 3,
+          "foreslaatteTiltak": "Hardware refresh-syklus, redundante komponenter, capacity monitoring"
+        },
+        {
+          "id": "lokal-drift-004",
+          "risikoelement": "Ingen change management - uautoriserte endringer",
+          "saarbarhet": "Manglende change control prosess",
+          "eksisterendeBeskyttelse": "Informal approval",
+          "eksisterendeKontroll": "Post-change review",
+          "K": 2,
+          "I": 4,
+          "T": 4,
+          "sannsynlighet": 3,
+          "foreslaatteTiltak": "Formal change management, CAB, approval workflow, rollback procedures"
+        }
+      ]
+    },
+    {
+      "id": "lokal-nettverk",
+      "navn": "Lokalt nettverk",
+      "risikoer": [
+        {
+          "id": "lokal-net-001",
+          "risikoelement": "Intern angriper på lokalt nettverk",
+          "saarbarhet": "Flat nettverksarkitektur, manglende segmentering",
+          "eksisterendeBeskyttelse": "Firewall mot internett",
+          "eksisterendeKontroll": "Nettverksovervåking",
+          "K": 5,
+          "I": 4,
+          "T": 3,
+          "sannsynlighet": 2,
+          "foreslaatteTiltak": "Mikrosegmentering, VLAN-separasjon, IDS/IPS"
+        },
+        {
+          "id": "lokal-net-002",
+          "risikoelement": "Nettverksutstyr blir utdatert og usikkert",
+          "saarbarhet": "Gamle switcher/rutere uten oppdateringer",
+          "eksisterendeBeskyttelse": "Firmware oppdateres årlig",
+          "eksisterendeKontroll": "Sårbarhetsskanning av nettverksutstyr",
+          "K": 4,
+          "I": 3,
+          "T": 4,
+          "sannsynlighet": 3,
+          "foreslaatteTiltak": "Regelmessig firmware-oppdatering, lifecycle management"
+        }
+      ]
+    }
+  ]
+}

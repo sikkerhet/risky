@@ -3,18 +3,106 @@
 let risikobank = null;
 let currentRiskIdForBank = null;
 
-// Last risikobanken
+const CUSTOM_BANKS_KEY = 'ros_custom_banks';
+
+// Last risikobanken fra flere filer
 async function loadRisikobank() {
     if (risikobank) return risikobank;
 
     try {
-        const response = await fetch('data/risikobank.json');
-        risikobank = await response.json();
+        // Last manifest
+        const manifestResp = await fetch('data/risikobanker/manifest.json');
+        const manifest = await manifestResp.json();
+
+        // Last alle aktive banker
+        const bankerPromises = manifest.banker
+            .filter(b => b.aktiv)
+            .map(async (bankDef) => {
+                try {
+                    const resp = await fetch(`data/risikobanker/${bankDef.fil}`);
+                    return await resp.json();
+                } catch (err) {
+                    console.error(`Kunne ikke laste ${bankDef.fil}:`, err);
+                    return null;
+                }
+            });
+
+        const banker = (await Promise.all(bankerPromises)).filter(b => b !== null);
+
+        // Last custom banker fra localStorage
+        const customBanks = getCustomBanks();
+        banker.push(...customBanks);
+
+        risikobank = { banker };
         return risikobank;
     } catch (error) {
         console.error('Kunne ikke laste risikobank:', error);
         return { banker: [] };
     }
+}
+
+// Custom bank management
+function getCustomBanks() {
+    const stored = localStorage.getItem(CUSTOM_BANKS_KEY);
+    return stored ? JSON.parse(stored) : [];
+}
+
+function saveCustomBank(bank) {
+    const banks = getCustomBanks();
+
+    // Sjekk om bank med samme ID finnes
+    const existingIndex = banks.findIndex(b => b.id === bank.id);
+    if (existingIndex >= 0) {
+        banks[existingIndex] = bank;
+    } else {
+        banks.push(bank);
+    }
+
+    localStorage.setItem(CUSTOM_BANKS_KEY, JSON.stringify(banks));
+
+    // Reload risikobank
+    risikobank = null;
+    return loadRisikobank();
+}
+
+function deleteCustomBank(bankId) {
+    const banks = getCustomBanks();
+    const filtered = banks.filter(b => b.id !== bankId);
+    localStorage.setItem(CUSTOM_BANKS_KEY, JSON.stringify(filtered));
+
+    // Reload risikobank
+    risikobank = null;
+    return loadRisikobank();
+}
+
+// Last opp risikobank fra fil
+async function uploadCustomBank(file) {
+    return new Promise((resolve, reject) => {
+        const reader = new FileReader();
+
+        reader.onload = async (e) => {
+            try {
+                const bank = JSON.parse(e.target.result);
+
+                // Valider struktur
+                if (!bank.id || !bank.navn || !bank.kategorier) {
+                    reject(new Error('Ugyldig bankstruktur. Må ha: id, navn, kategorier'));
+                    return;
+                }
+
+                // Merk som custom
+                bank.custom = true;
+
+                await saveCustomBank(bank);
+                resolve(bank);
+            } catch (err) {
+                reject(new Error('Kunne ikke parse JSON: ' + err.message));
+            }
+        };
+
+        reader.onerror = () => reject(new Error('Kunne ikke lese fil'));
+        reader.readAsText(file);
+    });
 }
 
 // Åpne risikobank modal

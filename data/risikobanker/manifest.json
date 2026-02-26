@@ -1,0 +1,25 @@
+{
+  "version": "1.0",
+  "banker": [
+    {
+      "id": "generell",
+      "fil": "generell.json",
+      "aktiv": true
+    },
+    {
+      "id": "sky",
+      "fil": "sky.json",
+      "aktiv": true
+    },
+    {
+      "id": "onprem",
+      "fil": "onprem.json",
+      "aktiv": true
+    },
+    {
+      "id": "persondata",
+      "fil": "persondata.json",
+      "aktiv": true
+    }
+  ]
+}

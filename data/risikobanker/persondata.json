@@ -1,0 +1,175 @@
+{
+  "id": "persondata",
+  "navn": "Persondata/GDPR",
+  "beskrivelse": "Risikoer knyttet til behandling av personopplysninger",
+  "kategorier": [
+    {
+      "id": "gdpr-grunnlag",
+      "navn": "Behandlingsgrunnlag",
+      "risikoer": [
+        {
+          "id": "gdpr-001",
+          "risikoelement": "Manglende eller ugyldig behandlingsgrunnlag",
+          "saarbarhet": "Uklart rettslig grunnlag, manglende samtykke",
+          "eksisterendeBeskyttelse": "Personvernombud, DPIA",
+          "eksisterendeKontroll": "Årlig gjennomgang av behandlingsgrunnlag",
+          "K": 5,
+          "I": 3,
+          "T": 2,
+          "sannsynlighet": 2,
+          "foreslaatteTiltak": "Dokumentere behandlingsgrunnlag, samtykkeløsning, legal review"
+        },
+        {
+          "id": "gdpr-002",
+          "risikoelement": "Persondata brukes til andre formål enn opprinnelig",
+          "saarbarhet": "Manglende formålsbegrensning, bred datainnsamling",
+          "eksisterendeBeskyttelse": "Privacy policy",
+          "eksisterendeKontroll": "Kvartalsvis review av databehandling",
+          "K": 5,
+          "I": 4,
+          "T": 1,
+          "sannsynlighet": 2,
+          "foreslaatteTiltak": "Formålsbegrensning i system, data minimization"
+        },
+        {
+          "id": "gdpr-003",
+          "risikoelement": "Data minimization ikke oppfylt",
+          "saarbarhet": "Samler inn mer data enn nødvendig",
+          "eksisterendeBeskyttelse": "Privacy policy",
+          "eksisterendeKontroll": "DPIA",
+          "K": 4,
+          "I": 3,
+          "T": 1,
+          "sannsynlighet": 3,
+          "foreslaatteTiltak": "Data minimization by design, regular data inventory review"
+        }
+      ]
+    },
+    {
+      "id": "gdpr-rettigheter",
+      "navn": "Registrertes rettigheter",
+      "risikoer": [
+        {
+          "id": "gdpr-rett-001",
+          "risikoelement": "Kan ikke oppfylle rett til sletting",
+          "saarbarhet": "Data spredt i mange systemer, manglende oversikt",
+          "eksisterendeBeskyttelse": "Rutine for sletting",
+          "eksisterendeKontroll": "Logging av slettingsforespørsler",
+          "K": 5,
+          "I": 4,
+          "T": 2,
+          "sannsynlighet": 3,
+          "foreslaatteTiltak": "Data inventory, sentralisert slettingsfunksjon, testing"
+        },
+        {
+          "id": "gdpr-rett-002",
+          "risikoelement": "Kan ikke oppfylle rett til dataportabilitet",
+          "saarbarhet": "Data i proprietære formater, ingen eksportfunksjon",
+          "eksisterendeBeskyttelse": "Manuell eksport mulig",
+          "eksisterendeKontroll": "Kvartalsvis test av eksport",
+          "K": 3,
+          "I": 2,
+          "T": 2,
+          "sannsynlighet": 2,
+          "foreslaatteTiltak": "Automatisk eksport i strukturert format (JSON/CSV)"
+        },
+        {
+          "id": "gdpr-rett-003",
+          "risikoelement": "Kan ikke identifisere all data om en person",
+          "saarbarhet": "Data spredt, manglende mapping",
+          "eksisterendeBeskyttelse": "Data inventory",
+          "eksisterendeKontroll": "Quarterly review",
+          "K": 5,
+          "I": 3,
+          "T": 2,
+          "sannsynlighet": 3,
+          "foreslaatteTiltak": "Complete data inventory, data lineage tracking, tagging"
+        }
+      ]
+    },
+    {
+      "id": "gdpr-deling",
+      "navn": "Datadeling",
+      "risikoer": [
+        {
+          "id": "gdpr-del-001",
+          "risikoelement": "Persondata deles uten databehandleravtale",
+          "saarbarhet": "Uklar oversikt over alle databehandlere, manglende avtaler",
+          "eksisterendeBeskyttelse": "Standard databehandleravtale",
+          "eksisterendeKontroll": "Årlig gjennomgang av databehandlere",
+          "K": 5,
+          "I": 3,
+          "T": 1,
+          "sannsynlighet": 3,
+          "foreslaatteTiltak": "Register over databehandlere, avtalemal, vendor management"
+        },
+        {
+          "id": "gdpr-del-002",
+          "risikoelement": "Overføring til tredjeland uten grunnlag",
+          "saarbarhet": "Uklar oversikt over hvor data lagres, cloud-tjenester i USA",
+          "eksisterendeBeskyttelse": "Schrems II vurdering",
+          "eksisterendeKontroll": "Årlig review av dataflyt",
+          "K": 5,
+          "I": 3,
+          "T": 1,
+          "sannsynlighet": 2,
+          "foreslaatteTiltak": "Data residency-krav, EU-region for sky, SCC"
+        },
+        {
+          "id": "gdpr-del-003",
+          "risikoelement": "Sub-processorer ikke dokumentert",
+          "saarbarhet": "Ukjente underbehandlere, chain of processing",
+          "eksisterendeBeskyttelse": "Hovedavtaler med leverandører",
+          "eksisterendeKontroll": "Årlig vendor review",
+          "K": 4,
+          "I": 3,
+          "T": 1,
+          "sannsynlighet": 3,
+          "foreslaatteTiltak": "Sub-processor register, notification requirements, audit rights"
+        }
+      ]
+    },
+    {
+      "id": "gdpr-sikkerhet",
+      "navn": "GDPR sikkerhetstiltak",
+      "risikoer": [
+        {
+          "id": "gdpr-sik-001",
+          "risikoelement": "Manglende kryptering av persondata",
+          "saarbarhet": "Data i klartekst at rest og in transit",
+          "eksisterendeBeskyttelse": "HTTPS for web",
+          "eksisterendeKontroll": "Annual review",
+          "K": 5,
+          "I": 3,
+          "T": 1,
+          "sannsynlighet": 2,
+          "foreslaatteTiltak": "Encryption at rest, TLS 1.3, field-level encryption for sensitive data"
+        },
+        {
+          "id": "gdpr-sik-002",
+          "risikoelement": "Ingen pseudonymisering eller anonymisering",
+          "saarbarhet": "Persondata alltid i identifiserbar form",
+          "eksisterendeBeskyttelse": "Access controls",
+          "eksisterendeKontroll": "DPIA",
+          "K": 5,
+          "I": 2,
+          "T": 1,
+          "sannsynlighet": 3,
+          "foreslaatteTiltak": "Pseudonymization for analytics, anonymization techniques, k-anonymity"
+        },
+        {
+          "id": "gdpr-sik-003",
+          "risikoelement": "Manglende data breach notification prosedyre",
+          "saarbarhet": "Ikke i stand til å varsle innen 72 timer",
+          "eksisterendeBeskyttelse": "Incident response plan",
+          "eksisterendeKontroll": "Årlig review",
+          "K": 4,
+          "I": 3,
+          "T": 2,
+          "sannsynlighet": 2,
+          "foreslaatteTiltak": "Breach notification playbook, pre-drafted templates, DPO involvement"
+        }
+      ]
+    }
+  ]
+}
