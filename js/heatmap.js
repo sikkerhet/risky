@@ -80,12 +80,26 @@ function renderHeatmap() {
 
     // Plasser risikoer på heatmap
     if (currentAnalysis && currentAnalysis.risikoer) {
+        // Grupper risikoer etter posisjon (konsekvens, sannsynlighet)
+        const grouped = {};
         currentAnalysis.risikoer.forEach(risk => {
             if (risk.sannsynlighet > 0 && risk.konsekvens > 0) {
-                const x = margin + (risk.sannsynlighet - 0.5) * cellWidth;
-                const y = height - margin - (risk.konsekvens - 0.5) * cellHeight;
+                const key = `${risk.konsekvens}-${risk.sannsynlighet}`;
+                if (!grouped[key]) {
+                    grouped[key] = [];
+                }
+                grouped[key].push(risk);
+            }
+        });
 
-                // Tegn sirkel med risikonummer
+        // Tegn grupperte risikoer
+        Object.values(grouped).forEach(risks => {
+            const risk = risks[0]; // Bruk første risiko for posisjon
+            const x = margin + (risk.sannsynlighet - 0.5) * cellWidth;
+            const y = height - margin - (risk.konsekvens - 0.5) * cellHeight;
+
+            if (risks.length === 1) {
+                // En risiko - vanlig visning
                 ctx.fillStyle = '#fff';
                 ctx.beginPath();
                 ctx.arc(x, y + 30, 15, 0, 2 * Math.PI);
@@ -99,6 +113,45 @@ function renderHeatmap() {
                 ctx.textAlign = 'center';
                 ctx.textBaseline = 'middle';
                 ctx.fillText(risk.nr.toString(), x, y + 30);
+            } else {
+                // Flere risikoer - større sirkel med antall
+                const radius = Math.min(20 + risks.length * 2, 30);
+
+                ctx.fillStyle = '#fff';
+                ctx.beginPath();
+                ctx.arc(x, y + 30, radius, 0, 2 * Math.PI);
+                ctx.fill();
+                ctx.strokeStyle = '#000';
+                ctx.lineWidth = 2.5;
+                ctx.stroke();
+
+                // Tegn antall risikoer
+                ctx.fillStyle = '#000';
+                ctx.font = 'bold 14px Arial';
+                ctx.textAlign = 'center';
+                ctx.textBaseline = 'middle';
+                ctx.fillText(`${risks.length}×`, x, y + 30);
+
+                // Tegn små tall rundt sirkelen for risikonumrene
+                ctx.font = 'bold 10px Arial';
+                const angleStep = (2 * Math.PI) / risks.length;
+                risks.forEach((r, i) => {
+                    const angle = i * angleStep - Math.PI / 2;
+                    const tx = x + Math.cos(angle) * (radius + 12);
+                    const ty = y + 30 + Math.sin(angle) * (radius + 12);
+
+                    // Liten sirkel rundt tallet
+                    ctx.fillStyle = '#fff';
+                    ctx.beginPath();
+                    ctx.arc(tx, ty, 8, 0, 2 * Math.PI);
+                    ctx.fill();
+                    ctx.strokeStyle = '#666';
+                    ctx.lineWidth = 1;
+                    ctx.stroke();
+
+                    ctx.fillStyle = '#000';
+                    ctx.fillText(r.nr.toString(), tx, ty);
+                });
             }
         });
     }
