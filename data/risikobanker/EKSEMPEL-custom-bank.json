@@ -1,0 +1,25 @@
+{
+  "id": "min-bank",
+  "navn": "Min organisasjons risikobank",
+  "beskrivelse": "Eksempel på egendefinert risikobank - kopier og tilpass denne",
+  "kategorier": [
+    {
+      "id": "min-kategori",
+      "navn": "Min kategori",
+      "risikoer": [
+        {
+          "id": "risk-001",
+          "risikoelement": "Beskriv hva som kan gå galt",
+          "saarbarhet": "Beskriv hvorfor det kan gå galt",
+          "eksisterendeBeskyttelse": "Hva gjør vi allerede for å beskytte oss?",
+          "eksisterendeKontroll": "Hvordan sjekker vi at beskyttelsen fungerer?",
+          "K": 3,
+          "I": 2,
+          "T": 4,
+          "sannsynlighet": 3,
+          "foreslaatteTiltak": "Hva bør vi gjøre for å redusere risikoen?"
+        }
+      ]
+    }
+  ]
+}
