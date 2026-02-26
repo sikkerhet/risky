@@ -31,6 +31,64 @@
     border-collapse: collapse;
     background: white;
     font-size: 14px;
+    table-layout: fixed;
+}
+
+/* Kolonnebredder */
+.risks-table th:nth-child(1), /* Nr */
+.risks-table td:nth-child(1) {
+    width: 40px;
+    text-align: center;
+}
+
+.risks-table th:nth-child(2), /* Risikoelement */
+.risks-table td:nth-child(2) {
+    width: 16%;
+}
+
+.risks-table th:nth-child(3), /* Sårbarhet */
+.risks-table td:nth-child(3) {
+    width: 14%;
+}
+
+.risks-table th:nth-child(4), /* Beskyttelse */
+.risks-table td:nth-child(4) {
+    width: 12%;
+}
+
+.risks-table th:nth-child(5), /* Kontroll */
+.risks-table td:nth-child(5) {
+    width: 12%;
+}
+
+.risks-table th:nth-child(6), /* K */
+.risks-table th:nth-child(7), /* I */
+.risks-table th:nth-child(8), /* T */
+.risks-table th:nth-child(10), /* S */
+.risks-table td:nth-child(6),
+.risks-table td:nth-child(7),
+.risks-table td:nth-child(8),
+.risks-table td:nth-child(10) {
+    width: 50px;
+    text-align: center;
+}
+
+.risks-table th:nth-child(9), /* K* */
+.risks-table th:nth-child(11), /* RN* */
+.risks-table td:nth-child(9),
+.risks-table td:nth-child(11) {
+    width: 55px;
+    text-align: center;
+}
+
+.risks-table th:nth-child(12), /* Tiltak */
+.risks-table td:nth-child(12) {
+    width: 14%;
+}
+
+.risks-table th:nth-child(13), /* Handlinger */
+.risks-table td:nth-child(13) {
+    width: 140px;
 }
 
 .risks-table thead {
@@ -148,26 +206,27 @@
 }
 
 .risks-table select {
-    width: 100%;
-    padding: 6px;
+    width: 60px;
+    padding: 6px 4px;
     border: 1px solid transparent;
     border-radius: 2px;
-    font-size: 15px;
+    font-size: 16px;
     background-color: transparent;
     transition: all 0.15s;
     cursor: pointer;
-    color: #000;
-    font-weight: 600;
+    color: #000 !important;
+    font-weight: 700;
     -webkit-appearance: none;
     -moz-appearance: none;
     appearance: none;
     text-align: center;
 }
 
-/* Alltid vis verdien tydelig */
+/* Alltid vis verdien tydelig - fjern dropdown pil helt */
 .risks-table select:not(:hover):not(:focus) {
     background-image: none;
     cursor: default;
+    pointer-events: auto;
 }
 
 .risks-table select:hover {
@@ -175,9 +234,8 @@
     border-color: #d0d0d0;
     background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
     background-repeat: no-repeat;
-    background-position: right 2px center;
-    background-size: 16px;
-    padding-right: 20px;
+    background-position: right 4px center;
+    background-size: 14px;
 }
 
 .risks-table select:focus {
@@ -187,9 +245,14 @@
     box-shadow: 0 0 0 2px rgba(46, 95, 142, 0.1);
     background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%232e5f8e' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
     background-repeat: no-repeat;
-    background-position: right 2px center;
-    background-size: 16px;
-    padding-right: 20px;
+    background-position: right 4px center;
+    background-size: 14px;
+}
+
+/* Vis verdien med option color */
+.risks-table select option {
+    color: #000;
+    font-weight: 600;
 }
 
 .calculated-field {
