@@ -1,6 +1,12 @@
 # Risky
 
-Web-basert verktøy for å lage Risiko- og Sårbarhetsanalyser (ROS) basert på klassisk ROS-modell (5x5 matrise).
+**Risiko- og sårbarhetsanalyse (ROS) verktøy**
+
+En moderne, webbasert applikasjon for strukturert risikovurdering etter norsk ROS-metodikk. Perfekt for sikkerhetsteam, IT-avdelinger og organisasjoner som trenger å dokumentere og håndtere risikoer systematisk.
+
+🌐 **[Live Demo - Åpne Risky](https://sikkerhet.github.io/risky/)** | 📂 [GitHub Repository](https://github.com/sikkerhet/risky)
+
+> Kjør 100% i nettleseren - ingen installasjon nødvendig!
 
 ## ✨ Funksjoner
 
@@ -81,14 +87,34 @@ Web-basert verktøy for å lage Risiko- og Sårbarhetsanalyser (ROS) basert på 
 
 ## 🚀 Kom i gang
 
-1. Åpne `index.html` i en moderne nettleser
-2. Klikk "Ny analyse" for å starte
-3. Fyll inn metadata
-4. Legg til risikoer:
-   - Bruk risikobanken (anbefalt) eller
-   - Fyll inn manuelt
-5. Se risikoprofilen i heatmap
-6. Eksporter som PDF, Excel eller JSON
+### Alternativ 1: Bruk direkte i nettleser (anbefalt)
+Ingen installasjon nødvendig! Bare åpne:
+
+**🌐 [https://sikkerhet.github.io/risky/](https://sikkerhet.github.io/risky/)**
+
+### Alternativ 2: Kjør lokalt
+```bash
+# Last ned eller klon repository
+git clone https://github.com/sikkerhet/risky.git
+cd risky
+
+# Åpne i nettleser (anbefalt: bruk lokal webserver)
+python3 -m http.server 8000
+# Deretter åpne http://localhost:8000
+
+# Eller åpne direkte
+open index.html  # macOS
+xdg-open index.html  # Linux
+```
+
+### Slik bruker du Risky:
+1. Klikk "Ny analyse" eller last inn eksempelanalysen
+2. Fyll inn metadata (tjeneste, dato, deltakere, etc.)
+3. Legg til risikoer fra risikobanken eller opprett egne
+4. Vurder konsekvens (1-5) og sannsynlighet (1-5)
+5. Se statistikk og heatmap oppdateres automatisk
+6. Dokumenter oppfølging med kommentarer og tiltak
+7. Eksporter som PDF, Excel, JSON eller Markdown
 
 ## 📊 Risikobank - 322 profesjonelle risikoer
 
