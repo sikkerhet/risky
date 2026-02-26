@@ -14,12 +14,18 @@ Web-basert verktøy for å lage Risiko- og Sårbarhetsanalyser (ROS) basert på 
   - Rød (19-25): Kritisk risiko
   - Klikk på heatmap for å hoppe til risiko i tabellen
 - **Komplett risikotabell** - Alle felt med auto-beregning
-- **Risikobank** - 117 profesjonelle risikoer
-  - **4 hovedbanker** (66 risikoer):
-    - Generell IT-tjeneste (31 risikoer)
-    - Skytjeneste (13 risikoer)
+- **Risikobank** - 322 profesjonelle risikoer
+  - **10 modulære risikobanker** (271 risikoer):
+    - Generell IT-tjeneste (39 risikoer)
+    - Skytjeneste - AWS/Azure/GCP (13 risikoer)
     - Lokal server/on-premise (10 risikoer)
     - Persondata/GDPR (12 risikoer)
+    - KI-tjenester og Agentic AI (34 risikoer)
+    - SaaS-tjenester (34 risikoer)
+    - Governance og organisasjon (29 risikoer)
+    - Personell og menneskelige faktorer (33 risikoer)
+    - Business Continuity og resiliens (32 risikoer)
+    - Integrasjoner og systemsamspill (35 risikoer)
   - **6 baseline-maler** (51 risikoer):
     - Baseline - IT-tjeneste (10 risikoer)
     - Baseline - Sky (8 risikoer)
@@ -84,23 +90,23 @@ Web-basert verktøy for å lage Risiko- og Sårbarhetsanalyser (ROS) basert på 
 5. Se risikoprofilen i heatmap
 6. Eksporter som PDF, Excel eller JSON
 
-## 📊 Risikobank - 117 profesjonelle risikoer
+## 📊 Risikobank - 322 profesjonelle risikoer
 
 Risky kommer med to typer forhåndsdefinerte risikoer:
 
-### Hovedrisikobank (66 risikoer i 4 banker)
+### Modulære risikobanker (271 risikoer i 10 banker)
 Brukes gjennom risikobank-velgeren (📁-knappen):
 
-#### 1. Generell IT-tjeneste (31 risikoer)
+#### 1. Generell IT-tjeneste (39 risikoer, 6 kategorier)
 Standard risikoer for de fleste IT-tjenester:
-- **Tilgangsstyring** (7) - Brukeradministrasjon, passord, service accounts, API-nøkler
+- **Tilgangsstyring** (15) - Brukeradministrasjon, passord, MFA, service accounts, API-nøkler
 - **Teknisk drift** (5) - Backup, patch management, kunnskapstap
 - **Applikasjonssikkerhet** (7) - SQL injection, XSS, CSRF, broken access control, rate limiting
 - **Logging og overvåking** (3) - Sensitive data i logger, integritetssjekk, alerting
 - **Nettverk og kommunikasjon** (5) - Kryptering, DDoS, MitM, DNS, segmentering
 - **Organisatoriske forhold** (4) - Sikkerhetskompetanse, incident response, awareness, shadow IT
 
-#### 2. Skytjeneste - AWS/Azure/GCP (13 risikoer)
+#### 2. Skytjeneste - AWS/Azure/GCP (13 risikoer, 5 kategorier)
 Spesifikke cloud-risikoer:
 - **Sky-tilgangsstyring** (4) - IAM-roller, rot-kontoer, public exposure, credential stuffing
 - **Sky-nettverk** (3) - Security groups, mTLS, service mesh
@@ -108,18 +114,72 @@ Spesifikke cloud-risikoer:
 - **Sky-kostnader** (1) - Ressurs-forbruk, budget alerts
 - **Sky-compliance** (2) - Resource sprawl, continuous compliance
 
-#### 3. Lokal server/on-premise (10 risikoer)
+#### 3. Lokal server/on-premise (10 risikoer, 3 kategorier)
 On-premise spesifikke risikoer:
 - **Fysisk sikkerhet** (4) - Fysisk tilgang, brann/vann, tyveri, dumpster diving
 - **Lokal drift** (4) - Hardware lifecycle, destruksjon, kapasitet, change management
 - **Lokalt nettverk** (2) - Intern angriper, nettverksutstyr
 
-#### 4. Persondata/GDPR (12 risikoer)
+#### 4. Persondata/GDPR (12 risikoer, 4 kategorier)
 Personvernspesifikke risikoer:
 - **Behandlingsgrunnlag** (3) - Samtykke, formålsbegrensning, data minimization
 - **Registrertes rettigheter** (3) - Sletting, dataportabilitet, identifisering av data
 - **Datadeling** (3) - DPA, tredjelandsoverføring, sub-processorer
 - **GDPR sikkerhetstiltak** (3) - Kryptering, pseudonymisering, breach notification
+
+#### 5. KI-tjenester og Agentic AI (34 risikoer, 6 kategorier)
+AI og LLM-spesifikke risikoer:
+- **LLM-sikkerhet** (7) - Prompt injection, model poisoning, data leakage
+- **Agentic AI og autonome systemer** (8) - Tool use risks, agentic loops, hallucinations
+- **ML-modell sikkerhet** (5) - Adversarial attacks, model theft, backdoors
+- **AI-spesifikk datahåndtering** (5) - Training data privacy, PII i modeller
+- **Bias og rettferdighet** (4) - Diskriminering, fairness, transparens
+- **AI-governance og compliance** (5) - AI Act, risikoklassifisering, dokumentasjon
+
+#### 6. SaaS-tjenester (34 risikoer, 6 kategorier)
+Software-as-a-Service risikoer:
+- **Multi-tenancy og isolasjon** (5) - Data leakage mellom kunder
+- **SaaS-leverandør risiko** (7) - Lock-in, leverandør-shutdown, SLA
+- **SaaS-forbruker risiko** (8) - Shadow IT, lisenshåndtering, konfigurasjon
+- **SaaS-integrasjoner og API** (5) - OAuth misbruk, API-eksponering
+- **Data governance i SaaS** (5) - Datasuverenitet, eksport, sletting
+- **Tilgjengelighet og kontinuitet** (4) - Uptime, failover, exit-strategi
+
+#### 7. Governance og organisasjon (29 risikoer, 6 kategorier)
+Styring og organisatoriske risikoer:
+- **Ledelse og styring** (5) - Ledelses-commitment, sikkerhetsstrategi
+- **Roller, ansvar og eierskap** (4) - Unclear ownership, RACI
+- **Policy og compliance** (6) - Manglende policies, ISO 27001, regulatoriske krav
+- **Leverandørstyring** (6) - Vendor risk, SLA, avhengigheter
+- **Audit og tilsyn** (4) - Manglende audit, findings ikke fulgt opp
+- **Dokumentasjon og kunnskapsstyring** (4) - Dårlig dokumentasjon, kunnskapstap
+
+#### 8. Personell og menneskelige faktorer (33 risikoer, 6 kategorier)
+HR og personellsikkerhet:
+- **HR-livssyklus sikkerhet** (6) - Bakgrunnssjekk, onboarding, offboarding
+- **Insider threat** (5) - Misfornøyde ansatte, privilegert tilgang
+- **Security awareness og trening** (5) - Phishing, social engineering
+- **Fjernarbeid og BYOD** (6) - Usikrede hjemmekontor, private enheter
+- **Fysisk sikkerhet - kontormiljø** (6) - Clean desk, shoulder surfing
+- **Menneskelig faktor og feil** (5) - Feilkonfigurasjon, stress, burnout
+
+#### 9. Business Continuity og resiliens (32 risikoer, 6 kategorier)
+Kontinuitetsplanlegging og krisehåndtering:
+- **BCP/DR-planlegging** (5) - Manglende planer, RTO/RPO
+- **Backup og gjenoppretting** (6) - Backup failures, recovery testing
+- **Krisehåndtering og kommunikasjon** (5) - Kriseteam, kommunikasjonsplan
+- **Testing og øving** (5) - Tabletop exercises, red team
+- **Leverandør- og avhengighetsresiliens** (5) - Single point of failure
+- **Hendelseshåndtering og resiliens** (6) - Incident response, post-mortem
+
+#### 10. Integrasjoner og systemsamspill (35 risikoer, 6 kategorier)
+Integrasjonsrisikoer:
+- **Synkron integrasjon** (6) - REST/SOAP/GraphQL sikkerhet, API keys
+- **Asynkron integrasjon** (7) - Message queue security, event-driven
+- **Data pipelines og ETL** (6) - Data quality, transformation errors
+- **Integrasjonsmønstre** (5) - Orkesterering, saga patterns
+- **Resiliens og feilhåndtering** (6) - Circuit breakers, retry logic
+- **Middleware og integrasjonsplattformer** (5) - ESB security, iPaaS
 
 ### Baseline-maler (51 risikoer i 6 maler)
 Brukes gjennom import-funksjonen (📥 Importer risikoer):
