@@ -43,22 +43,22 @@
 
 .risks-table th:nth-child(2), /* Risikoelement */
 .risks-table td:nth-child(2) {
-    width: 16%;
+    width: 14%;
 }
 
 .risks-table th:nth-child(3), /* Sårbarhet */
 .risks-table td:nth-child(3) {
-    width: 14%;
+    width: 12%;
 }
 
 .risks-table th:nth-child(4), /* Beskyttelse */
 .risks-table td:nth-child(4) {
-    width: 12%;
+    width: 10%;
 }
 
 .risks-table th:nth-child(5), /* Kontroll */
 .risks-table td:nth-child(5) {
-    width: 12%;
+    width: 10%;
 }
 
 .risks-table th:nth-child(6), /* K */
@@ -69,7 +69,7 @@
 .risks-table td:nth-child(7),
 .risks-table td:nth-child(8),
 .risks-table td:nth-child(10) {
-    width: 50px;
+    width: 45px;
     text-align: center;
 }
 
@@ -77,18 +77,18 @@
 .risks-table th:nth-child(11), /* RN* */
 .risks-table td:nth-child(9),
 .risks-table td:nth-child(11) {
-    width: 55px;
+    width: 50px;
     text-align: center;
 }
 
 .risks-table th:nth-child(12), /* Tiltak */
 .risks-table td:nth-child(12) {
-    width: 14%;
+    width: 12%;
 }
 
 .risks-table th:nth-child(13), /* Handlinger */
 .risks-table td:nth-child(13) {
-    width: 140px;
+    width: 120px;
 }
 
 .risks-table thead {
@@ -260,8 +260,10 @@
     text-align: center;
     background-color: #fafafa;
     color: #222;
-    font-size: 15px;
+    font-size: 16px;
     border-left: 1px solid #e0e0e0 !important;
+    padding: 6px 4px;
+    vertical-align: middle;
 }
 
 /* KIT-tabell */
