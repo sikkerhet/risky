@@ -313,7 +313,7 @@ function generatePDFContent(doc) {
             // Split long text into lines
             const textLines = doc.splitTextToSize(customText, 250);
             textLines.forEach(line => {
-                if (yPos > 270) {
+                if (yPos > 265) {
                     doc.addPage();
                     yPos = 20;
                 }
@@ -368,22 +368,28 @@ function generatePDFContent(doc) {
                     }
 
                     try {
-                        // Sjekk om vi trenger ny side først
-                        if (yPos > 260) {
-                            doc.addPage();
-                            yPos = 20;
-                        }
-
                         // Legg til risikotittel første gang
                         if (!riskTitleAdded) {
+                            // Sjekk om vi har plass til tittel + minst én kommentar (ca 30mm)
+                            if (yPos > 250) {
+                                doc.addPage();
+                                yPos = 20;
+                            }
+
                             doc.setFontSize(12);
                             doc.setFont(undefined, 'bold');
                             doc.setTextColor(0, 0, 0);
                             const titleText = `#${risk.nr || 0} - ${safeText(risk.risikoelement)}`;
                             const titleLines = doc.splitTextToSize(titleText, 250);
                             doc.text(titleLines, 20, yPos);
-                            yPos += titleLines.length * 6 + 3;
+                            yPos += titleLines.length * 6 + 5;
                             riskTitleAdded = true;
+                        }
+
+                        // Sjekk om vi trenger ny side før vi starter denne kommentaren
+                        if (yPos > 260) {
+                            doc.addPage();
+                            yPos = 20;
                         }
 
                         // Type label med fargekoding
@@ -415,6 +421,12 @@ function generatePDFContent(doc) {
 
                         // Lenker
                         if (comment.links && Array.isArray(comment.links) && comment.links.length > 0) {
+                            // Sjekk om det er plass til lenker-overskrift
+                            if (yPos > 265) {
+                                doc.addPage();
+                                yPos = 20;
+                            }
+
                             doc.setFont(undefined, 'bold');
                             doc.setTextColor(100, 100, 100);
                             doc.text('Lenker:', 25, yPos);
@@ -422,6 +434,7 @@ function generatePDFContent(doc) {
 
                             comment.links.forEach((link, linkIdx) => {
                                 try {
+                                    // Sjekk om det er plass til en lenke (ca 10mm)
                                     if (yPos > 260) {
                                         doc.addPage();
                                         yPos = 20;
@@ -443,7 +456,7 @@ function generatePDFContent(doc) {
                                         doc.setFontSize(9);
                                         const urlLines = doc.splitTextToSize(`    ${linkUrl}`, 245);
                                         doc.text(urlLines, 25, yPos);
-                                        yPos += urlLines.length * 4 + 2;
+                                        yPos += urlLines.length * 4 + 3;
                                         doc.setFontSize(10);
                                     }
                                 } catch (linkError) {
@@ -453,14 +466,14 @@ function generatePDFContent(doc) {
                             yPos += 3;
                         }
 
-                        yPos += 8; // Mellomrom mellom kommentarer
+                        yPos += 10; // Mellomrom mellom kommentarer
                     } catch (commentError) {
                         console.error('Error processing comment:', commentError, comment);
                     }
                 });
 
                 if (riskTitleAdded) {
-                    yPos += 5;
+                    yPos += 8; // Mellomrom mellom risikoer
                 }
             });
         }
