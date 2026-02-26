@@ -325,6 +325,9 @@ function selectRisikoFromBank(bankRisiko) {
     // Oppdater analyse
     updateAnalysis(currentAnalysisId, { risikoer: currentAnalysis.risikoer });
 
+    // Lagre nåværende scroll-posisjon
+    const currentScrollPos = window.scrollY;
+
     // Re-render
     renderRisksTable();
     renderHeatmap();
@@ -332,18 +335,20 @@ function selectRisikoFromBank(bankRisiko) {
     renderKITTable();
 
     // Scroll til og highlight den oppdaterte risikoen
-    setTimeout(() => {
-        const updatedRow = document.querySelector(`tr[data-risk-id="${riskId}"]`);
-        if (updatedRow) {
-            updatedRow.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    requestAnimationFrame(() => {
+        requestAnimationFrame(() => {
+            const updatedRow = document.querySelector(`tr[data-risk-id="${riskId}"]`);
+            if (updatedRow) {
+                updatedRow.scrollIntoView({ behavior: 'smooth', block: 'center' });
 
-            // Highlight rad i et par sekunder
-            updatedRow.style.backgroundColor = '#e8f5e9';
-            setTimeout(() => {
-                updatedRow.style.backgroundColor = '';
-            }, 2000);
-        }
-    }, 100);
+                // Highlight rad i et par sekunder
+                updatedRow.style.backgroundColor = '#e8f5e9';
+                setTimeout(() => {
+                    updatedRow.style.backgroundColor = '';
+                }, 2000);
+            }
+        });
+    });
 }
 
 // Eksponér custom bank-funksjoner globalt for bruk i editor.html
