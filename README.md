@@ -14,17 +14,21 @@ Web-basert verktøy for å lage Risiko- og Sårbarhetsanalyser (ROS) basert på 
   - Rød (19-25): Kritisk risiko
   - Klikk på heatmap for å hoppe til risiko i tabellen
 - **Komplett risikotabell** - Alle felt med auto-beregning
-- **Risikobank** - 92 profesjonelle risikoer i 10 spesialiserte banker
-  - Generell IT-tjeneste (31 risikoer)
-  - Skytjeneste (13 risikoer)
-  - Lokal server/on-premise (10 risikoer)
-  - Persondata/GDPR (12 risikoer)
-  - Webapp/API - OWASP Top 10 (10 risikoer)
-  - Database (7 risikoer)
-  - Mobilapp - OWASP Mobile (8 risikoer)
+- **Risikobank** - 117 profesjonelle risikoer
+  - **4 hovedbanker** (66 risikoer):
+    - Generell IT-tjeneste (31 risikoer)
+    - Skytjeneste (13 risikoer)
+    - Lokal server/on-premise (10 risikoer)
+    - Persondata/GDPR (12 risikoer)
+  - **6 baseline-maler** (51 risikoer):
+    - Baseline - IT-tjeneste (10 risikoer)
+    - Baseline - Sky (8 risikoer)
+    - Baseline - Persondata (8 risikoer)
+    - Baseline - Webapp/API (10 OWASP Top 10 risikoer)
+    - Baseline - Database (7 risikoer)
+    - Baseline - Mobilapp (8 OWASP Mobile risikoer)
   - Modal-basert velger: Velg bank → Velg kategori → Velg risiko
   - Import av risikoer fra andre analyser
-  - 6 baseline-maler for rask oppstart
   - Vises kun for nye/tomme risikoer (grønn 📁-knapp)
   - Automatisk utfylling av alle felt
   - Redigerbart etter valg
@@ -80,9 +84,14 @@ Web-basert verktøy for å lage Risiko- og Sårbarhetsanalyser (ROS) basert på 
 5. Se risikoprofilen i heatmap
 6. Eksporter som PDF, Excel eller JSON
 
-## 📊 Risikobank - 66 risikoer i 4 spesialiserte banker
+## 📊 Risikobank - 117 profesjonelle risikoer
 
-### 1. Generell IT-tjeneste (31 risikoer)
+Risky kommer med to typer forhåndsdefinerte risikoer:
+
+### Hovedrisikobank (66 risikoer i 4 banker)
+Brukes gjennom risikobank-velgeren (📁-knappen):
+
+#### 1. Generell IT-tjeneste (31 risikoer)
 Standard risikoer for de fleste IT-tjenester:
 - **Tilgangsstyring** (7) - Brukeradministrasjon, passord, service accounts, API-nøkler
 - **Teknisk drift** (5) - Backup, patch management, kunnskapstap
@@ -91,7 +100,7 @@ Standard risikoer for de fleste IT-tjenester:
 - **Nettverk og kommunikasjon** (5) - Kryptering, DDoS, MitM, DNS, segmentering
 - **Organisatoriske forhold** (4) - Sikkerhetskompetanse, incident response, awareness, shadow IT
 
-### 2. Skytjeneste - AWS/Azure/GCP (13 risikoer)
+#### 2. Skytjeneste - AWS/Azure/GCP (13 risikoer)
 Spesifikke cloud-risikoer:
 - **Sky-tilgangsstyring** (4) - IAM-roller, rot-kontoer, public exposure, credential stuffing
 - **Sky-nettverk** (3) - Security groups, mTLS, service mesh
@@ -99,18 +108,39 @@ Spesifikke cloud-risikoer:
 - **Sky-kostnader** (1) - Ressurs-forbruk, budget alerts
 - **Sky-compliance** (2) - Resource sprawl, continuous compliance
 
-### 3. Lokal server/on-premise (10 risikoer)
+#### 3. Lokal server/on-premise (10 risikoer)
 On-premise spesifikke risikoer:
 - **Fysisk sikkerhet** (4) - Fysisk tilgang, brann/vann, tyveri, dumpster diving
 - **Lokal drift** (4) - Hardware lifecycle, destruksjon, kapasitet, change management
 - **Lokalt nettverk** (2) - Intern angriper, nettverksutstyr
 
-### 4. Persondata/GDPR (12 risikoer)
+#### 4. Persondata/GDPR (12 risikoer)
 Personvernspesifikke risikoer:
 - **Behandlingsgrunnlag** (3) - Samtykke, formålsbegrensning, data minimization
 - **Registrertes rettigheter** (3) - Sletting, dataportabilitet, identifisering av data
 - **Datadeling** (3) - DPA, tredjelandsoverføring, sub-processorer
 - **GDPR sikkerhetstiltak** (3) - Kryptering, pseudonymisering, breach notification
+
+### Baseline-maler (51 risikoer i 6 maler)
+Brukes gjennom import-funksjonen (📥 Importer risikoer):
+
+#### 1. Baseline - IT-tjeneste (10 risikoer)
+Kompakt samling for generelle IT-tjenester
+
+#### 2. Baseline - Sky (8 risikoer)
+Cloud-spesifikke risikoer for AWS/Azure/GCP
+
+#### 3. Baseline - Persondata (8 risikoer)
+GDPR og personvernrisikoer
+
+#### 4. Baseline - Webapp/API (10 risikoer)
+OWASP Top 10 for webapplikasjoner og API-er
+
+#### 5. Baseline - Database (7 risikoer)
+Database-sikkerhet (SQL og NoSQL)
+
+#### 6. Baseline - Mobilapp (8 risikoer)
+OWASP Mobile Top 10 for iOS/Android
 
 ## 📖 Brukerveiledning
 

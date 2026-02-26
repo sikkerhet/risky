@@ -106,47 +106,80 @@
 
         <div class="help-section">
             <h2>Risikobanker</h2>
-            <p>Risky kommer med <strong>10 ferdigdefinerte risikobanker</strong> med til sammen <strong>271 profesjonelle risikoer</strong> fordelt på 55 kategorier:</p>
+            <p>Risky kommer med <strong>117 profesjonelle risikoer</strong> fordelt i to systemer:</p>
+
+            <h3>Hovedrisikobank (66 risikoer i 4 banker)</h3>
+            <p>Brukes via risikobank-velgeren (📁-knappen på tomme risikoer):</p>
 
             <div class="feature-grid">
                 <div class="feature-card">
-                    <h4>Teknologi & Infrastruktur</h4>
-                    <ul>
-                        <li>Generell IT-tjeneste (39)</li>
-                        <li>Skytjenester (13)</li>
-                        <li>Lokal server/on-prem (10)</li>
-                        <li>AI-tjenester (34)</li>
-                        <li>SaaS-tjenester (34)</li>
-                        <li>Integrasjoner (35)</li>
-                    </ul>
+                    <h4>Generell IT-tjeneste (31)</h4>
+                    <p>6 kategorier: Tilgangsstyring, Teknisk drift, Applikasjonssikkerhet, Logging, Nettverk, Organisatoriske forhold</p>
                 </div>
                 <div class="feature-card">
-                    <h4>Compliance</h4>
-                    <ul>
-                        <li>Persondata/GDPR (12)</li>
-                    </ul>
+                    <h4>Skytjeneste (13)</h4>
+                    <p>5 kategorier: IAM, Nettverk, Datalagring, Kostnader, Compliance</p>
                 </div>
                 <div class="feature-card">
-                    <h4>Organisasjon & Styring</h4>
-                    <ul>
-                        <li>Governance (29)</li>
-                        <li>Personell (33)</li>
-                        <li>Kontinuitet (32)</li>
-                    </ul>
+                    <h4>Lokal server/on-prem (10)</h4>
+                    <p>3 kategorier: Fysisk sikkerhet, Lokal drift, Lokalt nettverk</p>
+                </div>
+                <div class="feature-card">
+                    <h4>Persondata/GDPR (12)</h4>
+                    <p>4 kategorier: Behandlingsgrunnlag, Rettigheter, Datadeling, Sikkerhetstiltak</p>
                 </div>
             </div>
 
-            <h3>Bruke risikobanken</h3>
+            <h3>Baseline-maler (51 risikoer i 6 maler)</h3>
+            <p>Brukes via import-funksjonen (📥 Importer risikoer):</p>
+
+            <div class="feature-grid">
+                <div class="feature-card">
+                    <h4>Baseline - IT-tjeneste (10)</h4>
+                    <p>Kompakt samling for generelle IT-tjenester</p>
+                </div>
+                <div class="feature-card">
+                    <h4>Baseline - Sky (8)</h4>
+                    <p>Cloud-spesifikke risikoer for AWS/Azure/GCP</p>
+                </div>
+                <div class="feature-card">
+                    <h4>Baseline - Persondata (8)</h4>
+                    <p>GDPR og personvernrisikoer</p>
+                </div>
+                <div class="feature-card">
+                    <h4>Baseline - Webapp/API (10)</h4>
+                    <p>OWASP Top 10 for webapplikasjoner</p>
+                </div>
+                <div class="feature-card">
+                    <h4>Baseline - Database (7)</h4>
+                    <p>Database-sikkerhet (SQL og NoSQL)</p>
+                </div>
+                <div class="feature-card">
+                    <h4>Baseline - Mobilapp (8)</h4>
+                    <p>OWASP Mobile Top 10 for iOS/Android</p>
+                </div>
+            </div>
+
+            <h3>Bruke hovedrisikobanken</h3>
             <ol>
                 <li>Klikk <strong>"📁 Velg fra risikobank"</strong> på en tom risiko</li>
-                <li>Velg relevant bank (f.eks. "Sky" for AWS/Azure-tjenester)</li>
-                <li>Velg kategori (f.eks. "IAM og tilgangsstyring")</li>
+                <li>Velg relevant bank (f.eks. "Skytjeneste" for AWS/Azure)</li>
+                <li>Velg kategori (f.eks. "Sky-tilgangsstyring")</li>
                 <li>Velg risiko fra listen</li>
                 <li>Alle felt fylles automatisk ut - du kan redigere dem etterpå</li>
             </ol>
 
+            <h3>Bruke baseline-maler</h3>
+            <ol>
+                <li>Klikk <strong>"📥 Importer risikoer fra analyse"</strong></li>
+                <li>Velg en baseline-mal (f.eks. "Baseline - Webapp/API")</li>
+                <li>Velg "Erstatt" eller "Legg til"</li>
+                <li>Alle risikoer importeres automatisk</li>
+                <li>Du kan kombinere flere baselines ved å velge "Legg til"</li>
+            </ol>
+
             <h3>Laste opp egne risikobanker</h3>
-            <p>Under "Risikobank administrasjon" i editoren kan du laste opp egne JSON-baserte risikobanker. Se <code>data/risikobanker/EKSEMPEL-custom-bank.json</code> for mal.</p>
+            <p>Under "Risikobank administrasjon" i editoren kan du laste opp egne JSON-baserte risikobanker.</p>
         </div>
 
         <div class="help-section">
