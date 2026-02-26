@@ -330,6 +330,12 @@ function selectRisikoFromBank(bankRisiko) {
         document.activeElement.blur();
     }
 
+    // Scroll til ankeret på slutten før vi oppdaterer
+    const anchor = document.getElementById('tableAnchor');
+    if (anchor) {
+        anchor.scrollIntoView({ behavior: 'instant', block: 'end' });
+    }
+
     // Finn den eksisterende raden og oppdater den direkte (ikke re-render hele tabellen)
     const existingRow = document.querySelector(`tr[data-risk-id="${riskId}"]`);
     if (existingRow) {

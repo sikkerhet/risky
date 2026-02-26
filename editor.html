@@ -153,6 +153,7 @@
                         <!-- Risikoer vil bli lagt til her -->
                     </tbody>
                 </table>
+                <div id="tableAnchor" style="height: 1px;"></div>
             </div>
 
             <div class="add-risk-container">
@@ -598,6 +599,12 @@
             // Blur active element to prevent browser from trying to keep it in view
             if (document.activeElement && document.activeElement !== document.body) {
                 document.activeElement.blur();
+            }
+
+            // Scroll til ankeret på slutten før vi renderer
+            const anchor = document.getElementById('tableAnchor');
+            if (anchor) {
+                anchor.scrollIntoView({ behavior: 'instant', block: 'end' });
             }
 
             currentAnalysis.risikoer.push(newRisk);
