@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Risky - Hjelp</title>
+    <link rel="stylesheet" href="css/main.css">
+    <style>
+        .help-container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+        .help-header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        .help-section {
+            margin-bottom: 40px;
+            padding: 30px;
+            background: #f9f9f9;
+            border-left: 4px solid #2e5f8e;
+        }
+        .help-section h2 {
+            color: #2e5f8e;
+            margin-top: 0;
+            margin-bottom: 20px;
+        }
+        .help-section h3 {
+            color: #1a4d6e;
+            margin-top: 25px;
+            margin-bottom: 15px;
+        }
+        .help-section ul, .help-section ol {
+            margin: 15px 0;
+            padding-left: 25px;
+        }
+        .help-section li {
+            margin: 8px 0;
+            line-height: 1.6;
+        }
+        .help-section code {
+            background: #e8e8e8;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-family: monospace;
+        }
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin: 20px 0;
+        }
+        .feature-card {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            border: 1px solid #ddd;
+        }
+        .feature-card h4 {
+            color: #2e5f8e;
+            margin-top: 0;
+            margin-bottom: 10px;
+        }
+        .back-btn {
+            margin-bottom: 20px;
+        }
+        .tip {
+            background: #fff3cd;
+            border-left: 4px solid #ffc107;
+            padding: 15px;
+            margin: 20px 0;
+        }
+        .tip strong {
+            color: #856404;
+        }
+    </style>
+</head>
+<body>
+    <div class="help-container">
+        <button onclick="window.close()" class="btn btn-secondary back-btn">← Lukk hjelp</button>
+
+        <div class="help-header">
+            <h1>RISKY</h1>
+            <p class="subtitle">Brukerveiledning for risiko- og sårbarhetsanalyse</p>
+        </div>
+
+        <div class="help-section">
+            <h2>Kom i gang</h2>
+            <p>Risky er et verktøy for å lage profesjonelle Risiko- og Sårbarhetsanalyser (ROS) basert på 5x5 matrise-modellen.</p>
+
+            <h3>Opprett ny analyse</h3>
+            <ol>
+                <li>Klikk på <strong>"+ Ny analyse"</strong> i oversikten</li>
+                <li>Fyll ut metadata: tjeneste, dato, utført av, deltakere, tjenesteeier, beskrivelse</li>
+                <li>Legg til risikoer fra risikobanken eller opprett egne</li>
+                <li>Vurder K (Konfidensialitet), I (Integritet), T (Tilgjengelighet)</li>
+                <li>Vurder sannsynlighet (S*)</li>
+                <li>Systemet beregner automatisk konsekvens (K*) og risikonivå (RN*)</li>
+            </ol>
+
+            <div class="tip">
+                <strong>Tips:</strong> Alle endringer lagres automatisk i nettleserens localStorage. Du trenger ikke å "lagre" manuelt.
+            </div>
+        </div>
+
+        <div class="help-section">
+            <h2>Risikobanker</h2>
+            <p>Risky kommer med <strong>10 ferdigdefinerte risikobanker</strong> med til sammen <strong>271 profesjonelle risikoer</strong> fordelt på 55 kategorier:</p>
+
+            <div class="feature-grid">
+                <div class="feature-card">
+                    <h4>Teknologi & Infrastruktur</h4>
+                    <ul>
+                        <li>Generell IT-tjeneste (39)</li>
+                        <li>Skytjenester (13)</li>
+                        <li>Lokal server/on-prem (10)</li>
+                        <li>AI-tjenester (34)</li>
+                        <li>SaaS-tjenester (34)</li>
+                        <li>Integrasjoner (35)</li>
+                    </ul>
+                </div>
+                <div class="feature-card">
+                    <h4>Compliance</h4>
+                    <ul>
+                        <li>Persondata/GDPR (12)</li>
+                    </ul>
+                </div>
+                <div class="feature-card">
+                    <h4>Organisasjon & Styring</h4>
+                    <ul>
+                        <li>Governance (29)</li>
+                        <li>Personell (33)</li>
+                        <li>Kontinuitet (32)</li>
+                    </ul>
+                </div>
+            </div>
+
+            <h3>Bruke risikobanken</h3>
+            <ol>
+                <li>Klikk <strong>"📁 Velg fra risikobank"</strong> på en tom risiko</li>
+                <li>Velg relevant bank (f.eks. "Sky" for AWS/Azure-tjenester)</li>
+                <li>Velg kategori (f.eks. "IAM og tilgangsstyring")</li>
+                <li>Velg risiko fra listen</li>
+                <li>Alle felt fylles automatisk ut - du kan redigere dem etterpå</li>
+            </ol>
+
+            <h3>Laste opp egne risikobanker</h3>
+            <p>Under "Risikobank administrasjon" i editoren kan du laste opp egne JSON-baserte risikobanker. Se <code>data/risikobanker/EKSEMPEL-custom-bank.json</code> for mal.</p>
+        </div>
+
+        <div class="help-section">
+            <h2>Heatmap og visualisering</h2>
+            <p>Heatmapet viser risikoplassering i en 5x5 matrise med fargekoding:</p>
+            <ul>
+                <li><strong style="color: #28a745;">Grønn (1-6):</strong> Lav risiko</li>
+                <li><strong style="color: #ffc107;">Gul (7-12):</strong> Middels risiko</li>
+                <li><strong style="color: #fd7e14;">Oransje (13-18):</strong> Høy risiko</li>
+                <li><strong style="color: #dc3545;">Rød (19-25):</strong> Kritisk risiko</li>
+            </ul>
+
+            <div class="tip">
+                <strong>Tips:</strong> Klikk på en sirkel i heatmapet for å hoppe direkte til risikoen i tabellen!
+            </div>
+
+            <h3>Grupperte risikoer</h3>
+            <p>Når flere risikoer havner på samme posisjon i heatmapet:</p>
+            <ul>
+                <li>Vises som én stor sirkel med antall (f.eks. "3×")</li>
+                <li>Små nummererte sirkler rundt viser hver enkelt risiko</li>
+                <li>Klikk på den store sirkelen eller en av de små for å hoppe til risikoen</li>
+            </ul>
+        </div>
+
+        <div class="help-section">
+            <h2>Tiltak og kommentarer</h2>
+            <p>Under "Tiltak og kommentarer" kan du legge til strukturerte oppfølgingspunkter på hver risiko.</p>
+
+            <h3>Fire typer kommentarer</h3>
+            <ul>
+                <li><strong>📋 Tiltak:</strong> Konkrete tiltak som skal gjennomføres</li>
+                <li><strong>💬 Kommentar:</strong> Generelle notater og observasjoner</li>
+                <li><strong>🔍 Oppfølging:</strong> Oppgaver som krever videre undersøkelse</li>
+                <li><strong>🔒 Intern kommentar:</strong> Sensitiv informasjon som ikke skal eksporteres</li>
+            </ul>
+
+            <h3>Eksterne lenker</h3>
+            <p>Du kan lenke til eksterne systemer ved å inkludere full URL i kommentarteksten:</p>
+            <ul>
+                <li>GitHub issues: <code>https://github.com/org/repo/issues/123</code></li>
+                <li>Jira: <code>https://jira.example.com/browse/PROJ-456</code></li>
+                <li>Dokumentasjon, arkiv, osv.</li>
+            </ul>
+            <p>Lenker blir automatisk klikkbare og åpnes i ny fane.</p>
+
+            <h3>Løse kommentarer</h3>
+            <p>Når et tiltak er gjennomført, klikk <strong>"✓ Løst"</strong>. Løste kommentarer skjules fra visning men beholdes i dataene.</p>
+        </div>
+
+        <div class="help-section">
+            <h2>Eksport og deling</h2>
+
+            <h3>I editor (enkelt analyse)</h3>
+            <ul>
+                <li><strong>📄 Eksporter PDF:</strong> Profesjonell rapport med metadata, risikotabell, kommentarer og sidetall</li>
+                <li><strong>📊 Eksporter Excel:</strong> Regneark med 3 ark (Metadata, Risikoer, Tiltak og kommentarer)</li>
+                <li><strong>💾 Eksporter JSON:</strong> Komplett datastruktur for backup eller deling</li>
+                <li><strong>📦 Eksporter alt (ZIP):</strong> Alle tre formater i én ZIP-fil</li>
+            </ul>
+
+            <h3>I oversikt (alle analyser)</h3>
+            <ul>
+                <li><strong>💾 Eksporter alle:</strong> ZIP-fil med mapper per analyse</li>
+                <li>Hver mappe inneholder PDF, Excel og JSON</li>
+                <li>Mapper nummereres: <code>1_MinTjeneste/</code>, <code>2_AnnenTjeneste/</code>, osv.</li>
+            </ul>
+
+            <div class="tip">
+                <strong>Filnavn format:</strong> <code>Risky_[tjeneste]_[dato].[format]</code>
+            </div>
+        </div>
+
+        <div class="help-section">
+            <h2>Import og backup</h2>
+
+            <h3>Importere analyser</h3>
+            <ol>
+                <li>Klikk <strong>"📁 Importer JSON"</strong> i oversikten</li>
+                <li>Velg en JSON-fil (enkelt analyse eller flere)</li>
+                <li>Hvis analysen finnes fra før, får du valg om å overskrive</li>
+            </ol>
+
+            <h3>Backup og gjenoppretting</h3>
+            <p>Alle data lagres i nettleserens localStorage. For å ta backup:</p>
+            <ol>
+                <li>Eksporter alle analyser som ZIP eller JSON</li>
+                <li>Lagre filen et trygt sted</li>
+                <li>Ved gjenoppretting: Bruk "Importer JSON"</li>
+            </ol>
+
+            <div class="tip">
+                <strong>Viktig:</strong> localStorage er per nettleser og domene. Hvis du bytter nettleser eller sletter nettleserdata, mister du analysene med mindre du har eksportert dem først!
+            </div>
+        </div>
+
+        <div class="help-section">
+            <h2>Tastaturhurtigtaster</h2>
+            <p>Effektiviser arbeidsflyten med tastaturhurtigtaster:</p>
+            <ul>
+                <li><strong>Tab:</strong> Naviger mellom felt i tabellen</li>
+                <li><strong>Enter:</strong> Bekreft endringer i auto-resize tekstfelt</li>
+                <li><strong>Ctrl+S / Cmd+S:</strong> (Ingen handling - auto-lagring er aktivert)</li>
+            </ul>
+        </div>
+
+        <div class="help-section">
+            <h2>Ofte stilte spørsmål</h2>
+
+            <h3>Hvorfor vises ikke mine analyser?</h3>
+            <p>Sjekk at du er i samme nettleser og ikke har slettet nettleserdata (cookies/localStorage).</p>
+
+            <h3>Kan jeg bruke Risky offline?</h3>
+            <p>Ja! Risky fungerer helt uten internett etter første lasting. Alle data lagres lokalt.</p>
+
+            <h3>Hvordan sletter jeg en analyse?</h3>
+            <p>I oversikten, klikk <strong>"🗑️"</strong> på analysekortet. Du får en bekreftelsesdialog.</p>
+
+            <h3>Kan jeg dele analyser med andre?</h3>
+            <p>Ja, eksporter analysen som PDF, Excel eller JSON og send filen. Mottaker kan importere JSON-filen i sitt eget Risky.</p>
+
+            <h3>Hvor mange analyser kan jeg ha?</h3>
+            <p>Begrenset kun av nettleserens localStorage (typisk 5-10 MB). Dette holder til hundrevis av analyser.</p>
+
+            <h3>Støtter Risky samarbeid?</h3>
+            <p>Ikke direkte. Risky er designet for enkeltstående bruk. For samarbeid: eksporter JSON, del filen, og importer endringer tilbake.</p>
+        </div>
+
+        <div class="help-section">
+            <h2>Teknisk informasjon</h2>
+            <p><strong>Versjon:</strong> 1.0</p>
+            <p><strong>Teknologi:</strong> Vanilla JavaScript, HTML5, CSS3</p>
+            <p><strong>Lagring:</strong> localStorage (lokal i nettleser)</p>
+            <p><strong>Biblioteker:</strong></p>
+            <ul>
+                <li>jsPDF + autotable - PDF-generering</li>
+                <li>SheetJS (xlsx) - Excel-generering</li>
+                <li>JSZip - ZIP-fil komprimering</li>
+            </ul>
+            <p><strong>Nettleserstøtte:</strong> Moderne nettlesere (Chrome, Firefox, Edge, Safari)</p>
+        </div>
+
+        <button onclick="window.close()" class="btn btn-primary" style="width: 100%; margin-top: 20px;">← Lukk hjelp</button>
+    </div>
+</body>
+</html>

@@ -27,6 +27,7 @@
             <button id="newAnalysisBtn" class="btn btn-primary">+ Ny analyse</button>
             <button id="importJsonBtn" class="btn btn-secondary">📁 Importer JSON</button>
             <button id="exportAllBtn" class="btn btn-secondary">💾 Eksporter alle</button>
+            <button id="helpBtn" class="btn btn-secondary">❓ Hjelp</button>
             <input type="file" id="jsonFileInput" accept=".json" style="display: none;">
         </div>
 
@@ -53,6 +54,9 @@
             });
             document.getElementById('jsonFileInput').addEventListener('change', importJSON);
             document.getElementById('exportAllBtn').addEventListener('click', exportAllAnalyses);
+            document.getElementById('helpBtn').addEventListener('click', () => {
+                window.open('help.html', '_blank');
+            });
         });
 
         function loadAnalysesList() {
