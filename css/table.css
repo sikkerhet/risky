@@ -88,7 +88,25 @@
 
 .risks-table th:nth-child(13), /* Handlinger */
 .risks-table td:nth-child(13) {
-    width: 120px;
+    width: 80px;
+}
+
+/* Handlinger grid 2x2 */
+.actions-cell {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4px;
+    padding: 8px 6px !important;
+}
+
+.actions-cell .btn-icon {
+    width: 100%;
+    min-width: 0;
+    padding: 6px 4px;
+    font-size: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .risks-table thead {

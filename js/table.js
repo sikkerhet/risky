@@ -131,7 +131,7 @@ function createRiskRow(risk, index) {
 
     // Handlinger
     const actionsCell = document.createElement('td');
-    actionsCell.style.whiteSpace = 'nowrap';
+    actionsCell.className = 'actions-cell';
 
     // Sjekk om risikoen er tom (ny risiko)
     const isEmpty = !risk.risikoelement && !risk.saarbarhet &&
