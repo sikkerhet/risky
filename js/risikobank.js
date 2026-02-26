@@ -327,3 +327,11 @@ function selectRisikoFromBank(bankRisiko) {
     renderHeatmap();
     renderKITTable();
 }
+
+// Eksponér custom bank-funksjoner globalt for bruk i editor.html
+if (typeof window !== 'undefined') {
+    window.getCustomBanks = getCustomBanks;
+    window.saveCustomBank = saveCustomBank;
+    window.deleteCustomBank = deleteCustomBank;
+    window.uploadCustomBank = uploadCustomBank;
+}
