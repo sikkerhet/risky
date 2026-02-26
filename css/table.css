@@ -67,64 +67,122 @@
     border-right: none;
 }
 
+.risks-table tbody tr {
+    transition: background-color 0.15s;
+}
+
 .risks-table tbody tr:hover {
     background-color: #fafafa;
+}
+
+/* Gi rader med innhold et mer "ferdig" utseende */
+.risks-table tbody tr:not(:hover) textarea:not(:focus):not(:empty) {
+    color: #222;
+}
+
+.risks-table tbody tr:not(:hover) textarea:not(:focus):empty {
+    color: #bbb;
+    font-style: italic;
 }
 
 .risks-table textarea {
     width: 100%;
     min-width: 150px;
-    padding: 6px;
-    border: 1px solid #ddd;
-    border-radius: 4px;
+    padding: 4px 6px;
+    border: 1px solid transparent;
+    border-radius: 2px;
     font-family: inherit;
-    font-size: 13px;
+    font-size: 14px;
     resize: vertical;
+    background-color: transparent;
+    transition: all 0.2s;
+    line-height: 1.5;
+}
+
+.risks-table textarea:hover {
+    background-color: #fafafa;
+    border-color: #e0e0e0;
 }
 
 .risks-table textarea:focus {
     outline: none;
-    border-color: #007bff;
+    border-color: #2e5f8e;
+    background-color: #fff;
+    box-shadow: 0 0 0 2px rgba(46, 95, 142, 0.1);
+}
+
+.risks-table textarea:placeholder-shown {
+    font-style: italic;
+    color: #999;
+}
+
+.risks-table textarea:empty::before {
+    content: attr(placeholder);
+    color: #bbb;
+    font-style: italic;
 }
 
 .risks-table select {
     width: 100%;
-    padding: 6px;
-    border: 1px solid #ddd;
-    border-radius: 4px;
+    padding: 4px 6px;
+    border: 1px solid transparent;
+    border-radius: 2px;
     font-size: 14px;
+    background-color: transparent;
+    transition: all 0.2s;
+    cursor: pointer;
+}
+
+.risks-table select:hover {
+    background-color: #fafafa;
+    border-color: #e0e0e0;
 }
 
 .risks-table select:focus {
     outline: none;
-    border-color: #007bff;
+    border-color: #2e5f8e;
+    background-color: #fff;
+    box-shadow: 0 0 0 2px rgba(46, 95, 142, 0.1);
 }
 
 .calculated-field {
-    font-weight: bold;
+    font-weight: 600;
     text-align: center;
-    background-color: #e9ecef;
+    background-color: #f5f5f5;
+    color: #333;
+    font-size: 15px;
 }
 
 /* KIT-tabell */
 .kit-section {
-    margin-top: 40px;
-    padding: 20px;
-    background: #f9f9f9;
-    border-radius: 8px;
+    margin-top: 50px;
+    padding: 30px 0;
+    background: transparent;
+    border-radius: 0;
+    border-top: 1px solid #e8e8e8;
 }
 
 .kit-table {
     width: 100%;
     max-width: 600px;
     border-collapse: collapse;
-    margin-top: 20px;
+    margin-top: 30px;
 }
 
-.kit-table th,
+.kit-table th {
+    padding: 14px;
+    border: none;
+    border-bottom: 2px solid #ddd;
+    text-align: left;
+    background-color: #f8f8f8;
+    font-weight: 600;
+    font-size: 14px;
+}
+
 .kit-table td {
-    padding: 12px;
-    border: 1px solid #ddd;
+    padding: 12px 14px;
+    border: none;
+    border-bottom: 1px solid #e8e8e8;
     text-align: left;
 }
 
