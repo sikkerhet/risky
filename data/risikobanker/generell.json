@@ -90,6 +90,102 @@
           "T": 2,
           "sannsynlighet": 3,
           "foreslaatteTiltak": "Secret scanning (TruffleHog), secrets manager, pre-commit hooks"
+        },
+        {
+          "id": "tilgang-008",
+          "risikoelement": "SSO/federation feil låser ut mange brukere",
+          "saarbarhet": "Single point of failure i SAML/OIDC-integrasjon, feil konfigurasjon, sertifikat utløpt",
+          "eksisterendeBeskyttelse": "SSO via FEIDE/Azure AD",
+          "eksisterendeKontroll": "Overvåking av innlogginger",
+          "K": 4,
+          "I": 2,
+          "T": 3,
+          "sannsynlighet": 2,
+          "foreslaatteTiltak": "Redundans i federation, sertifikatovervåking, break-glass accounts utenfor SSO, dokumenterte recovery-prosedyrer"
+        },
+        {
+          "id": "tilgang-009",
+          "risikoelement": "Foreldreløse kontoer uten eier",
+          "saarbarhet": "Kontoer for tidligere ansatte eller test-kontoer som fortsatt eksisterer uten kjent eier eller formål",
+          "eksisterendeBeskyttelse": "Periodisk tilgangsgjennomgang",
+          "eksisterendeKontroll": "Manuell gjennomgang ved review",
+          "K": 3,
+          "I": 3,
+          "T": 2,
+          "sannsynlighet": 4,
+          "foreslaatteTiltak": "Automatisert identifisering av orphaned accounts, krav om eier for alle kontoer, automatisk deaktivering etter inaktivitet"
+        },
+        {
+          "id": "tilgang-010",
+          "risikoelement": "Manglende eller ineffektiv access certification",
+          "saarbarhet": "Tilgangsgjennomganger ikke gjennomført, attestations blir 'rubber stamped', ingen oppfølging av funn",
+          "eksisterendeBeskyttelse": "Årlig tilgangsgjennomgang",
+          "eksisterendeKontroll": "Spreadsheet-basert review",
+          "K": 3,
+          "I": 3,
+          "T": 3,
+          "sannsynlighet": 4,
+          "foreslaatteTiltak": "Implementere Identity Governance-verktøy, risiko-baserte reviews (high-risk oftere), automatisk revoking ved ikke-svar"
+        },
+        {
+          "id": "tilgang-011",
+          "risikoelement": "Utilstrekkelig Privileged Access Management",
+          "saarbarhet": "Privilegerte kontoer deles, ingen session recording, permanente admin-rettigheter, ikke sporbart hvem som gjorde hva",
+          "eksisterendeBeskyttelse": "Admin-kontoer er separerte",
+          "eksisterendeKontroll": "Logging av admin-aktivitet",
+          "K": 4,
+          "I": 4,
+          "T": 3,
+          "sannsynlighet": 3,
+          "foreslaatteTiltak": "Implementere PAM-løsning med session recording, privileged elevation workflow, just-in-time admin access"
+        },
+        {
+          "id": "tilgang-012",
+          "risikoelement": "Manglende Just-In-Time (JIT) access",
+          "saarbarhet": "Brukere får permanente tilganger i stedet for midlertidige, øker risiko ved kompromittering",
+          "eksisterendeBeskyttelse": "Manuelle tildelinger ved behov",
+          "eksisterendeKontroll": "Årlig review fjerner noe",
+          "K": 3,
+          "I": 3,
+          "T": 2,
+          "sannsynlighet": 3,
+          "foreslaatteTiltak": "Implementere JIT access med automatisk utløp, self-service med godkjenning, time-boxed privileged access"
+        },
+        {
+          "id": "tilgang-013",
+          "risikoelement": "Directory services synkroniseringsfeil",
+          "saarbarhet": "AD/LDAP sync feiler, schema drift mellom systemer, ukonsistente brukerdata på tvers av systemer",
+          "eksisterendeBeskyttelse": "Automatisk AD-sync til cloud",
+          "eksisterendeKontroll": "Ukentlig sjekk av sync-status",
+          "K": 3,
+          "I": 3,
+          "T": 3,
+          "sannsynlighet": 3,
+          "foreslaatteTiltak": "Overvåke sync-status kontinuerlig, varsling ved feil, reconciliation-rapporter, test sync i staging"
+        },
+        {
+          "id": "tilgang-014",
+          "risikoelement": "Utilstrekkelig håndtering av eksterne identiteter",
+          "saarbarhet": "B2B-partnere, konsulenter og leverandører får interne kontoer, vanskelig å skille fra ansatte, ingen utløpsdato",
+          "eksisterendeBeskyttelse": "Guest-kontoer i Azure AD",
+          "eksisterendeKontroll": "Manuell oppfølging av eksterne",
+          "K": 4,
+          "I": 3,
+          "T": 3,
+          "sannsynlighet": 3,
+          "foreslaatteTiltak": "Dedikert external identity management, automatisk utløp, tydelig merking, attestation av sponsor"
+        },
+        {
+          "id": "tilgang-015",
+          "risikoelement": "Manglende eller dårlig break-glass prosedyre",
+          "saarbarhet": "Ingen emergency access når SSO/IAM feiler, break-glass kontoer ikke testet eller dokumentert",
+          "eksisterendeBeskyttelse": "Lokal admin-konto på noen systemer",
+          "eksisterendeKontroll": "Passord i safe",
+          "K": 4,
+          "I": 3,
+          "T": 4,
+          "sannsynlighet": 2,
+          "foreslaatteTiltak": "Dokumenterte break-glass prosedyrer, test kvartalsvis, varsling ved bruk, rotasjon av credentials etter bruk"
         }
       ]
     },

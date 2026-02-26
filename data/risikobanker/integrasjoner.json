@@ -1,0 +1,463 @@
+{
+  "id": "integrasjoner",
+  "navn": "Integrasjoner og systemsamspill",
+  "beskrivelse": "API-integrasjoner, meldingskøer, data pipelines, asynkron kommunikasjon, ESB/middleware og systemsamspill",
+  "kategorier": [
+    {
+      "id": "synkron-integrasjon",
+      "navn": "Synkron integrasjon (REST/SOAP/GraphQL)",
+      "risikoer": [
+        {
+          "id": "sync-001",
+          "risikoelement": "Manglende eller for korte timeouts",
+          "saarbarhet": "API-kall henger uten timeout, eller timeout så kort at normale operasjoner feiler",
+          "eksisterendeBeskyttelse": "Standard HTTP timeout (30s)",
+          "eksisterendeKontroll": "Sporadisk testing",
+          "K": 3,
+          "I": 2,
+          "T": 3,
+          "sannsynlighet": 4,
+          "foreslaatteTiltak": "Definere timeouts per operasjon basert på SLA, implementere connection timeout og read timeout separat"
+        },
+        {
+          "id": "sync-002",
+          "risikoelement": "Utilstrekkelig HTTP feilhåndtering",
+          "saarbarhet": "Klient behandler alle feil likt, retry på 4xx, ingen skille mellom transient og permanent feil",
+          "eksisterendeBeskyttelse": "Try-catch på API-kall",
+          "eksisterendeKontroll": "Error logging",
+          "K": 3,
+          "I": 3,
+          "T": 3,
+          "sannsynlighet": 4,
+          "foreslaatteTiltak": "Implementere feilhåndtering basert på HTTP status (2xx, 4xx, 5xx), kun retry på transient errors (429, 503, etc.)"
+        },
+        {
+          "id": "sync-003",
+          "risikoelement": "API versioning ikke implementert",
+          "saarbarhet": "Breaking changes bryter eksisterende klienter, ingen deprecation-strategi, tvungen migrering",
+          "eksisterendeBeskyttelse": "Planlagt vedlikehold ved endringer",
+          "eksisterendeKontroll": "Release notes",
+          "K": 4,
+          "I": 3,
+          "T": 3,
+          "sannsynlighet": 3,
+          "foreslaatteTiltak": "Implementere API versioning (URL-path eller header), semantic versioning, deprecation policy med sunset-dato"
+        },
+        {
+          "id": "sync-004",
+          "risikoelement": "Manglende rate limiting på API",
+          "saarbarhet": "Én klient kan overbelaste API, ingen beskyttelse mot misbruk eller bugs i klient",
+          "eksisterendeBeskyttelse": "Generell WAF",
+          "eksisterendeKontroll": "Infrastruktur-nivå begrensninger",
+          "K": 4,
+          "I": 3,
+          "T": 3,
+          "sannsynlighet": 3,
+          "foreslaatteTiltak": "Implementere rate limiting per klient/API-key, returnere 429 med Retry-After header, dokumentere limits"
+        },
+        {
+          "id": "sync-005",
+          "risikoelement": "Manglende circuit breaker",
+          "saarbarhet": "Fortsetter å kalle feilende tjeneste, forverrer situasjon, cascade failures, ingen graceful degradation",
+          "eksisterendeBeskyttelse": "Timeout stopper langvarige kall",
+          "eksisterendeKontroll": "Manuell restart ved problemer",
+          "K": 4,
+          "I": 3,
+          "T": 4,
+          "sannsynlighet": 3,
+          "foreslaatteTiltak": "Implementere circuit breaker pattern (closed/open/half-open), fallback-mekanisme, overvåke circuit breaker state"
+        },
+        {
+          "id": "sync-006",
+          "risikoelement": "API-dokumentasjon utdatert eller feil",
+          "saarbarhet": "Klienter implementerer basert på feil dokumentasjon, OpenAPI/Swagger ikke i sync med kode",
+          "eksisterendeBeskyttelse": "README med API-dokumentasjon",
+          "eksisterendeKontroll": "Manuell oppdatering ved endringer",
+          "K": 2,
+          "I": 2,
+          "T": 3,
+          "sannsynlighet": 4,
+          "foreslaatteTiltak": "Generere API-dokumentasjon fra kode (OpenAPI annotations), automatisk validering i CI/CD, contract testing"
+        }
+      ]
+    },
+    {
+      "id": "asynkron-meldingskoer",
+      "navn": "Asynkron integrasjon og meldingskøer",
+      "risikoer": [
+        {
+          "id": "async-001",
+          "risikoelement": "Meldinger går tapt uten varsling",
+          "saarbarhet": "Message broker feiler, ingen persistering, ikke-durables køer, ingen dead letter queue",
+          "eksisterendeBeskyttelse": "Message broker med basic config",
+          "eksisterendeKontroll": "Logging av sendte meldinger",
+          "K": 5,
+          "I": 4,
+          "T": 4,
+          "sannsynlighet": 2,
+          "foreslaatteTiltak": "Durable queues, publisher confirms/acks, dead letter queues, message replay capability, overvåke message rates"
+        },
+        {
+          "id": "async-002",
+          "risikoelement": "Duplikat-prosessering av meldinger",
+          "saarbarhet": "At-least-once delivery uten idempotency, meldinger prosesseres flere ganger, data-korrupsjon",
+          "eksisterendeBeskyttelse": "Message broker leverer meldinger",
+          "eksisterendeKontroll": "Ingen spesifikk håndtering",
+          "K": 4,
+          "I": 4,
+          "T": 3,
+          "sannsynlighet": 3,
+          "foreslaatteTiltak": "Implementere idempotency i consumers (idempotency keys), deduplication logic, transaksjonell prosessering"
+        },
+        {
+          "id": "async-003",
+          "risikoelement": "Message ordering problemer",
+          "saarbarhet": "Meldinger prosesseres i feil rekkefølge, partisjonering ikke konfigurert, concurrent consumers",
+          "eksisterendeBeskyttelse": "FIFO-køer",
+          "eksisterendeKontroll": "Timestamps i meldinger",
+          "K": 4,
+          "I": 3,
+          "T": 3,
+          "sannsynlighet": 3,
+          "foreslaatteTiltak": "Bruke partition keys (Kafka) eller message groups (SQS FIFO), sequence numbers, single consumer per partition hvor ordering kreves"
+        },
+        {
+          "id": "async-004",
+          "risikoelement": "Eventual consistency ikke håndtert",
+          "saarbarhet": "Applikasjon forventer umiddelbar konsistens, race conditions, bruker ser utdatert data",
+          "eksisterendeBeskyttelse": "Async processing dokumentert",
+          "eksisterendeKontroll": "Ingen spesifikk håndtering",
+          "K": 3,
+          "I": 2,
+          "T": 3,
+          "sannsynlighet": 4,
+          "foreslaatteTiltak": "Design for eventual consistency, optimistic UI, polling/webhooks for status, versioning på data, conflict resolution"
+        },
+        {
+          "id": "async-005",
+          "risikoelement": "Poison messages blokkerer kø",
+          "saarbarhet": "Én ugyldig melding feiler processing, blokkerer hele køen, ingen DLQ, infinite retry loop",
+          "eksisterendeBeskyttelse": "Error logging",
+          "eksisterendeKontroll": "Manuell fjerning ved problem",
+          "K": 4,
+          "I": 3,
+          "T": 4,
+          "sannsynlighet": 3,
+          "foreslaatteTiltak": "Dead Letter Queue (DLQ) etter N retries, max retry count, message validation før processing, DLQ monitoring og alerts"
+        },
+        {
+          "id": "async-006",
+          "risikoelement": "Consumer lag øker ukontrollert",
+          "saarbarhet": "Producers sender raskere enn consumers prosesserer, backlog bygges opp, memory issues, datedness",
+          "eksisterendeBeskyttelse": "Basic monitoring av kø-lengde",
+          "eksisterendeKontroll": "Manuell skalering ved behov",
+          "K": 3,
+          "I": 3,
+          "T": 3,
+          "sannsynlighet": 3,
+          "foreslaatteTiltak": "Overvåke consumer lag kontinuerlig, auto-scaling av consumers, backpressure mekanismer, alerting på lag threshold"
+        },
+        {
+          "id": "async-007",
+          "risikoelement": "Manglende message schema validation",
+          "saarbarhet": "Ugyldige meldinger aksepteres, schema changes bryter consumers, ingen versjonering av meldinger",
+          "eksisterendeBeskyttelse": "JSON-struktur dokumentert",
+          "eksisterendeKontroll": "Runtime errors ved parsing",
+          "K": 3,
+          "I": 3,
+          "T": 3,
+          "sannsynlighet": 4,
+          "foreslaatteTiltak": "Schema registry (Avro, Protobuf), validering ved produce og consume, schema evolution rules (backward/forward compatible)"
+        }
+      ]
+    },
+    {
+      "id": "data-pipelines",
+      "navn": "Data pipelines og ETL",
+      "risikoer": [
+        {
+          "id": "etl-001",
+          "risikoelement": "Data transformasjonsfeil",
+          "saarbarhet": "Feil i mapping logic, nullverdier ikke håndtert, type casting feiler, data-korrupsjon",
+          "eksisterendeBeskyttelse": "Unit tests på transformasjoner",
+          "eksisterendeKontroll": "Sample-basert validering",
+          "K": 4,
+          "I": 4,
+          "T": 3,
+          "sannsynlighet": 3,
+          "foreslaatteTiltak": "Comprehensive testing av transformasjoner, null-handling, type safety, data quality checks, reconciliation reports"
+        },
+        {
+          "id": "etl-002",
+          "risikoelement": "Schema drift mellom systemer",
+          "saarbarhet": "Source system endrer schema uten varsel, pipelines feiler, data mappes feil, nye felter ignoreres",
+          "eksisterendeBeskyttelse": "Dokumentert datakatalog",
+          "eksisterendeKontroll": "Pipeline feiler ved schema mismatch",
+          "K": 4,
+          "I": 3,
+          "T": 3,
+          "sannsynlighet": 3,
+          "foreslaatteTiltak": "Schema registry, automated schema validation, schema evolution notifications, backward compatibility testing"
+        },
+        {
+          "id": "etl-003",
+          "risikoelement": "Data quality issues ikke oppdaget",
+          "saarbarhet": "Duplikater, manglende data, ugyldig data prosesseres og lagres, ingen data quality gates",
+          "eksisterendeBeskyttelse": "Basic validation av required fields",
+          "eksisterendeKontroll": "Ad-hoc data quality sjekker",
+          "K": 4,
+          "I": 3,
+          "T": 3,
+          "sannsynlighet": 4,
+          "foreslaatteTiltak": "Implementere data quality framework (Great Expectations, Deequ), automated quality checks, quarantine bad data, quality metrics"
+        },
+        {
+          "id": "etl-004",
+          "risikoelement": "Pipeline feil gir inkomplette data",
+          "saarbarhet": "Pipeline feiler midt i kjøring, partial data loaded, ingen transaksjonalitet, vanskelig å recovery",
+          "eksisterendeBeskyttelse": "Logging av pipeline status",
+          "eksisterendeKontroll": "Monitoring av pipeline completion",
+          "K": 4,
+          "I": 3,
+          "T": 3,
+          "sannsynlighet": 3,
+          "foreslaatteTiltak": "Atomic loads (staging + swap), checkpointing, idempotent pipelines, automated recovery, data lineage tracking"
+        },
+        {
+          "id": "etl-005",
+          "risikoelement": "Full load vs incremental load problemer",
+          "saarbarhet": "Incremental logic feil (missed updates/deletes), watermarks ikke oppdatert, change data capture (CDC) feiler",
+          "eksisterendeBeskyttelse": "Timestamp-basert incremental load",
+          "eksisterendeKontroll": "Periodic full refresh",
+          "K": 3,
+          "I": 3,
+          "T": 3,
+          "sannsynlighet": 3,
+          "foreslaatteTiltak": "Reliable CDC implementation, watermark management, reconciliation between full and incremental, soft deletes"
+        },
+        {
+          "id": "etl-006",
+          "risikoelement": "Manglende data lineage og observability",
+          "saarbarhet": "Umulig å spore hvor data kom fra, debugging vanskelig, compliance issues, ingen impact analysis",
+          "eksisterendeBeskyttelse": "Dokumentasjon av dataflyt",
+          "eksisterendeKontroll": "Logging av pipeline kjøringer",
+          "K": 3,
+          "I": 2,
+          "T": 4,
+          "sannsynlighet": 3,
+          "foreslaatteTiltak": "Implementere data lineage tracking (OpenLineage), metadata management, data catalog, end-to-end tracing"
+        }
+      ]
+    },
+    {
+      "id": "integrasjonsmonstre",
+      "navn": "Integrasjonsmønstre og orkesterering",
+      "risikoer": [
+        {
+          "id": "pattern-001",
+          "risikoelement": "Choreography uten koordinering",
+          "saarbarhet": "Event-driven arkitektur uten oversikt, ingen felles forståelse av workflows, debugging vanskelig",
+          "eksisterendeBeskyttelse": "Event-driven kommunikasjon",
+          "eksisterendeKontroll": "Dokumenterte events",
+          "K": 3,
+          "I": 3,
+          "T": 4,
+          "sannsynlighet": 3,
+          "foreslaatteTiltak": "Event schema registry, event storming workshops, distributed tracing, service mesh for observability"
+        },
+        {
+          "id": "pattern-002",
+          "risikoelement": "Saga pattern feil og kompensering",
+          "saarbarhet": "Distribuert transaksjon feiler midt i saga, kompenserende transaksjoner ikke implementert eller feiler",
+          "eksisterendeBeskyttelse": "Multi-step workflows",
+          "eksisterendeKontroll": "Manuell rollback ved feil",
+          "K": 4,
+          "I": 4,
+          "T": 4,
+          "sannsynlighet": 3,
+          "foreslaatteTiltak": "Implementere saga pattern med orchestration (Temporal, Camunda), kompenserende transaksjoner, saga status tracking"
+        },
+        {
+          "id": "pattern-003",
+          "risikoelement": "Distribuerte transaksjoner uten 2PC/consistency",
+          "saarbarhet": "Data inkonsistent på tvers av systemer, manglende transaksjonalitet, race conditions",
+          "eksisterendeBeskyttelse": "Best-effort consistency",
+          "eksisterendeKontroll": "Eventual consistency",
+          "K": 4,
+          "I": 3,
+          "T": 3,
+          "sannsynlighet": 3,
+          "foreslaatteTiltak": "Unngå distribuerte transaksjoner hvor mulig, bruk saga pattern, eventual consistency med reconciliation, idempotency"
+        },
+        {
+          "id": "pattern-004",
+          "risikoelement": "Orkestreringstjeneste single point of failure",
+          "saarbarhet": "Workflow engine/orchestrator feiler, alle workflows stopper, state data går tapt",
+          "eksisterendeBeskyttelse": "Orchestration platform (Airflow/Temporal)",
+          "eksisterendeKontroll": "Monitoring av orchestrator",
+          "K": 5,
+          "I": 3,
+          "T": 4,
+          "sannsynlighet": 2,
+          "foreslaatteTiltak": "High availability orchestrator, persistent state store, workflow resume capability, circuit breakers til orchestrator"
+        },
+        {
+          "id": "pattern-005",
+          "risikoelement": "State management i distribuerte workflows",
+          "saarbarhet": "Workflow state ikke persistent, retry feiler fordi state tapt, ingen deduplication",
+          "eksisterendeBeskyttelse": "In-memory state",
+          "eksisterendeKontroll": "Logging av workflow status",
+          "K": 4,
+          "I": 3,
+          "T": 3,
+          "sannsynlighet": 3,
+          "foreslaatteTiltak": "Persistent workflow state (database, workflow engine), idempotency keys, state machine pattern, event sourcing"
+        }
+      ]
+    },
+    {
+      "id": "resiliens-feilhandtering",
+      "navn": "Resiliens og feilhåndtering",
+      "risikoer": [
+        {
+          "id": "resiliens-001",
+          "risikoelement": "Retry logic uten exponential backoff",
+          "saarbarhet": "Aggressive retries forverrer overload, thundering herd, ingen jitter, DDoS på egen infrastruktur",
+          "eksisterendeBeskyttelse": "Retry 3 ganger ved feil",
+          "eksisterendeKontroll": "Fixed delay mellom retries",
+          "K": 3,
+          "I": 3,
+          "T": 3,
+          "sannsynlighet": 4,
+          "foreslaatteTiltak": "Exponential backoff med jitter, max retry count, retry kun transient errors, circuit breaker for å stoppe retries"
+        },
+        {
+          "id": "resiliens-002",
+          "risikoelement": "Manglende idempotency i operasjoner",
+          "saarbarhet": "Retry eller replay av operasjon gir uønsket duplikater (dobbel betaling, dupliserte orders)",
+          "eksisterendeBeskyttelse": "Unike IDer på transaksjoner",
+          "eksisterendeKontroll": "Håp om at retries ikke skjer",
+          "K": 5,
+          "I": 4,
+          "T": 3,
+          "sannsynlighet": 3,
+          "foreslaatteTiltak": "Design alle operasjoner idempotent, idempotency keys, deduplication store (TTL cache), safe to retry"
+        },
+        {
+          "id": "resiliens-003",
+          "risikoelement": "Ingen backpressure-mekanisme",
+          "saarbarhet": "Upstream sender raskere enn downstream kan prosessere, memory exhaustion, cascading failures",
+          "eksisterendeBeskyttelse": "Buffering i minne",
+          "eksisterendeKontroll": "Restart ved out-of-memory",
+          "K": 4,
+          "I": 3,
+          "T": 4,
+          "sannsynlighet": 3,
+          "foreslaatteTiltak": "Implementere backpressure (reactive streams), bounded queues, load shedding, rate limiting, 429/503 responses"
+        },
+        {
+          "id": "resiliens-004",
+          "risikoelement": "Manglende graceful degradation",
+          "saarbarhet": "Når en avhengighet feiler, feiler hele tjenesten i stedet for å degradere funksjonalitet",
+          "eksisterendeBeskyttelse": "Error handling",
+          "eksisterendeKontroll": "Manuell failover",
+          "K": 4,
+          "I": 3,
+          "T": 3,
+          "sannsynlighet": 3,
+          "foreslaatteTiltak": "Feature toggles for non-critical features, fallback values, cached responses, static content som fallback"
+        },
+        {
+          "id": "resiliens-005",
+          "risikoelement": "Dependency failures kaskaderer",
+          "saarbarhet": "Én tjeneste feiler, trekker ned alle avhengige tjenester, ingen isolasjon, tight coupling",
+          "eksisterendeBeskyttelse": "Monitoring av avhengigheter",
+          "eksisterendeKontroll": "Alerting ved feil",
+          "K": 5,
+          "I": 4,
+          "T": 4,
+          "sannsynlighet": 3,
+          "foreslaatteTiltak": "Circuit breakers, bulkheads (isolere ressurser), timeouts, async kommunikasjon, fail-fast på non-critical paths"
+        },
+        {
+          "id": "resiliens-006",
+          "risikoelement": "Manglende chaos engineering og resiliens-testing",
+          "saarbarhet": "Resiliens-mekanismer ikke testet, finner ut ved faktisk nedetid at fallbacks ikke virker",
+          "eksisterendeBeskyttelse": "Standard testing",
+          "eksisterendeKontroll": "Ingen chaos testing",
+          "K": 3,
+          "I": 3,
+          "T": 4,
+          "sannsynlighet": 3,
+          "foreslaatteTiltak": "Implementere chaos engineering (Chaos Monkey, fault injection), teste failure scenarios, gamedays, test i prod"
+        }
+      ]
+    },
+    {
+      "id": "middleware-platform",
+      "navn": "Middleware og integrasjonsplattformer",
+      "risikoer": [
+        {
+          "id": "middleware-001",
+          "risikoelement": "ESB/middleware single point of failure",
+          "saarbarhet": "All integrasjon går via én ESB/middleware, hvis denne feiler stopper all dataflyt",
+          "eksisterendeBeskyttelse": "Enterprise Service Bus",
+          "eksisterendeKontroll": "Monitoring av ESB",
+          "K": 5,
+          "I": 4,
+          "T": 4,
+          "sannsynlighet": 2,
+          "foreslaatteTiltak": "High availability setup, clustering, vurdere å gå bort fra ESB til point-to-point eller service mesh"
+        },
+        {
+          "id": "middleware-002",
+          "risikoelement": "Message transformation i middleware gir vendor lock-in",
+          "saarbarhet": "Business logic i middleware-config, vanskelig å migrere, proprietær transformasjonslogikk",
+          "eksisterendeBeskyttelse": "ESB håndterer transformasjoner",
+          "eksisterendeKontroll": "Dokumentert i ESB",
+          "K": 3,
+          "I": 2,
+          "T": 4,
+          "sannsynlighet": 3,
+          "foreslaatteTiltak": "Flytte transformasjonslogikk til services, minimal logic i middleware, infrastructure as code for middleware config"
+        },
+        {
+          "id": "middleware-003",
+          "risikoelement": "Performance bottleneck i integrasjonsplattform",
+          "saarbarhet": "All trafikk går via middleware, begrenset throughput, latency øker, skaleringsutfordringer",
+          "eksisterendeBeskyttelse": "Dedikert integrasjonsserver",
+          "eksisterendeKontroll": "Performance monitoring",
+          "K": 4,
+          "I": 3,
+          "T": 3,
+          "sannsynlighet": 3,
+          "foreslaatteTiltak": "Horizontal scaling av middleware, vurdere direct integration for high-volume, caching, async patterns"
+        },
+        {
+          "id": "middleware-004",
+          "risikoelement": "Configuration drift i middleware",
+          "saarbarhet": "Manuelle endringer i GUI, ikke versjonskontrollert, staging og prod ut-av-sync, ingen audit trail",
+          "eksisterendeBeskyttelse": "Change management prosess",
+          "eksisterendeKontroll": "Dokumentasjon av endringer",
+          "K": 3,
+          "I": 3,
+          "T": 4,
+          "sannsynlighet": 4,
+          "foreslaatteTiltak": "Infrastructure as Code for middleware, versjonskontroll av config, automated deployment, configuration validation"
+        },
+        {
+          "id": "middleware-005",
+          "risikoelement": "Manglende observability i integrasjonsflyt",
+          "saarbarhet": "Melding går inn i middleware og forsvinner, vanskelig å trace end-to-end, debugging tar lang tid",
+          "eksisterendeBeskyttelse": "Logging i middleware",
+          "eksisterendeKontroll": "Log aggregation",
+          "K": 3,
+          "I": 2,
+          "T": 4,
+          "sannsynlighet": 4,
+          "foreslaatteTiltak": "Distributed tracing (correlation IDs), end-to-end transaction monitoring, business process monitoring, integration flow visualization"
+        }
+      ]
+    }
+  ]
+}

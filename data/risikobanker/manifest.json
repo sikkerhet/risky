@@ -45,6 +45,11 @@
       "id": "kontinuitet",
       "fil": "kontinuitet.json",
       "aktiv": true
+    },
+    {
+      "id": "integrasjoner",
+      "fil": "integrasjoner.json",
+      "aktiv": true
     }
   ]
 }

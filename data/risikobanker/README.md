@@ -12,6 +12,7 @@ Systemet kommer med følgende banker:
 - **onprem.json** - Lokal server/on-premise (fysisk sikkerhet, lokal drift)
 - **ai-tjenester.json** - KI-tjenester og Agentic AI (LLM-sikkerhet, autonome agenter, ML-modeller, bias, governance)
 - **saas.json** - SaaS-tjenester (multi-tenancy, vendor management, integrasjoner, data governance)
+- **integrasjoner.json** - Integrasjoner og systemsamspill (API, meldingskøer, ETL, asynkron kommunikasjon, middleware)
 
 ### Compliance og personvern
 - **persondata.json** - Persondata/GDPR (behandlingsgrunnlag, registrertes rettigheter, etc.)
