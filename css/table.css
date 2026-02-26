@@ -56,15 +56,22 @@
 }
 
 .risks-table td {
-    padding: 12px 10px;
+    padding: 14px 12px;
     border: none;
     border-bottom: 1px solid #e8e8e8;
-    border-right: 1px solid #f0f0f0;
+    border-right: 1px solid #f5f5f5;
     vertical-align: top;
+    background-color: #fff;
 }
 
 .risks-table td:last-child {
     border-right: none;
+}
+
+/* Små nummer-celler (K, I, T, S) */
+.risks-table td:has(select) {
+    text-align: center;
+    font-weight: 500;
 }
 
 .risks-table tbody tr {
@@ -75,33 +82,37 @@
     background-color: #fafafa;
 }
 
-/* Gi rader med innhold et mer "ferdig" utseende */
-.risks-table tbody tr:not(:hover) textarea:not(:focus):not(:empty) {
-    color: #222;
-}
-
-.risks-table tbody tr:not(:hover) textarea:not(:focus):empty {
-    color: #bbb;
-    font-style: italic;
+/* Tomme felt med italic placeholder-hint */
+.risks-table tbody tr:not(:hover) textarea:not(:focus):placeholder-shown {
+    color: #aaa;
 }
 
 .risks-table textarea {
     width: 100%;
     min-width: 150px;
-    padding: 4px 6px;
+    padding: 4px 8px;
     border: 1px solid transparent;
     border-radius: 2px;
     font-family: inherit;
     font-size: 14px;
     resize: vertical;
     background-color: transparent;
-    transition: all 0.2s;
-    line-height: 1.5;
+    transition: all 0.15s;
+    line-height: 1.6;
+    color: #222;
+}
+
+/* Standard tilstand - ser ut som ren tekst */
+.risks-table textarea:not(:focus):not(:hover) {
+    border-color: transparent;
+    background-color: transparent;
+    cursor: default;
 }
 
 .risks-table textarea:hover {
-    background-color: #fafafa;
-    border-color: #e0e0e0;
+    background-color: #f9f9f9;
+    border-color: #e8e8e8;
+    cursor: text;
 }
 
 .risks-table textarea:focus {
@@ -109,17 +120,18 @@
     border-color: #2e5f8e;
     background-color: #fff;
     box-shadow: 0 0 0 2px rgba(46, 95, 142, 0.1);
+    cursor: text;
 }
 
-.risks-table textarea:placeholder-shown {
+/* Placeholder styling */
+.risks-table textarea::placeholder {
+    color: #aaa;
     font-style: italic;
-    color: #999;
+    opacity: 1;
 }
 
-.risks-table textarea:empty::before {
-    content: attr(placeholder);
+.risks-table textarea:focus::placeholder {
     color: #bbb;
-    font-style: italic;
 }
 
 .risks-table select {
@@ -131,11 +143,27 @@
     background-color: transparent;
     transition: all 0.2s;
     cursor: pointer;
+    color: #222;
+    font-weight: 500;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    text-align: center;
+}
+
+/* Fjern dropdown-pil når ikke hoveret/fokusert */
+.risks-table select:not(:hover):not(:focus) {
+    background-image: none;
 }
 
 .risks-table select:hover {
     background-color: #fafafa;
     border-color: #e0e0e0;
+    background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+    background-repeat: no-repeat;
+    background-position: right 2px center;
+    background-size: 16px;
+    padding-right: 20px;
 }
 
 .risks-table select:focus {
@@ -143,14 +171,20 @@
     border-color: #2e5f8e;
     background-color: #fff;
     box-shadow: 0 0 0 2px rgba(46, 95, 142, 0.1);
+    background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%232e5f8e' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+    background-repeat: no-repeat;
+    background-position: right 2px center;
+    background-size: 16px;
+    padding-right: 20px;
 }
 
 .calculated-field {
-    font-weight: 600;
+    font-weight: 700;
     text-align: center;
-    background-color: #f5f5f5;
-    color: #333;
+    background-color: #fafafa;
+    color: #222;
     font-size: 15px;
+    border-left: 1px solid #e0e0e0 !important;
 }
 
 /* KIT-tabell */
