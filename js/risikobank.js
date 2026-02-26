@@ -330,16 +330,6 @@ function selectRisikoFromBank(bankRisiko) {
         document.activeElement.blur();
     }
 
-    // Lagre scroll-posisjon og lås scrolling med CSS
-    const scrollPos = window.scrollY;
-    const scrollLeft = window.scrollX;
-
-    // Lås kroppen på nåværende posisjon
-    document.body.style.position = 'fixed';
-    document.body.style.top = `-${scrollPos}px`;
-    document.body.style.left = `-${scrollLeft}px`;
-    document.body.style.width = '100%';
-
     // Re-render
     renderRisksTable();
     renderHeatmap();
@@ -349,17 +339,9 @@ function selectRisikoFromBank(bankRisiko) {
     // Scroll til og highlight den oppdaterte risikoen
     requestAnimationFrame(() => {
         requestAnimationFrame(() => {
-            // Fjern scroll-lås
-            document.body.style.position = '';
-            document.body.style.top = '';
-            document.body.style.left = '';
-            document.body.style.width = '';
-            window.scrollTo(scrollLeft, scrollPos);
-
-            // Nå scroll til oppdatert risiko
             const updatedRow = document.querySelector(`tr[data-risk-id="${riskId}"]`);
             if (updatedRow) {
-                updatedRow.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                updatedRow.scrollIntoView({ behavior: 'instant', block: 'center' });
 
                 // Highlight rad i et par sekunder
                 updatedRow.style.backgroundColor = '#e8f5e9';

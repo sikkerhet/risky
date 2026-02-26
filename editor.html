@@ -600,16 +600,6 @@
                 document.activeElement.blur();
             }
 
-            // Lagre scroll-posisjon og lås scrolling med CSS
-            const scrollPos = window.scrollY;
-            const scrollLeft = window.scrollX;
-
-            // Lås kroppen på nåværende posisjon
-            document.body.style.position = 'fixed';
-            document.body.style.top = `-${scrollPos}px`;
-            document.body.style.left = `-${scrollLeft}px`;
-            document.body.style.width = '100%';
-
             currentAnalysis.risikoer.push(newRisk);
             updateAnalysis(currentAnalysisId, { risikoer: currentAnalysis.risikoer });
             renderRisksTable();
@@ -620,31 +610,23 @@
             // Scroll til og fokuser på den nye risikoen
             requestAnimationFrame(() => {
                 requestAnimationFrame(() => {
-                    // Fjern scroll-lås
-                    document.body.style.position = '';
-                    document.body.style.top = '';
-                    document.body.style.left = '';
-                    document.body.style.width = '';
-                    window.scrollTo(scrollLeft, scrollPos);
-
-                    // Nå scroll til ny risiko
                     const newRow = document.querySelector(`tr[data-risk-id="${newRisk.id}"]`);
                     if (newRow) {
-                        newRow.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                        newRow.scrollIntoView({ behavior: 'instant', block: 'center' });
 
                         // Fokuser på første input-felt
-                        setTimeout(() => {
+                        requestAnimationFrame(() => {
                             const firstInput = newRow.querySelector('textarea');
                             if (firstInput) {
                                 firstInput.focus({ preventScroll: true });
                             }
-                        }, 300);
 
-                        // Highlight rad i et par sekunder
-                        newRow.style.backgroundColor = '#e3f2fd';
-                        setTimeout(() => {
-                            newRow.style.backgroundColor = '';
-                        }, 2000);
+                            // Highlight rad i et par sekunder
+                            newRow.style.backgroundColor = '#e3f2fd';
+                            setTimeout(() => {
+                                newRow.style.backgroundColor = '';
+                            }, 2000);
+                        });
                     }
                 });
             });
