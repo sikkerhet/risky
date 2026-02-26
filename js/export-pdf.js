@@ -350,6 +350,15 @@ function generatePDFContent(doc) {
         // Don't throw - just skip comments if there's an error
     }
 
+    // Legg til sidetall på alle sider
+    const totalPages = doc.internal.getNumberOfPages();
+    for (let i = 1; i <= totalPages; i++) {
+        doc.setPage(i);
+        doc.setFontSize(9);
+        doc.setTextColor(100, 100, 100);
+        doc.text(`Side ${i} av ${totalPages}`, 148, 200, { align: 'center' });
+    }
+
     // Lagre PDF
     const tjeneste = safeText(currentAnalysis.metadata.tjeneste) || 'analyse';
     const dato = safeText(currentAnalysis.createdDate) || 'ukjent';
