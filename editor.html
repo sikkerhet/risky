@@ -601,12 +601,6 @@
                 document.activeElement.blur();
             }
 
-            // Scroll til ankeret på slutten før vi renderer
-            const anchor = document.getElementById('tableAnchor');
-            if (anchor) {
-                anchor.scrollIntoView({ behavior: 'instant', block: 'end' });
-            }
-
             currentAnalysis.risikoer.push(newRisk);
             updateAnalysis(currentAnalysisId, { risikoer: currentAnalysis.risikoer });
             renderRisksTable();
