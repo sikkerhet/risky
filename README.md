@@ -14,15 +14,21 @@ Web-basert verktøy for å lage Risiko- og Sårbarhetsanalyser (ROS) basert på 
   - Rød (19-25): Kritisk risiko
   - Klikk på heatmap for å hoppe til risiko i tabellen
 - **Komplett risikotabell** - Alle felt med auto-beregning
-- **Risikobank** - 66 profesjonelle risikoer i 4 spesialiserte banker
+- **Risikobank** - 92 profesjonelle risikoer i 10 spesialiserte banker
   - Generell IT-tjeneste (31 risikoer)
   - Skytjeneste (13 risikoer)
   - Lokal server/on-premise (10 risikoer)
   - Persondata/GDPR (12 risikoer)
+  - Webapp/API - OWASP Top 10 (10 risikoer)
+  - Database (7 risikoer)
+  - Mobilapp - OWASP Mobile (8 risikoer)
   - Modal-basert velger: Velg bank → Velg kategori → Velg risiko
+  - Import av risikoer fra andre analyser
+  - 6 baseline-maler for rask oppstart
   - Vises kun for nye/tomme risikoer (grønn 📁-knapp)
   - Automatisk utfylling av alle felt
   - Redigerbart etter valg
+  - Last opp egne risikobanker (JSON)
 - **KIT-analyse** - Analyse av Konfidensialitet, Integritet, Tilgjengelighet
 - **Tiltak og kommentarer**
   - Fire typer: Tiltak, Kommentar, Oppfølging, Intern kommentar
@@ -35,14 +41,32 @@ Web-basert verktøy for å lage Risiko- og Sårbarhetsanalyser (ROS) basert på 
   - PDF viser både lenketittel og full URL
   - Fargekoding: Grønn (tiltak), Blå (kommentar), Oransje (oppfølging), Grå (intern)
   - Skjulte kommentarer vises dimmet med 🚫-merke
+- **Statistikk og visualisering**
+  - Sanntids statistikk-panel med risikofordeling
+  - 3 interaktive diagrammer: konsekvens, sannsynlighet, KIT-fordeling
+  - Automatisk oppdatering ved endringer
+- **Akseptansenivå og høyrisikorapport**
+  - Definer akseptabelt risikonivå (grønn/gul/oransje/rød)
+  - Eksporter Markdown-rapport over akseptansenivået
+  - Automatisk gruppering etter alvorlighet
+- **Tilleggsinformasjon**
+  - Egendefinert tekstfelt med redigerbar overskrift
+  - Inkluderes i PDF- og Excel-rapporter
+  - Perfekt for sammendrag og konklusjoner
+- **Eksempelanalyse**
+  - Komplett "Nettbank for bedriftskunder" med 12 risikoer
+  - Demonstrerer alle funksjoner
+  - Last inn med ett klikk
 - **Automatiske beregninger**
   - Konsekvens = max(K, I, T)
   - Risikonivå = Konsekvens × Sannsynlighet
 - **LocalStorage lagring** - Alt lagres automatisk i nettleseren
 - **Komplett eksport**
-  - 📄 **PDF** - Profesjonell rapport med heatmap, tabeller og KIT-analyse
-  - 📊 **Excel** - 4 ark (Metadata, Risikoer, KIT-analyse, Heatmap)
+  - 📄 **PDF** - Profesjonell rapport med statistikk, heatmap, tabeller, KIT-analyse og kommentarer
+  - 📊 **Excel** - Flere ark (Metadata, Risikoer, KIT-analyse, Heatmap, Tilleggsinformasjon, Kommentarer)
   - 💾 **JSON** - Import/eksport for backup og deling
+  - 📦 **ZIP** - Eksporter alle analyser i strukturerte mapper
+  - 📝 **Markdown** - Høyrisikorapport over akseptansenivå
 - **Responsivt design** - Fungerer på desktop, tablet og mobil
 
 ## 🚀 Kom i gang
@@ -188,24 +212,37 @@ Personvernspesifikke risikoer:
 ## 🗂️ Filstruktur
 
 ```
-rosa/
+risky/
 ├── index.html              # Startskjerm (oversikt)
 ├── editor.html             # Hovedverktøy
-├── README.md               # Dokumentasjon
+├── help.html              # Komplett hjelpedokumentasjon
+├── README.md              # Dokumentasjon
 ├── css/
 │   ├── main.css           # Hovedstyling
 │   ├── heatmap.css        # Heatmap
-│   └── table.css          # Tabell
+│   ├── table.css          # Tabell
+│   ├── modal.css          # Modal-vinduer
+│   └── comments.css       # Kommentarsystem
 ├── js/
 │   ├── app.js             # Kjernefunksjoner
 │   ├── heatmap.js         # Heatmap rendering
 │   ├── table.js           # Tabell-håndtering
 │   ├── risikobank.js      # Risikobank logikk
+│   ├── comments.js        # Kommentarsystem
 │   ├── export-json.js     # JSON import/eksport
 │   ├── export-pdf.js      # PDF generering
-│   └── export-excel.js    # Excel generering
+│   ├── export-excel.js    # Excel generering
+│   └── export-all.js      # ZIP eksport
 └── data/
-    └── risikobank.json    # 40+ forhåndsdefinerte risikoer
+    ├── baselines/         # 6 baseline-maler
+    │   ├── baseline-it-tjeneste.json
+    │   ├── baseline-sky.json
+    │   ├── baseline-persondata.json
+    │   ├── baseline-webapp.json
+    │   ├── baseline-database.json
+    │   └── baseline-mobile.json
+    ├── risikobank.json    # Hovedrisikobank
+    └── eksempel-analyse.json  # Eksempelanalyse
 ```
 
 ## 🔧 Teknologi
@@ -244,6 +281,16 @@ Verktøyet følger klassisk ROS-metodikk:
 - **13-18** (Oransje): Høy risiko - Reduser
 - **19-25** (Rød): Kritisk risiko - Umiddelbare tiltak
 
+## 🤝 Bidrag
+
+Bidrag er velkomne! Vennligst:
+
+1. Fork repository
+2. Opprett en feature branch (`git checkout -b feature/ny-funksjon`)
+3. Commit endringer (`git commit -m 'Legg til ny funksjon'`)
+4. Push til branch (`git push origin feature/ny-funksjon`)
+5. Åpne en Pull Request
+
 ## 🔮 Fremtidige forbedringer
 
 - Eksport til Word/DOCX
@@ -253,12 +300,37 @@ Verktøyet følger klassisk ROS-metodikk:
 - Dashboard med risikooversikt
 - Egendefinerte skalaer (3x3, 4x4)
 - Mørk modus
-- Utvidbar risikobank (legg til egne maler)
 
-## 📝 Basert på
+## 🙏 Anerkjennelser
 
-UiO ROS-mal (uio-ros-mal.xlsx)
+- OWASP Top 10 og OWASP Mobile Top 10 for baseline-maler
+- Norsk ROS-metodikk for risikovurdering
+- Open source-biblioteker: jsPDF, xlsx, JSZip
 
 ## 📄 Lisens
 
-Internt verktøy for UiO
+MIT License
+
+Copyright (c) 2026 Sikkerhet
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+
+---
+
+**Utviklet for norske organisasjoner som ønsker strukturert risikovurdering.**
