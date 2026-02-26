@@ -124,6 +124,7 @@ function generatePDFContent(doc) {
             body: tableData,
             styles: { fontSize: 8, cellPadding: 2 },
             headStyles: { fillColor: [0, 123, 255], textColor: 255 },
+            rowPageBreak: 'avoid', // Unngå å dele risikoer over sideskift
             columnStyles: {
                 0: { cellWidth: 10 },
                 5: { cellWidth: 8 },
