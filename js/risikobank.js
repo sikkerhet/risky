@@ -330,27 +330,68 @@ function selectRisikoFromBank(bankRisiko) {
         document.activeElement.blur();
     }
 
-    // Re-render
-    renderRisksTable();
-    renderHeatmap();
-    renderStatistics();
-    renderKITTable();
+    // Finn den eksisterende raden og oppdater den direkte (ikke re-render hele tabellen)
+    const existingRow = document.querySelector(`tr[data-risk-id="${riskId}"]`);
+    if (existingRow) {
+        // Oppdater feltene direkte
+        const textareas = existingRow.querySelectorAll('textarea');
+        if (textareas[0]) textareas[0].value = risk.risikoelement;
+        if (textareas[1]) textareas[1].value = risk.saarbarhet;
+        if (textareas[2]) textareas[2].value = risk.eksisterendeBeskyttelse;
+        if (textareas[3]) textareas[3].value = risk.eksisterendeKontroll;
+        if (textareas[4]) textareas[4].value = risk.foreslaatteTiltak;
 
-    // Scroll til og highlight den oppdaterte risikoen
-    requestAnimationFrame(() => {
+        // Oppdater KIT dropdowns
+        const selects = existingRow.querySelectorAll('select');
+        if (selects[0]) selects[0].value = risk.K;
+        if (selects[1]) selects[1].value = risk.I;
+        if (selects[2]) selects[2].value = risk.T;
+        if (selects[3]) selects[3].value = risk.sannsynlighet;
+
+        // Oppdater konsekvens og risikonivå celler
+        const konsCell = existingRow.querySelector('td:nth-child(10)');
+        const rnCell = existingRow.querySelector('td:nth-child(11)');
+        if (konsCell) {
+            konsCell.textContent = risk.konsekvens;
+            konsCell.style.fontWeight = 'bold';
+        }
+        if (rnCell) {
+            rnCell.textContent = risk.risikonivaa;
+            rnCell.style.color = getRiskColor(risk.risikonivaa);
+            rnCell.style.fontWeight = 'bold';
+        }
+
+        // Oppdater kun heatmap, statistikk og KIT (ikke hele tabellen)
+        renderHeatmap();
+        renderStatistics();
+        renderKITTable();
+
+        // Scroll til og highlight den oppdaterte risikoen
+        existingRow.scrollIntoView({ behavior: 'instant', block: 'center' });
+
+        // Highlight rad i et par sekunder
+        existingRow.style.backgroundColor = '#e8f5e9';
+        setTimeout(() => {
+            existingRow.style.backgroundColor = '';
+        }, 2000);
+    } else {
+        // Fallback: re-render alt hvis raden ikke finnes
+        renderRisksTable();
+        renderHeatmap();
+        renderStatistics();
+        renderKITTable();
+
         requestAnimationFrame(() => {
             const updatedRow = document.querySelector(`tr[data-risk-id="${riskId}"]`);
             if (updatedRow) {
                 updatedRow.scrollIntoView({ behavior: 'instant', block: 'center' });
-
-                // Highlight rad i et par sekunder
                 updatedRow.style.backgroundColor = '#e8f5e9';
                 setTimeout(() => {
                     updatedRow.style.backgroundColor = '';
                 }, 2000);
             }
         });
-    });
+    }
 }
 
 // Eksponér custom bank-funksjoner globalt for bruk i editor.html
