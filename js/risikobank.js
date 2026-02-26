@@ -325,9 +325,20 @@ function selectRisikoFromBank(bankRisiko) {
     // Oppdater analyse
     updateAnalysis(currentAnalysisId, { risikoer: currentAnalysis.risikoer });
 
-    // Lagre scroll-posisjon og hindre auto-scroll under rendering
+    // Blur active element to prevent browser from trying to keep it in view
+    if (document.activeElement && document.activeElement !== document.body) {
+        document.activeElement.blur();
+    }
+
+    // Lagre scroll-posisjon og lås scrolling med CSS
     const scrollPos = window.scrollY;
-    document.body.style.overflow = 'hidden';
+    const scrollLeft = window.scrollX;
+
+    // Lås kroppen på nåværende posisjon
+    document.body.style.position = 'fixed';
+    document.body.style.top = `-${scrollPos}px`;
+    document.body.style.left = `-${scrollLeft}px`;
+    document.body.style.width = '100%';
 
     // Re-render
     renderRisksTable();
@@ -335,15 +346,17 @@ function selectRisikoFromBank(bankRisiko) {
     renderStatistics();
     renderKITTable();
 
-    // Gjenopprett scroll umiddelbart for å forhindre hopp
-    window.scrollTo(0, scrollPos);
-
     // Scroll til og highlight den oppdaterte risikoen
     requestAnimationFrame(() => {
         requestAnimationFrame(() => {
-            // Re-aktiver scrolling
-            document.body.style.overflow = '';
+            // Fjern scroll-lås
+            document.body.style.position = '';
+            document.body.style.top = '';
+            document.body.style.left = '';
+            document.body.style.width = '';
+            window.scrollTo(scrollLeft, scrollPos);
 
+            // Nå scroll til oppdatert risiko
             const updatedRow = document.querySelector(`tr[data-risk-id="${riskId}"]`);
             if (updatedRow) {
                 updatedRow.scrollIntoView({ behavior: 'smooth', block: 'center' });
