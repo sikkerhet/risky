@@ -25,6 +25,11 @@
       "id": "ai-tjenester",
       "fil": "ai-tjenester.json",
       "aktiv": true
+    },
+    {
+      "id": "saas",
+      "fil": "saas.json",
+      "aktiv": true
     }
   ]
 }
