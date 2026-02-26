@@ -325,6 +325,7 @@ function selectRisikoFromBank(bankRisiko) {
     // Re-render
     renderRisksTable();
     renderHeatmap();
+    renderStatistics();
     renderKITTable();
 }
 

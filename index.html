@@ -38,6 +38,8 @@
             </div>
             <div id="emptyState" class="empty-state">
                 <p>Ingen analyser ennå. Klikk "Ny analyse" for å komme i gang.</p>
+                <button id="loadExampleBtn" class="btn btn-primary" style="margin-top: 20px;">📚 Last inn eksempelanalyse</button>
+                <p style="margin-top: 10px; font-size: 0.9em; color: #666;">Se hvordan en komplett ROS-analyse ser ut</p>
             </div>
         </section>
     </div>
@@ -57,6 +59,11 @@
             document.getElementById('helpBtn').addEventListener('click', () => {
                 window.open('help.html', '_blank');
             });
+
+            const loadExampleBtn = document.getElementById('loadExampleBtn');
+            if (loadExampleBtn) {
+                loadExampleBtn.addEventListener('click', loadExampleAnalysis);
+            }
         });
 
         function loadAnalysesList() {
@@ -590,6 +597,37 @@
 
             // Reset file input
             event.target.value = '';
+        }
+
+        async function loadExampleAnalysis() {
+            try {
+                const response = await fetch('data/eksempel-analyse.json');
+                if (!response.ok) {
+                    throw new Error('Kunne ikke laste eksempelanalyse');
+                }
+
+                const exampleAnalysis = await response.json();
+                const analyses = getAnalyses();
+
+                // Sjekk om eksempelanalysen allerede finnes
+                const existing = analyses.findIndex(a => a.id === exampleAnalysis.id);
+                if (existing >= 0) {
+                    if (!confirm('Eksempelanalysen finnes allerede. Vil du overskrive den?')) {
+                        return;
+                    }
+                    analyses[existing] = exampleAnalysis;
+                } else {
+                    analyses.push(exampleAnalysis);
+                }
+
+                saveAnalyses(analyses);
+                loadAnalysesList();
+
+                alert('✓ Eksempelanalyse lastet inn!\n\n"ROS-analyse - Nettbank for bedriftskunder" er nå tilgjengelig.\n\nDenne analysen demonstrerer alle funksjoner i Risky:\n• 12 risikoer med varierende nivå\n• Kommentarer og tiltak\n• Tilleggsinformasjon\n• Akseptansenivå satt til 12');
+            } catch (err) {
+                alert('Feil ved lasting av eksempelanalyse: ' + err.message);
+                console.error(err);
+            }
         }
 
         function validateAnalysis(analysis) {

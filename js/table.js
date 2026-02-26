@@ -212,6 +212,7 @@ function recalculateRisk(riskId) {
     updateAnalysis(currentAnalysisId, { risikoer: currentAnalysis.risikoer });
     renderRisksTable();
     renderHeatmap();
+    renderStatistics();
     renderKITTable();
 }
 
@@ -226,6 +227,7 @@ function deleteRisk(riskId) {
     updateAnalysis(currentAnalysisId, { risikoer: currentAnalysis.risikoer });
     renderRisksTable();
     renderHeatmap();
+    renderStatistics();
     renderKITTable();
 }
 
@@ -239,6 +241,8 @@ function moveRisk(fromIndex, toIndex) {
 
     updateAnalysis(currentAnalysisId, { risikoer: risks });
     renderRisksTable();
+    renderHeatmap();
+    renderStatistics();
 }
 
 function renderKITTable() {

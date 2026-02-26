@@ -317,6 +317,53 @@ section h2 {
     gap: 15px;
     justify-content: center;
     flex-wrap: wrap;
+    margin-bottom: 30px;
+}
+
+.acceptance-level-section {
+    margin-top: 30px;
+    padding-top: 30px;
+    border-top: 1px solid #e0e0e0;
+}
+
+.acceptance-level-section h3 {
+    margin-top: 0;
+    margin-bottom: 20px;
+    font-size: 1.2em;
+    color: #333;
+}
+
+.acceptance-level-controls {
+    display: flex;
+    align-items: flex-end;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+.acceptance-level-controls .form-group {
+    margin: 0;
+    flex: 0 0 auto;
+}
+
+.acceptance-level-controls .form-group label {
+    display: block;
+    margin-bottom: 8px;
+}
+
+.export-preview {
+    background: #fff;
+    padding: 10px 15px;
+    border-radius: 4px;
+    border: 1px solid #d0d0d0;
+    font-weight: 600;
+    color: #555;
+    display: flex;
+    align-items: center;
+    height: 40px;
+}
+
+.acceptance-level-controls button {
+    margin: 0;
 }
 
 .btn-highlight {
@@ -414,6 +461,152 @@ section h2 {
     font-size: 13px;
 }
 
+/* Egendefinert tekstseksjon */
+.custom-text-section {
+    margin-top: 50px;
+    padding: 30px 0;
+    border-top: 1px solid #e8e8e8;
+}
+
+.custom-text-section .editable-title {
+    cursor: text;
+    padding: 5px;
+    border-radius: 2px;
+    transition: background 0.2s;
+}
+
+.custom-text-section .editable-title:hover {
+    background: #f8f8f8;
+}
+
+.custom-text-section .editable-title:focus {
+    background: #fafafa;
+    box-shadow: 0 0 0 2px #d0d0d0;
+    outline: none;
+}
+
+.custom-text-area {
+    min-height: 150px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    line-height: 1.6;
+}
+
+.text-muted {
+    color: #999;
+    font-size: 0.85em;
+    display: block;
+    margin-top: 10px;
+}
+
+/* Statistikk seksjon */
+.stats-section {
+    margin-top: 50px;
+    padding: 30px 0;
+}
+
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 20px;
+    margin-bottom: 40px;
+}
+
+.stat-card {
+    background: #f8f9fa;
+    padding: 25px;
+    border-radius: 8px;
+    text-align: center;
+    border: 1px solid #e0e0e0;
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.stat-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+.stat-value {
+    font-size: 2.5em;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 8px;
+}
+
+.stat-label {
+    font-size: 0.9em;
+    color: #666;
+    margin-bottom: 5px;
+}
+
+.stat-percent {
+    font-size: 0.85em;
+    color: #999;
+    font-style: italic;
+}
+
+.stat-card.stat-red {
+    background: #ffe6e6;
+    border-color: #dc3545;
+}
+
+.stat-card.stat-red .stat-value {
+    color: #dc3545;
+}
+
+.stat-card.stat-orange {
+    background: #fff4e6;
+    border-color: #fd7e14;
+}
+
+.stat-card.stat-orange .stat-value {
+    color: #fd7e14;
+}
+
+.stat-card.stat-yellow {
+    background: #fffbeb;
+    border-color: #ffc107;
+}
+
+.stat-card.stat-yellow .stat-value {
+    color: #f59f00;
+}
+
+.stat-card.stat-green {
+    background: #e6f7e6;
+    border-color: #28a745;
+}
+
+.stat-card.stat-green .stat-value {
+    color: #28a745;
+}
+
+.charts-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 30px;
+    margin-top: 30px;
+}
+
+.chart-box {
+    background: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    border: 1px solid #e0e0e0;
+    text-align: center;
+}
+
+.chart-box h3 {
+    font-size: 1.1em;
+    margin-bottom: 15px;
+    margin-top: 0;
+    color: #333;
+}
+
+.chart-box canvas {
+    max-width: 100%;
+    height: auto;
+}
+
 /* Responsive */
 @media (max-width: 768px) {
     .form-grid {
@@ -430,5 +623,13 @@ section h2 {
 
     header h1 {
         font-size: 1.8em;
+    }
+
+    .stats-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .charts-container {
+        grid-template-columns: 1fr;
     }
 }

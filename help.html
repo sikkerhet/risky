@@ -150,6 +150,65 @@
         </div>
 
         <div class="help-section">
+            <h2>Importer risikoer fra andre analyser</h2>
+            <p>Gjenbruk risikoer fra tidligere analyser eller start med profesjonelle baseline-maler.</p>
+
+            <h3>📚 Forhåndsdefinerte baseline-maler</h3>
+            <p>Risky kommer med <strong>6 baseline-maler</strong> med til sammen <strong>51 profesjonelle risikoer</strong>:</p>
+
+            <div class="feature-grid">
+                <div class="feature-card">
+                    <h4>Baseline - Generell IT-tjeneste (10)</h4>
+                    <p style="font-size: 13px;">Tilgangsstyring, sårbarhetshåndtering, logging, backup, BCP/DR, applikasjonssikkerhet, kryptering, awareness, secrets</p>
+                </div>
+                <div class="feature-card">
+                    <h4>Baseline - Skytjeneste (8)</h4>
+                    <p style="font-size: 13px;">IAM, S3/storage exposure, kryptering, logging, network segmentering, tagging, IMDS</p>
+                </div>
+                <div class="feature-card">
+                    <h4>Baseline - Persondata/GDPR (8)</h4>
+                    <p style="font-size: 13px;">Behandlingsgrunnlag, informasjonsplikt, rettigheter, lagringstid, DBA, tredjeland, DPIA, breach notification</p>
+                </div>
+                <div class="feature-card">
+                    <h4>Baseline - Webapp/API (10)</h4>
+                    <p style="font-size: 13px;">OWASP Top 10: Access control, injection, XSS, CSRF, SSRF, kryptografi, sårbare komponenter, sessions, design</p>
+                </div>
+                <div class="feature-card">
+                    <h4>Baseline - Database (7)</h4>
+                    <p style="font-size: 13px;">Privilegier, eksponering, kryptering at rest, audit logging, backup, SQL injection, credentials</p>
+                </div>
+                <div class="feature-card">
+                    <h4>Baseline - Mobilapp (8)</h4>
+                    <p style="font-size: 13px;">OWASP Mobile: Storage, kryptering, autentisering, autorisasjon, input validering, reverse engineering, biblioteker, backup</p>
+                </div>
+            </div>
+
+            <h3>Hvordan importere</h3>
+            <ol>
+                <li>I editor, klikk <strong>"📥 Importer risikoer fra analyse"</strong></li>
+                <li>Velg fra <strong>📚 Forhåndsdefinerte maler</strong> eller <strong>📋 Mine analyser</strong></li>
+                <li>Velg import-modus:
+                    <ul>
+                        <li><strong>Erstatt</strong> - Fjerner alle eksisterende risikoer og erstatter med importerte</li>
+                        <li><strong>Legg til</strong> - Beholder eksisterende risikoer og legger til importerte</li>
+                    </ul>
+                </li>
+                <li>Klikk <strong>"Importer risikoer"</strong></li>
+            </ol>
+
+            <h3>Bruksscenarioer</h3>
+            <ul>
+                <li><strong>Mal-analyser:</strong> Opprett "TEMPLATE - Standard IT-tjeneste" med vanlige risikoer, importer til nye analyser</li>
+                <li><strong>Baseline-analyser:</strong> Start nye prosjekter med baseline, legg til prosjektspesifikke risikoer</li>
+                <li><strong>Gjenbruk:</strong> Kopier risikoer fra relaterte analyser for konsistens</li>
+            </ul>
+
+            <div class="tip">
+                <strong>Tips:</strong> Kombiner flere baselines! Start med "Baseline - Webapp/API", importer med "Legg til", deretter importer "Baseline - Database" også med "Legg til".
+            </div>
+        </div>
+
+        <div class="help-section">
             <h2>Heatmap og visualisering</h2>
             <p>Heatmapet viser risikoplassering i en 5x5 matrise med fargekoding:</p>
             <ul>
@@ -170,6 +229,83 @@
                 <li>Små nummererte sirkler rundt viser hver enkelt risiko</li>
                 <li>Klikk på den store sirkelen eller en av de små for å hoppe til risikoen</li>
             </ul>
+        </div>
+
+        <div class="help-section">
+            <h2>Statistikk og analyse</h2>
+            <p>Risky gir deg omfattende statistikk og visualiseringer for bedre innsikt i risikobildet.</p>
+
+            <h3>Statistikk-panel</h3>
+            <p>Få oversikt over risikofordelingen med disse nøkkeltallene:</p>
+            <ul>
+                <li><strong>Totalt antall risikoer:</strong> Samlet oversikt</li>
+                <li><strong>Røde risikoer (19-25):</strong> Kritiske risikoer som krever umiddelbar oppfølging</li>
+                <li><strong>Oransje risikoer (13-18):</strong> Høye risikoer med prioritert håndtering</li>
+                <li><strong>Gule risikoer (7-12):</strong> Medium risikoer for planlagt oppfølging</li>
+                <li><strong>Grønne risikoer (1-6):</strong> Lave risikoer med akseptabelt nivå</li>
+                <li><strong>Gjennomsnittlig risikonivå:</strong> Helhetlig risikovurdering</li>
+            </ul>
+
+            <h3>Visualiseringer</h3>
+            <p>Tre diagrammer gir deg dypere innsikt:</p>
+            <ul>
+                <li><strong>Fordeling etter konsekvens:</strong> Ser hvordan risikoene fordeler seg på konsekvens-skalaen (1-5)</li>
+                <li><strong>Fordeling etter sannsynlighet:</strong> Viser sannsynlighetsfordelingen på tvers av risikoer</li>
+                <li><strong>KIT-analyse fordeling:</strong> Gjennomsnittlige verdier for Konfidensialitet, Integritet og Tilgjengelighet</li>
+            </ul>
+
+            <div class="tip">
+                <strong>Tips:</strong> Statistikken oppdateres automatisk når du legger til, endrer eller sletter risikoer!
+            </div>
+        </div>
+
+        <div class="help-section">
+            <h2>Tilleggsinformasjon</h2>
+            <p>Legg til fritekst som blir inkludert i rapporter - perfekt for sammendrag, konklusjoner eller kontekst.</p>
+
+            <h3>Slik bruker du det</h3>
+            <ol>
+                <li>Klikk på overskriften "TILLEGGSINFORMASJON" for å endre den</li>
+                <li>Skriv inn din tekst i tekstfeltet</li>
+                <li>Teksten lagres automatisk og inkluderes i PDF- og Excel-eksport</li>
+            </ol>
+
+            <h3>Bruksområder</h3>
+            <ul>
+                <li>Sammendrag av risikoanalysen</li>
+                <li>Konklusjoner og anbefalinger</li>
+                <li>Kontekstinformasjon om tjenesten/systemet</li>
+                <li>Referanser til andre dokumenter</li>
+                <li>Møtenotater eller beslutninger</li>
+            </ul>
+        </div>
+
+        <div class="help-section">
+            <h2>Akseptansenivå og høyrisikorapport</h2>
+            <p>Definer akseptabelt risikonivå og eksporter en fokusert rapport over risikoer som må håndteres.</p>
+
+            <h3>Sette akseptansenivå</h3>
+            <p>Velg mellom fire nivåer:</p>
+            <ul>
+                <li><strong>Nivå 6 (Grønn):</strong> Alle risikoer over lav risiko</li>
+                <li><strong>Nivå 12 (Gul):</strong> Alle medium, høye og kritiske risikoer (standard)</li>
+                <li><strong>Nivå 18 (Oransje):</strong> Kun høye og kritiske risikoer</li>
+                <li><strong>Nivå 19 (Rød):</strong> Kun kritiske risikoer</li>
+            </ul>
+
+            <h3>Høyrisikorapport (Markdown)</h3>
+            <p>Eksporter en strukturert rapport i Markdown-format med:</p>
+            <ul>
+                <li>Automatisk gruppering etter risikonivå (kritisk, høy, medium)</li>
+                <li>Komplett informasjon for hver risiko inkludert KIT-verdier</li>
+                <li>Foreslåtte tiltak og eksisterende kontroller</li>
+                <li>Alle tilhørende kommentarer</li>
+                <li>Tidsstempel og metadata</li>
+            </ul>
+
+            <div class="tip">
+                <strong>Tips:</strong> Markdown-rapporten kan enkelt konverteres til PDF, Word eller HTML med verktøy som Pandoc eller VS Code!
+            </div>
         </div>
 
         <div class="help-section">

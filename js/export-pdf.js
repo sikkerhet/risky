@@ -94,6 +94,90 @@ function generatePDFContent(doc) {
     }
 
     try {
+        // Statistikk
+        if (yPos > 150) {
+            doc.addPage();
+            yPos = 20;
+        } else {
+            yPos += 10;
+        }
+
+        doc.setFontSize(14);
+        doc.setFont(undefined, 'bold');
+        doc.text('STATISTIKK', 20, yPos);
+        yPos += 10;
+
+        const risks = currentAnalysis.risikoer || [];
+        const total = risks.length;
+
+        // Kategoriser risikoer
+        let green = 0, yellow = 0, orange = 0, red = 0;
+        let sumRiskLevel = 0;
+
+        risks.forEach(risk => {
+            const rn = risk.risikonivaa;
+            sumRiskLevel += rn;
+
+            if (rn >= 1 && rn <= 6) green++;
+            else if (rn >= 7 && rn <= 12) yellow++;
+            else if (rn >= 13 && rn <= 18) orange++;
+            else if (rn >= 19 && rn <= 25) red++;
+        });
+
+        const avgRisk = total > 0 ? (sumRiskLevel / total).toFixed(1) : '0.0';
+
+        doc.setFontSize(10);
+        doc.setFont(undefined, 'normal');
+
+        const stats = [
+            ['Totalt antall risikoer:', total.toString()],
+            ['Røde risikoer (19-25):', `${red} (${total > 0 ? Math.round(red/total*100) : 0}%)`],
+            ['Oransje risikoer (13-18):', `${orange} (${total > 0 ? Math.round(orange/total*100) : 0}%)`],
+            ['Gule risikoer (7-12):', `${yellow} (${total > 0 ? Math.round(yellow/total*100) : 0}%)`],
+            ['Grønne risikoer (1-6):', `${green} (${total > 0 ? Math.round(green/total*100) : 0}%)`],
+            ['Gjennomsnittlig risikonivå:', avgRisk]
+        ];
+
+        stats.forEach(([label, value]) => {
+            doc.setFont(undefined, 'bold');
+            doc.text(label, 20, yPos);
+            doc.setFont(undefined, 'normal');
+            doc.text(value, 90, yPos);
+            yPos += 7;
+        });
+
+        // Legg til visualiseringer
+        yPos += 5;
+        const chartStartY = yPos;
+
+        // Consequence chart
+        const consequenceCanvas = document.getElementById('consequenceChart');
+        if (consequenceCanvas) {
+            const imgData = consequenceCanvas.toDataURL('image/png');
+            doc.addImage(imgData, 'PNG', 20, yPos, 70, 47);
+        }
+
+        // Probability chart
+        const probabilityCanvas = document.getElementById('probabilityChart');
+        if (probabilityCanvas) {
+            const imgData = probabilityCanvas.toDataURL('image/png');
+            doc.addImage(imgData, 'PNG', 100, yPos, 70, 47);
+        }
+
+        // KIT chart
+        const kitCanvas = document.getElementById('kitChart');
+        if (kitCanvas) {
+            const imgData = kitCanvas.toDataURL('image/png');
+            doc.addImage(imgData, 'PNG', 180, yPos, 70, 47);
+        }
+
+        yPos += 50;
+    } catch (e) {
+        console.error('Error in statistics section:', e);
+        throw new Error('Feil i statistikk-seksjonen');
+    }
+
+    try {
         // Ny side for risikoer
         doc.addPage();
         yPos = 20;
@@ -206,6 +290,40 @@ function generatePDFContent(doc) {
     } catch (e) {
         console.error('Error in KIT analysis section:', e);
         throw new Error('Feil i KIT-analyse-seksjonen');
+    }
+
+    // Legg til egendefinert tekstseksjon
+    try {
+        const customTextTitle = currentAnalysis.metadata.customTextTitle;
+        const customText = currentAnalysis.metadata.customText;
+
+        if (customText && customText.trim()) {
+            doc.addPage();
+            yPos = 20;
+
+            doc.setFontSize(14);
+            doc.setFont(undefined, 'bold');
+            doc.setTextColor(0, 0, 0);
+            doc.text(customTextTitle || 'TILLEGGSINFORMASJON', 20, yPos);
+            yPos += 10;
+
+            doc.setFontSize(10);
+            doc.setFont(undefined, 'normal');
+
+            // Split long text into lines
+            const textLines = doc.splitTextToSize(customText, 250);
+            textLines.forEach(line => {
+                if (yPos > 270) {
+                    doc.addPage();
+                    yPos = 20;
+                }
+                doc.text(line, 20, yPos);
+                yPos += 6;
+            });
+        }
+    } catch (e) {
+        console.error('Error in custom text section:', e);
+        throw new Error('Feil i egendefinert tekst-seksjonen');
     }
 
     // Legg til kommentarer - Filtrer basert på synlige typer

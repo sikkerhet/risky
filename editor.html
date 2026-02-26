@@ -76,6 +76,56 @@
             </div>
         </section>
 
+        <!-- Statistikk seksjon -->
+        <section class="stats-section">
+            <h2>STATISTIKK</h2>
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-value" id="statTotal">0</div>
+                    <div class="stat-label">Totalt antall risikoer</div>
+                </div>
+                <div class="stat-card stat-red">
+                    <div class="stat-value" id="statRed">0</div>
+                    <div class="stat-label">Røde risikoer (19-25)</div>
+                    <div class="stat-percent" id="statRedPercent">0%</div>
+                </div>
+                <div class="stat-card stat-orange">
+                    <div class="stat-value" id="statOrange">0</div>
+                    <div class="stat-label">Oransje risikoer (13-18)</div>
+                    <div class="stat-percent" id="statOrangePercent">0%</div>
+                </div>
+                <div class="stat-card stat-yellow">
+                    <div class="stat-value" id="statYellow">0</div>
+                    <div class="stat-label">Gule risikoer (7-12)</div>
+                    <div class="stat-percent" id="statYellowPercent">0%</div>
+                </div>
+                <div class="stat-card stat-green">
+                    <div class="stat-value" id="statGreen">0</div>
+                    <div class="stat-label">Grønne risikoer (1-6)</div>
+                    <div class="stat-percent" id="statGreenPercent">0%</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value" id="statAvgRisk">0.0</div>
+                    <div class="stat-label">Gjennomsnittlig risikonivå</div>
+                </div>
+            </div>
+
+            <div class="charts-container">
+                <div class="chart-box">
+                    <h3>Fordeling etter konsekvens</h3>
+                    <canvas id="consequenceChart" width="300" height="200"></canvas>
+                </div>
+                <div class="chart-box">
+                    <h3>Fordeling etter sannsynlighet</h3>
+                    <canvas id="probabilityChart" width="300" height="200"></canvas>
+                </div>
+                <div class="chart-box">
+                    <h3>KIT-analyse fordeling</h3>
+                    <canvas id="kitChart" width="300" height="200"></canvas>
+                </div>
+            </div>
+        </section>
+
         <!-- Risikotabell -->
         <section class="risks-section">
             <h2>RISIKOER</h2>
@@ -127,6 +177,15 @@
             </table>
         </section>
 
+        <!-- Egendefinert tekstseksjon -->
+        <section class="custom-text-section">
+            <h2 contenteditable="true" id="customTextTitle" class="editable-title">TILLEGGSINFORMASJON</h2>
+            <div class="form-group">
+                <textarea id="customText" class="form-control custom-text-area" rows="8" placeholder="Skriv inn tilleggsinformasjon som skal inkluderes i rapporten..."></textarea>
+            </div>
+            <small class="text-muted">Overskriften og teksten over blir med i PDF- og Excel-rapporter.</small>
+        </section>
+
         <!-- Tiltak og kommentarer -->
         <section id="commentsSection" class="comments-section">
             <div class="comments-section-header">
@@ -151,6 +210,26 @@
                 <button id="exportExcelBtn" class="btn btn-primary">📊 Eksporter Excel</button>
                 <button id="exportJsonBtn" class="btn btn-primary">💾 Eksporter JSON</button>
                 <button id="exportAllBtn" class="btn btn-primary btn-highlight">📦 Eksporter alt (ZIP)</button>
+            </div>
+
+            <div class="acceptance-level-section">
+                <h3>Akseptansenivå og risikorapport</h3>
+                <div class="acceptance-level-controls">
+                    <div class="form-group">
+                        <label for="acceptanceLevel">Akseptansenivå (risikoer over dette nivået vil bli eksportert):</label>
+                        <select id="acceptanceLevel" class="form-control" style="max-width: 200px;">
+                            <option value="0">0 - Ingen</option>
+                            <option value="6">6 - Grønn (lav)</option>
+                            <option value="12" selected>12 - Gul (medium)</option>
+                            <option value="18">18 - Oransje (høy)</option>
+                            <option value="19">19 - Rød (kritisk)</option>
+                        </select>
+                    </div>
+                    <div class="export-preview">
+                        <span id="acceptanceLevelPreview">0 risikoer over nivå 12</span>
+                    </div>
+                    <button id="exportMarkdownBtn" class="btn btn-primary">📝 Eksporter høyrisikorappport (Markdown)</button>
+                </div>
             </div>
         </section>
 
@@ -313,6 +392,13 @@
             document.getElementById('tjenesteeier').addEventListener('change', saveMetadata);
             document.getElementById('beskrivelse').addEventListener('change', saveMetadata);
             document.getElementById('commentsSectionTitle').addEventListener('blur', saveCommentsSectionTitle);
+            document.getElementById('customTextTitle').addEventListener('blur', saveCustomTextTitle);
+            document.getElementById('customText').addEventListener('change', saveCustomText);
+            document.getElementById('acceptanceLevel').addEventListener('change', saveAcceptanceLevel);
+            document.getElementById('exportMarkdownBtn').addEventListener('click', exportHighRisksToMarkdown);
+
+            // Initial update of acceptance level preview
+            updateAcceptanceLevelPreview();
         });
 
         function validateAndSaveDate() {
@@ -371,6 +457,127 @@
             showSavedIndicator();
         }
 
+        function saveCustomTextTitle() {
+            const title = document.getElementById('customTextTitle').textContent.trim();
+            currentAnalysis.metadata.customTextTitle = title;
+            currentAnalysis = updateAnalysis(currentAnalysisId, {
+                metadata: currentAnalysis.metadata
+            });
+            showSavedIndicator();
+        }
+
+        function saveCustomText() {
+            const text = document.getElementById('customText').value;
+            currentAnalysis.metadata.customText = text;
+            currentAnalysis = updateAnalysis(currentAnalysisId, {
+                metadata: currentAnalysis.metadata
+            });
+            showSavedIndicator();
+        }
+
+        function saveAcceptanceLevel() {
+            const level = parseInt(document.getElementById('acceptanceLevel').value);
+            currentAnalysis.metadata.acceptanceLevel = level;
+            currentAnalysis = updateAnalysis(currentAnalysisId, {
+                metadata: currentAnalysis.metadata
+            });
+            updateAcceptanceLevelPreview();
+            showSavedIndicator();
+        }
+
+        function updateAcceptanceLevelPreview() {
+            if (!currentAnalysis || !currentAnalysis.risikoer) return;
+
+            const level = parseInt(document.getElementById('acceptanceLevel').value);
+            const risksAboveLevel = currentAnalysis.risikoer.filter(r => r.risikonivaa > level);
+            const preview = document.getElementById('acceptanceLevelPreview');
+            preview.textContent = `${risksAboveLevel.length} risikoer over nivå ${level}`;
+        }
+
+        function exportHighRisksToMarkdown() {
+            if (!currentAnalysis) {
+                alert('Ingen analyse å eksportere');
+                return;
+            }
+
+            const level = parseInt(document.getElementById('acceptanceLevel').value);
+            const risksAboveLevel = currentAnalysis.risikoer.filter(r => r.risikonivaa > level);
+
+            if (risksAboveLevel.length === 0) {
+                alert(`Ingen risikoer funnet over akseptansenivå ${level}`);
+                return;
+            }
+
+            let markdown = `# Høyrisikorapport - ${currentAnalysis.name}\n\n`;
+            markdown += `**Dato:** ${currentAnalysis.metadata.dato || 'Ikke angitt'}\n`;
+            markdown += `**Tjeneste/system:** ${currentAnalysis.metadata.tjeneste || 'Ikke angitt'}\n`;
+            markdown += `**Utført av:** ${currentAnalysis.metadata.utfortAv || 'Ikke angitt'}\n`;
+            markdown += `**Akseptansenivå:** ${level}\n\n`;
+            markdown += `---\n\n`;
+            markdown += `## Risikoer over akseptansenivå\n\n`;
+            markdown += `Totalt **${risksAboveLevel.length}** risikoer over nivå ${level}.\n\n`;
+
+            // Group by risk level
+            const redRisks = risksAboveLevel.filter(r => r.risikonivaa >= 19);
+            const orangeRisks = risksAboveLevel.filter(r => r.risikonivaa >= 13 && r.risikonivaa <= 18);
+            const yellowRisks = risksAboveLevel.filter(r => r.risikonivaa >= 7 && r.risikonivaa <= 12);
+
+            if (redRisks.length > 0) {
+                markdown += `### 🔴 Kritiske risikoer (19-25): ${redRisks.length}\n\n`;
+                redRisks.forEach((risk, idx) => {
+                    markdown += formatRiskMarkdown(risk, idx + 1);
+                });
+            }
+
+            if (orangeRisks.length > 0) {
+                markdown += `### 🟠 Høye risikoer (13-18): ${orangeRisks.length}\n\n`;
+                orangeRisks.forEach((risk, idx) => {
+                    markdown += formatRiskMarkdown(risk, idx + 1);
+                });
+            }
+
+            if (yellowRisks.length > 0) {
+                markdown += `### 🟡 Medium risikoer (7-12): ${yellowRisks.length}\n\n`;
+                yellowRisks.forEach((risk, idx) => {
+                    markdown += formatRiskMarkdown(risk, idx + 1);
+                });
+            }
+
+            markdown += `\n---\n\n`;
+            markdown += `*Generert med Risky ${new Date().toISOString().split('T')[0]}*\n`;
+
+            // Download
+            const blob = new Blob([markdown], { type: 'text/markdown;charset=utf-8' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `Risky_Høyrisikorapport_${currentAnalysis.metadata.dato || 'ukjent_dato'}.md`;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+        }
+
+        function formatRiskMarkdown(risk, index) {
+            let md = `#### ${index}. ${risk.risikoelement} (RN: ${risk.risikonivaa})\n\n`;
+            md += `- **Sårbarhet:** ${risk.saarbarhet || 'Ikke angitt'}\n`;
+            md += `- **Konsekvens:** ${risk.konsekvens} | **Sannsynlighet:** ${risk.sannsynlighet}\n`;
+            md += `- **KIT:** K=${risk.K}, I=${risk.I}, T=${risk.T}\n`;
+            md += `- **Eksisterende beskyttelse:** ${risk.eksisterendeBeskyttelse || 'Ingen'}\n`;
+            md += `- **Eksisterende kontroll:** ${risk.eksisterendeKontroll || 'Ingen'}\n`;
+            md += `- **Foreslåtte tiltak:** ${risk.foreslaatteTiltak || 'Ikke angitt'}\n`;
+
+            if (risk.comments && risk.comments.length > 0) {
+                md += `- **Kommentarer:**\n`;
+                risk.comments.forEach(comment => {
+                    md += `  - [${comment.type}] ${comment.text}\n`;
+                });
+            }
+
+            md += `\n`;
+            return md;
+        }
+
         function addNewRisk() {
             const newRisk = {
                 id: generateUUID(),
@@ -392,6 +599,7 @@
             updateAnalysis(currentAnalysisId, { risikoer: currentAnalysis.risikoer });
             renderRisksTable();
             renderHeatmap();
+            renderStatistics();
             renderKITTable();
         }
 
@@ -416,7 +624,14 @@
 
             try {
                 // Load baseline analyses
-                const baselineFiles = ['baseline-it-tjeneste.json', 'baseline-sky.json', 'baseline-persondata.json'];
+                const baselineFiles = [
+                    'baseline-it-tjeneste.json',
+                    'baseline-sky.json',
+                    'baseline-persondata.json',
+                    'baseline-webapp.json',
+                    'baseline-database.json',
+                    'baseline-mobile.json'
+                ];
                 const baselinePromises = baselineFiles.map(file =>
                     fetch(`data/baselines/${file}`).then(r => r.json()).catch(() => null)
                 );
@@ -617,7 +832,8 @@
                 console.log('Table rendered, tbody has', document.getElementById('risksTableBody').children.length, 'rows');
 
                 renderHeatmap();
-                console.log('Heatmap rendered');
+                renderStatistics();
+                console.log('Heatmap and statistics rendered');
 
                 closeImportRisksModal();
 
@@ -720,6 +936,217 @@
             });
         }
 
+        // Statistikk og visualisering
+        function renderStatistics() {
+            if (!currentAnalysis || !currentAnalysis.risikoer || currentAnalysis.risikoer.length === 0) {
+                document.getElementById('statTotal').textContent = '0';
+                document.getElementById('statRed').textContent = '0';
+                document.getElementById('statOrange').textContent = '0';
+                document.getElementById('statYellow').textContent = '0';
+                document.getElementById('statGreen').textContent = '0';
+                document.getElementById('statAvgRisk').textContent = '0.0';
+                document.getElementById('statRedPercent').textContent = '0%';
+                document.getElementById('statOrangePercent').textContent = '0%';
+                document.getElementById('statYellowPercent').textContent = '0%';
+                document.getElementById('statGreenPercent').textContent = '0%';
+                return;
+            }
+
+            const risks = currentAnalysis.risikoer;
+            const total = risks.length;
+
+            // Kategoriser risikoer etter nivå
+            let green = 0, yellow = 0, orange = 0, red = 0;
+            let sumRiskLevel = 0;
+
+            risks.forEach(risk => {
+                const rn = risk.risikonivaa;
+                sumRiskLevel += rn;
+
+                if (rn >= 1 && rn <= 6) green++;
+                else if (rn >= 7 && rn <= 12) yellow++;
+                else if (rn >= 13 && rn <= 18) orange++;
+                else if (rn >= 19 && rn <= 25) red++;
+            });
+
+            const avgRisk = total > 0 ? (sumRiskLevel / total).toFixed(1) : '0.0';
+
+            // Oppdater stat cards
+            document.getElementById('statTotal').textContent = total;
+            document.getElementById('statRed').textContent = red;
+            document.getElementById('statOrange').textContent = orange;
+            document.getElementById('statYellow').textContent = yellow;
+            document.getElementById('statGreen').textContent = green;
+            document.getElementById('statAvgRisk').textContent = avgRisk;
+
+            document.getElementById('statRedPercent').textContent = total > 0 ? `${Math.round(red/total*100)}%` : '0%';
+            document.getElementById('statOrangePercent').textContent = total > 0 ? `${Math.round(orange/total*100)}%` : '0%';
+            document.getElementById('statYellowPercent').textContent = total > 0 ? `${Math.round(yellow/total*100)}%` : '0%';
+            document.getElementById('statGreenPercent').textContent = total > 0 ? `${Math.round(green/total*100)}%` : '0%';
+
+            // Render charts
+            renderConsequenceChart(risks);
+            renderProbabilityChart(risks);
+            renderKITChart(risks);
+
+            // Update acceptance level preview
+            updateAcceptanceLevelPreview();
+        }
+
+        function renderConsequenceChart(risks) {
+            const canvas = document.getElementById('consequenceChart');
+            if (!canvas) return;
+
+            const ctx = canvas.getContext('2d');
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            // Count distribution
+            const distribution = [0, 0, 0, 0, 0];
+            risks.forEach(r => {
+                if (r.konsekvens >= 1 && r.konsekvens <= 5) {
+                    distribution[r.konsekvens - 1]++;
+                }
+            });
+
+            const maxCount = Math.max(...distribution, 1);
+            const barWidth = 50;
+            const gap = 10;
+            const chartHeight = 150;
+            const startX = 20;
+            const startY = 180;
+
+            // Draw bars
+            distribution.forEach((count, i) => {
+                const barHeight = (count / maxCount) * chartHeight;
+                const x = startX + i * (barWidth + gap);
+                const y = startY - barHeight;
+
+                ctx.fillStyle = '#4a90e2';
+                ctx.fillRect(x, y, barWidth, barHeight);
+
+                // Draw count
+                ctx.fillStyle = '#000';
+                ctx.font = 'bold 14px Arial';
+                ctx.textAlign = 'center';
+                ctx.fillText(count, x + barWidth/2, y - 5);
+
+                // Draw label
+                ctx.font = '12px Arial';
+                ctx.fillText((i+1).toString(), x + barWidth/2, startY + 15);
+            });
+
+            // Draw axis label
+            ctx.font = 'bold 12px Arial';
+            ctx.textAlign = 'center';
+            ctx.fillText('Konsekvens (1-5)', canvas.width / 2, canvas.height - 5);
+        }
+
+        function renderProbabilityChart(risks) {
+            const canvas = document.getElementById('probabilityChart');
+            if (!canvas) return;
+
+            const ctx = canvas.getContext('2d');
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            // Count distribution
+            const distribution = [0, 0, 0, 0, 0];
+            risks.forEach(r => {
+                if (r.sannsynlighet >= 1 && r.sannsynlighet <= 5) {
+                    distribution[r.sannsynlighet - 1]++;
+                }
+            });
+
+            const maxCount = Math.max(...distribution, 1);
+            const barWidth = 50;
+            const gap = 10;
+            const chartHeight = 150;
+            const startX = 20;
+            const startY = 180;
+
+            // Draw bars
+            distribution.forEach((count, i) => {
+                const barHeight = (count / maxCount) * chartHeight;
+                const x = startX + i * (barWidth + gap);
+                const y = startY - barHeight;
+
+                ctx.fillStyle = '#e94e77';
+                ctx.fillRect(x, y, barWidth, barHeight);
+
+                // Draw count
+                ctx.fillStyle = '#000';
+                ctx.font = 'bold 14px Arial';
+                ctx.textAlign = 'center';
+                ctx.fillText(count, x + barWidth/2, y - 5);
+
+                // Draw label
+                ctx.font = '12px Arial';
+                ctx.fillText((i+1).toString(), x + barWidth/2, startY + 15);
+            });
+
+            // Draw axis label
+            ctx.font = 'bold 12px Arial';
+            ctx.textAlign = 'center';
+            ctx.fillText('Sannsynlighet (1-5)', canvas.width / 2, canvas.height - 5);
+        }
+
+        function renderKITChart(risks) {
+            const canvas = document.getElementById('kitChart');
+            if (!canvas) return;
+
+            const ctx = canvas.getContext('2d');
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            // Count average K, I, T
+            let sumK = 0, sumI = 0, sumT = 0;
+            risks.forEach(r => {
+                sumK += r.K || 0;
+                sumI += r.I || 0;
+                sumT += r.T || 0;
+            });
+
+            const avgK = risks.length > 0 ? sumK / risks.length : 0;
+            const avgI = risks.length > 0 ? sumI / risks.length : 0;
+            const avgT = risks.length > 0 ? sumT / risks.length : 0;
+
+            const data = [
+                { label: 'K', value: avgK, color: '#28a745' },
+                { label: 'I', value: avgI, color: '#ffc107' },
+                { label: 'T', value: avgT, color: '#dc3545' }
+            ];
+
+            const barWidth = 70;
+            const gap = 20;
+            const chartHeight = 150;
+            const startX = 40;
+            const startY = 180;
+            const maxValue = 5;
+
+            // Draw bars
+            data.forEach((item, i) => {
+                const barHeight = (item.value / maxValue) * chartHeight;
+                const x = startX + i * (barWidth + gap);
+                const y = startY - barHeight;
+
+                ctx.fillStyle = item.color;
+                ctx.fillRect(x, y, barWidth, barHeight);
+
+                // Draw value
+                ctx.fillStyle = '#000';
+                ctx.font = 'bold 14px Arial';
+                ctx.textAlign = 'center';
+                ctx.fillText(item.value.toFixed(1), x + barWidth/2, y - 5);
+
+                // Draw label
+                ctx.font = '12px Arial';
+                ctx.fillText(item.label, x + barWidth/2, startY + 15);
+            });
+
+            // Draw axis label
+            ctx.font = 'bold 12px Arial';
+            ctx.textAlign = 'center';
+            ctx.fillText('Gjennomsnittlig KIT-verdi', canvas.width / 2, canvas.height - 5);
+        }
+
         // Override loadAnalysis to include custom banks rendering
         async function loadAnalysis() {
             // Last risikobank først
@@ -746,10 +1173,17 @@
             document.getElementById('beskrivelse').value = currentAnalysis.metadata.beskrivelse || '';
             document.getElementById('commentsSectionTitle').textContent =
                 currentAnalysis.metadata.commentsSectionTitle || 'TILTAK OG KOMMENTARER';
+            document.getElementById('customTextTitle').textContent =
+                currentAnalysis.metadata.customTextTitle || 'TILLEGGSINFORMASJON';
+            document.getElementById('customText').value =
+                currentAnalysis.metadata.customText || '';
+            document.getElementById('acceptanceLevel').value =
+                currentAnalysis.metadata.acceptanceLevel || 12;
 
             // Populer risikoer
             renderRisksTable();
             renderHeatmap();
+            renderStatistics();
             renderKITTable();
             renderComments();
 

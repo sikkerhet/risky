@@ -159,7 +159,31 @@ function generateExcelContent() {
 
     XLSX.utils.book_append_sheet(wb, wsHeatmap, 'Heatmap');
 
-    // Ark 5: Tiltak og kommentarer (alltid inkluder alle i eksport)
+    // Ark 5: Egendefinert tekst
+    const customTextTitle = currentAnalysis.metadata.customTextTitle || 'TILLEGGSINFORMASJON';
+    const customText = currentAnalysis.metadata.customText || '';
+
+    if (customText.trim()) {
+        const customTextData = [
+            [customTextTitle],
+            [''],
+            [customText]
+        ];
+
+        const wsCustomText = XLSX.utils.aoa_to_sheet(customTextData);
+
+        if (!wsCustomText['!cols']) wsCustomText['!cols'] = [];
+        wsCustomText['!cols'][0] = { wch: 100 };
+
+        // Set row heights for better readability
+        if (!wsCustomText['!rows']) wsCustomText['!rows'] = [];
+        wsCustomText['!rows'][0] = { hpt: 20 };
+        wsCustomText['!rows'][2] = { hpt: 15 };
+
+        XLSX.utils.book_append_sheet(wb, wsCustomText, 'Tilleggsinformasjon');
+    }
+
+    // Ark 6: Tiltak og kommentarer (alltid inkluder alle i eksport)
     const risksWithComments = currentAnalysis.risikoer.filter(r => r.comments && r.comments.length > 0);
 
     if (risksWithComments.length > 0) {

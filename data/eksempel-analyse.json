@@ -1,0 +1,333 @@
+{
+  "id": "eksempel-nettbank-2026",
+  "name": "ROS-analyse - Nettbank for bedriftskunder",
+  "metadata": {
+    "tjeneste": "Nettbank for bedriftskunder v2.0",
+    "dato": "2026-02-26",
+    "beskrivelse": "Risikovurdering av ny nettbankløsning for bedriftskunder med fokus på betalingsformidling, kredittgodkjenning og kontoadministrasjon. Analysen dekker både tekniske og organisatoriske risikoer.",
+    "utfortAv": "Sikkerhetsteamet",
+    "deltakere": "Alice Berg (sikkerhet), Bob Hansen (utvikling), Charlie Olsen (drift), Diana Larsen (compliance)",
+    "tjenesteeier": "Eva Johansen - Produktansvarlig Bedriftsbank",
+    "commentsSectionTitle": "TILTAK OG OPPFØLGING",
+    "customTextTitle": "OPPSUMMERING OG ANBEFALINGER",
+    "customText": "Denne risikoanalysen identifiserer 12 primære risikoer knyttet til den nye nettbankløsningen for bedriftskunder. Analysen viser at vi har 3 kritiske risikoer (røde) som må håndteres før produksjonssetting:\n\n1. Manglende MFA på privilegerte kontoer\n2. Utilstrekkelig logging og overvåkning av transaksjoner\n3. Ukrypterte API-kommunikasjon i utviklingsmiljø\n\nVi har også identifisert 4 høyrisikoer (oransje) som bør adresseres i løpet av Q2 2026.\n\nDe fleste risikoene kan mitigeres gjennom eksisterende sikkerhetstiltak og planlagte forbedringer. Kostnad for implementering av alle kritiske tiltak er estimert til ca. 850 000 kr over 3 måneder.\n\nAnbefaling: Utsett produksjonssetting med 6 uker for å implementere kritiske sikkerhetstiltak. Gjennomfør ny risikovurdering før go-live.",
+    "acceptanceLevel": 12
+  },
+  "createdDate": "2026-02-26",
+  "lastModified": "2026-02-26",
+  "risikoer": [
+    {
+      "id": "risk-001",
+      "nr": 1,
+      "risikoelement": "Manglende MFA på privilegerte administratorkontoer",
+      "saarbarhet": "Administratorkontoer i produksjon bruker kun brukernavn/passord. Ingen krav til MFA. Passwordpolicy er svak (min 8 tegn). Shared admin accounts brukes av flere.",
+      "eksisterendeBeskyttelse": "VPN-tilgang påkrevd, IP-whitelisting",
+      "eksisterendeKontroll": "Logging av admin-pålogging, quarterly access review",
+      "K": 5,
+      "I": 5,
+      "T": 4,
+      "konsekvens": 5,
+      "sannsynlighet": 4,
+      "risikonivaa": 20,
+      "foreslaatteTiltak": "Implementer MFA (Yubikey/TOTP) for alle admin-kontoer. Eliminer shared accounts. Passordpolicy: min 14 tegn, complexity requirements. Periodic password rotation (90 dager).",
+      "comments": [
+        {
+          "id": "comment-001-1",
+          "type": "tiltak",
+          "text": "Bestille Yubikey til alle 8 administratorer - deadline 15. mars",
+          "author": "Alice Berg",
+          "date": "2026-02-26",
+          "visible": true
+        },
+        {
+          "id": "comment-001-2",
+          "type": "tiltak",
+          "text": "Oppdatere IAM-policy for å kreve MFA på alle admin-kontoer - deadline 20. mars",
+          "author": "Bob Hansen",
+          "date": "2026-02-26",
+          "visible": true
+        },
+        {
+          "id": "comment-001-3",
+          "type": "kommentar",
+          "text": "KRITISK: Dette må være på plass før prod-setting. Compliance-krav fra Finanstilsynet.",
+          "author": "Diana Larsen",
+          "date": "2026-02-26",
+          "visible": true
+        }
+      ]
+    },
+    {
+      "id": "risk-002",
+      "nr": 2,
+      "risikoelement": "Utilstrekkelig logging og overvåkning av transaksjoner",
+      "saarbarhet": "Manglende real-time overvåkning av mistenkelige transaksjoner. Logger sendes ikke til SIEM. Ingen alerting på uvanlige mønstre. Retention kun 30 dager (regulatorisk krav: 5 år).",
+      "eksisterendeBeskyttelse": "Basic application logging",
+      "eksisterendeKontroll": "Ukentlig manuell review av logs",
+      "K": 4,
+      "I": 5,
+      "T": 3,
+      "konsekvens": 5,
+      "sannsynlighet": 4,
+      "risikonivaa": 20,
+      "foreslaatteTiltak": "Integrer med SIEM (Splunk). Implementer real-time fraud detection. Utvid log retention til 7 år. Alert på: transaksjoner >500k, multiple failed auth, etter-timer aktivitet.",
+      "comments": [
+        {
+          "id": "comment-002-1",
+          "type": "tiltak",
+          "text": "Opprette Splunk-integrasjon - deadline 1. april",
+          "author": "Charlie Olsen",
+          "date": "2026-02-26",
+          "visible": true
+        },
+        {
+          "id": "comment-002-2",
+          "type": "oppfolging",
+          "text": "Møte med compliance for å definere eksakte logging-krav - 1. mars kl 10:00",
+          "author": "Diana Larsen",
+          "date": "2026-02-26",
+          "visible": true
+        }
+      ]
+    },
+    {
+      "id": "risk-003",
+      "nr": 3,
+      "risikoelement": "Ukryptert API-kommunikasjon i utviklingsmiljø",
+      "saarbarhet": "Dev/test-miljøer bruker HTTP i stedet for HTTPS. Real production data brukes i testing. API keys hardkodet i kode. Certificates ikke validert.",
+      "eksisterendeBeskyttelse": "Miljøene er på isolert VLAN",
+      "eksisterendeKontroll": "Begrenset nettverkstilgang",
+      "K": 5,
+      "I": 4,
+      "T": 2,
+      "konsekvens": 5,
+      "sannsynlighet": 4,
+      "risikonivaa": 20,
+      "foreslaatteTiltak": "Enforce HTTPS i alle miljøer. Data masking/anonymisering i dev/test. Secrets manager (Vault) for API keys. Certificate pinning.",
+      "comments": [
+        {
+          "id": "comment-003-1",
+          "type": "tiltak",
+          "text": "Implementere TLS i dev/test miljøer - deadline 10. mars",
+          "author": "Bob Hansen",
+          "date": "2026-02-26",
+          "visible": true
+        },
+        {
+          "id": "comment-003-2",
+          "type": "kommentar",
+          "text": "Vi har allerede HashiCorp Vault lisens, kan gjenbruke infrastruktur",
+          "author": "Charlie Olsen",
+          "date": "2026-02-26",
+          "visible": true
+        }
+      ]
+    },
+    {
+      "id": "risk-004",
+      "nr": 4,
+      "risikoelement": "SQL injection i legacy rapporteringsmodul",
+      "saarbarhet": "Gammel rapportgenerator (C# .NET Framework 4.5) bruker string concatenation i SQL queries. User input fra dato-filtre ikke sanitert.",
+      "eksisterendeBeskyttelse": "Input validation på frontend (JavaScript)",
+      "eksisterendeKontroll": "Read-only database user for rapporter",
+      "K": 5,
+      "I": 5,
+      "T": 3,
+      "konsekvens": 5,
+      "sannsynlighet": 3,
+      "risikonivaa": 15,
+      "foreslaatteTiltak": "Refaktorer til parameterized queries (stored procedures). Server-side input validation. Upgrade til .NET 8. SAST scanning i CI/CD.",
+      "comments": [
+        {
+          "id": "comment-004-1",
+          "type": "tiltak",
+          "text": "Skrive om rapportmodul med parameterized queries - deadline 15. april",
+          "author": "Bob Hansen",
+          "date": "2026-02-26",
+          "visible": true
+        }
+      ]
+    },
+    {
+      "id": "risk-005",
+      "nr": 5,
+      "risikoelement": "Manglende rate limiting på API endpoints",
+      "saarbarhet": "Ingen rate limiting på login, payment eller account query endpoints. Tillater brute force og credential stuffing. Kan misbrukes til DoS.",
+      "eksisterendeBeskyttelse": "CloudFlare DDoS protection",
+      "eksisterendeKontroll": "IP blocking ved 1000 req/min",
+      "K": 3,
+      "I": 3,
+      "T": 5,
+      "konsekvens": 4,
+      "sannsynlighet": 4,
+      "risikonivaa": 16,
+      "foreslaatteTiltak": "Implementer rate limiting per user/IP: 5 failed logins/5min, 100 API calls/min per user, 10 payments/hour. CAPTCHA etter 3 failed attempts.",
+      "comments": []
+    },
+    {
+      "id": "risk-006",
+      "nr": 6,
+      "risikoelement": "Utilstrekkelig backup og disaster recovery testing",
+      "saarbarhet": "Database backups kjører daglig, men restore aldri testet i prod-liknende miljø. RTO/RPO ikke definert. Backup og prod i samme AWS region. Ingen cross-region replication.",
+      "eksisterendeBeskyttelse": "Daglig automated backups",
+      "eksisterendeKontroll": "Backup monitoring alerts",
+      "K": 4,
+      "I": 5,
+      "T": 5,
+      "konsekvens": 5,
+      "sannsynlighet": 2,
+      "risikonivaa": 10,
+      "foreslaatteTiltak": "Quarterly full restore test. Cross-region backup replication (eu-north-1 -> eu-west-1). Definere RTO: 4h, RPO: 1h. DR runbook og table-top exercises.",
+      "comments": [
+        {
+          "id": "comment-006-1",
+          "type": "oppfolging",
+          "text": "Planlegge første restore test - 15. april",
+          "author": "Charlie Olsen",
+          "date": "2026-02-26",
+          "visible": true
+        }
+      ]
+    },
+    {
+      "id": "risk-007",
+      "nr": 7,
+      "risikoelement": "Sårbare tredjepartsbiblioteker (NPM dependencies)",
+      "saarbarhet": "Frontend (React) har 47 npm packages med kjente CVEs (npm audit: 12 high, 35 moderate). Avhengigheter ikke oppdatert på 18 måneder. Ingen automated scanning.",
+      "eksisterendeBeskyttelse": "Sporadisk npm audit",
+      "eksisterendeKontroll": "Manual quarterly review",
+      "K": 4,
+      "I": 4,
+      "T": 3,
+      "konsekvens": 4,
+      "sannsynlighet": 4,
+      "risikonivaa": 16,
+      "foreslaatteTiltak": "Oppdater alle dependencies. Implementer Dependabot/Snyk i GitHub. Block PRs med high/critical CVEs. Monthly dependency updates.",
+      "comments": [
+        {
+          "id": "comment-007-1",
+          "type": "tiltak",
+          "text": "Kjøre npm update og teste - deadline 5. mars",
+          "author": "Bob Hansen",
+          "date": "2026-02-26",
+          "visible": true
+        },
+        {
+          "id": "comment-007-2",
+          "type": "kommentar",
+          "text": "Noen av pakkene er deprecated, må finne alternativer",
+          "author": "Bob Hansen",
+          "date": "2026-02-26",
+          "visible": true
+        }
+      ]
+    },
+    {
+      "id": "risk-008",
+      "nr": 8,
+      "risikoelement": "Manglende segregation of duties i betalingsprosess",
+      "saarbarhet": "Samme person kan initiere OG godkjenne betalinger under 100k. Ingen four-eyes principle. Audit trail eksisterer men reviewes ikke.",
+      "eksisterendeBeskyttelse": "Dual approval for >100k",
+      "eksisterendeKontroll": "Monthly transaction review",
+      "K": 5,
+      "I": 5,
+      "T": 3,
+      "konsekvens": 5,
+      "sannsynlighet": 2,
+      "risikonivaa": 10,
+      "foreslaatteTiltak": "Implementer maker-checker for alle betalinger >25k. Separate roller: initiator, approver, releaser. Weekly audit trail review med anomaly detection.",
+      "comments": []
+    },
+    {
+      "id": "risk-009",
+      "nr": 9,
+      "risikoelement": "GDPR - utilstrekkelig data sletting ved kundeoppgjør",
+      "saarbarhet": "Når bedriftskunde avslutter forhold, slettes ikke persondata automatisk. Data ligger i backups i 90 dager. Manglende prosess for 'right to be forgotten'. Soft deletes brukes (data flagges, ikke slettet).",
+      "eksisterendeBeskyttelse": "Manual sletting ved forespørsel",
+      "eksisterendeKontroll": "Legal review av datahåndtering",
+      "K": 4,
+      "I": 4,
+      "T": 2,
+      "konsekvens": 4,
+      "sannsynlighet": 3,
+      "risikonivaa": 12,
+      "foreslaatteTiltak": "Automated data retention policy (delete etter 30 dager post-avslutning, 7 års retention for transaksjonsdata pga regulatoriske krav). Hard deletes fra prod, separate compliance archive.",
+      "comments": [
+        {
+          "id": "comment-009-1",
+          "type": "oppfolging",
+          "text": "Avklare med juridisk hva som er regulatoriske krav vs GDPR - 28. februar",
+          "author": "Diana Larsen",
+          "date": "2026-02-26",
+          "visible": true
+        }
+      ]
+    },
+    {
+      "id": "risk-010",
+      "nr": 10,
+      "risikoelement": "Insider threat - overpriviligerte database-tilganger",
+      "saarbarhet": "15 utviklere har GRANT ALL på prod database. DBAs har ukontrollert tilgang til krypteringsnøkler. Ingen logging av admin queries. Separation prod/non-prod ikke håndhevet.",
+      "eksisterendeBeskyttelse": "VPN + MFA for database access",
+      "eksisterendeKontroll": "Annual access review",
+      "K": 5,
+      "I": 5,
+      "T": 3,
+      "konsekvens": 5,
+      "sannsynlighet": 2,
+      "risikonivaa": 10,
+      "foreslaatteTiltak": "Least privilege: utviklere kun SELECT på prod views. Admin access via bastion/jump server med session recording. Key management: split-knowledge, M-of-N encryption. Quarterly access reviews.",
+      "comments": [
+        {
+          "id": "comment-010-1",
+          "type": "tiltak",
+          "text": "Revoke GRANT ALL fra utviklere, gi read-only views - deadline 20. mars",
+          "author": "Charlie Olsen",
+          "date": "2026-02-26",
+          "visible": true
+        }
+      ]
+    },
+    {
+      "id": "risk-011",
+      "nr": 11,
+      "risikoelement": "Manglende sikkerhetstrening for utviklere",
+      "saarbarhet": "Utviklere har ikke gjennomført secure coding training. Ingen awareness om OWASP Top 10. Code review fokuserer på funksjonalitet, ikke sikkerhet. Threat modeling ikke del av SDLC.",
+      "eksisterendeBeskyttelse": "Generell onboarding training",
+      "eksisterendeKontroll": "Annual general security awareness",
+      "K": 3,
+      "I": 3,
+      "T": 2,
+      "konsekvens": 3,
+      "sannsynlighet": 4,
+      "risikonivaa": 12,
+      "foreslaatteTiltak": "Mandatory secure coding training (SANS/OWASP). Quarterly threat modeling workshops. Security champion program. Integrate security into code review checklist.",
+      "comments": []
+    },
+    {
+      "id": "risk-012",
+      "nr": 12,
+      "risikoelement": "Utilstrekkelig incident response plan",
+      "saarbarhet": "Ingen dokumentert IR plan for security incidents. Kontaktlister utdatert. Ingen defined escalation paths. IR team aldri testet (table-top eller simulations). Mean time to detect (MTTD) ukjent.",
+      "eksisterendeBeskyttelse": "Generell IT incident prosess",
+      "eksisterendeKontroll": "24/7 NOC monitoring",
+      "K": 3,
+      "I": 3,
+      "T": 4,
+      "konsekvens": 4,
+      "sannsynlighet": 3,
+      "risikonivaa": 12,
+      "foreslaatteTiltak": "Utvikle IR playbooks (ransomware, data breach, insider threat, DDoS). Bi-annual tabletop exercises. Define SLAs: MTTD <15min, MTTR <4h. Integrate med ekstern IR vendor (retainer agreement).",
+      "comments": [
+        {
+          "id": "comment-012-1",
+          "type": "oppfolging",
+          "text": "Planlegge første tabletop exercise i Q2 - tema: ransomware scenario",
+          "author": "Alice Berg",
+          "date": "2026-02-26",
+          "visible": true
+        }
+      ]
+    }
+  ]
+}
