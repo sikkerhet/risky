@@ -319,6 +319,17 @@ section h2 {
     flex-wrap: wrap;
 }
 
+.btn-highlight {
+    background-color: #1a4d6e !important;
+    font-weight: 600;
+    box-shadow: 0 2px 8px rgba(46, 95, 142, 0.3);
+}
+
+.btn-highlight:hover {
+    background-color: #153d57 !important;
+    box-shadow: 0 4px 12px rgba(46, 95, 142, 0.4);
+}
+
 /* Bank administrasjon */
 .bank-admin-section {
     margin-top: 50px;

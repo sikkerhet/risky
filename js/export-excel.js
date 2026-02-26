@@ -31,7 +31,7 @@ function generateExcelContent() {
 
     // Ark 1: Metadata
     const metadataData = [
-        ['ROS-ANALYSE'],
+        ['RISKY'],
         [''],
         ['Analysenavn:', safeText(currentAnalysis.name)],
         ['Dato:', safeText(currentAnalysis.metadata.dato)],
@@ -237,6 +237,6 @@ function generateExcelContent() {
     // Lagre fil
     const tjeneste = safeText(currentAnalysis.metadata.tjeneste) || 'analyse';
     const dato = safeText(currentAnalysis.createdDate) || 'ukjent';
-    const filename = `ROS_${tjeneste}_${dato}.xlsx`;
+    const filename = `Risky_${tjeneste}_${dato}.xlsx`;
     XLSX.writeFile(wb, filename);
 }

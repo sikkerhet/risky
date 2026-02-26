@@ -36,7 +36,7 @@ function generatePDFContent(doc) {
         // Header
         doc.setFontSize(20);
         doc.setTextColor(0, 123, 255);
-        doc.text('ROS-ANALYSE', 148, yPos, { align: 'center' });
+        doc.text('RISKY', 148, yPos, { align: 'center' });
         yPos += 10;
 
         doc.setFontSize(16);
@@ -363,6 +363,6 @@ function generatePDFContent(doc) {
     // Lagre PDF
     const tjeneste = safeText(currentAnalysis.metadata.tjeneste) || 'analyse';
     const dato = safeText(currentAnalysis.createdDate) || 'ukjent';
-    const filename = `ROS_${tjeneste}_${dato}.pdf`;
+    const filename = `Risky_${tjeneste}_${dato}.pdf`;
     doc.save(filename);
 }

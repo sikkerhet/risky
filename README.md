@@ -1,4 +1,4 @@
-# ROS-Analyse Verktøy
+# Risky
 
 Web-basert verktøy for å lage Risiko- og Sårbarhetsanalyser (ROS) basert på klassisk ROS-modell (5x5 matrise).
 

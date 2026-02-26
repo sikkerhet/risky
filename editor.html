@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ROS-Analyse Editor</title>
+    <title>Risky - Rediger analyse</title>
     <link rel="stylesheet" href="css/main.css">
     <link rel="stylesheet" href="css/heatmap.css">
     <link rel="stylesheet" href="css/table.css">
@@ -16,6 +16,9 @@
 
     <!-- Excel Export -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+
+    <!-- ZIP Export -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
 </head>
 <body>
     <div class="container">
@@ -26,7 +29,7 @@
 
         <!-- Metadata seksjon -->
         <section class="metadata-section">
-            <h1 contenteditable="true" id="analysisName">Ny ROS-analyse</h1>
+            <h1 contenteditable="true" id="analysisName">Ny analyse</h1>
 
             <div class="form-grid">
                 <div class="form-group">
@@ -146,6 +149,7 @@
                 <button id="exportPdfBtn" class="btn btn-primary">📄 Eksporter PDF</button>
                 <button id="exportExcelBtn" class="btn btn-primary">📊 Eksporter Excel</button>
                 <button id="exportJsonBtn" class="btn btn-primary">💾 Eksporter JSON</button>
+                <button id="exportAllBtn" class="btn btn-primary btn-highlight">📦 Eksporter alt (ZIP)</button>
             </div>
         </section>
 
@@ -230,6 +234,7 @@
     <script src="js/export-json.js"></script>
     <script src="js/export-pdf.js"></script>
     <script src="js/export-excel.js"></script>
+    <script src="js/export-all.js"></script>
     <script>
         let currentAnalysis = null;
         let currentAnalysisId = null;
@@ -256,6 +261,7 @@
             document.getElementById('exportJsonBtn').addEventListener('click', exportCurrentAnalysisJSON);
             document.getElementById('exportPdfBtn').addEventListener('click', exportToPDF);
             document.getElementById('exportExcelBtn').addEventListener('click', exportToExcel);
+            document.getElementById('exportAllBtn').addEventListener('click', exportAllFormats);
 
             // Risikobank upload
             document.getElementById('uploadBankBtn').addEventListener('click', () => {
@@ -357,7 +363,7 @@
         function exportCurrentAnalysisJSON() {
             const dataStr = JSON.stringify(currentAnalysis, null, 2);
             const dataUri = 'data:application/json;charset=utf-8,'+ encodeURIComponent(dataStr);
-            const exportName = `ROS_${currentAnalysis.metadata.tjeneste || 'analyse'}_${currentAnalysis.createdDate}.json`;
+            const exportName = `Risky_${currentAnalysis.metadata.tjeneste || 'analyse'}_${currentAnalysis.createdDate}.json`;
 
             const linkElement = document.createElement('a');
             linkElement.setAttribute('href', dataUri);

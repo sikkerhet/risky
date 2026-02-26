@@ -3,13 +3,23 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ROS-Analyse Verktøy</title>
+    <title>Risky</title>
     <link rel="stylesheet" href="css/main.css">
+
+    <!-- PDF Export -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.31/jspdf.plugin.autotable.min.js"></script>
+
+    <!-- Excel Export -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+
+    <!-- ZIP Export -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
 </head>
 <body>
     <div class="container">
         <header>
-            <h1>ROS-ANALYSE VERKTØY</h1>
+            <h1>RISKY</h1>
             <p class="subtitle">Risiko- og sårbarhetsanalyse</p>
         </header>
 
@@ -162,7 +172,7 @@
             const dataStr = JSON.stringify(analysis, null, 2);
             const dataUri = 'data:application/json;charset=utf-8,'+ encodeURIComponent(dataStr);
 
-            const exportName = `ROS_${analysis.metadata.tjeneste || 'analyse'}_${analysis.createdDate}.json`;
+            const exportName = `Risky_${analysis.metadata.tjeneste || 'analyse'}_${analysis.createdDate}.json`;
 
             const linkElement = document.createElement('a');
             linkElement.setAttribute('href', dataUri);
@@ -170,22 +180,348 @@
             linkElement.click();
         }
 
-        function exportAllAnalyses() {
+        // Helper: Generate PDF blob for an analysis
+        async function generatePDFForAnalysis(analysis) {
+            const { jsPDF } = window.jspdf;
+            const doc = new jsPDF('landscape', 'mm', 'a4');
+
+            function safeText(value) {
+                if (value === null || value === undefined) return '';
+                return String(value).replace(/[\u0000-\u001F\u007F-\u009F]/g, '');
+            }
+
+            // Metadata
+            doc.setFontSize(20);
+            doc.text('Risky', 20, 20);
+
+            doc.setFontSize(12);
+            let yPos = 35;
+            const metadata = analysis.metadata;
+
+            if (metadata.tjeneste) {
+                doc.text(`Tjeneste/system: ${safeText(metadata.tjeneste)}`, 20, yPos);
+                yPos += 7;
+            }
+            if (metadata.dato) {
+                doc.text(`Dato: ${safeText(metadata.dato)}`, 20, yPos);
+                yPos += 7;
+            }
+            if (metadata.utfortAv) {
+                doc.text(`Utført av: ${safeText(metadata.utfortAv)}`, 20, yPos);
+                yPos += 7;
+            }
+            if (metadata.deltakere) {
+                doc.text(`Deltakere: ${safeText(metadata.deltakere)}`, 20, yPos);
+                yPos += 7;
+            }
+            if (metadata.tjenesteeier) {
+                doc.text(`Tjenesteeier: ${safeText(metadata.tjenesteeier)}`, 20, yPos);
+                yPos += 7;
+            }
+            if (metadata.beskrivelse) {
+                const beskrivelse = safeText(metadata.beskrivelse);
+                const splitBeskrivelse = doc.splitTextToSize(beskrivelse, 250);
+                doc.text(`Beskrivelse: ${splitBeskrivelse[0]}`, 20, yPos);
+                yPos += 7;
+                for (let i = 1; i < splitBeskrivelse.length; i++) {
+                    doc.text(splitBeskrivelse[i], 20, yPos);
+                    yPos += 7;
+                }
+            }
+
+            yPos += 5;
+
+            // Risikotabell
+            const tableData = analysis.risikoer.map((risk, index) => [
+                (index + 1).toString(),
+                safeText(risk.risikoelement),
+                safeText(risk.saarbarhet),
+                safeText(risk.eksisterendeBeskyttelse),
+                safeText(risk.eksisterendeKontroll),
+                safeText(risk.K),
+                safeText(risk.I),
+                safeText(risk.T),
+                safeText(risk.konsekvens),
+                safeText(risk.sannsynlighet),
+                safeText(risk.risikonivaa),
+                safeText(risk.foreslaatteTiltak)
+            ]);
+
+            doc.autoTable({
+                startY: yPos,
+                head: [['Nr', 'Risikoelement', 'Sårbarhet', 'Beskyttelse', 'Kontroll', 'K', 'I', 'T', 'K*', 'S*', 'RN*', 'Tiltak']],
+                body: tableData,
+                styles: { fontSize: 8, cellPadding: 2 },
+                headStyles: { fillColor: [46, 95, 142], textColor: 255 },
+                columnStyles: {
+                    0: { cellWidth: 10 },
+                    1: { cellWidth: 35 },
+                    2: { cellWidth: 35 },
+                    3: { cellWidth: 30 },
+                    4: { cellWidth: 30 },
+                    5: { cellWidth: 8 },
+                    6: { cellWidth: 8 },
+                    7: { cellWidth: 8 },
+                    8: { cellWidth: 10 },
+                    9: { cellWidth: 10 },
+                    10: { cellWidth: 10 },
+                    11: { cellWidth: 35 }
+                },
+                margin: { left: 10, right: 10 },
+                rowPageBreak: 'avoid'
+            });
+
+            // Kommentarer
+            try {
+                const risksWithComments = analysis.risikoer.filter(r =>
+                    r.kommentarer && r.kommentarer.some(c => !c.resolved)
+                );
+
+                if (risksWithComments.length > 0) {
+                    doc.addPage();
+                    doc.setFontSize(16);
+                    doc.text('Tiltak og kommentarer', 20, 20);
+
+                    let yPosition = 35;
+                    risksWithComments.forEach((risk) => {
+                        const visibleComments = risk.kommentarer.filter(c => !c.resolved);
+                        if (visibleComments.length === 0) return;
+
+                        const riskIndex = analysis.risikoer.indexOf(risk) + 1;
+
+                        if (yPosition > 180) {
+                            doc.addPage();
+                            yPosition = 20;
+                        }
+
+                        doc.setFontSize(12);
+                        doc.setFont(undefined, 'bold');
+                        doc.text(`Risiko ${riskIndex}: ${safeText(risk.risikoelement)}`, 20, yPosition);
+                        yPosition += 7;
+
+                        doc.setFont(undefined, 'normal');
+                        doc.setFontSize(10);
+
+                        visibleComments.forEach(comment => {
+                            if (yPosition > 185) {
+                                doc.addPage();
+                                yPosition = 20;
+                            }
+
+                            const timestamp = comment.timestamp ? new Date(comment.timestamp).toLocaleString('no-NO') : '';
+                            const commentText = `• [${timestamp}] ${safeText(comment.text)}`;
+                            const splitText = doc.splitTextToSize(commentText, 250);
+
+                            splitText.forEach(line => {
+                                if (yPosition > 185) {
+                                    doc.addPage();
+                                    yPosition = 20;
+                                }
+                                doc.text(line, 25, yPosition);
+                                yPosition += 6;
+                            });
+                        });
+
+                        yPosition += 5;
+                    });
+                }
+            } catch (e) {
+                console.error('Error in comments section:', e);
+            }
+
+            // Sidetall
+            const totalPages = doc.internal.getNumberOfPages();
+            for (let i = 1; i <= totalPages; i++) {
+                doc.setPage(i);
+                doc.setFontSize(9);
+                doc.setTextColor(100, 100, 100);
+                doc.text(`Side ${i} av ${totalPages}`, 148, 200, { align: 'center' });
+            }
+
+            return doc.output('blob');
+        }
+
+        // Helper: Generate Excel blob for an analysis
+        function generateExcelForAnalysis(analysis) {
+            function safeText(value) {
+                if (value === null || value === undefined) return '';
+                return String(value);
+            }
+
+            const wb = XLSX.utils.book_new();
+
+            // Metadata-ark
+            const metadataData = [
+                ['Risky - Risikoanalyse'],
+                [''],
+                ['Informasjon', 'Verdi'],
+                ['Tjeneste/system', safeText(analysis.metadata.tjeneste)],
+                ['Dato', safeText(analysis.metadata.dato)],
+                ['Utført av', safeText(analysis.metadata.utfortAv)],
+                ['Deltakere', safeText(analysis.metadata.deltakere)],
+                ['Tjenesteeier', safeText(analysis.metadata.tjenesteeier)],
+                ['Beskrivelse', safeText(analysis.metadata.beskrivelse)],
+                [''],
+                ['Opprettet', safeText(analysis.createdDate)],
+                ['Sist endret', safeText(analysis.lastModified)]
+            ];
+
+            const wsMetadata = XLSX.utils.aoa_to_sheet(metadataData);
+            if (!wsMetadata['!cols']) wsMetadata['!cols'] = [];
+            wsMetadata['!cols'][0] = { wch: 20 };
+            wsMetadata['!cols'][1] = { wch: 60 };
+            XLSX.utils.book_append_sheet(wb, wsMetadata, 'Metadata');
+
+            // Risikoer-ark
+            const risksData = [
+                ['Nr', 'Risikoelement', 'Sårbarhet/svakhet', 'Eksisterende beskyttelse', 'Eksisterende kontroll',
+                 'K', 'I', 'T', 'K*', 'S*', 'RN*', 'Foreslåtte tiltak']
+            ];
+
+            analysis.risikoer.forEach((risk, index) => {
+                risksData.push([
+                    index + 1,
+                    safeText(risk.risikoelement),
+                    safeText(risk.saarbarhet),
+                    safeText(risk.eksisterendeBeskyttelse),
+                    safeText(risk.eksisterendeKontroll),
+                    safeText(risk.K),
+                    safeText(risk.I),
+                    safeText(risk.T),
+                    safeText(risk.konsekvens),
+                    safeText(risk.sannsynlighet),
+                    safeText(risk.risikonivaa),
+                    safeText(risk.foreslaatteTiltak)
+                ]);
+            });
+
+            const wsRisks = XLSX.utils.aoa_to_sheet(risksData);
+            if (!wsRisks['!cols']) wsRisks['!cols'] = [];
+            wsRisks['!cols'][0] = { wch: 5 };
+            wsRisks['!cols'][1] = { wch: 25 };
+            wsRisks['!cols'][2] = { wch: 30 };
+            wsRisks['!cols'][3] = { wch: 25 };
+            wsRisks['!cols'][4] = { wch: 25 };
+            wsRisks['!cols'][5] = { wch: 4 };
+            wsRisks['!cols'][6] = { wch: 4 };
+            wsRisks['!cols'][7] = { wch: 4 };
+            wsRisks['!cols'][8] = { wch: 4 };
+            wsRisks['!cols'][9] = { wch: 4 };
+            wsRisks['!cols'][10] = { wch: 5 };
+            wsRisks['!cols'][11] = { wch: 30 };
+
+            XLSX.utils.book_append_sheet(wb, wsRisks, 'Risikoer');
+
+            // Kommentarer-ark
+            if (analysis.risikoer && analysis.risikoer.some(r => r.kommentarer && r.kommentarer.length > 0)) {
+                try {
+                    const commentsData = [
+                        ['Tiltak og kommentarer'],
+                        [''],
+                        ['Risiko Nr', 'Risikoelement', 'Kommentar']
+                    ];
+
+                    let hasAnyVisibleComments = false;
+
+                    analysis.risikoer.forEach((risk, index) => {
+                        if (risk.kommentarer && risk.kommentarer.length > 0) {
+                            const visibleComments = risk.kommentarer.filter(c => !c.resolved);
+                            if (visibleComments.length > 0) {
+                                hasAnyVisibleComments = true;
+                                visibleComments.forEach(comment => {
+                                    const timestamp = comment.timestamp ? new Date(comment.timestamp).toLocaleString('no-NO') : '';
+                                    const commentText = `[${timestamp}] ${safeText(comment.text)}`;
+                                    commentsData.push([
+                                        index + 1,
+                                        safeText(risk.risikoelement),
+                                        commentText
+                                    ]);
+                                });
+                                commentsData.push(['---']);
+                                commentsData.push(['']);
+                            }
+                        }
+                    });
+
+                    if (hasAnyVisibleComments) {
+                        const wsComments = XLSX.utils.aoa_to_sheet(commentsData);
+                        if (!wsComments['!cols']) wsComments['!cols'] = [];
+                        wsComments['!cols'][0] = { wch: 20 };
+                        wsComments['!cols'][1] = { wch: 50 };
+                        wsComments['!cols'][2] = { wch: 60 };
+                        XLSX.utils.book_append_sheet(wb, wsComments, 'Tiltak og kommentarer');
+                    }
+                } catch (e) {
+                    console.error('Error creating comments sheet:', e);
+                }
+            }
+
+            const wbout = XLSX.write(wb, { type: 'array', bookType: 'xlsx' });
+            return new Blob([wbout], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
+        }
+
+        async function exportAllAnalyses() {
             const analyses = getAnalyses();
             if (analyses.length === 0) {
                 alert('Ingen analyser å eksportere');
                 return;
             }
 
-            const dataStr = JSON.stringify(analyses, null, 2);
-            const dataUri = 'data:application/json;charset=utf-8,'+ encodeURIComponent(dataStr);
+            const btn = document.getElementById('exportAllBtn');
+            const originalText = btn.textContent;
+            btn.textContent = '⏳ Genererer alle...';
+            btn.disabled = true;
 
-            const exportName = `ROS_alle_analyser_${new Date().toISOString().split('T')[0]}.json`;
+            try {
+                const zip = new JSZip();
 
-            const linkElement = document.createElement('a');
-            linkElement.setAttribute('href', dataUri);
-            linkElement.setAttribute('download', exportName);
-            linkElement.click();
+                for (let i = 0; i < analyses.length; i++) {
+                    const analysis = analyses[i];
+                    const folderName = `${i + 1}_${sanitizeFolderName(analysis.metadata.tjeneste || analysis.name || 'analyse')}`;
+                    const folder = zip.folder(folderName);
+
+                    // Generer filer for denne analysen
+                    const pdfBlob = await generatePDFForAnalysis(analysis);
+                    const excelBlob = generateExcelForAnalysis(analysis);
+                    const jsonBlob = new Blob([JSON.stringify(analysis, null, 2)], { type: 'application/json' });
+
+                    const baseName = sanitizeFileName(analysis.metadata.tjeneste || 'analyse');
+                    const dato = analysis.createdDate || 'ukjent';
+
+                    folder.file(`Risky_${baseName}_${dato}.pdf`, pdfBlob);
+                    folder.file(`Risky_${baseName}_${dato}.xlsx`, excelBlob);
+                    folder.file(`Risky_${baseName}_${dato}.json`, jsonBlob);
+                }
+
+                // Generer og last ned ZIP
+                const zipBlob = await zip.generateAsync({ type: 'blob' });
+                const zipFilename = `Risky_alle_analyser_${new Date().toISOString().split('T')[0]}.zip`;
+
+                const link = document.createElement('a');
+                link.href = URL.createObjectURL(zipBlob);
+                link.download = zipFilename;
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+                URL.revokeObjectURL(link.href);
+
+                btn.textContent = originalText;
+                btn.disabled = false;
+
+            } catch (error) {
+                console.error('Feil ved eksport:', error);
+                alert('Det oppsto en feil ved eksport. Se konsollen for detaljer.');
+                btn.textContent = originalText;
+                btn.disabled = false;
+            }
+        }
+
+        function sanitizeFolderName(name) {
+            return name.replace(/[^a-zA-Z0-9æøåÆØÅ_-]/g, '_').substring(0, 50);
+        }
+
+        function sanitizeFileName(name) {
+            return name.replace(/[^a-zA-Z0-9æøåÆØÅ_-]/g, '_');
         }
 
         function deleteAnalysis(id) {
