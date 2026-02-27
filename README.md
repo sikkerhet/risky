@@ -133,4 +133,4 @@ risky/
 
 ## Lisens
 
-MIT License - Copyright (c) 2026 Sikkerhet
+MIT License - Copyright (c) 2026 UiO-CERT
