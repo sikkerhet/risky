@@ -1,0 +1,307 @@
+{
+  "id": "devops-cicd",
+  "navn": "DevOps & CI/CD",
+  "beskrivelse": "Risikoer knyttet til utviklingsprosess, CI/CD-pipelines og deployment",
+  "kategorier": [
+    {
+      "id": "pipeline-sikkerhet",
+      "navn": "Pipeline-sikkerhet",
+      "risikoer": [
+        {
+          "id": "cicd-001",
+          "risikoelement": "Kompromittert CI/CD-pipeline injiserer ondsinnet kode",
+          "saarbarhet": "Manglende signing av artifacts, svak tilgangskontroll på pipeline",
+          "eksisterendeBeskyttelse": "Pipeline-as-code, branch protection",
+          "eksisterendeKontroll": "Logging av pipeline-kjøringer",
+          "K": 5,
+          "I": 5,
+          "T": 4,
+          "sannsynlighet": 3,
+          "foreslaatteTiltak": "Code signing, artifact attestation, SLSA Level 3+, immutable build environments"
+        },
+        {
+          "id": "cicd-002",
+          "risikoelement": "Secrets eksponert i CI/CD logs eller environment variables",
+          "saarbarhet": "Hardkodede secrets, secrets i plaintext logs, ekko av env vars",
+          "eksisterendeBeskyttelse": "Secret scanning i repos",
+          "eksisterendeKontroll": "Periodisk review av logs",
+          "K": 5,
+          "I": 4,
+          "T": 2,
+          "sannsynlighet": 4,
+          "foreslaatteTiltak": "Secret managers (Vault, AWS Secrets Manager), secret rotation, mask secrets in logs"
+        },
+        {
+          "id": "cicd-003",
+          "risikoelement": "Ukontrollert deployment til produksjon",
+          "saarbarhet": "Manglende approvals, ingen deployment gates, direktegang fra dev til prod",
+          "eksisterendeBeskyttelse": "Manual approval for prod",
+          "eksisterendeKontroll": "Deployment logging",
+          "K": 3,
+          "I": 5,
+          "T": 5,
+          "sannsynlighet": 3,
+          "foreslaatteTiltak": "4-eyes principle, automated testing gates, canary deployments, rollback plan"
+        },
+        {
+          "id": "cicd-004",
+          "risikoelement": "Drift av usignerte eller uverifiserte artifacts",
+          "saarbarhet": "Ingen signatursjekk på binaries, manglende provenance",
+          "eksisterendeBeskyttelse": "Artifacts fra trusted pipeline",
+          "eksisterendeKontroll": "Manual verifisering ved kritiske releases",
+          "K": 5,
+          "I": 5,
+          "T": 4,
+          "sannsynlighet": 2,
+          "foreslaatteTiltak": "Sigstore/Cosign, SLSA provenance, artifact verification before deployment"
+        },
+        {
+          "id": "cicd-005",
+          "risikoelement": "Lateral movement fra kompromittert build agent",
+          "saarbarhet": "Build agents med for mange tilganger, delte credentials",
+          "eksisterendeBeskyttelse": "Isolerte build environments",
+          "eksisterendeKontroll": "Network segmentation",
+          "K": 5,
+          "I": 4,
+          "T": 3,
+          "sannsynlighet": 2,
+          "foreslaatteTiltak": "Ephemeral build agents, workload identity, zero trust networking"
+        }
+      ]
+    },
+    {
+      "id": "kildekode-sikkerhet",
+      "navn": "Kildekode-sikkerhet",
+      "risikoer": [
+        {
+          "id": "code-001",
+          "risikoelement": "Secrets committed til source control (API keys, passwords)",
+          "saarbarhet": "Utviklere committer .env-filer, hardkoder credentials",
+          "eksisterendeBeskyttelse": ".gitignore for sensitive files",
+          "eksisterendeKontroll": "Pre-commit hooks med secret scanning",
+          "K": 5,
+          "I": 3,
+          "T": 2,
+          "sannsynlighet": 5,
+          "foreslaatteTiltak": "Gitleaks/TruffleHog, automated secret rotation ved leak, developer training"
+        },
+        {
+          "id": "code-002",
+          "risikoelement": "Utilstrekkelig code review fanger ikke sikkerhetsfeil",
+          "saarbarhet": "Manglende security focus i reviews, tidspress",
+          "eksisterendeBeskyttelse": "Mandatory code review",
+          "eksisterendeKontroll": "Review metrics",
+          "K": 4,
+          "I": 4,
+          "T": 2,
+          "sannsynlighet": 4,
+          "foreslaatteTiltak": "Security champions program, SAST i PR-flow, security checklists"
+        },
+        {
+          "id": "code-003",
+          "risikoelement": "Manglende branch protection tillater force push til main",
+          "saarbarhet": "Åpen main branch, ingen required reviews",
+          "eksisterendeBeskyttelse": "Branch protection på viktige repos",
+          "eksisterendeKontroll": "Audit logs",
+          "K": 3,
+          "I": 5,
+          "T": 4,
+          "sannsynlighet": 3,
+          "foreslaatteTiltak": "Enforce branch protection, require signed commits, linear history"
+        },
+        {
+          "id": "code-004",
+          "risikoelement": "Kompromittert utviklerkonto gir tilgang til alle repos",
+          "saarbarhet": "Svake passord, manglende MFA, over-privilegerte tilganger",
+          "eksisterendeBeskyttelse": "MFA requirement",
+          "eksisterendeKontroll": "Access reviews",
+          "K": 5,
+          "I": 5,
+          "T": 3,
+          "sannsynlighet": 2,
+          "foreslaatteTiltak": "Hardware keys (YubiKey), FIDO2, just-in-time access, PAM for source control"
+        }
+      ]
+    },
+    {
+      "id": "dependency-management",
+      "navn": "Avhengighetsstyring",
+      "risikoer": [
+        {
+          "id": "dep-001",
+          "risikoelement": "Kjente sårbarheter i dependencies (CVE-er)",
+          "saarbarhet": "Utdaterte packages, ingen automatisk oppdatering",
+          "eksisterendeBeskyttelse": "Dependabot alerts",
+          "eksisterendeKontroll": "Ukentlig review av security advisories",
+          "K": 4,
+          "I": 4,
+          "T": 3,
+          "sannsynlighet": 5,
+          "foreslaatteTiltak": "Automated dependency updates, SCA scanning, SBOM generation"
+        },
+        {
+          "id": "dep-002",
+          "risikoelement": "Dependency confusion / typosquatting attack",
+          "saarbarhet": "Manglende validering av package sources, public registries før private",
+          "eksisterendeBeskyttelse": "Locked dependency versions",
+          "eksisterendeKontroll": "Manual verification av nye packages",
+          "K": 5,
+          "I": 5,
+          "T": 3,
+          "sannsynlighet": 2,
+          "foreslaatteTiltak": "Private registry først, namespace reservation, checksum verification"
+        },
+        {
+          "id": "dep-003",
+          "risikoelement": "Ondsinnet package installert fra kompromittert registry",
+          "saarbarhet": "Automatisk installasjon uten verifikasjon, manglende signing",
+          "eksisterendeBeskyttelse": "Curated package list",
+          "eksisterendeKontroll": "Firewall rules for package downloads",
+          "K": 5,
+          "I": 5,
+          "T": 4,
+          "sannsynlighet": 1,
+          "foreslaatteTiltak": "Package signing verification, air-gapped builds, vendoring dependencies"
+        },
+        {
+          "id": "dep-004",
+          "risikoelement": "Transitive dependencies inneholder malware",
+          "saarbarhet": "Manglende scanning av hele dependency tree",
+          "eksisterendeBeskyttelse": "Direct dependencies scannet",
+          "eksisterendeKontroll": "SBOM review",
+          "K": 5,
+          "I": 5,
+          "T": 3,
+          "sannsynlighet": 2,
+          "foreslaatteTiltak": "Deep SCA scanning, dependency tree visualization, minimize dependencies"
+        }
+      ]
+    },
+    {
+      "id": "iac-config",
+      "navn": "Infrastructure-as-Code",
+      "risikoer": [
+        {
+          "id": "iac-001",
+          "risikoelement": "Feilkonfigurert infrastructure via IaC",
+          "saarbarhet": "Manglende validering av Terraform/CloudFormation, ingen policy enforcement",
+          "eksisterendeBeskyttelse": "Peer review av IaC changes",
+          "eksisterendeKontroll": "Post-deployment validation",
+          "K": 4,
+          "I": 4,
+          "T": 4,
+          "sannsynlighet": 3,
+          "foreslaatteTiltak": "Policy-as-code (OPA, Sentinel), automated testing, drift detection"
+        },
+        {
+          "id": "iac-002",
+          "risikoelement": "Secrets i IaC templates",
+          "saarbarhet": "Hardkodede credentials i Terraform state, CloudFormation parameters",
+          "eksisterendeBeskyttelse": "Encrypted Terraform state",
+          "eksisterendeKontroll": "Secret scanning",
+          "K": 5,
+          "I": 4,
+          "T": 2,
+          "sannsynlighet": 4,
+          "foreslaatteTiltak": "External secret stores, dynamic credentials, state file encryption"
+        },
+        {
+          "id": "iac-003",
+          "risikoelement": "Uautoriserte endringer i produksjon-infrastruktur",
+          "saarbarhet": "Direkte tilgang til cloud console, clickops, drift fra IaC",
+          "eksisterendeBeskyttelse": "Change management process",
+          "eksisterendeKontroll": "Drift detection tools",
+          "K": 3,
+          "I": 5,
+          "T": 4,
+          "sannsynlighet": 4,
+          "foreslaatteTiltak": "Read-only console, automation-only changes, drift remediation"
+        }
+      ]
+    },
+    {
+      "id": "container-security",
+      "navn": "Container-sikkerhet",
+      "risikoer": [
+        {
+          "id": "container-001",
+          "risikoelement": "Sårbarheter i container images",
+          "saarbarhet": "Utdaterte base images, unødvendige packages",
+          "eksisterendeBeskyttelse": "Official base images",
+          "eksisterendeKontroll": "Weekly image scanning",
+          "K": 4,
+          "I": 4,
+          "T": 3,
+          "sannsynlighet": 5,
+          "foreslaatteTiltak": "Distroless images, automated scanning (Trivy, Grype), image signing"
+        },
+        {
+          "id": "container-002",
+          "risikoelement": "Privileged containers eller root execution",
+          "saarbarhet": "Containers kjører som root, privileged mode",
+          "eksisterendeBeskyttelse": "Security contexts defined",
+          "eksisterendeKontroll": "Admission controller warnings",
+          "K": 4,
+          "I": 5,
+          "T": 3,
+          "sannsynlighet": 4,
+          "foreslaatteTiltak": "Non-root users, drop capabilities, Pod Security Standards"
+        },
+        {
+          "id": "container-003",
+          "risikoelement": "Kompromittert container registry",
+          "saarbarhet": "Svak tilgangskontroll, manglende image signing",
+          "eksisterendeBeskyttelse": "Private registry",
+          "eksisterendeKontroll": "Access logs",
+          "K": 5,
+          "I": 5,
+          "T": 4,
+          "sannsynlighet": 2,
+          "foreslaatteTiltak": "Image signing (Cosign), admission webhooks, registry scanning"
+        }
+      ]
+    },
+    {
+      "id": "deployment",
+      "navn": "Deployment og release",
+      "risikoer": [
+        {
+          "id": "deploy-001",
+          "risikoelement": "Mislykket deployment uten rollback-mulighet",
+          "saarbarhet": "Manglende rollback-strategi, irreversible migrations",
+          "eksisterendeBeskyttelse": "Blue-green deployment",
+          "eksisterendeKontroll": "Health checks",
+          "K": 2,
+          "I": 3,
+          "T": 5,
+          "sannsynlighet": 3,
+          "foreslaatteTiltak": "Automated rollback, feature flags, database migrations versioned"
+        },
+        {
+          "id": "deploy-002",
+          "risikoelement": "Ukoordinert deployment av avhengige tjenester",
+          "saarbarhet": "Mikroservices deployed uavhengig uten API version control",
+          "eksisterendeBeskyttelse": "Deployment windows",
+          "eksisterendeKontroll": "Integration tests",
+          "K": 2,
+          "I": 4,
+          "T": 4,
+          "sannsynlighet": 3,
+          "foreslaatteTiltak": "API versioning, backward compatibility, orchestrated deployments"
+        },
+        {
+          "id": "deploy-003",
+          "risikoelement": "Manglende observability etter deployment",
+          "saarbarhet": "Problemer oppdages ikke før brukere rapporterer",
+          "eksisterendeBeskyttelse": "Basic monitoring",
+          "eksisterendeKontroll": "User reports",
+          "K": 2,
+          "I": 3,
+          "T": 4,
+          "sannsynlighet": 4,
+          "foreslaatteTiltak": "Distributed tracing, deployment markers, SLO monitoring, canary metrics"
+        }
+      ]
+    }
+  ]
+}

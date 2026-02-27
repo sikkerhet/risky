@@ -50,6 +50,26 @@
       "id": "integrasjoner",
       "fil": "integrasjoner.json",
       "aktiv": true
+    },
+    {
+      "id": "devops-cicd",
+      "fil": "devops-cicd.json",
+      "aktiv": true
+    },
+    {
+      "id": "supply-chain",
+      "fil": "supply-chain.json",
+      "aktiv": true
+    },
+    {
+      "id": "iot-embedded",
+      "fil": "iot-embedded.json",
+      "aktiv": true
+    },
+    {
+      "id": "fysisk-sikkerhet",
+      "fil": "fysisk-sikkerhet.json",
+      "aktiv": true
     }
   ]
 }

@@ -12,8 +12,8 @@ Kjører 100% i nettleseren, ingen installasjon nødvendig.
 - Metadata-registrering (dato, tjeneste, deltakere, etc.)
 - Interaktiv 5x5 heatmap med fargekoding (grønn/gul/oransje/rød)
 - Komplett risikotabell med auto-beregning
-- **Risikobank med 322 risikoer**:
-  - 10 modulære banker (271 risikoer): Generell IT, Sky, On-premise, Persondata, KI/AI, SaaS, Governance, Personell, Business Continuity, Integrasjoner
+- **Risikobank med 415 risikoer**:
+  - 14 modulære banker (364 risikoer): Generell IT, Sky, On-premise, Persondata, KI/AI, SaaS, Governance, Personell, Business Continuity, Integrasjoner, DevOps/CI-CD, Supply Chain, IoT/Embedded, Fysisk sikkerhet
   - 6 baseline-maler (51 risikoer): IT-tjeneste, Sky, Persondata, Webapp/API, Database, Mobilapp
 - KIT-analyse (Konfidensialitet, Integritet, Tilgjengelighet)
 - Tiltak og kommentarer med fire typer (tiltak, kommentar, oppfølging, intern)
@@ -56,7 +56,7 @@ python3 -m http.server 8000
 
 ## Risikobank
 
-### Modulære risikobanker (271 risikoer)
+### Modulære risikobanker (364 risikoer)
 
 1. **Generell IT-tjeneste** (39): Tilgangsstyring, drift, appsec, logging, nettverk, org.
 2. **Skytjeneste** (13): IAM, nettverk, datalagring, kostnader, compliance
@@ -68,6 +68,10 @@ python3 -m http.server 8000
 8. **Personell** (33): HR-livssyklus, insider threat, awareness, fjernarbeid, fysisk sikkerhet
 9. **Business Continuity** (32): BCP/DR, backup, krisehåndtering, testing, resiliens
 10. **Integrasjoner** (35): Synkron/asynkron integrasjon, data pipelines, resiliens, middleware
+11. **DevOps & CI/CD** (22): Pipeline-sikkerhet, kildekode, dependencies, IaC, containers, deployment
+12. **Supply Chain** (20): Leverandørstyring, datadeling, tredjepartsintegrasjoner, OSS, offboarding
+13. **IoT/Embedded** (24): Device security, firmware, OT/SCADA, IoT backend, edge computing
+14. **Fysisk sikkerhet** (27): Adgangskontroll, utstyrssikring, miljøkontroll, overvåkning, dokumenthåndtering
 
 ### Baseline-maler (51 risikoer)
 

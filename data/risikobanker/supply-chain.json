@@ -1,0 +1,277 @@
+{
+  "id": "supply-chain",
+  "navn": "Leverandørkjede og tredjeparter",
+  "beskrivelse": "Risikoer knyttet til leverandører, underleverandører og supply chain-sikkerhet",
+  "kategorier": [
+    {
+      "id": "leverandorstyring",
+      "navn": "Leverandørstyring",
+      "risikoer": [
+        {
+          "id": "vendor-001",
+          "risikoelement": "Kritisk avhengighet av én leverandør (single point of failure)",
+          "saarbarhet": "Vendor lock-in, ingen alternative leverandører kartlagt",
+          "eksisterendeBeskyttelse": "SLA med leverandør",
+          "eksisterendeKontroll": "Årlig leverandørgjennomgang",
+          "K": 3,
+          "I": 3,
+          "T": 5,
+          "sannsynlighet": 3,
+          "foreslaatteTiltak": "Multi-vendor strategi, exit plan, alternative leverandører identifisert"
+        },
+        {
+          "id": "vendor-002",
+          "risikoelement": "Leverandør med utilstrekkelig sikkerhetsnivå",
+          "saarbarhet": "Manglende security assessment av leverandører, ingen audit rights",
+          "eksisterendeBeskyttelse": "Generelle sikkerhetskrav i avtale",
+          "eksisterendeKontroll": "Selvdeklarasjon fra leverandør",
+          "K": 5,
+          "I": 4,
+          "T": 3,
+          "sannsynlighet": 4,
+          "foreslaatteTiltak": "Vendor security assessments, SOC 2/ISO 27001 krav, audit rights i kontrakt"
+        },
+        {
+          "id": "vendor-003",
+          "risikoelement": "Utilstrekkelig SLA/OLA fører til tjenesteavbrudd",
+          "saarbarhet": "Vage SLA-er, ingen bøter ved brudd, manglende eskalering",
+          "eksisterendeBeskyttelse": "SLA definert i avtale",
+          "eksisterendeKontroll": "Månedlig SLA-rapportering",
+          "K": 2,
+          "I": 3,
+          "T": 5,
+          "sannsynlighet": 3,
+          "foreslaatteTiltak": "Tydelige SLA-er med penalties, eskaleringsmatrise, backup-løsning"
+        },
+        {
+          "id": "vendor-004",
+          "risikoelement": "Leverandør går konkurs eller avslutter tjeneste",
+          "saarbarhet": "Ingen escrow agreement, avhengighet av proprietær teknologi",
+          "eksisterendeBeskyttelse": "Backup av data",
+          "eksisterendeKontroll": "Finansiell due diligence",
+          "K": 3,
+          "I": 4,
+          "T": 5,
+          "sannsynlighet": 2,
+          "foreslaatteTiltak": "Source code escrow, data portability, migrasjonsplan"
+        },
+        {
+          "id": "vendor-005",
+          "risikoelement": "Underleverandør (subprocessor) uten avtale",
+          "saarbarhet": "Leverandør bruker underleverandører vi ikke kjenner til",
+          "eksisterendeBeskyttelse": "Generell tillatt bruk av subprocessors",
+          "eksisterendeKontroll": "GDPR DPA med notifikasjon",
+          "K": 4,
+          "I": 3,
+          "T": 2,
+          "sannsynlighet": 4,
+          "foreslaatteTiltak": "Preapproval av subprocessors, GDPR Article 28 compliance, subprocessor list"
+        },
+        {
+          "id": "vendor-006",
+          "risikoelement": "Manglende oversikt over alle leverandører (shadow IT)",
+          "saarbarhet": "Ansatte bruker SaaS-tjenester uten IT-godkjenning",
+          "eksisterendeBeskyttelse": "Policy mot unauthorized IT",
+          "eksisterendeKontroll": "Expense report review",
+          "K": 4,
+          "I": 3,
+          "T": 2,
+          "sannsynlighet": 5,
+          "foreslaatteTiltak": "CASB, SaaS discovery tools, SSO enforcement, vendor management system"
+        }
+      ]
+    },
+    {
+      "id": "data-deling",
+      "navn": "Datadeling med tredjeparter",
+      "risikoer": [
+        {
+          "id": "data-001",
+          "risikoelement": "Overdeling av data til leverandør (over-privileging)",
+          "saarbarhet": "Leverandør får tilgang til mer data enn nødvendig",
+          "eksisterendeBeskyttelse": "Data classification",
+          "eksisterendeKontroll": "Periodisk access review",
+          "K": 5,
+          "I": 3,
+          "T": 2,
+          "sannsynlighet": 4,
+          "foreslaatteTiltak": "Data minimization, need-to-know basis, API-scoped access"
+        },
+        {
+          "id": "data-002",
+          "risikoelement": "Ukryptert datatransfer til leverandør",
+          "saarbarhet": "Data sendes i klartekst, svake krypteringsmetoder",
+          "eksisterendeBeskyttelse": "HTTPS for API calls",
+          "eksisterendeKontroll": "TLS version check",
+          "K": 5,
+          "I": 3,
+          "T": 1,
+          "sannsynlighet": 3,
+          "foreslaatteTiltak": "End-to-end encryption, TLS 1.3+, encrypted file transfers (SFTP/GPG)"
+        },
+        {
+          "id": "data-003",
+          "risikoelement": "Leverandør bruker data til uautoriserte formål",
+          "saarbarhet": "Vag data processing agreement, manglende kontroll",
+          "eksisterendeBeskyttelse": "DPA med purpose limitation",
+          "eksisterendeKontroll": "Årlig audit",
+          "K": 5,
+          "I": 4,
+          "T": 2,
+          "sannsynlighet": 2,
+          "foreslaatteTiltak": "Clear DPA terms, audit rights, data usage monitoring, GDPR Article 28"
+        },
+        {
+          "id": "data-004",
+          "risikoelement": "Data lagres hos leverandør etter kontraktsavslutning",
+          "saarbarhet": "Manglende data return/deletion prosedyre",
+          "eksisterendeBeskyttelse": "Contractual deletion clause",
+          "eksisterendeKontroll": "Manual request ved offboarding",
+          "K": 4,
+          "I": 3,
+          "T": 2,
+          "sannsynlighet": 4,
+          "foreslaatteTiltak": "Automated data deletion, verified deletion certificate, escrow for transition"
+        }
+      ]
+    },
+    {
+      "id": "integrasjoner-api",
+      "navn": "Tredjepartsintegrasjoner",
+      "risikoer": [
+        {
+          "id": "api-vendor-001",
+          "risikoelement": "Ukontrollert tilgang via API-nøkler til tredjeparter",
+          "saarbarhet": "Statiske API keys, over-privilegerte tokens",
+          "eksisterendeBeskyttelse": "API key rotation policy",
+          "eksisterendeKontroll": "Kvartalsvis key review",
+          "K": 5,
+          "I": 4,
+          "T": 3,
+          "sannsynlighet": 3,
+          "foreslaatteTiltak": "OAuth 2.0 med scopes, short-lived tokens, automated rotation"
+        },
+        {
+          "id": "api-vendor-002",
+          "risikoelement": "Leverandørens API kompromittert eller nedlagt",
+          "saarbarhet": "Hard dependency på external API, ingen fallback",
+          "eksisterendeBeskyttelse": "Error handling",
+          "eksisterendeKontroll": "Uptime monitoring",
+          "K": 3,
+          "I": 3,
+          "T": 5,
+          "sannsynlighet": 2,
+          "foreslaatteTiltak": "Circuit breakers, graceful degradation, local caching, API versioning"
+        },
+        {
+          "id": "api-vendor-003",
+          "risikoelement": "Manglende rate limiting på integrasjoner",
+          "saarbarhet": "Leverandør eller oss kan bli DDoS-et via integrasjon",
+          "eksisterendeBeskyttelse": "Basic rate limiting",
+          "eksisterendeKontroll": "API usage metrics",
+          "K": 2,
+          "I": 2,
+          "T": 4,
+          "sannsynlighet": 3,
+          "foreslaatteTiltak": "Bidirectional rate limiting, backpressure, queue-based integration"
+        }
+      ]
+    },
+    {
+      "id": "open-source",
+      "navn": "Open source avhengigheter",
+      "risikoer": [
+        {
+          "id": "oss-001",
+          "risikoelement": "Kritisk OSS-prosjekt ikke lenger vedlikeholdt",
+          "saarbarhet": "Avhengighet av unmaintained libraries, single maintainer risk",
+          "eksisterendeBeskyttelse": "Dependency scanning",
+          "eksisterendeKontroll": "Quarterly dependency review",
+          "K": 3,
+          "I": 4,
+          "T": 4,
+          "sannsynlighet": 3,
+          "foreslaatteTiltak": "Monitor project health, consider forking, commercial support, alternative libraries"
+        },
+        {
+          "id": "oss-002",
+          "risikoelement": "Ondsinnet takeover av OSS-prosjekt",
+          "saarbarhet": "Maintainer account kompromittert, hostile takeover",
+          "eksisterendeBeskyttelse": "Locked versions",
+          "eksisterendeKontroll": "Changelogs reviewed",
+          "K": 5,
+          "I": 5,
+          "T": 4,
+          "sannsynlighet": 1,
+          "foreslaatteTiltak": "Pin exact versions, verify signatures, SBOM tracking, security.txt monitoring"
+        },
+        {
+          "id": "oss-003",
+          "risikoelement": "Lisensendringer i OSS-dependencies",
+          "saarbarhet": "License changes fra permissive til copyleft",
+          "eksisterendeBeskyttelse": "License compliance scanning",
+          "eksisterendeKontroll": "Annual license audit",
+          "K": 3,
+          "I": 2,
+          "T": 3,
+          "sannsynlighet": 2,
+          "foreslaatteTiltak": "Automated license tracking, legal review of critical deps, pin versions"
+        },
+        {
+          "id": "oss-004",
+          "risikoelement": "Zero-day i critical OSS dependency",
+          "saarbarhet": "Log4Shell-type vulnerability, widespread impact",
+          "eksisterendeBeskyttelse": "Vulnerability scanning",
+          "eksisterendeKontroll": "CVE monitoring",
+          "K": 5,
+          "I": 4,
+          "T": 5,
+          "sannsynlighet": 2,
+          "foreslaatteTiltak": "Runtime protection (RASP), virtual patching, fast patch cycle, SBOM for incident response"
+        }
+      ]
+    },
+    {
+      "id": "vendor-offboarding",
+      "navn": "Leverandør-offboarding",
+      "risikoer": [
+        {
+          "id": "offboard-001",
+          "risikoelement": "Leverandør beholder tilgang etter kontraktsavslutning",
+          "saarbarhet": "Manglende offboarding prosedyre, glemte tilganger",
+          "eksisterendeBeskyttelse": "Manual access revocation",
+          "eksisterendeKontroll": "Quarterly access review",
+          "K": 5,
+          "I": 4,
+          "T": 2,
+          "sannsynlighet": 4,
+          "foreslaatteTiltak": "Automated offboarding workflow, access expiration dates, full audit trail"
+        },
+        {
+          "id": "offboard-002",
+          "risikoelement": "Kunnskapsoverføring til ny leverandør mislykkes",
+          "saarbarhet": "Dårlig dokumentasjon, vendor lock-in på kunnskap",
+          "eksisterendeBeskyttelse": "Contractual knowledge transfer period",
+          "eksisterendeKontroll": "Handover documentation",
+          "K": 2,
+          "I": 3,
+          "T": 5,
+          "sannsynlighet": 3,
+          "foreslaatteTiltak": "Mandatory documentation, knowledge base, transition plan, shadowing period"
+        },
+        {
+          "id": "offboard-003",
+          "risikoelement": "IP-rettigheter uklare ved leverandørskifte",
+          "saarbarhet": "Uklare IP clauses i kontrakt, custom development ownership",
+          "eksisterendeBeskyttelse": "Standard IP terms",
+          "eksisterendeKontroll": "Legal review at termination",
+          "K": 3,
+          "I": 4,
+          "T": 4,
+          "sannsynlighet": 2,
+          "foreslaatteTiltak": "Clear IP ownership clauses, work-for-hire agreements, source code escrow"
+        }
+      ]
+    }
+  ]
+}
