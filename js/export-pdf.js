@@ -63,7 +63,7 @@ async function generatePDFContent(doc) {
 
     try {
         // Header with custom logo and title
-        const reportTitle = safeText(currentAnalysis.metadata.reportTitle || 'RISKY');
+        const reportTitle = safeText(currentAnalysis.metadata.reportTitle);
         const reportLogo = safeText(currentAnalysis.metadata.reportLogo);
 
         // Try to load and display logo if URL is provided
@@ -98,36 +98,39 @@ async function generatePDFContent(doc) {
                 }
 
                 doc.addImage(img, format, imgX, yPos, imgWidth, imgHeight);
-                yPos += imgHeight + 10;
+                yPos += imgHeight + 5;
                 console.log('Logo added to PDF successfully');
             } catch (logoError) {
                 console.warn('Could not load logo, using text instead:', logoError.message);
                 console.warn('Logo URL was:', reportLogo);
                 console.warn('Tip: Use "Test logo" button to verify logo before export, or convert to Data URL');
 
-                // Fallback to text if logo fails
-                doc.setFontSize(20);
-                doc.setTextColor(0, 123, 255);
-                doc.text(reportTitle, 148, yPos, { align: 'center' });
-                yPos += 10;
+                // Fallback to text if logo fails (and title exists)
+                if (reportTitle) {
+                    doc.setFontSize(20);
+                    doc.setTextColor(0, 123, 255);
+                    doc.text(reportTitle, 148, yPos, { align: 'center' });
+                    yPos += 5;
+                }
 
                 // Optional: Show warning to user
                 if (!reportLogo.startsWith('data:')) {
                     console.warn('⚠️ External URLs may fail due to CORS. Consider using Data URL instead.');
                 }
             }
-        } else {
-            // No logo, just show title
+        } else if (reportTitle) {
+            // No logo, but show title if provided
             doc.setFontSize(20);
             doc.setTextColor(0, 123, 255);
             doc.text(reportTitle, 148, yPos, { align: 'center' });
-            yPos += 10;
+            yPos += 5;
         }
 
+        // Always show analysis name
         doc.setFontSize(16);
         doc.setTextColor(0, 0, 0);
         doc.text(safeText(currentAnalysis.name), 148, yPos, { align: 'center' });
-        yPos += 15;
+        yPos += 10;
     } catch (e) {
         console.error('Error in header section:', e);
         throw new Error('Feil i header-seksjonen');
@@ -152,10 +155,10 @@ async function generatePDFContent(doc) {
             doc.text(label, 20, yPos);
             doc.setFont(undefined, 'normal');
             doc.text(value, 60, yPos);
-            yPos += 7;
+            yPos += 6;
         });
 
-        yPos += 10;
+        yPos += 5;
     } catch (e) {
         console.error('Error in metadata section:', e);
         throw new Error('Feil i metadata-seksjonen');
@@ -166,13 +169,13 @@ async function generatePDFContent(doc) {
         doc.setFontSize(14);
         doc.setFont(undefined, 'bold');
         doc.text('RISIKO HEATMAP', 20, yPos);
-        yPos += 10;
+        yPos += 5;
 
         const canvas = document.getElementById('heatmapCanvas');
         if (canvas) {
             const imgData = canvas.toDataURL('image/png');
             doc.addImage(imgData, 'PNG', 20, yPos, 120, 100);
-            yPos += 110;
+            yPos += 105;
         }
     } catch (e) {
         console.error('Error in heatmap section:', e);
@@ -181,17 +184,17 @@ async function generatePDFContent(doc) {
 
     try {
         // Statistikk
-        if (yPos > 150) {
+        if (yPos > 160) {
             doc.addPage();
             yPos = 20;
         } else {
-            yPos += 10;
+            yPos += 5;
         }
 
         doc.setFontSize(14);
         doc.setFont(undefined, 'bold');
         doc.text('STATISTIKK', 20, yPos);
-        yPos += 10;
+        yPos += 8;
 
         const risks = currentAnalysis.risikoer || [];
         const total = risks.length;

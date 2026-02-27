@@ -30,10 +30,17 @@ function generateExcelContent() {
     const wb = XLSX.utils.book_new();
 
     // Ark 1: Metadata
-    const reportTitle = safeText(currentAnalysis.metadata.reportTitle || 'RISKY');
-    const metadataData = [
-        [reportTitle],
-        [''],
+    const reportTitle = safeText(currentAnalysis.metadata.reportTitle);
+    const metadataData = [];
+
+    // Add title if provided
+    if (reportTitle) {
+        metadataData.push([reportTitle]);
+        metadataData.push(['']);
+    }
+
+    // Add metadata
+    metadataData.push(
         ['Analysenavn:', safeText(currentAnalysis.name)],
         ['Dato:', safeText(currentAnalysis.metadata.dato)],
         ['Tjeneste/system:', safeText(currentAnalysis.metadata.tjeneste)],
@@ -44,7 +51,7 @@ function generateExcelContent() {
         [''],
         ['Opprettet:', safeText(currentAnalysis.createdDate)],
         ['Sist endret:', formatNorwegianDate(currentAnalysis.lastModified)]
-    ];
+    );
 
     const wsMetadata = XLSX.utils.aoa_to_sheet(metadataData);
 
@@ -53,17 +60,20 @@ function generateExcelContent() {
     wsMetadata['!cols'][0] = { wch: 25 };
     wsMetadata['!cols'][1] = { wch: 50 };
 
-    // Style header
-    if (wsMetadata['A1']) {
+    // Style title if present
+    if (reportTitle && wsMetadata['A1']) {
         wsMetadata['A1'].s = {
             font: { bold: true, sz: 16, color: { rgb: '007BFF' } },
             alignment: { horizontal: 'left', vertical: 'center' }
         };
     }
 
-    // Bold labels
-    const labelCells = ['A3', 'A4', 'A5', 'A6', 'A7', 'A8', 'A9', 'A11', 'A12'];
-    labelCells.forEach(cell => {
+    // Bold labels - calculate row offset based on whether title exists
+    const rowOffset = reportTitle ? 2 : 0; // Title + blank row = 2 rows
+    const labelRows = [1, 2, 3, 4, 5, 6, 7, 9, 10]; // Relative row numbers for labels
+    labelRows.forEach(relativeRow => {
+        const actualRow = relativeRow + rowOffset;
+        const cell = `A${actualRow}`;
         if (wsMetadata[cell]) {
             wsMetadata[cell].s = { font: { bold: true } };
         }
