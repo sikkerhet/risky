@@ -68,18 +68,44 @@
                 </div>
 
                 <div class="form-group">
-                    <label for="reportLogo">Logo URL (valgfri):</label>
-                    <div style="display: flex; gap: 10px; align-items: start;">
-                        <input type="text" id="reportLogo" class="form-control" placeholder="https://example.com/logo.png" style="flex: 1;">
-                        <button type="button" id="testLogoBtn" class="btn btn-secondary" style="white-space: nowrap;">Test logo</button>
-                    </div>
-                    <small class="text-muted">URL til logo som vises i PDF. Støtter PNG, JPG. Maks bredde 150px. <strong>Tips:</strong> Bruk Data URL for garantert kompatibilitet.</small>
-                    <div id="logoPreview" style="margin-top: 10px; padding: 10px; border: 1px dashed #ccc; background: #f9f9f9; display: none;">
-                        <div style="text-align: center;">
-                            <img id="logoPreviewImg" style="max-width: 150px; max-height: 100px;">
-                            <p id="logoPreviewStatus" style="margin-top: 5px; font-size: 0.9em;"></p>
+                    <label for="reportLogo">Logo (valgfri):</label>
+
+                    <!-- File upload drop zone -->
+                    <div id="logoDropZone" style="
+                        border: 2px dashed #ccc;
+                        border-radius: 8px;
+                        padding: 30px;
+                        text-align: center;
+                        background: #f9f9f9;
+                        cursor: pointer;
+                        transition: all 0.3s;
+                        margin-bottom: 10px;
+                    ">
+                        <div id="logoDropZoneContent">
+                            <svg width="48" height="48" style="margin-bottom: 10px; opacity: 0.5;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"></path>
+                            </svg>
+                            <p style="margin: 0; font-weight: 500;">Dra og slipp logo her</p>
+                            <p style="margin: 5px 0 0 0; font-size: 0.9em; color: #666;">eller klikk for å velge fil</p>
+                            <p style="margin: 10px 0 0 0; font-size: 0.85em; color: #999;">PNG eller JPG, maks 2 MB</p>
+                        </div>
+                        <div id="logoPreview" style="display: none;">
+                            <img id="logoPreviewImg" style="max-width: 150px; max-height: 100px; border-radius: 4px; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
+                            <p id="logoPreviewStatus" style="margin-top: 10px; font-size: 0.9em;"></p>
+                            <button type="button" id="removeLogoBtn" class="btn btn-secondary btn-sm" style="margin-top: 10px;">Fjern logo</button>
                         </div>
                     </div>
+                    <input type="file" id="logoFileInput" accept="image/png,image/jpeg,image/jpg" style="display: none;">
+
+                    <!-- Advanced: Manual URL input (collapsed by default) -->
+                    <details style="margin-top: 10px;">
+                        <summary style="cursor: pointer; font-size: 0.9em; color: #666;">Avansert: Bruk URL i stedet</summary>
+                        <div style="margin-top: 10px; display: flex; gap: 10px; align-items: start;">
+                            <input type="text" id="reportLogo" class="form-control" placeholder="data:image/png;base64,..." style="flex: 1; font-size: 0.85em;">
+                            <button type="button" id="testLogoBtn" class="btn btn-secondary btn-sm" style="white-space: nowrap;">Test</button>
+                        </div>
+                        <small class="text-muted">Data URL eller ekstern URL (kan gi CORS-feil)</small>
+                    </details>
                 </div>
             </div>
         </section>
@@ -420,6 +446,9 @@
             document.getElementById('acceptanceLevel').addEventListener('change', saveAcceptanceLevel);
             document.getElementById('exportMarkdownBtn').addEventListener('click', exportHighRisksToMarkdown);
 
+            // Logo upload
+            setupLogoUpload();
+
             // Logo test
             document.getElementById('testLogoBtn').addEventListener('click', testLogo);
 
@@ -427,53 +456,153 @@
             updateAcceptanceLevelPreview();
         });
 
-        async function testLogo() {
-            const logoUrl = document.getElementById('reportLogo').value.trim();
+        function setupLogoUpload() {
+            const dropZone = document.getElementById('logoDropZone');
+            const fileInput = document.getElementById('logoFileInput');
             const preview = document.getElementById('logoPreview');
-            const img = document.getElementById('logoPreviewImg');
-            const status = document.getElementById('logoPreviewStatus');
+            const previewImg = document.getElementById('logoPreviewImg');
+            const previewStatus = document.getElementById('logoPreviewStatus');
+            const dropZoneContent = document.getElementById('logoDropZoneContent');
+            const removeBtn = document.getElementById('removeLogoBtn');
 
-            if (!logoUrl) {
-                alert('Vennligst oppgi en logo URL først');
+            // Click to open file dialog
+            dropZone.addEventListener('click', (e) => {
+                if (e.target.id !== 'removeLogoBtn') {
+                    fileInput.click();
+                }
+            });
+
+            // File selected via dialog
+            fileInput.addEventListener('change', (e) => {
+                const file = e.target.files[0];
+                if (file) {
+                    handleLogoFile(file);
+                }
+            });
+
+            // Drag and drop
+            dropZone.addEventListener('dragover', (e) => {
+                e.preventDefault();
+                dropZone.style.borderColor = '#007BFF';
+                dropZone.style.background = '#e7f3ff';
+            });
+
+            dropZone.addEventListener('dragleave', (e) => {
+                e.preventDefault();
+                dropZone.style.borderColor = '#ccc';
+                dropZone.style.background = '#f9f9f9';
+            });
+
+            dropZone.addEventListener('drop', (e) => {
+                e.preventDefault();
+                dropZone.style.borderColor = '#ccc';
+                dropZone.style.background = '#f9f9f9';
+
+                const file = e.dataTransfer.files[0];
+                if (file) {
+                    handleLogoFile(file);
+                }
+            });
+
+            // Remove logo
+            removeBtn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                removeLogo();
+            });
+        }
+
+        function handleLogoFile(file) {
+            // Validate file type
+            const validTypes = ['image/png', 'image/jpeg', 'image/jpg'];
+            if (!validTypes.includes(file.type)) {
+                alert('Ugyldig filtype. Vennligst bruk PNG eller JPG.');
                 return;
             }
 
-            preview.style.display = 'block';
-            status.textContent = '⏳ Laster logo...';
-            status.style.color = '#666';
-            img.style.display = 'none';
-
-            try {
-                // Try to load the image
-                await new Promise((resolve, reject) => {
-                    const testImg = new Image();
-                    testImg.crossOrigin = 'Anonymous';
-
-                    testImg.onload = () => {
-                        img.src = logoUrl;
-                        img.style.display = 'block';
-                        status.textContent = `✓ Logo lastet OK! (${testImg.width}x${testImg.height}px)`;
-                        status.style.color = '#28a745';
-                        resolve();
-                    };
-
-                    testImg.onerror = () => {
-                        reject(new Error('CORS eller nettverksfeil'));
-                    };
-
-                    // Add timeout
-                    setTimeout(() => reject(new Error('Timeout - bildet tok for lang tid å laste')), 5000);
-
-                    testImg.src = logoUrl;
-                });
-            } catch (error) {
-                img.style.display = 'none';
-                status.textContent = `✗ Kunne ikke laste logo: ${error.message}. Mulige løsninger: Bruk Data URL (base64), sørg for at bildet er offentlig tilgjengelig, eller bruk bilde fra samme domene.`;
-                status.style.color = '#dc3545';
-
-                console.error('Logo loading failed:', error);
-                console.log('Tip: Convert your image to Data URL at https://www.base64-image.de/');
+            // Validate file size (2 MB max)
+            const maxSize = 2 * 1024 * 1024; // 2 MB
+            if (file.size > maxSize) {
+                alert('Filen er for stor. Maksimal størrelse er 2 MB.');
+                return;
             }
+
+            // Read file and convert to Data URL
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                const dataUrl = e.target.result;
+
+                // Save to metadata
+                document.getElementById('reportLogo').value = dataUrl;
+                currentAnalysis.metadata.reportLogo = dataUrl;
+                currentAnalysis = updateAnalysis(currentAnalysisId, {
+                    metadata: currentAnalysis.metadata
+                });
+                showSavedIndicator();
+
+                // Show preview
+                showLogoPreview(dataUrl, file);
+            };
+
+            reader.onerror = () => {
+                alert('Kunne ikke lese filen. Prøv igjen.');
+            };
+
+            reader.readAsDataURL(file);
+        }
+
+        function showLogoPreview(dataUrl, file = null) {
+            const preview = document.getElementById('logoPreview');
+            const previewImg = document.getElementById('logoPreviewImg');
+            const previewStatus = document.getElementById('logoPreviewStatus');
+            const dropZoneContent = document.getElementById('logoDropZoneContent');
+
+            previewImg.src = dataUrl;
+            dropZoneContent.style.display = 'none';
+            preview.style.display = 'block';
+
+            // Get image dimensions
+            const img = new Image();
+            img.onload = () => {
+                let statusText = `${img.width}×${img.height}px`;
+                if (file) {
+                    const sizeKB = (file.size / 1024).toFixed(1);
+                    statusText += ` • ${sizeKB} KB`;
+                }
+                previewStatus.textContent = `✓ Logo lastet: ${statusText}`;
+                previewStatus.style.color = '#28a745';
+            };
+            img.src = dataUrl;
+        }
+
+        function removeLogo() {
+            const preview = document.getElementById('logoPreview');
+            const dropZoneContent = document.getElementById('logoDropZoneContent');
+            const fileInput = document.getElementById('logoFileInput');
+
+            // Clear UI
+            preview.style.display = 'none';
+            dropZoneContent.style.display = 'block';
+            fileInput.value = '';
+            document.getElementById('reportLogo').value = '';
+
+            // Clear from metadata
+            currentAnalysis.metadata.reportLogo = '';
+            currentAnalysis = updateAnalysis(currentAnalysisId, {
+                metadata: currentAnalysis.metadata
+            });
+            showSavedIndicator();
+        }
+
+        async function testLogo() {
+            const logoUrl = document.getElementById('reportLogo').value.trim();
+
+            if (!logoUrl) {
+                alert('Vennligst oppgi en logo URL først, eller last opp en fil');
+                return;
+            }
+
+            // Just show the preview using the existing function
+            showLogoPreview(logoUrl);
         }
 
         function validateAndSaveDate() {
@@ -1280,6 +1409,12 @@
             document.getElementById('beskrivelse').value = currentAnalysis.metadata.beskrivelse || '';
             document.getElementById('reportTitle').value = currentAnalysis.metadata.reportTitle || '';
             document.getElementById('reportLogo').value = currentAnalysis.metadata.reportLogo || '';
+
+            // Show logo preview if exists
+            if (currentAnalysis.metadata.reportLogo) {
+                showLogoPreview(currentAnalysis.metadata.reportLogo);
+            }
+
             document.getElementById('commentsSectionTitle').textContent =
                 currentAnalysis.metadata.commentsSectionTitle || 'TILTAK OG KOMMENTARER';
             document.getElementById('customTextTitle').textContent =
