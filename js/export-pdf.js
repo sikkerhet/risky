@@ -130,7 +130,7 @@ async function generatePDFContent(doc) {
         doc.setFontSize(16);
         doc.setTextColor(0, 0, 0);
         doc.text(safeText(currentAnalysis.name), 148, yPos, { align: 'center' });
-        yPos += 10;
+        yPos += 8;
     } catch (e) {
         console.error('Error in header section:', e);
         throw new Error('Feil i header-seksjonen');
@@ -146,19 +146,33 @@ async function generatePDFContent(doc) {
             ['Tjeneste/system:', safeText(currentAnalysis.metadata.tjeneste)],
             ['Utført av:', safeText(currentAnalysis.metadata.utfortAv)],
             ['Deltakere:', safeText(currentAnalysis.metadata.deltakere)],
-            ['Tjenesteeier:', safeText(currentAnalysis.metadata.tjenesteeier)],
-            ['Beskrivelse:', safeText(currentAnalysis.metadata.beskrivelse)]
+            ['Tjenesteeier:', safeText(currentAnalysis.metadata.tjenesteeier)]
         ];
 
+        // Regular metadata fields (single line)
         metadata.forEach(([label, value]) => {
             doc.setFont(undefined, 'bold');
             doc.text(label, 20, yPos);
             doc.setFont(undefined, 'normal');
             doc.text(value, 60, yPos);
-            yPos += 6;
+            yPos += 5;
         });
 
-        yPos += 5;
+        // Beskrivelse with word wrap
+        const beskrivelse = safeText(currentAnalysis.metadata.beskrivelse);
+        if (beskrivelse) {
+            doc.setFont(undefined, 'bold');
+            doc.text('Beskrivelse:', 20, yPos);
+            doc.setFont(undefined, 'normal');
+
+            // Split text to fit width (page width - left margin - label width - padding)
+            const maxWidth = 276 - 60; // A4 landscape width (297mm) - margins - label column
+            const lines = doc.splitTextToSize(beskrivelse, maxWidth);
+            doc.text(lines, 60, yPos);
+            yPos += lines.length * 5;
+        }
+
+        yPos += 3;
     } catch (e) {
         console.error('Error in metadata section:', e);
         throw new Error('Feil i metadata-seksjonen');
@@ -169,13 +183,13 @@ async function generatePDFContent(doc) {
         doc.setFontSize(14);
         doc.setFont(undefined, 'bold');
         doc.text('RISIKO HEATMAP', 20, yPos);
-        yPos += 5;
+        yPos += 3;
 
         const canvas = document.getElementById('heatmapCanvas');
         if (canvas) {
             const imgData = canvas.toDataURL('image/png');
             doc.addImage(imgData, 'PNG', 20, yPos, 120, 100);
-            yPos += 105;
+            yPos += 102;
         }
     } catch (e) {
         console.error('Error in heatmap section:', e);
@@ -184,17 +198,17 @@ async function generatePDFContent(doc) {
 
     try {
         // Statistikk
-        if (yPos > 160) {
+        if (yPos > 165) {
             doc.addPage();
             yPos = 20;
         } else {
-            yPos += 5;
+            yPos += 3;
         }
 
         doc.setFontSize(14);
         doc.setFont(undefined, 'bold');
         doc.text('STATISTIKK', 20, yPos);
-        yPos += 8;
+        yPos += 6;
 
         const risks = currentAnalysis.risikoer || [];
         const total = risks.length;
@@ -232,11 +246,11 @@ async function generatePDFContent(doc) {
             doc.text(label, 20, yPos);
             doc.setFont(undefined, 'normal');
             doc.text(value, 90, yPos);
-            yPos += 7;
+            yPos += 5;
         });
 
         // Legg til visualiseringer
-        yPos += 5;
+        yPos += 3;
         const chartStartY = yPos;
 
         // Consequence chart
