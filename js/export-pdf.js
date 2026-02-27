@@ -36,9 +36,27 @@ async function generatePDFContent(doc) {
     const loadImage = (url) => {
         return new Promise((resolve, reject) => {
             const img = new Image();
-            img.crossOrigin = 'Anonymous';
-            img.onload = () => resolve(img);
-            img.onerror = () => reject(new Error('Failed to load image'));
+
+            // Only set crossOrigin for external URLs, not for data URLs
+            if (!url.startsWith('data:')) {
+                img.crossOrigin = 'Anonymous';
+            }
+
+            // Add timeout
+            const timeout = setTimeout(() => {
+                reject(new Error('Image loading timeout'));
+            }, 5000);
+
+            img.onload = () => {
+                clearTimeout(timeout);
+                resolve(img);
+            };
+
+            img.onerror = () => {
+                clearTimeout(timeout);
+                reject(new Error('Failed to load image - CORS or network error'));
+            };
+
             img.src = url;
         });
     };
@@ -51,19 +69,52 @@ async function generatePDFContent(doc) {
         // Try to load and display logo if URL is provided
         if (reportLogo) {
             try {
+                console.log('Attempting to load logo from:', reportLogo);
                 const img = await loadImage(reportLogo);
-                const imgWidth = Math.min(img.width / 2, 150); // Max 150px width
-                const imgHeight = (img.height / img.width) * imgWidth;
+                console.log('Logo loaded successfully:', img.width + 'x' + img.height);
+
+                // Calculate dimensions
+                const maxWidth = 150;
+                let imgWidth = img.width;
+                let imgHeight = img.height;
+
+                // Scale down if needed
+                if (imgWidth > maxWidth) {
+                    const scale = maxWidth / imgWidth;
+                    imgWidth = maxWidth;
+                    imgHeight = imgHeight * scale;
+                }
+
                 const imgX = 148 - (imgWidth / 2); // Center horizontally
-                doc.addImage(img, 'PNG', imgX, yPos, imgWidth, imgHeight);
+
+                // Try to detect image format
+                let format = 'PNG';
+                if (reportLogo.toLowerCase().includes('.jpg') || reportLogo.toLowerCase().includes('.jpeg')) {
+                    format = 'JPEG';
+                } else if (reportLogo.startsWith('data:image/jpeg')) {
+                    format = 'JPEG';
+                } else if (reportLogo.startsWith('data:image/jpg')) {
+                    format = 'JPEG';
+                }
+
+                doc.addImage(img, format, imgX, yPos, imgWidth, imgHeight);
                 yPos += imgHeight + 10;
+                console.log('Logo added to PDF successfully');
             } catch (logoError) {
-                console.warn('Could not load logo, using text instead:', logoError);
+                console.warn('Could not load logo, using text instead:', logoError.message);
+                console.warn('Logo URL was:', reportLogo);
+                console.warn('Tip: Use "Test logo" button to verify logo before export, or convert to Data URL');
+
                 // Fallback to text if logo fails
                 doc.setFontSize(20);
                 doc.setTextColor(0, 123, 255);
                 doc.text(reportTitle, 148, yPos, { align: 'center' });
                 yPos += 10;
+
+                // Optional: Show warning to user
+                if (!reportLogo.startsWith('data:')) {
+                    console.warn('⚠️ External URLs may fail due to CORS. Consider using Data URL instead.');
+                }
             }
         } else {
             // No logo, just show title

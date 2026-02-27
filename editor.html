@@ -69,8 +69,17 @@
 
                 <div class="form-group">
                     <label for="reportLogo">Logo URL (valgfri):</label>
-                    <input type="text" id="reportLogo" class="form-control" placeholder="https://example.com/logo.png">
-                    <small class="text-muted">URL til logo som vises i PDF/Excel. Støtter PNG, JPG, SVG. Maks bredde 150px.</small>
+                    <div style="display: flex; gap: 10px; align-items: start;">
+                        <input type="text" id="reportLogo" class="form-control" placeholder="https://example.com/logo.png" style="flex: 1;">
+                        <button type="button" id="testLogoBtn" class="btn btn-secondary" style="white-space: nowrap;">Test logo</button>
+                    </div>
+                    <small class="text-muted">URL til logo som vises i PDF. Støtter PNG, JPG. Maks bredde 150px. <strong>Tips:</strong> Bruk Data URL for garantert kompatibilitet.</small>
+                    <div id="logoPreview" style="margin-top: 10px; padding: 10px; border: 1px dashed #ccc; background: #f9f9f9; display: none;">
+                        <div style="text-align: center;">
+                            <img id="logoPreviewImg" style="max-width: 150px; max-height: 100px;">
+                            <p id="logoPreviewStatus" style="margin-top: 5px; font-size: 0.9em;"></p>
+                        </div>
+                    </div>
                 </div>
             </div>
         </section>
@@ -411,9 +420,61 @@
             document.getElementById('acceptanceLevel').addEventListener('change', saveAcceptanceLevel);
             document.getElementById('exportMarkdownBtn').addEventListener('click', exportHighRisksToMarkdown);
 
+            // Logo test
+            document.getElementById('testLogoBtn').addEventListener('click', testLogo);
+
             // Initial update of acceptance level preview
             updateAcceptanceLevelPreview();
         });
+
+        async function testLogo() {
+            const logoUrl = document.getElementById('reportLogo').value.trim();
+            const preview = document.getElementById('logoPreview');
+            const img = document.getElementById('logoPreviewImg');
+            const status = document.getElementById('logoPreviewStatus');
+
+            if (!logoUrl) {
+                alert('Vennligst oppgi en logo URL først');
+                return;
+            }
+
+            preview.style.display = 'block';
+            status.textContent = '⏳ Laster logo...';
+            status.style.color = '#666';
+            img.style.display = 'none';
+
+            try {
+                // Try to load the image
+                await new Promise((resolve, reject) => {
+                    const testImg = new Image();
+                    testImg.crossOrigin = 'Anonymous';
+
+                    testImg.onload = () => {
+                        img.src = logoUrl;
+                        img.style.display = 'block';
+                        status.textContent = `✓ Logo lastet OK! (${testImg.width}x${testImg.height}px)`;
+                        status.style.color = '#28a745';
+                        resolve();
+                    };
+
+                    testImg.onerror = () => {
+                        reject(new Error('CORS eller nettverksfeil'));
+                    };
+
+                    // Add timeout
+                    setTimeout(() => reject(new Error('Timeout - bildet tok for lang tid å laste')), 5000);
+
+                    testImg.src = logoUrl;
+                });
+            } catch (error) {
+                img.style.display = 'none';
+                status.textContent = `✗ Kunne ikke laste logo: ${error.message}. Mulige løsninger: Bruk Data URL (base64), sørg for at bildet er offentlig tilgjengelig, eller bruk bilde fra samme domene.`;
+                status.style.color = '#dc3545';
+
+                console.error('Logo loading failed:', error);
+                console.log('Tip: Convert your image to Data URL at https://www.base64-image.de/');
+            }
+        }
 
         function validateAndSaveDate() {
             const datoInput = document.getElementById('dato');
