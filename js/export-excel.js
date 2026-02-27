@@ -30,8 +30,9 @@ function generateExcelContent() {
     const wb = XLSX.utils.book_new();
 
     // Ark 1: Metadata
+    const reportTitle = safeText(currentAnalysis.metadata.reportTitle || 'RISKY');
     const metadataData = [
-        ['RISKY'],
+        [reportTitle],
         [''],
         ['Analysenavn:', safeText(currentAnalysis.name)],
         ['Dato:', safeText(currentAnalysis.metadata.dato)],

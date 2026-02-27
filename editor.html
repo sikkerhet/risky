@@ -61,6 +61,17 @@
                     <label for="beskrivelse">Beskrivelse:</label>
                     <textarea id="beskrivelse" class="form-control" rows="3"></textarea>
                 </div>
+
+                <div class="form-group">
+                    <label for="reportTitle">Rapporttittel (valgfri, erstatter "RISKY"):</label>
+                    <input type="text" id="reportTitle" class="form-control" placeholder="RISKY">
+                </div>
+
+                <div class="form-group">
+                    <label for="reportLogo">Logo URL (valgfri):</label>
+                    <input type="text" id="reportLogo" class="form-control" placeholder="https://example.com/logo.png">
+                    <small class="text-muted">URL til logo som vises i PDF/Excel. Støtter PNG, JPG, SVG. Maks bredde 150px.</small>
+                </div>
             </div>
         </section>
 
@@ -392,6 +403,8 @@
             document.getElementById('deltakere').addEventListener('change', saveMetadata);
             document.getElementById('tjenesteeier').addEventListener('change', saveMetadata);
             document.getElementById('beskrivelse').addEventListener('change', saveMetadata);
+            document.getElementById('reportTitle').addEventListener('change', saveMetadata);
+            document.getElementById('reportLogo').addEventListener('change', saveMetadata);
             document.getElementById('commentsSectionTitle').addEventListener('blur', saveCommentsSectionTitle);
             document.getElementById('customTextTitle').addEventListener('blur', saveCustomTextTitle);
             document.getElementById('customText').addEventListener('change', saveCustomText);
@@ -435,12 +448,15 @@
             const updates = {
                 name: document.getElementById('analysisName').textContent,
                 metadata: {
+                    ...currentAnalysis.metadata, // Preserve existing metadata fields
                     dato: document.getElementById('dato').value,
                     tjeneste: document.getElementById('tjeneste').value,
                     utfortAv: document.getElementById('utfortAv').value,
                     deltakere: document.getElementById('deltakere').value,
                     tjenesteeier: document.getElementById('tjenesteeier').value,
-                    beskrivelse: document.getElementById('beskrivelse').value
+                    beskrivelse: document.getElementById('beskrivelse').value,
+                    reportTitle: document.getElementById('reportTitle').value,
+                    reportLogo: document.getElementById('reportLogo').value
                 }
             };
 
@@ -1201,6 +1217,8 @@
             document.getElementById('deltakere').value = currentAnalysis.metadata.deltakere || '';
             document.getElementById('tjenesteeier').value = currentAnalysis.metadata.tjenesteeier || '';
             document.getElementById('beskrivelse').value = currentAnalysis.metadata.beskrivelse || '';
+            document.getElementById('reportTitle').value = currentAnalysis.metadata.reportTitle || '';
+            document.getElementById('reportLogo').value = currentAnalysis.metadata.reportLogo || '';
             document.getElementById('commentsSectionTitle').textContent =
                 currentAnalysis.metadata.commentsSectionTitle || 'TILTAK OG KOMMENTARER';
             document.getElementById('customTextTitle').textContent =

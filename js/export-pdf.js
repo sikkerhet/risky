@@ -1,6 +1,6 @@
 // PDF eksport med jsPDF
 
-function exportToPDF() {
+async function exportToPDF() {
     if (!currentAnalysis) {
         alert('Ingen analyse å eksportere');
         return;
@@ -16,14 +16,14 @@ function exportToPDF() {
         const { jsPDF } = window.jspdf;
         const doc = new jsPDF('l', 'mm', 'a4'); // Landscape for bedre tabellplass
 
-        generatePDFContent(doc);
+        await generatePDFContent(doc);
     } catch (error) {
         alert('Feil ved generering av PDF: ' + error.message);
         console.error('PDF export error:', error);
     }
 }
 
-function generatePDFContent(doc) {
+async function generatePDFContent(doc) {
     let yPos = 20;
 
     // Helper function to safely get text value
@@ -32,14 +32,49 @@ function generatePDFContent(doc) {
         return String(value);
     };
 
+    // Helper function to load image from URL
+    const loadImage = (url) => {
+        return new Promise((resolve, reject) => {
+            const img = new Image();
+            img.crossOrigin = 'Anonymous';
+            img.onload = () => resolve(img);
+            img.onerror = () => reject(new Error('Failed to load image'));
+            img.src = url;
+        });
+    };
+
     try {
-        // Header
-        doc.setFontSize(20);
-        doc.setTextColor(0, 123, 255);
-        doc.text('RISKY', 148, yPos, { align: 'center' });
-        yPos += 10;
+        // Header with custom logo and title
+        const reportTitle = safeText(currentAnalysis.metadata.reportTitle || 'RISKY');
+        const reportLogo = safeText(currentAnalysis.metadata.reportLogo);
+
+        // Try to load and display logo if URL is provided
+        if (reportLogo) {
+            try {
+                const img = await loadImage(reportLogo);
+                const imgWidth = Math.min(img.width / 2, 150); // Max 150px width
+                const imgHeight = (img.height / img.width) * imgWidth;
+                const imgX = 148 - (imgWidth / 2); // Center horizontally
+                doc.addImage(img, 'PNG', imgX, yPos, imgWidth, imgHeight);
+                yPos += imgHeight + 10;
+            } catch (logoError) {
+                console.warn('Could not load logo, using text instead:', logoError);
+                // Fallback to text if logo fails
+                doc.setFontSize(20);
+                doc.setTextColor(0, 123, 255);
+                doc.text(reportTitle, 148, yPos, { align: 'center' });
+                yPos += 10;
+            }
+        } else {
+            // No logo, just show title
+            doc.setFontSize(20);
+            doc.setTextColor(0, 123, 255);
+            doc.text(reportTitle, 148, yPos, { align: 'center' });
+            yPos += 10;
+        }
 
         doc.setFontSize(16);
+        doc.setTextColor(0, 0, 0);
         doc.text(safeText(currentAnalysis.name), 148, yPos, { align: 'center' });
         yPos += 15;
     } catch (e) {
