@@ -451,12 +451,12 @@ async function generatePDFContent(doc) {
             doc.addPage();
             yPos = 20;
 
-            doc.setFontSize(14);
+            doc.setFontSize(12);
             doc.setFont(undefined, 'bold');
             doc.setTextColor(0, 0, 0);
             const sectionTitle = currentAnalysis.metadata.commentsSectionTitle || 'TILTAK OG KOMMENTARER';
             doc.text(sectionTitle, 20, yPos);
-            yPos += 15;
+            yPos += 10;
 
             risksWithComments.forEach(risk => {
                 let riskTitleAdded = false;
@@ -479,24 +479,43 @@ async function generatePDFContent(doc) {
                                 yPos = 20;
                             }
 
-                            doc.setFontSize(12);
+                            doc.setFontSize(11);
                             doc.setFont(undefined, 'bold');
                             doc.setTextColor(0, 0, 0);
                             const titleText = `#${risk.nr || 0} - ${safeText(risk.risikoelement)}`;
                             const titleLines = doc.splitTextToSize(titleText, 250);
                             doc.text(titleLines, 20, yPos);
-                            yPos += titleLines.length * 6 + 5;
+                            yPos += titleLines.length * 5 + 3;
                             riskTitleAdded = true;
                         }
 
-                        // Sjekk om vi trenger ny side før vi starter denne kommentaren
-                        if (yPos > 260) {
+                        // Calculate approximate height of this comment block
+                        const commentText = safeText(comment.text);
+                        const tempLines = commentText ? doc.splitTextToSize(commentText, 250) : [];
+                        let estimatedHeight = 5 + tempLines.length * 4 + 2; // Type label + text
+
+                        if (comment.links && Array.isArray(comment.links) && comment.links.length > 0) {
+                            estimatedHeight += 5; // Links header
+                            comment.links.forEach(link => {
+                                estimatedHeight += 5; // Title
+                                const linkUrl = safeText(link.url);
+                                if (linkUrl && linkUrl.trim()) {
+                                    const urlLines = doc.splitTextToSize(`    ${linkUrl}`, 245);
+                                    estimatedHeight += urlLines.length * 4 + 2;
+                                }
+                            });
+                            estimatedHeight += 2;
+                        }
+                        estimatedHeight += 6; // Space after comment
+
+                        // Check if entire comment block fits on current page
+                        if (yPos + estimatedHeight > 270) {
                             doc.addPage();
                             yPos = 20;
                         }
 
                         // Type label med fargekoding
-                        doc.setFontSize(10);
+                        doc.setFontSize(9);
                         doc.setFont(undefined, 'bold');
 
                         const typeConfig = {
@@ -509,40 +528,27 @@ async function generatePDFContent(doc) {
                         const config = typeConfig[comment.type] || typeConfig['kommentar'];
                         doc.setTextColor(config.color[0], config.color[1], config.color[2]);
                         doc.text(config.label, 25, yPos);
-                        yPos += 7;
+                        yPos += 5;
 
                         // Kommentar tekst
                         doc.setFont(undefined, 'normal');
                         doc.setTextColor(0, 0, 0);
-                        const commentText = safeText(comment.text);
 
                         if (commentText && commentText.length > 0) {
                             const lines = doc.splitTextToSize(commentText, 250);
                             doc.text(lines, 25, yPos);
-                            yPos += lines.length * 5 + 3;
+                            yPos += lines.length * 4 + 2;
                         }
 
                         // Lenker
                         if (comment.links && Array.isArray(comment.links) && comment.links.length > 0) {
-                            // Sjekk om det er plass til lenker-overskrift
-                            if (yPos > 265) {
-                                doc.addPage();
-                                yPos = 20;
-                            }
-
                             doc.setFont(undefined, 'bold');
                             doc.setTextColor(100, 100, 100);
                             doc.text('Lenker:', 25, yPos);
-                            yPos += 6;
+                            yPos += 5;
 
                             comment.links.forEach((link, linkIdx) => {
                                 try {
-                                    // Sjekk om det er plass til en lenke (ca 10mm)
-                                    if (yPos > 260) {
-                                        doc.addPage();
-                                        yPos = 20;
-                                    }
-
                                     // Tittel
                                     const linkTitle = safeText(link.title);
                                     if (linkTitle) {
@@ -556,27 +562,27 @@ async function generatePDFContent(doc) {
                                     const linkUrl = safeText(link.url);
                                     if (linkUrl && linkUrl.trim()) {
                                         doc.setTextColor(100, 100, 100);
-                                        doc.setFontSize(9);
+                                        doc.setFontSize(8);
                                         const urlLines = doc.splitTextToSize(`    ${linkUrl}`, 245);
                                         doc.text(urlLines, 25, yPos);
-                                        yPos += urlLines.length * 4 + 3;
-                                        doc.setFontSize(10);
+                                        yPos += urlLines.length * 4 + 2;
+                                        doc.setFontSize(9);
                                     }
                                 } catch (linkError) {
                                     console.error('Error processing link:', linkError, link);
                                 }
                             });
-                            yPos += 3;
+                            yPos += 2;
                         }
 
-                        yPos += 10; // Mellomrom mellom kommentarer
+                        yPos += 6; // Mellomrom mellom kommentarer
                     } catch (commentError) {
                         console.error('Error processing comment:', commentError, comment);
                     }
                 });
 
                 if (riskTitleAdded) {
-                    yPos += 8; // Mellomrom mellom risikoer
+                    yPos += 5; // Mellomrom mellom risikoer
                 }
             });
         }

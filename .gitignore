@@ -18,3 +18,15 @@ node_modules/
 
 # Local testing
 .env
+
+# Excel files
+*.xlsx
+*.xls
+
+# Test scripts
+test*.js
+test*.html
+test*.py
+*test.js
+*test.html
+*test.py
