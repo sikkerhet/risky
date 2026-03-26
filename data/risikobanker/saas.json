@@ -1,449 +1,983 @@
 {
   "id": "saas",
-  "navn": "SaaS-tjenester",
-  "beskrivelse": "Risikoer for SaaS-leverandører og organisasjoner som bruker SaaS-tjenester",
+  "navn": {
+    "no": "SaaS-tjenester",
+    "en": "SaaS Services"
+  },
+  "beskrivelse": {
+    "no": "Risikoer for SaaS-leverandører og organisasjoner som bruker SaaS-tjenester",
+    "en": "Risks for SaaS vendors and organizations that use SaaS services"
+  },
   "kategorier": [
     {
       "id": "saas-multi-tenancy",
-      "navn": "Multi-tenancy og isolasjon",
+      "navn": {
+        "no": "Multi-tenancy og isolasjon",
+        "en": "SaaS Multi-tenancy"
+      },
       "risikoer": [
         {
           "id": "tenant-001",
-          "risikoelement": "Data leakage mellom tenants (kundeorganisasjoner)",
-          "saarbarhet": "Utilstrekkelig tenant isolasjon i database eller applikasjon",
-          "eksisterendeBeskyttelse": "Tenant ID i alle queries, row-level security",
-          "eksisterendeKontroll": "Penetrasjonstesting av tenant isolasjon",
+          "risikoelement": {
+            "no": "Data leakage mellom tenants (kundeorganisasjoner)",
+            "en": "Data leakage between tenants (customer organizations)"
+          },
+          "saarbarhet": {
+            "no": "Utilstrekkelig tenant isolasjon i database eller applikasjon",
+            "en": "Insufficient tenant isolation in the database or application"
+          },
+          "eksisterendeBeskyttelse": {
+            "no": "Tenant ID i alle queries, row-level security",
+            "en": "Tenant ID in all queries, row-level security"
+          },
+          "eksisterendeKontroll": {
+            "no": "Penetrasjonstesting av tenant isolasjon",
+            "en": "Penetration testing of tenant isolation"
+          },
           "K": 5,
           "I": 5,
           "T": 2,
           "sannsynlighet": 2,
-          "foreslaatteTiltak": "Database per tenant, schema isolation, policy-based access control, automated testing av isolasjon"
+          "foreslaatteTiltak": {
+            "no": "Database per tenant, schema isolation, policy-based tilgang control, automated testing av isolasjon",
+            "en": "A database per tenant, schema isolation, policy-based access control, and automated testing of isolation"
+          }
         },
         {
           "id": "tenant-002",
-          "risikoelement": "Privilege escalation på tvers av tenants",
-          "saarbarhet": "Bruker kan få tilgang til andre organisasjoners data/funksjoner",
-          "eksisterendeBeskyttelse": "RBAC med tenant scoping",
-          "eksisterendeKontroll": "Access control testing",
+          "risikoelement": {
+            "no": "Privilege escalation på tvers av tenants",
+            "en": "Privilege escalation across tenants"
+          },
+          "saarbarhet": {
+            "no": "Bruker kan få tilgang til andre organisasjoners data/funksjoner",
+            "en": "A user can gain access to another organization's data or functions"
+          },
+          "eksisterendeBeskyttelse": {
+            "no": "RBAC med tenant scoping",
+            "en": "RBAC with tenant scoping"
+          },
+          "eksisterendeKontroll": {
+            "no": "tilgang control testing",
+            "en": "Access control testing"
+          },
           "K": 5,
           "I": 5,
           "T": 2,
           "sannsynlighet": 2,
-          "foreslaatteTiltak": "Enforced tenant context, JWT claims validation, API gateway tenant filtering"
+          "foreslaatteTiltak": {
+            "no": "Enforced tenant context, JWT claims validation, API gateway tenant filtering",
+            "en": "Enforced tenant context, JWT claims validation, API gateway tenant filtering"
+          }
         },
         {
           "id": "tenant-003",
-          "risikoelement": "Resource exhaustion av én tenant påvirker andre",
-          "saarbarhet": "Noisy neighbor problem - én kunde bruker for mye ressurser",
-          "eksisterendeBeskyttelse": "Basic resource limits",
-          "eksisterendeKontroll": "Resource usage monitoring",
+          "risikoelement": {
+            "no": "Resource exhaustion av én tenant påvirker andre",
+            "en": "Resource exhaustion by one tenant affects others"
+          },
+          "saarbarhet": {
+            "no": "Noisy neighbor problem - én kunde bruker for mye ressurser",
+            "en": "Noisy-neighbor problems where one customer consumes too many resources"
+          },
+          "eksisterendeBeskyttelse": {
+            "no": "Basic resource limits",
+            "en": "Basic resource limits"
+          },
+          "eksisterendeKontroll": {
+            "no": "Resource usage overvåking",
+            "en": "Resource usage monitoring"
+          },
           "K": 1,
           "I": 1,
           "T": 5,
           "sannsynlighet": 3,
-          "foreslaatteTiltak": "Per-tenant quotas, rate limiting, auto-scaling, circuit breakers, isolated compute pools for enterprise"
+          "foreslaatteTiltak": {
+            "no": "Per-tenant quotas, rate limiting, auto-scaling, circuit breakers, isolated compute pools for enterprise",
+            "en": "Per-tenant quotas, rate limiting, auto-scaling, circuit breakers, isolated compute pools for enterprise"
+          }
         },
         {
           "id": "tenant-004",
-          "risikoelement": "Logging/metrics eksponerer data fra andre tenants",
-          "saarbarhet": "Aggregerte logger eller metrics avslører tenant-spesifikk informasjon",
-          "eksisterendeBeskyttelse": "Tenant ID filtering i logging",
-          "eksisterendeKontroll": "Log access audit",
+          "risikoelement": {
+            "no": "loggføring/metrics eksponerer data fra andre tenants",
+            "en": "Logging or metrics expose data from other tenants"
+          },
+          "saarbarhet": {
+            "no": "Aggregerte logger eller metrics avslører tenant-spesifikk informasjon",
+            "en": "Aggregated logs or metrics reveal tenant-specific information"
+          },
+          "eksisterendeBeskyttelse": {
+            "no": "Tenant ID filtering i loggføring",
+            "en": "Tenant ID filtering in logging"
+          },
+          "eksisterendeKontroll": {
+            "no": "Log tilgang audit",
+            "en": "Log access audit"
+          },
           "K": 4,
           "I": 3,
           "T": 1,
           "sannsynlighet": 3,
-          "foreslaatteTiltak": "Tenant-scoped logging, anonymization i shared metrics, separate log streams per tier"
+          "foreslaatteTiltak": {
+            "no": "Tenant-scoped loggføring, anonymization i shared metrics, separate log streams per tier",
+            "en": "Tenant-scoped logging, anonymization in shared metrics, separate log streams per tier"
+          }
         },
         {
           "id": "tenant-005",
-          "risikoelement": "Shared cache leakage mellom tenants",
-          "saarbarhet": "Cache keys ikke tenant-aware, data bleed",
-          "eksisterendeBeskyttelse": "Tenant ID i cache keys",
-          "eksisterendeKontroll": "Cache configuration review",
+          "risikoelement": {
+            "no": "Shared cache leakage mellom tenants",
+            "en": "Shared cache leakage between tenants"
+          },
+          "saarbarhet": {
+            "no": "Cache keys ikke tenant-aware, data bleed",
+            "en": "Cache keys not tenant-aware, data bleed"
+          },
+          "eksisterendeBeskyttelse": {
+            "no": "Tenant ID i cache keys",
+            "en": "Tenant ID in cache keys"
+          },
+          "eksisterendeKontroll": {
+            "no": "Cache configuration gjennomgang",
+            "en": "Cache configuration review"
+          },
           "K": 5,
           "I": 3,
           "T": 1,
           "sannsynlighet": 2,
-          "foreslaatteTiltak": "Namespaced caching, tenant-specific cache instances, cache validation testing"
+          "foreslaatteTiltak": {
+            "no": "Namespaced caching, tenant-specific cache instances, cache validation testing",
+            "en": "Namespaced caching, tenant-specific cache instances, cache validation testing"
+          }
         }
       ]
     },
     {
       "id": "saas-provider",
-      "navn": "SaaS-leverandør risiko",
+      "navn": {
+        "no": "SaaS-leverandør risiko",
+        "en": "SaaS Provider Risk"
+      },
       "risikoer": [
         {
           "id": "provider-001",
-          "risikoelement": "Manglende compliance per kunde-jurisdiksjon",
-          "saarbarhet": "Globale kunder med ulike compliance-krav (GDPR, HIPAA, etc.)",
-          "eksisterendeBeskyttelse": "Standard GDPR compliance",
-          "eksisterendeKontroll": "Annual compliance audit",
+          "risikoelement": {
+            "no": "Manglende compliance per kunde-jurisdiksjon",
+            "en": "Missing compliance controls per customer jurisdiction"
+          },
+          "saarbarhet": {
+            "no": "Globale kunder med ulike compliance-krav (GDPR, HIPAA, etc.)",
+            "en": "Global customers with different compliance requirements such as GDPR and HIPAA"
+          },
+          "eksisterendeBeskyttelse": {
+            "no": "Standard GDPR compliance",
+            "en": "Standard GDPR compliance"
+          },
+          "eksisterendeKontroll": {
+            "no": "årlig compliance audit",
+            "en": "Annual compliance audit"
+          },
           "K": 5,
           "I": 4,
           "T": 2,
           "sannsynlighet": 3,
-          "foreslaatteTiltak": "Multi-region deployment, compliance-as-code, per-tenant compliance settings, certifications (SOC2, ISO27001)"
+          "foreslaatteTiltak": {
+            "no": "Multi-region utrulling, compliance-as-code, per-tenant compliance settings, certifications (SOC2, ISO27001)",
+            "en": "Multi-region deployment, compliance-as-code, per-tenant compliance settings, certifications (SOC2, ISO27001)"
+          }
         },
         {
           "id": "provider-002",
-          "risikoelement": "Data residency krav ikke oppfylt",
-          "saarbarhet": "Customer data lagres i feil region/land",
-          "eksisterendeBeskyttelse": "EU-region standard",
-          "eksisterendeKontroll": "Quarterly data location audit",
+          "risikoelement": {
+            "no": "Data residency krav ikke oppfylt",
+            "en": "Data residency requirements not fulfilled"
+          },
+          "saarbarhet": {
+            "no": "Customer data lagres i feil region/land",
+            "en": "Customer data is stored in the wrong region or country"
+          },
+          "eksisterendeBeskyttelse": {
+            "no": "EU-region standard",
+            "en": "EU-region standard"
+          },
+          "eksisterendeKontroll": {
+            "no": "kvartalsvis data location audit",
+            "en": "Quarterly data location audit"
+          },
           "K": 5,
           "I": 4,
           "T": 2,
           "sannsynlighet": 2,
-          "foreslaatteTiltak": "Per-tenant region selection, geo-fencing, data residency guarantees, multi-region architecture"
+          "foreslaatteTiltak": {
+            "no": "Per-tenant region selection, geo-fencing, data residency guarantees, multi-region architecture",
+            "en": "Per-tenant region selection, geo-fencing, data residency guarantees, multi-region architecture"
+          }
         },
         {
           "id": "provider-003",
-          "risikoelement": "Subscription/billing fraud eller feil",
-          "saarbarhet": "Utilstrekkelig validering av subscription changes, usage tracking",
-          "eksisterendeBeskyttelse": "Payment provider validation",
-          "eksisterendeKontroll": "Monthly billing reconciliation",
+          "risikoelement": {
+            "no": "Subscription/billing fraud eller feil",
+            "en": "Subscription or billing fraud and billing errors"
+          },
+          "saarbarhet": {
+            "no": "Utilstrekkelig validering av subscription changes, usage sporing",
+            "en": "Insufficient validation of subscription changes, usage tracking"
+          },
+          "eksisterendeBeskyttelse": {
+            "no": "Payment provider validation",
+            "en": "Payment provider validation"
+          },
+          "eksisterendeKontroll": {
+            "no": "månedlig billing reconciliation",
+            "en": "Monthly billing reconciliation"
+          },
           "K": 2,
           "I": 4,
           "T": 2,
           "sannsynlighet": 3,
-          "foreslaatteTiltak": "Usage metering validation, billing anomaly detection, subscription change audit trail, fraud detection"
+          "foreslaatteTiltak": {
+            "no": "Usage metering validation, billing anomaly detection, subscription change audit trail, fraud detection",
+            "en": "Usage metering validation, billing anomaly detection, subscription change audit trail, fraud detection"
+          }
         },
         {
           "id": "provider-004",
-          "risikoelement": "Onboarding/offboarding av kunder ikke sikker",
-          "saarbarhet": "Data ikke slettet ved churn, eller provisjonering har sikkerhetshull",
-          "eksisterendeBeskyttelse": "Manual offboarding procedures",
-          "eksisterendeKontroll": "Offboarding checklist",
+          "risikoelement": {
+            "no": "onboarding/offboarding av kunder ikke sikker",
+            "en": "Onboarding/offboarding of kunder not sikker"
+          },
+          "saarbarhet": {
+            "no": "Data ikke slettet ved churn, eller provisjonering har sikkerhetshull",
+            "en": "Data not erased during churn, or provisjonering har sikkerhetshull"
+          },
+          "eksisterendeBeskyttelse": {
+            "no": "manuell offboarding procedures",
+            "en": "Manual offboarding procedures"
+          },
+          "eksisterendeKontroll": {
+            "no": "offboarding sjekkliste",
+            "en": "Offboarding checklist"
+          },
           "K": 5,
           "I": 4,
           "T": 2,
           "sannsynlighet": 3,
-          "foreslaatteTiltak": "Automated provisioning/deprovisioning, data deletion verification, account lifecycle management, retention policies"
+          "foreslaatteTiltak": {
+            "no": "Automated provisioning/deprovisioning, data deletion verification, account lifecycle management, retention policyer",
+            "en": "Automated provisioning/deprovisioning, data deletion verification, account lifecycle management, retention policies"
+          }
         },
         {
           "id": "provider-005",
-          "risikoelement": "API rate limiting ikke granulær nok per tenant",
-          "saarbarhet": "En kunde kan DDoS API for alle",
-          "eksisterendeBeskyttelse": "Global rate limiting",
-          "eksisterendeKontroll": "API usage monitoring",
+          "risikoelement": {
+            "no": "API rate limiting ikke granulær nok per tenant",
+            "en": "API rate limiting is not granular enough per tenant"
+          },
+          "saarbarhet": {
+            "no": "En kunde kan DDoS API for alle",
+            "en": "A kunde can DDoS API for all"
+          },
+          "eksisterendeBeskyttelse": {
+            "no": "Global rate limiting",
+            "en": "Global rate limiting"
+          },
+          "eksisterendeKontroll": {
+            "no": "API usage overvåking",
+            "en": "API usage monitoring"
+          },
           "K": 1,
           "I": 1,
           "T": 5,
           "sannsynlighet": 3,
-          "foreslaatteTiltak": "Per-tenant rate limits, tiered limits per plan, auto-throttling, API gateway enforcement"
+          "foreslaatteTiltak": {
+            "no": "Per-tenant rate limits, tiered limits per plan, auto-throttling, API gateway enforcement",
+            "en": "Per-tenant rate limits, tiered limits per plan, auto-throttling, API gateway enforcement"
+          }
         },
         {
           "id": "provider-006",
-          "risikoelement": "Manglende SLA monitoring og enforcement",
-          "saarbarhet": "Kan ikke bevise oppetid eller ytelse per kunde",
-          "eksisterendeBeskyttelse": "Global uptime monitoring",
-          "eksisterendeKontroll": "Monthly SLA reports",
+          "risikoelement": {
+            "no": "Manglende SLA overvåking og enforcement",
+            "en": "Missing SLA monitoring and enforcement"
+          },
+          "saarbarhet": {
+            "no": "Kan ikke bevise oppetid eller ytelse per kunde",
+            "en": "Cannot bevise oppetid or ytelse per kunde"
+          },
+          "eksisterendeBeskyttelse": {
+            "no": "Global uptime overvåking",
+            "en": "Global uptime monitoring"
+          },
+          "eksisterendeKontroll": {
+            "no": "månedlig SLA reports",
+            "en": "Monthly SLA reports"
+          },
           "K": 1,
           "I": 3,
           "T": 4,
           "sannsynlighet": 3,
-          "foreslaatteTiltak": "Per-tenant SLA tracking, synthetic monitoring, auto-credits for SLA breaches, status page per kunde"
+          "foreslaatteTiltak": {
+            "no": "Per-tenant SLA sporing, synthetic overvåking, auto-credits for SLA breaches, status page per kunde",
+            "en": "Per-tenant SLA tracking, synthetic monitoring, auto-credits for SLA breaches, status page per kunde"
+          }
         },
         {
           "id": "provider-007",
-          "risikoelement": "Custom code/config per kunde skaper sikkerhetshull",
-          "saarbarhet": "Customizations ikke testet like grundig som core product",
-          "eksisterendeBeskyttelse": "Code review av customizations",
-          "eksisterendeKontroll": "Security testing",
+          "risikoelement": {
+            "no": "Custom code/config per kunde skaper sikkerhetshull",
+            "en": "Custom code/config per kunde create sikkerhetshull"
+          },
+          "saarbarhet": {
+            "no": "Customizations ikke testet like grundig som core product",
+            "en": "Customizations not tested like grundig that core product"
+          },
+          "eksisterendeBeskyttelse": {
+            "no": "Code gjennomgang av customizations",
+            "en": "Code review of customizations"
+          },
+          "eksisterendeKontroll": {
+            "no": "Sikkerhetstesting",
+            "en": "Security testing"
+          },
           "K": 4,
           "I": 4,
           "T": 3,
           "sannsynlighet": 3,
-          "foreslaatteTiltak": "Configuration-over-code, sandboxed customizations, security review for all customs, plugin architecture"
+          "foreslaatteTiltak": {
+            "no": "Konfigurasjon fremfor kode, sandkassede tilpasninger, sikkerhetsgjennomgang for alle tilpasninger og plugin-arkitektur",
+            "en": "Configuration-over-code, sandboxed customizations, security review for all customs, plugin architecture"
+          }
         }
       ]
     },
     {
       "id": "saas-consumer",
-      "navn": "SaaS-forbruker risiko",
+      "navn": {
+        "no": "SaaS-forbruker risiko",
+        "en": "SaaS Consumer Risk"
+      },
       "risikoer": [
         {
           "id": "consumer-001",
-          "risikoelement": "Shadow IT - uautoriserte SaaS-tjenester i bruk",
-          "saarbarhet": "Ansatte abonnerer på SaaS uten IT/security godkjenning",
-          "eksisterendeBeskyttelse": "Policy mot uautorisert SaaS",
-          "eksisterendeKontroll": "Network monitoring, expense reviews",
+          "risikoelement": {
+            "no": "Shadow IT - uautoriserte SaaS-tjenester i bruk",
+            "en": "Shadow IT - uautoriserte SaaS-services in bruk"
+          },
+          "saarbarhet": {
+            "no": "Ansatte abonnerer på SaaS uten godkjenning fra IT eller sikkerhet",
+            "en": "Employees abonnerer on SaaS without IT/security approval"
+          },
+          "eksisterendeBeskyttelse": {
+            "no": "policy mot uautorisert SaaS",
+            "en": "Policy mot unauthorized SaaS"
+          },
+          "eksisterendeKontroll": {
+            "no": "Nettverksovervåking og utgiftsgjennomganger",
+            "en": "Network monitoring, expense reviews"
+          },
           "K": 4,
           "I": 3,
           "T": 2,
           "sannsynlighet": 4,
-          "foreslaatteTiltak": "CASB (Cloud Access Security Broker), SaaS discovery tools, approved vendor catalog, SSO enforcement"
+          "foreslaatteTiltak": {
+            "no": "CASB (Cloud Access Security Broker), verktøy for oppdagelse av SaaS, godkjent leverandørkatalog og håndheving av SSO",
+            "en": "CASB (Cloud Access Security Broker), SaaS discovery tools, approved vendor catalog, SSO enforcement"
+          }
         },
         {
           "id": "consumer-002",
-          "risikoelement": "Vendor lock-in og data portability",
-          "saarbarhet": "Data/workflows ikke portable til alternative leverandører",
-          "eksisterendeBeskyttelse": "Contract review",
-          "eksisterendeKontroll": "Yearly vendor assessment",
+          "risikoelement": {
+            "no": "leverandør lock-in og data portability",
+            "en": "Vendor lock-in and data portability"
+          },
+          "saarbarhet": {
+            "no": "Data og arbeidsflyter er ikke portable til alternative leverandører",
+            "en": "Data/workflows not portable to alternative vendors"
+          },
+          "eksisterendeBeskyttelse": {
+            "no": "kontrakt gjennomgang",
+            "en": "Contract review"
+          },
+          "eksisterendeKontroll": {
+            "no": "Yearly leverandør vurdering",
+            "en": "Yearly vendor assessment"
+          },
           "K": 2,
           "I": 2,
           "T": 4,
           "sannsynlighet": 3,
-          "foreslaatteTiltak": "Data export testing, multi-vendor strategy, API-first architecture, standard data formats, exit clauses"
+          "foreslaatteTiltak": {
+            "no": "Data export testing, multi-leverandør strategy, API-first architecture, standard data formats, exit clauses",
+            "en": "Data export testing, multi-vendor strategy, API-first architecture, standard data formats, exit clauses"
+          }
         },
         {
           "id": "consumer-003",
-          "risikoelement": "SaaS vendor security breach eksponerer våre data",
-          "saarbarhet": "Avhengig av vendor sin security posture",
-          "eksisterendeBeskyttelse": "Vendor security questionnaires",
-          "eksisterendeKontroll": "Annual vendor audits",
+          "risikoelement": {
+            "no": "Et sikkerhetsbrudd hos SaaS-leverandøren eksponerer våre data",
+            "en": "SaaS vendor security breach eksponerer our data"
+          },
+          "saarbarhet": {
+            "no": "Avhengig av leverandørens sikkerhetsnivå",
+            "en": "Avhengig of vendor sin security posture"
+          },
+          "eksisterendeBeskyttelse": {
+            "no": "Sikkerhetsspørreskjemaer for leverandør",
+            "en": "Vendor security questionnaires"
+          },
+          "eksisterendeKontroll": {
+            "no": "årlig leverandør audits",
+            "en": "Annual vendor audits"
+          },
           "K": 5,
           "I": 4,
           "T": 3,
           "sannsynlighet": 2,
-          "foreslaatteTiltak": "Vendor risk assessment, SOC2/ISO certifications requirement, breach notification clauses, data encryption"
+          "foreslaatteTiltak": {
+            "no": "leverandør risk vurdering, SOC2/ISO certifications requirement, breach notification clauses, data encryption",
+            "en": "Vendor risk assessment, SOC2/ISO certifications requirement, breach notification clauses, data encryption"
+          }
         },
         {
           "id": "consumer-004",
-          "risikoelement": "Manglende SSO/centralized identity management",
-          "saarbarhet": "Separate credentials per SaaS, manglende MFA",
-          "eksisterendeBeskyttelse": "SSO for noen tjenester",
-          "eksisterendeKontroll": "Quarterly access review",
+          "risikoelement": {
+            "no": "Manglende SSO/centralized identity management",
+            "en": "Missing SSO/centralized identity management"
+          },
+          "saarbarhet": {
+            "no": "Separate credentials per SaaS, manglende MFA",
+            "en": "Separate credentials per SaaS, missing MFA"
+          },
+          "eksisterendeBeskyttelse": {
+            "no": "SSO for noen tjenester",
+            "en": "SSO for anyone services"
+          },
+          "eksisterendeKontroll": {
+            "no": "kvartalsvis tilgang gjennomgang",
+            "en": "Quarterly access review"
+          },
           "K": 4,
           "I": 3,
           "T": 2,
           "sannsynlighet": 3,
-          "foreslaatteTiltak": "SSO enforcement (SAML/OIDC), IdP integration, MFA requirement, centralized provisioning (SCIM)"
+          "foreslaatteTiltak": {
+            "no": "SSO enforcement (SAML/OIDC), IdP integration, MFA requirement, centralized provisioning (SCIM)",
+            "en": "SSO enforcement (SAML/OIDC), IdP integration, MFA requirement, centralized provisioning (SCIM)"
+          }
         },
         {
           "id": "consumer-005",
-          "risikoelement": "SaaS integrasjoner skaper nye angrepsflater",
-          "saarbarhet": "OAuth tokens, webhooks, API keys ikke sikret",
-          "eksisterendeBeskyttelse": "Review av integrasjoner",
-          "eksisterendeKontroll": "Integration inventory",
+          "risikoelement": {
+            "no": "SaaS integrasjoner skaper nye angrepsflater",
+            "en": "There is no backup of SaaS configurations"
+          },
+          "saarbarhet": {
+            "no": "OAuth tokens, webhooks, API keys ikke sikret",
+            "en": "OAuth tokens, webhooks, API keys not sikret"
+          },
+          "eksisterendeBeskyttelse": {
+            "no": "gjennomgang av integrasjoner",
+            "en": "Review of integrations"
+          },
+          "eksisterendeKontroll": {
+            "no": "Integration inventory",
+            "en": "Integration inventory"
+          },
           "K": 4,
           "I": 4,
           "T": 2,
           "sannsynlighet": 3,
-          "foreslaatteTiltak": "Integration security standards, least privilege OAuth scopes, webhook signature validation, API key rotation"
+          "foreslaatteTiltak": {
+            "no": "Sikkerhetsstandarder for integrasjoner, least privilege for OAuth-scopes, validering av webhook-signaturer og rotasjon av API-nøkler",
+            "en": "Integration security standards, least privilege OAuth scopes, webhook signature validation, API key rotation"
+          }
         },
         {
           "id": "consumer-006",
-          "risikoelement": "Tap av data ved SaaS-leverandør konkurs/nedleggelse",
-          "saarbarhet": "Ingen backup av SaaS data",
-          "eksisterendeBeskyttelse": "Noe manual eksport",
-          "eksisterendeKontroll": "Årlig vendor health check",
+          "risikoelement": {
+            "no": "Tap av data ved SaaS-leverandør konkurs/nedleggelse",
+            "en": "Tap of data during SaaS-vendor bankrupt/nedleggelse"
+          },
+          "saarbarhet": {
+            "no": "Ingen backup av SaaS data",
+            "en": "No backup of SaaS data"
+          },
+          "eksisterendeBeskyttelse": {
+            "no": "Noe manuell eksport",
+            "en": "some manual eksport"
+          },
+          "eksisterendeKontroll": {
+            "no": "Årlig leverandør health check",
+            "en": "Annual vendor health check"
+          },
           "K": 3,
           "I": 4,
           "T": 5,
           "sannsynlighet": 2,
-          "foreslaatteTiltak": "Automated SaaS backup (CloudAlly, Spanning), export testing, escrow agreements, multi-vendor strategy"
+          "foreslaatteTiltak": {
+            "no": "Automatisert SaaS-backup (CloudAlly, Spanning), eksporttesting, escrow-avtaler og strategi med flere leverandører",
+            "en": "Automated SaaS backup (CloudAlly, Spanning), export testing, escrow agreements, multi-vendor strategy"
+          }
         },
         {
           "id": "consumer-007",
-          "risikoelement": "Overprivilegerte SaaS admin-kontoer",
-          "saarbarhet": "For mange admin users, manglende privileged access management",
-          "eksisterendeBeskyttelse": "RBAC i SaaS apps",
-          "eksisterendeKontroll": "Kvartalsvis admin review",
+          "risikoelement": {
+            "no": "Overprivilegerte SaaS admin-kontoer",
+            "en": "Overprivilegerte SaaS admin accounts"
+          },
+          "saarbarhet": {
+            "no": "For mange admin users, manglende privileged tilgang management",
+            "en": "too many admin users, missing privileged access management"
+          },
+          "eksisterendeBeskyttelse": {
+            "no": "RBAC i SaaS apps",
+            "en": "RBAC in SaaS apps"
+          },
+          "eksisterendeKontroll": {
+            "no": "Kvartalsvis admin gjennomgang",
+            "en": "Quarterly admin review"
+          },
           "K": 4,
           "I": 4,
           "T": 3,
           "sannsynlighet": 3,
-          "foreslaatteTiltak": "Just-in-time admin access, PAM for SaaS, admin activity logging, periodic access certification"
+          "foreslaatteTiltak": {
+            "no": "Just-in-time admin tilgang, PAM for SaaS, admin activity loggføring, periodic tilgang certification",
+            "en": "Just-in-time admin access, PAM for SaaS, admin activity logging, periodic access certification"
+          }
         },
         {
           "id": "consumer-008",
-          "risikoelement": "Manglende SaaS sprawl governance",
-          "saarbarhet": "Ukontrollert vekst i antall SaaS-tjenester, overlapp, waste",
-          "eksisterendeBeskyttelse": "Procurement approval",
-          "eksisterendeKontroll": "Manual SaaS inventory",
+          "risikoelement": {
+            "no": "Manglende SaaS sprawl governance",
+            "en": "Missing SaaS sprawl governance"
+          },
+          "saarbarhet": {
+            "no": "Ukontrollert vekst i antall SaaS-tjenester, overlapp, waste",
+            "en": "Ukontrollert vekst in antall SaaS-services, overlapp, waste"
+          },
+          "eksisterendeBeskyttelse": {
+            "no": "Procurement approval",
+            "en": "Procurement approval"
+          },
+          "eksisterendeKontroll": {
+            "no": "manuell SaaS inventory",
+            "en": "Manual SaaS inventory"
+          },
           "K": 2,
           "I": 2,
-          "T": 2,
-          "sannsynlighet": 4,
-          "foreslaatteTiltak": "SaaS Management Platform (SMP), usage analytics, license optimization, rationalization reviews"
+          "T": 3,
+          "sannsynlighet": 3,
+          "foreslaatteTiltak": {
+            "no": "SaaS Management Platform (SMP), bruksanalyse, lisensoptimalisering og gjennomganger for sanering",
+            "en": "SaaS Management Platform (SMP), usage analytics, license optimization, rationalization reviews"
+          }
         }
       ]
     },
     {
       "id": "saas-integration",
-      "navn": "SaaS-integrasjoner og API",
+      "navn": {
+        "no": "SaaS-integrasjoner og API",
+        "en": "SaaS Integration"
+      },
       "risikoer": [
         {
           "id": "integration-001",
-          "risikoelement": "API keys eksponert i kode eller logs",
-          "saarbarhet": "Credentials hardkodet eller logget i klartekst",
-          "eksisterendeBeskyttelse": ".gitignore for secrets",
-          "eksisterendeKontroll": "Code review",
+          "risikoelement": {
+            "no": "API keys eksponert i kode eller logs",
+            "en": "API keys eksponert in code or logs"
+          },
+          "saarbarhet": {
+            "no": "Credentials hardkodet eller logget i klartekst",
+            "en": "Credentials hardkodet or logget in plaintext"
+          },
+          "eksisterendeBeskyttelse": {
+            "no": ".gitignore for secrets",
+            "en": ".gitignore for secrets"
+          },
+          "eksisterendeKontroll": {
+            "no": "Code gjennomgang",
+            "en": "Code review"
+          },
           "K": 5,
           "I": 3,
           "T": 2,
           "sannsynlighet": 3,
-          "foreslaatteTiltak": "Secrets management (Vault, AWS Secrets Manager), secret scanning, environment variables, key rotation"
+          "foreslaatteTiltak": {
+            "no": "Secrets management (Vault, AWS Secrets Manager), secret scanning, environment variables, key rotation",
+            "en": "Secrets management (Vault, AWS Secrets Manager), secret scanning, environment variables, key rotation"
+          }
         },
         {
           "id": "integration-002",
-          "risikoelement": "Webhook endpoints ikke sikret",
-          "saarbarhet": "Webhooks mottar data uten signature verification",
-          "eksisterendeBeskyttelse": "HTTPS endpoints",
-          "eksisterendeKontroll": "Integration testing",
+          "risikoelement": {
+            "no": "Webhook endpoints ikke sikret",
+            "en": "Webhook endpoints not sikret"
+          },
+          "saarbarhet": {
+            "no": "Webhooks mottar data uten signature verification",
+            "en": "Webhooks mottar data without signature verification"
+          },
+          "eksisterendeBeskyttelse": {
+            "no": "HTTPS endpoints",
+            "en": "HTTPS endpoints"
+          },
+          "eksisterendeKontroll": {
+            "no": "Integration testing",
+            "en": "Integration testing"
+          },
           "K": 3,
           "I": 5,
           "T": 2,
           "sannsynlighet": 3,
-          "foreslaatteTiltak": "Webhook signature validation (HMAC), IP whitelisting, replay attack protection, idempotency"
+          "foreslaatteTiltak": {
+            "no": "Webhook signature validation (HMAC), IP whitelisting, replay attack protection, idempotency",
+            "en": "Webhook signature validation (HMAC), IP whitelisting, replay attack protection, idempotency"
+          }
         },
         {
           "id": "integration-003",
-          "risikoelement": "Overprivilegerte OAuth scopes",
-          "saarbarhet": "Integrasjoner ber om mer tilgang enn nødvendig",
-          "eksisterendeBeskyttelse": "Manual OAuth approval",
-          "eksisterendeKontroll": "Scope review ved setup",
+          "risikoelement": {
+            "no": "Overprivilegerte OAuth scopes",
+            "en": "Overprivilegerte OAuth scopes"
+          },
+          "saarbarhet": {
+            "no": "Integrasjoner ber om mer tilgang enn nødvendig",
+            "en": "Integrations ber about mer access than necessary"
+          },
+          "eksisterendeBeskyttelse": {
+            "no": "manuell OAuth approval",
+            "en": "Manual OAuth approval"
+          },
+          "eksisterendeKontroll": {
+            "no": "Scope gjennomgang ved setup",
+            "en": "Scope review during setup"
+          },
           "K": 4,
           "I": 3,
           "T": 2,
           "sannsynlighet": 3,
-          "foreslaatteTiltak": "Least privilege scopes, periodic scope audit, OAuth consent management, scope justification requirement"
+          "foreslaatteTiltak": {
+            "no": "Least privilege scopes, periodic scope audit, OAuth consent management, scope justification requirement",
+            "en": "Least privilege scopes, periodic scope audit, OAuth consent management, scope justification requirement"
+          }
         },
         {
           "id": "integration-004",
-          "risikoelement": "SaaS-to-SaaS data sync skaper compliance issues",
-          "saarbarhet": "Sensitive data synkroniseres til tjenester uten adekvat sikkerhet",
-          "eksisterendeBeskyttelse": "Approved integration list",
-          "eksisterendeKontroll": "Data flow mapping",
+          "risikoelement": {
+            "no": "SaaS-to-SaaS data sync skaper compliance issues",
+            "en": "SaaS-to-SaaS data sync create compliance issues"
+          },
+          "saarbarhet": {
+            "no": "Sensitive data synkroniseres til tjenester uten adekvat sikkerhet",
+            "en": "Sensitive data synkroniseres to services without adekvat security"
+          },
+          "eksisterendeBeskyttelse": {
+            "no": "Approved integration list",
+            "en": "Approved integration list"
+          },
+          "eksisterendeKontroll": {
+            "no": "Data flow mapping",
+            "en": "Data flow mapping"
+          },
           "K": 5,
           "I": 4,
           "T": 1,
           "sannsynlighet": 3,
-          "foreslaatteTiltak": "DLP policies, data classification, sync monitoring, field-level sync control, data residency validation"
+          "foreslaatteTiltak": {
+            "no": "DLP policyer, data classification, sync overvåking, field-level sync control, data residency validation",
+            "en": "DLP policies, data classification, sync monitoring, field-level sync control, data residency validation"
+          }
         },
         {
           "id": "integration-005",
-          "risikoelement": "Legacy/deprecated API versions i bruk",
-          "saarbarhet": "Gamle API-versjoner med kjente sårbarheter",
-          "eksisterendeBeskyttelse": "Noen API versjonering",
-          "eksisterendeKontroll": "Quarterly dependency review",
+          "risikoelement": {
+            "no": "Legacy/deprecated API versions i bruk",
+            "en": "Legacy/deprecated API versions in bruk"
+          },
+          "saarbarhet": {
+            "no": "Gamle API-versjoner med kjente sårbarheter",
+            "en": "Gamle API-versjoner with known vulnerabilities"
+          },
+          "eksisterendeBeskyttelse": {
+            "no": "Noen API versjonering",
+            "en": "Anyone API versjonering"
+          },
+          "eksisterendeKontroll": {
+            "no": "Kvartalsvis gjennomgang av avhengigheter",
+            "en": "Quarterly dependency review"
+          },
           "K": 4,
           "I": 3,
           "T": 3,
           "sannsynlighet": 3,
-          "foreslaatteTiltak": "API version inventory, deprecation notices monitoring, automated migration testing, API gateway version enforcement"
+          "foreslaatteTiltak": {
+            "no": "API version inventory, deprecation notices overvåking, automated migration testing, API gateway version enforcement",
+            "en": "API version inventory, deprecation notices monitoring, automated migration testing, API gateway version enforcement"
+          }
         }
       ]
     },
     {
       "id": "saas-data-governance",
-      "navn": "Data governance i SaaS",
+      "navn": {
+        "no": "Data governance i SaaS",
+        "en": "SaaS Data Governance"
+      },
       "risikoer": [
         {
           "id": "data-gov-001",
-          "risikoelement": "Manglende oversikt over data i SaaS-applikasjoner",
-          "saarbarhet": "Vet ikke hvilke data som er lagret hvor",
-          "eksisterendeBeskyttelse": "Manual data inventory",
-          "eksisterendeKontroll": "Årlig gjennomgang",
+          "risikoelement": {
+            "no": "Data i SaaS-applikasjoner er ikke tilstrekkelig kartlagt",
+            "en": "Data in SaaS applications is not mapped sufficiently"
+          },
+          "saarbarhet": {
+            "no": "Vet ikke hvilke data som er lagret hvor",
+            "en": "Vet not hvilke data that is lagret hvor"
+          },
+          "eksisterendeBeskyttelse": {
+            "no": "manuell data inventory",
+            "en": "Manual data inventory"
+          },
+          "eksisterendeKontroll": {
+            "no": "Årlig gjennomgang",
+            "en": "Annual review"
+          },
           "K": 4,
           "I": 3,
           "T": 2,
           "sannsynlighet": 4,
-          "foreslaatteTiltak": "CASB data discovery, data classification in SaaS, DLP policies, automated data mapping"
+          "foreslaatteTiltak": {
+            "no": "CASB data discovery, data classification in SaaS, DLP policyer, automated data mapping",
+            "en": "CASB data discovery, data classification in SaaS, DLP policies, automated data mapping"
+          }
         },
         {
           "id": "data-gov-002",
-          "risikoelement": "Feil data retention i SaaS-tjenester",
-          "saarbarhet": "Data beholdes lengre eller kortere enn policy",
-          "eksisterendeBeskyttelse": "Vendor standard retention",
-          "eksisterendeKontroll": "Contract review",
+          "risikoelement": {
+            "no": "Feil data retention i SaaS-tjenester",
+            "en": "Errors data retention in SaaS-services"
+          },
+          "saarbarhet": {
+            "no": "Data beholdes lengre eller kortere enn policy",
+            "en": "Data beholdes lengre or kortere than policy"
+          },
+          "eksisterendeBeskyttelse": {
+            "no": "leverandør standard retention",
+            "en": "Vendor standard retention"
+          },
+          "eksisterendeKontroll": {
+            "no": "kontrakt gjennomgang",
+            "en": "Contract review"
+          },
           "K": 4,
           "I": 4,
           "T": 2,
           "sannsynlighet": 3,
-          "foreslaatteTiltak": "Custom retention policies, automated deletion, retention compliance monitoring, legal hold procedures"
+          "foreslaatteTiltak": {
+            "no": "Custom retention policyer, automated deletion, retention compliance overvåking, legal hold procedures",
+            "en": "Custom retention policies, automated deletion, retention compliance monitoring, legal hold procedures"
+          }
         },
         {
           "id": "data-gov-003",
-          "risikoelement": "Sensitive data delt eksternt via SaaS-sharing features",
-          "saarbarhet": "Brukere deler konfidensielle docs via link-sharing",
-          "eksisterendeBeskyttelse": "Brukeropplæring",
-          "eksisterendeKontroll": "Manual audits",
+          "risikoelement": {
+            "no": "Sensitive data delt eksternt via SaaS-sharing features",
+            "en": "Sensitive data delt eksternt via SaaS-sharing features"
+          },
+          "saarbarhet": {
+            "no": "Brukere deler konfidensielle docs via link-sharing",
+            "en": "Users deler konfidensielle docs via link-sharing"
+          },
+          "eksisterendeBeskyttelse": {
+            "no": "Brukeropplæring",
+            "en": "User training"
+          },
+          "eksisterendeKontroll": {
+            "no": "manuell audits",
+            "en": "Manual audits"
+          },
           "K": 5,
           "I": 3,
           "T": 1,
           "sannsynlighet": 4,
-          "foreslaatteTiltak": "DLP for SaaS, external sharing policies, link expiry enforcement, sharing audit logs, CASB controls"
+          "foreslaatteTiltak": {
+            "no": "DLP for SaaS, external sharing policyer, link expiry enforcement, sharing audit logs, CASB controls",
+            "en": "DLP for SaaS, external sharing policies, link expiry enforcement, sharing audit logs, CASB controls"
+          }
         },
         {
           "id": "data-gov-004",
-          "risikoelement": "GDPR/CCPA subject access requests ikke håndterbar",
-          "saarbarhet": "Kan ikke finne eller eksportere persondata på tvers av SaaS",
-          "eksisterendeBeskyttelse": "Manual search i SaaS apps",
-          "eksisterendeKontroll": "Annual DPIA",
+          "risikoelement": {
+            "no": "GDPR/CCPA subject tilgang requests ikke håndterbar",
+            "en": "GDPR or CCPA subject access requests are not handled effectively"
+          },
+          "saarbarhet": {
+            "no": "Kan ikke finne eller eksportere persondata på tvers av SaaS",
+            "en": "Cannot finne or eksportere personal data on across of SaaS"
+          },
+          "eksisterendeBeskyttelse": {
+            "no": "manuell search i SaaS apps",
+            "en": "Manual search in SaaS apps"
+          },
+          "eksisterendeKontroll": {
+            "no": "årlig DPIA",
+            "en": "Annual DPIA"
+          },
           "K": 5,
           "I": 4,
           "T": 2,
           "sannsynlighet": 3,
-          "foreslaatteTiltak": "Centralized identity mapping, automated SAR workflows, data subject management tool, SaaS API integrations"
+          "foreslaatteTiltak": {
+            "no": "Sentralisert identitetskobling, automatiserte SAR-arbeidsflyter, verktøy for håndtering av registrerte og SaaS API-integrasjoner",
+            "en": "Centralized identity mapping, automated SAR workflows, data subject management tool, SaaS API integrations"
+          }
         },
         {
           "id": "data-gov-005",
-          "risikoelement": "Lack of encryption for data-at-rest i SaaS",
-          "saarbarhet": "Vendor krypterer ikke customer data at-rest",
-          "eksisterendeBeskyttelse": "Contract encryption requirements",
-          "eksisterendeKontroll": "Vendor questionnaires",
+          "risikoelement": {
+            "no": "Lack of encryption for data-at-rest i SaaS",
+            "en": "Lack of encryption for data-at-rest in SaaS"
+          },
+          "saarbarhet": {
+            "no": "leverandør krypterer ikke customer data at-rest",
+            "en": "Vendor krypterer not customer data at-rest"
+          },
+          "eksisterendeBeskyttelse": {
+            "no": "kontrakt encryption requirements",
+            "en": "Contract encryption requirements"
+          },
+          "eksisterendeKontroll": {
+            "no": "leverandør questionnaires",
+            "en": "Vendor questionnaires"
+          },
           "K": 5,
           "I": 3,
           "T": 1,
           "sannsynlighet": 2,
-          "foreslaatteTiltak": "Encryption requirement in contracts, customer-managed keys (BYOK), field-level encryption, vendor validation"
+          "foreslaatteTiltak": {
+            "no": "Encryption requirement in kontrakter, customer-managed keys (BYOK), field-level encryption, leverandør validation",
+            "en": "Encryption requirement in contracts, customer-managed keys (BYOK), field-level encryption, vendor validation"
+          }
         }
       ]
     },
     {
       "id": "saas-availability",
-      "navn": "Tilgjengelighet og kontinuitet",
+      "navn": {
+        "no": "Tilgjengelighet og kontinuitet",
+        "en": "SaaS Availability and Continuity"
+      },
       "risikoer": [
         {
           "id": "avail-001",
-          "risikoelement": "SaaS outage blokkerer kritiske forretningsprosesser",
-          "saarbarhet": "Avhengighet av single SaaS provider uten fallback",
-          "eksisterendeBeskyttelse": "SLA med vendor",
-          "eksisterendeKontroll": "Uptime monitoring",
+          "risikoelement": {
+            "no": "SaaS outage blokkerer kritiske forretningsprosesser",
+            "en": "SaaS outage blokkerer critical forretningsprosesser"
+          },
+          "saarbarhet": {
+            "no": "Avhengighet av single SaaS provider uten fallback",
+            "en": "dependency of single SaaS provider without fallback"
+          },
+          "eksisterendeBeskyttelse": {
+            "no": "SLA med leverandør",
+            "en": "SLA with vendor"
+          },
+          "eksisterendeKontroll": {
+            "no": "Uptime overvåking",
+            "en": "Uptime monitoring"
+          },
           "K": 1,
           "I": 2,
           "T": 5,
           "sannsynlighet": 2,
-          "foreslaatteTiltak": "Multi-vendor redundancy for kritiske tjenester, offline mode, business continuity plan, status page monitoring"
+          "foreslaatteTiltak": {
+            "no": "Multi-leverandør redundancy for kritiske tjenester, offline mode, business continuity plan, status page overvåking",
+            "en": "Multi-vendor redundancy for critical services, offline mode, business continuity plan, status page monitoring"
+          }
         },
         {
           "id": "avail-002",
-          "risikoelement": "Performance degradering ikke oppdaget",
-          "saarbarhet": "Manglende monitoring av SaaS response times",
-          "eksisterendeBeskyttelse": "User complaints",
-          "eksisterendeKontroll": "Manual testing",
+          "risikoelement": {
+            "no": "Performance degradering ikke oppdaget",
+            "en": "Performance degradering not oppdaget"
+          },
+          "saarbarhet": {
+            "no": "Manglende overvåking av SaaS respons times",
+            "en": "Missing monitoring of SaaS response times"
+          },
+          "eksisterendeBeskyttelse": {
+            "no": "User complaints",
+            "en": "User complaints"
+          },
+          "eksisterendeKontroll": {
+            "no": "manuell testing",
+            "en": "Manual testing"
+          },
           "K": 1,
           "I": 1,
           "T": 4,
           "sannsynlighet": 3,
-          "foreslaatteTiltak": "Synthetic monitoring, APM for SaaS integrations, SLA monitoring, alerting på latency spikes"
+          "foreslaatteTiltak": {
+            "no": "Synthetic overvåking, APM for SaaS integrations, SLA overvåking, alerting på latency spikes",
+            "en": "Synthetic monitoring, APM for SaaS integrations, SLA monitoring, alerting on latency spikes"
+          }
         },
         {
           "id": "avail-003",
-          "risikoelement": "Ingen backup av SaaS-konfigurasjoner",
-          "saarbarhet": "Tap av custom workflows, permissions ved account issues",
-          "eksisterendeBeskyttelse": "Manual documentation",
-          "eksisterendeKontroll": "None",
+          "risikoelement": {
+            "no": "Ingen backup av SaaS-konfigurasjoner",
+            "en": "There is no backup of SaaS configurations"
+          },
+          "saarbarhet": {
+            "no": "Tap av tilpassede arbeidsflyter og rettigheter ved kontoproblemer",
+            "en": "Tap of custom workflows, permissions during account issues"
+          },
+          "eksisterendeBeskyttelse": {
+            "no": "manuell dokumentasjon",
+            "en": "Manual documentation"
+          },
+          "eksisterendeKontroll": {
+            "no": "None",
+            "en": "None"
+          },
           "K": 2,
           "I": 4,
           "T": 4,
           "sannsynlighet": 2,
-          "foreslaatteTiltak": "Infrastructure-as-code for SaaS config, config backup tools, version control for configs, disaster recovery testing"
+          "foreslaatteTiltak": {
+            "no": "Infrastructure-as-code for SaaS config, config backup tools, version control for configs, disaster gjenoppretting testing",
+            "en": "Infrastructure-as-code for SaaS config, config backup tools, version control for configs, disaster recovery testing"
+          }
         },
         {
           "id": "avail-004",
-          "risikoelement": "Kritisk SaaS-tjeneste discontinued av vendor",
-          "saarbarhet": "Vendor legger ned produkt eller blir kjøpt opp",
-          "eksisterendeBeskyttelse": "Diverse vendor portfolio",
-          "eksisterendeKontroll": "Vendor health monitoring",
+          "risikoelement": {
+            "no": "Kritisk SaaS-tjeneste discontinued av leverandør",
+            "en": "Critical SaaS-service discontinued of vendor"
+          },
+          "saarbarhet": {
+            "no": "leverandør legger ned produkt eller blir kjøpt opp",
+            "en": "The vendor shuts down the product or is acquired"
+          },
+          "eksisterendeBeskyttelse": {
+            "no": "Diverse leverandør portfolio",
+            "en": "Diverse vendor portfolio"
+          },
+          "eksisterendeKontroll": {
+            "no": "leverandør health overvåking",
+            "en": "Vendor health monitoring"
+          },
           "K": 2,
           "I": 3,
           "T": 5,
           "sannsynlighet": 2,
-          "foreslaatteTiltak": "Alternative vendor evaluation, migration playbooks, data portability testing, early warning systems"
+          "foreslaatteTiltak": {
+            "no": "Alternative leverandør evaluation, migration playbooks, data portability testing, early warning systems",
+            "en": "Alternative vendor evaluation, migration playbooks, data portability testing, early warning systems"
+          }
         }
       ]
     }

@@ -4,40 +4,317 @@ let risikobank = null;
 let currentRiskIdForBank = null;
 
 const CUSTOM_BANKS_KEY = 'ros_custom_banks';
+const DEFAULT_BANK_FILES = [
+    'generell.json',
+    'sky.json',
+    'onprem.json',
+    'persondata.json',
+    'ai-tjenester.json',
+    'saas.json',
+    'governance.json',
+    'personell.json',
+    'kontinuitet.json',
+    'integrasjoner.json',
+    'devops-cicd.json',
+    'supply-chain.json',
+    'iot-embedded.json',
+    'fysisk-sikkerhet.json'
+];
+
+const BANK_NAME_OVERRIDES = {
+    generell: 'General IT Service',
+    sky: 'Cloud Service',
+    skytjeneste: 'Cloud Service',
+    onprem: 'On-premises Service',
+    persondata: 'Personal Data',
+    'ai-tjenester': 'AI Services',
+    saas: 'SaaS',
+    governance: 'Governance',
+    personell: 'Personnel',
+    kontinuitet: 'Continuity',
+    integrasjoner: 'Integrations',
+    'devops-cicd': 'DevOps and CI/CD',
+    'supply-chain': 'Supply Chain',
+    'iot-embedded': 'IoT and Embedded',
+    'fysisk-sikkerhet': 'Physical Security'
+};
+
+const CATEGORY_NAME_OVERRIDES = {
+    tilgangsstyring: 'Access Management',
+    'sky-tilgang': 'Cloud Access Management',
+    'sky-nettverk': 'Cloud Networking',
+    'sky-data': 'Cloud Data',
+    'sky-kostnad': 'Cloud Cost Management',
+    'sky-compliance': 'Cloud Compliance',
+    leverandorstyring: 'Vendor Management',
+    'data-deling': 'Data Sharing',
+    'integrasjoner-api': 'Integrations and APIs',
+    'open-source': 'Open Source',
+    'vendor-offboarding': 'Vendor Offboarding',
+    'ledelse-styring': 'Leadership and Governance',
+    'roller-ansvar': 'Roles and Responsibilities',
+    'policy-compliance': 'Policies and Compliance',
+    'audit-tilsyn': 'Audit and Oversight',
+    'dokumentasjon-kunnskap': 'Documentation and Knowledge',
+    'saas-multi-tenancy': 'SaaS Multi-tenancy',
+    'saas-provider': 'SaaS Provider',
+    'saas-consumer': 'SaaS Consumer',
+    'saas-data-governance': 'SaaS Data Governance',
+    'saas-integration': 'SaaS Integration',
+    'saas-availability': 'SaaS Availability',
+    'device-security': 'Device Security',
+    firmware: 'Firmware',
+    'ot-scada': 'OT and SCADA',
+    'iot-backend': 'IoT Backend',
+    'supply-chain-iot': 'IoT Supply Chain',
+    'edge-computing': 'Edge Computing',
+    'synkron-integrasjon': 'Synchronous Integration',
+    'asynkron-meldingskoer': 'Asynchronous Message Queues',
+    'data-pipelines': 'Data Pipelines',
+    integrasjonsmonstre: 'Integration Anti-patterns',
+    'resiliens-feilhandtering': 'Resilience and Error Handling',
+    'middleware-platform': 'Middleware Platform',
+    adgangskontroll: 'Access Control',
+    nettverk: 'Network',
+    applikasjon: 'Application',
+    logging: 'Logging',
+    overvaking: 'Monitoring',
+    backup: 'Backup',
+    'backup-restore': 'Backup and Restore',
+    'lokal-server': 'Local Servers',
+    'lokal-nettverk': 'Local Network',
+    'lokal-fysisk': 'Local Physical Security',
+    'lokal-drift': 'Local Operations',
+    dokumenthåndtering: 'Document Management',
+    'gdpr-grunnlag': 'GDPR Legal Basis',
+    'gdpr-rettigheter': 'GDPR Rights',
+    'gdpr-sikkerhet': 'GDPR Security',
+    'gdpr-deling': 'GDPR Data Sharing',
+    'llm-sikkerhet': 'LLM Security',
+    'ml-model-sikkerhet': 'ML Model Security',
+    'ai-data-privacy': 'AI Data Privacy',
+    'ai-bias-fairness': 'AI Bias and Fairness',
+    'ai-governance': 'AI Governance',
+    'agentic-ai': 'Agentic AI',
+    'fjernarbeid-byod': 'Remote Work and BYOD',
+    'hr-livssyklus': 'HR Lifecycle',
+    'awareness-trening': 'Awareness Training',
+    'insider-threat': 'Insider Threat',
+    'fysisk-personell': 'Physical Personnel Security',
+    'bcp-planlegging': 'Business Continuity Planning',
+    krisehandtering: 'Crisis Management',
+    'incident-response': 'Incident Response',
+    'testing-oving': 'Testing and Exercises',
+    'remote-sites': 'Remote Sites',
+    'leverandor-resiliens': 'Vendor Resilience',
+    'container-security': 'Container Security',
+    'dependency-management': 'Dependency Management',
+    'pipeline-sikkerhet': 'Pipeline Security',
+    'kildekode-sikkerhet': 'Source Code Security',
+    'iac-config': 'Infrastructure as Code Configuration',
+    deployment: 'Deployment',
+    'teknisk-drift': 'Technical Operations',
+    inngangsportaler: 'Entry Points',
+    utstyrssikring: 'Equipment Security',
+    miljokontroll: 'Environmental Controls',
+    'menneskelig-faktor': 'Human Factors',
+    organisatorisk: 'Organizational'
+};
+
+const ID_TOKEN_TRANSLATIONS = {
+    generell: 'General',
+    sky: 'Cloud',
+    skytjeneste: 'Cloud Service',
+    tilgang: 'Access',
+    tilgangsstyring: 'Access Management',
+    nettverk: 'Network',
+    kostnad: 'Cost',
+    persondata: 'Personal Data',
+    personell: 'Personnel',
+    kontinuitet: 'Continuity',
+    integrasjoner: 'Integrations',
+    fysisk: 'Physical',
+    sikkerhet: 'Security',
+    ledelse: 'Leadership',
+    styring: 'Governance',
+    roller: 'Roles',
+    ansvar: 'Responsibilities',
+    tilsyn: 'Oversight',
+    dokumentasjon: 'Documentation',
+    kunnskap: 'Knowledge',
+    leverandor: 'Vendor',
+    leverandorstyring: 'Vendor Management',
+    deling: 'Sharing',
+    synkron: 'Synchronous',
+    asynkron: 'Asynchronous',
+    meldingskoer: 'Message Queues',
+    resiliens: 'Resilience',
+    feilhandtering: 'Error Handling',
+    lokal: 'Local',
+    drift: 'Operations',
+    applikasjon: 'Application',
+    overvaking: 'Monitoring',
+    dokumenthåndtering: 'Document Management',
+    grunnlag: 'Legal Basis',
+    rettigheter: 'Rights',
+    trening: 'Training',
+    fjernarbeid: 'Remote Work',
+    menneskelig: 'Human',
+    faktor: 'Factors',
+    organisatorisk: 'Organizational',
+    utstyrssikring: 'Equipment Security',
+    miljokontroll: 'Environmental Controls',
+    krisehandtering: 'Crisis Management',
+    kildekode: 'Source Code',
+    testing: 'Testing',
+    oving: 'Exercises'
+};
+
+function toTitleCase(text) {
+    return text
+        .split(' ')
+        .filter(Boolean)
+        .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+        .join(' ');
+}
+
+function buildEnglishLabelFromId(id, overrides = {}) {
+    if (!id) return '';
+    if (overrides[id]) return overrides[id];
+
+    const tokens = id.split('-').map((token) => ID_TOKEN_TRANSLATIONS[token] || token.toUpperCase());
+    return toTitleCase(tokens.join(' '));
+}
+
+function normalizeDisplayName(value, id, overrides = {}) {
+    const normalized = normalizeLocalizedText(value, id);
+    const englishLabel = buildEnglishLabelFromId(id, overrides);
+
+    if (!normalized.en || normalized.en === normalized.no) {
+        normalized.en = englishLabel || normalized.en || normalized.no;
+    }
+
+    if (!normalized.no) {
+        normalized.no = id;
+    }
+
+    return normalized;
+}
+
+function normalizeLocalizedText(value, fallback = '') {
+    if (value && typeof value === 'object') {
+        return {
+            no: value.no || value.nb || value.nn || value.en || fallback,
+            en: value.en || value.no || fallback
+        };
+    }
+
+    return {
+        no: value || fallback,
+        en: value || fallback
+    };
+}
+
+function normalizeBankRisk(bankRisk, index = 0) {
+    const normalized = normalizeRisk(bankRisk, index);
+    normalized.riskElement = normalizeLocalizedText(bankRisk.riskElement || bankRisk.risikoelement, normalized.riskElement);
+    normalized.vulnerability = normalizeLocalizedText(bankRisk.vulnerability || bankRisk.saarbarhet, normalized.vulnerability);
+    normalized.existingProtection = normalizeLocalizedText(bankRisk.existingProtection || bankRisk.eksisterendeBeskyttelse, normalized.existingProtection);
+    normalized.existingControl = normalizeLocalizedText(bankRisk.existingControl || bankRisk.eksisterendeKontroll, normalized.existingControl);
+    normalized.proposedMeasures = normalizeLocalizedText(bankRisk.proposedMeasures || bankRisk.foreslaatteTiltak, normalized.proposedMeasures);
+    return normalized;
+}
+
+function normalizeBank(bank) {
+    return {
+        ...bank,
+        name: normalizeDisplayName(bank.name || bank.navn, bank.id, BANK_NAME_OVERRIDES),
+        description: normalizeLocalizedText(bank.description || bank.beskrivelse, ''),
+        categories: (bank.categories || bank.kategorier || []).map((category) => ({
+            ...category,
+            name: normalizeDisplayName(category.name || category.navn, category.id, CATEGORY_NAME_OVERRIDES),
+            risks: (category.risks || category.risikoer || []).map(normalizeBankRisk)
+        }))
+    };
+}
+
+function isExampleBank(bank) {
+    return bank && bank.id === 'min-bank';
+}
 
 // Last risikobanken fra flere filer
 async function loadRisikobank() {
-    if (risikobank) return risikobank;
+    if (risikobank && Array.isArray(risikobank.banks) && risikobank.banks.length > 0) {
+        return risikobank;
+    }
+
+    if (window.location.protocol === 'file:' && Array.isArray(window.EMBEDDED_RISK_BANKS)) {
+        const banks = window.EMBEDDED_RISK_BANKS
+            .filter((bank) => !isExampleBank(bank))
+            .map(normalizeBank);
+        try {
+            const customBanks = getCustomBanks().map(normalizeBank);
+            banks.push(...customBanks);
+        } catch (customBankError) {
+            console.error('Could not load custom banks:', customBankError);
+        }
+        risikobank = { banks };
+        return risikobank;
+    }
 
     try {
-        // Last manifest
-        const manifestResp = await fetch('data/risikobanker/manifest.json');
-        const manifest = await manifestResp.json();
+        let bankFiles = DEFAULT_BANK_FILES;
 
-        // Last alle aktive banker
-        const bankerPromises = manifest.banker
-            .filter(b => b.aktiv)
-            .map(async (bankDef) => {
+        try {
+            const manifestResp = await fetch('data/risikobanker/manifest.json');
+            if (manifestResp.ok) {
+                const manifest = await manifestResp.json();
+                if (Array.isArray(manifest.banker)) {
+                    bankFiles = manifest.banker
+                        .filter((bankDef) => bankDef.aktiv)
+                        .map((bankDef) => bankDef.fil);
+                }
+            }
+        } catch (manifestError) {
+            console.warn('Could not load manifest, using default bank list:', manifestError);
+        }
+
+        const bankPromises = bankFiles.map(async (fileName) => {
                 try {
-                    const resp = await fetch(`data/risikobanker/${bankDef.fil}`);
-                    return await resp.json();
+                    const resp = await fetch(`data/risikobanker/${fileName}`);
+                    if (!resp.ok) {
+                        throw new Error(`HTTP ${resp.status}`);
+                    }
+                    return normalizeBank(await resp.json());
                 } catch (err) {
-                    console.error(`Kunne ikke laste ${bankDef.fil}:`, err);
+                    console.error(`Could not load risk bank ${fileName}:`, err);
                     return null;
                 }
             });
 
-        const banker = (await Promise.all(bankerPromises)).filter(b => b !== null);
+        const banks = (await Promise.all(bankPromises)).filter(b => b !== null && !isExampleBank(b));
 
-        // Last custom banker fra localStorage
-        const customBanks = getCustomBanks();
-        banker.push(...customBanks);
+        try {
+            const customBanks = getCustomBanks().map(normalizeBank);
+            banks.push(...customBanks);
+        } catch (customBankError) {
+            console.error('Could not load custom banks:', customBankError);
+        }
 
-        risikobank = { banker };
+        risikobank = { banks };
         return risikobank;
     } catch (error) {
         console.error('Kunne ikke laste risikobank:', error);
-        return { banker: [] };
+
+        if (Array.isArray(window.EMBEDDED_RISK_BANKS)) {
+            const banks = window.EMBEDDED_RISK_BANKS
+                .filter((bank) => !isExampleBank(bank))
+                .map(normalizeBank);
+            risikobank = { banks };
+            return risikobank;
+        }
+
+        return { banks: [] };
     }
 }
 
@@ -48,14 +325,15 @@ function getCustomBanks() {
 }
 
 function saveCustomBank(bank) {
+    const normalizedBank = normalizeBank(bank);
     const banks = getCustomBanks();
 
     // Sjekk om bank med samme ID finnes
-    const existingIndex = banks.findIndex(b => b.id === bank.id);
+    const existingIndex = banks.findIndex(b => b.id === normalizedBank.id);
     if (existingIndex >= 0) {
-        banks[existingIndex] = bank;
+        banks[existingIndex] = normalizedBank;
     } else {
-        banks.push(bank);
+        banks.push(normalizedBank);
     }
 
     localStorage.setItem(CUSTOM_BANKS_KEY, JSON.stringify(banks));
@@ -85,8 +363,8 @@ async function uploadCustomBank(file) {
                 const bank = JSON.parse(e.target.result);
 
                 // Valider struktur
-                if (!bank.id || !bank.navn || !bank.kategorier) {
-                    reject(new Error('Ugyldig bankstruktur. Må ha: id, navn, kategorier'));
+                if (!bank.id || !(bank.navn || bank.name) || !(bank.kategorier || bank.categories)) {
+                    reject(new Error('Ugyldig bankstruktur. Må ha: id, navn/name, kategorier/categories'));
                     return;
                 }
 
@@ -106,15 +384,29 @@ async function uploadCustomBank(file) {
 }
 
 // Åpne risikobank modal
-function openRisikobankModal(riskId) {
+async function openRisikobankModal(riskId) {
     currentRiskIdForBank = riskId;
     const modal = document.getElementById('risikobankModal');
     modal.classList.add('active');
 
+    if (!risikobank || !Array.isArray(risikobank.banks) || risikobank.banks.length === 0) {
+        risikobank = null;
+        await loadRisikobank();
+    }
+
     // Render første bank som default
-    if (risikobank && risikobank.banker.length > 0) {
+    if (risikobank && risikobank.banks.length > 0) {
         renderBankTabs();
-        selectBank(risikobank.banker[0].id);
+        selectBank(risikobank.banks[0].id);
+    } else {
+        const list = document.getElementById('risikoListe');
+        const bankSelector = document.getElementById('bankSelector');
+        const categorySelector = document.getElementById('kategoriSelector');
+        if (bankSelector) bankSelector.textContent = '';
+        if (categorySelector) categorySelector.textContent = '';
+        if (list) {
+            list.textContent = t('noRiskBanksAvailable');
+        }
     }
 }
 
@@ -150,11 +442,11 @@ function renderBankTabs() {
     const container = document.getElementById('bankSelector');
     container.textContent = '';
 
-    risikobank.banker.forEach((bank, index) => {
+    risikobank.banks.forEach((bank, index) => {
         const tab = document.createElement('button');
         tab.className = 'bank-tab';
         if (index === 0) tab.classList.add('active');
-        tab.textContent = bank.navn;
+        tab.textContent = getLocalizedValue(bank.name);
         tab.onclick = () => selectBank(bank.id);
         container.appendChild(tab);
     });
@@ -165,85 +457,83 @@ function selectBank(bankId) {
     // Oppdater aktiv tab
     document.querySelectorAll('.bank-tab').forEach(tab => {
         tab.classList.remove('active');
-        if (tab.textContent === risikobank.banker.find(b => b.id === bankId).navn) {
+        if (tab.textContent === getLocalizedValue(risikobank.banks.find(b => b.id === bankId).name)) {
             tab.classList.add('active');
         }
     });
 
-    const bank = risikobank.banker.find(b => b.id === bankId);
+    const bank = risikobank.banks.find(b => b.id === bankId);
     if (!bank) return;
 
     // Render kategorier
-    renderKategorier(bank.kategorier);
+    renderCategories(bank.categories);
 
     // Velg første kategori automatisk
-    if (bank.kategorier.length > 0) {
-        selectKategori(bank.kategorier[0].id, bank.kategorier);
+    if (bank.categories.length > 0) {
+        selectCategory(bank.categories[0].id, bank.categories);
     }
 }
 
-// Render kategorier
-function renderKategorier(kategorier) {
+function renderCategories(categories) {
     const container = document.getElementById('kategoriSelector');
     container.textContent = '';
 
-    kategorier.forEach((kat, index) => {
+    categories.forEach((category, index) => {
         const chip = document.createElement('button');
         chip.className = 'kategori-chip';
         if (index === 0) chip.classList.add('active');
-        chip.textContent = kat.navn;
-        chip.onclick = () => selectKategori(kat.id, kategorier);
+        chip.textContent = getLocalizedValue(category.name);
+        chip.onclick = () => selectCategory(category.id, categories, chip);
         container.appendChild(chip);
     });
 }
 
-// Velg kategori
-function selectKategori(kategoriId, kategorier) {
+function selectCategory(categoryId, categories, selectedChip = null) {
     // Oppdater aktiv chip
     document.querySelectorAll('.kategori-chip').forEach(chip => {
         chip.classList.remove('active');
     });
-    event.target.classList.add('active');
+    if (selectedChip) {
+        selectedChip.classList.add('active');
+    }
 
-    const kategori = kategorier.find(k => k.id === kategoriId);
-    if (!kategori) return;
+    const category = categories.find((item) => item.id === categoryId);
+    if (!category) return;
 
     // Render risikoer
-    renderRisikoer(kategori.risikoer);
+    renderRiskCards(category.risks);
 }
 
-// Render risikoer
-function renderRisikoer(risikoer) {
+function renderRiskCards(risks) {
     const container = document.getElementById('risikoListe');
     container.textContent = '';
 
-    if (risikoer.length === 0) {
+    if (risks.length === 0) {
         const empty = document.createElement('div');
         empty.className = 'empty-state-modal';
-        empty.textContent = 'Ingen risikoer i denne kategorien';
+        empty.textContent = t('noRisksInCategory');
         container.appendChild(empty);
         return;
     }
 
-    risikoer.forEach(risiko => {
-        const card = createRisikoCard(risiko);
+    risks.forEach((risk) => {
+        const card = createRiskCard(risk);
         container.appendChild(card);
     });
 }
 
-// Opprett risiko-kort
-function createRisikoCard(risiko) {
+function createRiskCard(risk) {
     const card = document.createElement('div');
     card.className = 'risiko-card';
 
     const title = document.createElement('h4');
-    title.textContent = risiko.risikoelement;
+    title.textContent = getLocalizedValue(risk.riskElement);
     card.appendChild(title);
 
-    const saarbarhet = document.createElement('div');
-    saarbarhet.className = 'risiko-saarbarhet';
-    saarbarhet.textContent = risiko.saarbarhet;
-    card.appendChild(saarbarhet);
+    const vulnerability = document.createElement('div');
+    vulnerability.className = 'risiko-saarbarhet';
+    vulnerability.textContent = getLocalizedValue(risk.vulnerability);
+    card.appendChild(vulnerability);
 
     const meta = document.createElement('div');
     meta.className = 'risiko-meta';
@@ -254,28 +544,28 @@ function createRisikoCard(risiko) {
     const kLabel = document.createElement('strong');
     kLabel.textContent = 'K:';
     kit.appendChild(kLabel);
-    kit.appendChild(document.createTextNode(' ' + risiko.K + ' '));
+    kit.appendChild(document.createTextNode(' ' + risk.K + ' '));
     const iLabel = document.createElement('strong');
     iLabel.textContent = 'I:';
     kit.appendChild(iLabel);
-    kit.appendChild(document.createTextNode(' ' + risiko.I + ' '));
+    kit.appendChild(document.createTextNode(' ' + risk.I + ' '));
     const tLabel = document.createElement('strong');
     tLabel.textContent = 'T:';
     kit.appendChild(tLabel);
-    kit.appendChild(document.createTextNode(' ' + risiko.T));
+    kit.appendChild(document.createTextNode(' ' + risk.T));
     meta.appendChild(kit);
 
     // Sannsynlighet meta
     const sann = document.createElement('span');
     sann.className = 'risiko-meta-item';
     const sannLabel = document.createElement('strong');
-    sannLabel.textContent = 'Sannsynlighet:';
+    sannLabel.textContent = `${t('probability')}:`;
     sann.appendChild(sannLabel);
-    sann.appendChild(document.createTextNode(' ' + risiko.sannsynlighet));
+    sann.appendChild(document.createTextNode(' ' + risk.probability));
     meta.appendChild(sann);
 
     // Risikonivå meta
-    const rn = calculateRisikonivaa(calculateKonsekvens(risiko.K, risiko.I, risiko.T), risiko.sannsynlighet);
+    const rn = calculateRisikonivaa(calculateKonsekvens(risk.K, risk.I, risk.T), risk.probability);
     const rnSpan = document.createElement('span');
     rnSpan.className = 'risiko-meta-item';
     const rnLabel = document.createElement('strong');
@@ -290,7 +580,7 @@ function createRisikoCard(risiko) {
 
     // Klikk for å velge
     card.onclick = () => {
-        selectRisikoFromBank(risiko);
+        selectRiskFromBank(risk);
         closeRisikobankModal();
     };
 
@@ -298,32 +588,32 @@ function createRisikoCard(risiko) {
 }
 
 // Velg risiko fra bank og fyll ut
-function selectRisikoFromBank(bankRisiko) {
+function selectRiskFromBank(bankRisk) {
     if (!currentRiskIdForBank) return;
 
-    const risk = currentAnalysis.risikoer.find(r => r.id === currentRiskIdForBank);
+    const risk = currentAnalysis.risks.find(r => r.id === currentRiskIdForBank);
     if (!risk) return;
 
     // Lagre ID for scrolling senere
     const riskId = risk.id;
 
     // Fyll ut alle felt fra risikobanken
-    risk.risikoelement = bankRisiko.risikoelement;
-    risk.saarbarhet = bankRisiko.saarbarhet;
-    risk.eksisterendeBeskyttelse = bankRisiko.eksisterendeBeskyttelse;
-    risk.eksisterendeKontroll = bankRisiko.eksisterendeKontroll;
-    risk.K = bankRisiko.K;
-    risk.I = bankRisiko.I;
-    risk.T = bankRisiko.T;
-    risk.sannsynlighet = bankRisiko.sannsynlighet;
-    risk.foreslaatteTiltak = bankRisiko.foreslaatteTiltak;
+    risk.riskElement = getLocalizedValue(bankRisk.riskElement);
+    risk.vulnerability = getLocalizedValue(bankRisk.vulnerability);
+    risk.existingProtection = getLocalizedValue(bankRisk.existingProtection);
+    risk.existingControl = getLocalizedValue(bankRisk.existingControl);
+    risk.K = bankRisk.K;
+    risk.I = bankRisk.I;
+    risk.T = bankRisk.T;
+    risk.probability = bankRisk.probability;
+    risk.proposedMeasures = getLocalizedValue(bankRisk.proposedMeasures);
 
     // Beregn konsekvens og risikonivå
-    risk.konsekvens = calculateKonsekvens(risk.K, risk.I, risk.T);
-    risk.risikonivaa = calculateRisikonivaa(risk.konsekvens, risk.sannsynlighet);
+    risk.consequence = calculateKonsekvens(risk.K, risk.I, risk.T);
+    risk.riskLevel = calculateRisikonivaa(risk.consequence, risk.probability);
 
     // Oppdater analyse
-    updateAnalysis(currentAnalysisId, { risikoer: currentAnalysis.risikoer });
+    updateAnalysis(currentAnalysisId, { risks: currentAnalysis.risks });
 
     // Blur active element to prevent browser from trying to keep it in view
     if (document.activeElement && document.activeElement !== document.body) {
@@ -341,29 +631,29 @@ function selectRisikoFromBank(bankRisiko) {
     if (existingRow) {
         // Oppdater feltene direkte
         const textareas = existingRow.querySelectorAll('textarea');
-        if (textareas[0]) textareas[0].value = risk.risikoelement;
-        if (textareas[1]) textareas[1].value = risk.saarbarhet;
-        if (textareas[2]) textareas[2].value = risk.eksisterendeBeskyttelse;
-        if (textareas[3]) textareas[3].value = risk.eksisterendeKontroll;
-        if (textareas[4]) textareas[4].value = risk.foreslaatteTiltak;
+        if (textareas[0]) textareas[0].value = risk.riskElement;
+        if (textareas[1]) textareas[1].value = risk.vulnerability;
+        if (textareas[2]) textareas[2].value = risk.existingProtection;
+        if (textareas[3]) textareas[3].value = risk.existingControl;
+        if (textareas[4]) textareas[4].value = risk.proposedMeasures;
 
         // Oppdater KIT dropdowns
         const selects = existingRow.querySelectorAll('select');
         if (selects[0]) selects[0].value = risk.K;
         if (selects[1]) selects[1].value = risk.I;
         if (selects[2]) selects[2].value = risk.T;
-        if (selects[3]) selects[3].value = risk.sannsynlighet;
+        if (selects[3]) selects[3].value = risk.probability;
 
         // Oppdater konsekvens og risikonivå celler
         const konsCell = existingRow.querySelector('td:nth-child(10)');
         const rnCell = existingRow.querySelector('td:nth-child(11)');
         if (konsCell) {
-            konsCell.textContent = risk.konsekvens;
+            konsCell.textContent = risk.consequence;
             konsCell.style.fontWeight = 'bold';
         }
         if (rnCell) {
-            rnCell.textContent = risk.risikonivaa;
-            rnCell.style.color = getRiskColor(risk.risikonivaa);
+            rnCell.textContent = risk.riskLevel;
+            rnCell.style.color = getRiskColor(risk.riskLevel);
             rnCell.style.fontWeight = 'bold';
         }
 

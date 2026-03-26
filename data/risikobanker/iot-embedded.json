@@ -1,329 +1,713 @@
 {
   "id": "iot-embedded",
-  "navn": "IoT og Embedded Systems",
-  "beskrivelse": "Risikoer knyttet til IoT-enheter, embedded systems og OT (Operational Technology)",
+  "navn": {
+    "no": "IoT og Embedded Systems",
+    "en": "IoT and Embedded Systems"
+  },
+  "beskrivelse": {
+    "no": "Risikoer knyttet til IoT-enheter, embedded systems og OT (Operational Technology)",
+    "en": "Risks related to IoT-devices, embedded systems and OT (Operational Technology)"
+  },
   "kategorier": [
     {
       "id": "device-security",
-      "navn": "Enhetssikkerhet",
+      "navn": {
+        "no": "Enhetssikkerhet",
+        "en": "Device Security"
+      },
       "risikoer": [
         {
           "id": "iot-001",
-          "risikoelement": "IoT-enheter med default credentials",
-          "saarbarhet": "Admin/admin, root/root, hardkodet factory password",
-          "eksisterendeBeskyttelse": "Dokumentert passordbytte ved installasjon",
-          "eksisterendeKontroll": "Scanning av default credentials",
+          "risikoelement": {
+            "no": "IoT-enheter med default credentials",
+            "en": "IoT-devices with default credentials"
+          },
+          "saarbarhet": {
+            "no": "Admin/admin, root/root, hardkodet factory password",
+            "en": "Admin/admin, root/root, hardkodet factory password"
+          },
+          "eksisterendeBeskyttelse": {
+            "no": "Dokumentert passordbytte ved installasjon",
+            "en": "Documented passordbytte during installasjon"
+          },
+          "eksisterendeKontroll": {
+            "no": "Scanning av default credentials",
+            "en": "Scanning of default credentials"
+          },
           "K": 5,
           "I": 4,
           "T": 4,
           "sannsynlighet": 5,
-          "foreslaatteTiltak": "Force password change ved first boot, unique per-device credentials, certificate-based auth"
+          "foreslaatteTiltak": {
+            "no": "Force password change ved first boot, unique per-enhet credentials, certificate-based auth",
+            "en": "Force password change during first boot, unique per-device credentials, certificate-based auth"
+          }
         },
         {
           "id": "iot-002",
-          "risikoelement": "Manglende firmware-oppdateringer på IoT-enheter",
-          "saarbarhet": "Ingen OTA (over-the-air) update, manuell firmware-oppdatering",
-          "eksisterendeBeskyttelse": "Firmwareversjon dokumentert",
-          "eksisterendeKontroll": "Årlig firmware review",
+          "risikoelement": {
+            "no": "Manglende firmware-oppdateringer på IoT-enheter",
+            "en": "Missing firmware-updates on IoT-devices"
+          },
+          "saarbarhet": {
+            "no": "Ingen OTA (over-the-air) update, manuell firmware-oppdatering",
+            "en": "No OTA (over-the-air) update, manuell firmware-updating"
+          },
+          "eksisterendeBeskyttelse": {
+            "no": "Firmwareversjon dokumentert",
+            "en": "Firmwareversjon documented"
+          },
+          "eksisterendeKontroll": {
+            "no": "Årlig firmware gjennomgang",
+            "en": "Annual firmware review"
+          },
           "K": 4,
           "I": 4,
           "T": 3,
           "sannsynlighet": 5,
-          "foreslaatteTiltak": "Automated OTA updates, signed firmware, rollback mechanism, update monitoring"
+          "foreslaatteTiltak": {
+            "no": "Automated OTA updates, signed firmware, rollback mechanism, update overvåking",
+            "en": "Automated OTA updates, signed firmware, rollback mechanism, update monitoring"
+          }
         },
         {
           "id": "iot-003",
-          "risikoelement": "Ukryptert kommunikasjon fra IoT-enhet til backend",
-          "saarbarhet": "HTTP i stedet for HTTPS, ingen TLS, plaintext MQTT",
-          "eksisterendeBeskyttelse": "Isolated IoT VLAN",
-          "eksisterendeKontroll": "Network traffic monitoring",
+          "risikoelement": {
+            "no": "Ukryptert kommunikasjon fra IoT-enhet til backend",
+            "en": "unencrypted communications from IoT-device to backend"
+          },
+          "saarbarhet": {
+            "no": "HTTP i stedet for HTTPS, ingen TLS, plaintext MQTT",
+            "en": "HTTP is used instead of HTTPS, there is no TLS, and MQTT traffic is sent in plaintext"
+          },
+          "eksisterendeBeskyttelse": {
+            "no": "Isolated IoT VLAN",
+            "en": "Isolated IoT VLAN"
+          },
+          "eksisterendeKontroll": {
+            "no": "nettverk traffic overvåking",
+            "en": "Network traffic monitoring"
+          },
           "K": 5,
           "I": 4,
           "T": 2,
           "sannsynlighet": 4,
-          "foreslaatteTiltak": "Mandatory TLS/DTLS, certificate pinning, encrypted MQTT (TLS), VPN for legacy devices"
+          "foreslaatteTiltak": {
+            "no": "Mandatory TLS/DTLS, certificate pinning, encrypted MQTT (TLS), VPN for legacy enheter",
+            "en": "Mandatory TLS/DTLS, certificate pinning, encrypted MQTT (TLS), VPN for legacy devices"
+          }
         },
         {
           "id": "iot-004",
-          "risikoelement": "Fysisk tilgang til enhet gir full kontroll",
-          "saarbarhet": "Debug ports åpne, ingen secure boot, ukryptert storage",
-          "eksisterendeBeskyttelse": "Fysisk sikring av kritiske enheter",
-          "eksisterendeKontroll": "Physical security audit",
+          "risikoelement": {
+            "no": "Fysisk tilgang til enhet gir full kontroll",
+            "en": "Physical access to the device provides full control"
+          },
+          "saarbarhet": {
+            "no": "Debug ports åpne, ingen secure boot, ukryptert storage",
+            "en": "Debug ports are open, secure boot is missing, and storage is unencrypted"
+          },
+          "eksisterendeBeskyttelse": {
+            "no": "Fysisk sikring av kritiske enheter",
+            "en": "Physical protection of critical devices"
+          },
+          "eksisterendeKontroll": {
+            "no": "Revisjon av fysisk sikkerhet",
+            "en": "Physical security audit"
+          },
           "K": 5,
           "I": 5,
           "T": 3,
           "sannsynlighet": 3,
-          "foreslaatteTiltak": "Secure boot, encrypted storage, disabled debug ports, tamper detection"
+          "foreslaatteTiltak": {
+            "no": "Secure boot, encrypted storage, disabled debug ports, tamper detection",
+            "en": "Secure boot, encrypted storage, disabled debug ports, tamper detection"
+          }
         },
         {
           "id": "iot-005",
-          "risikoelement": "Enhet kan brukes som inngangsport til OT-nettverk",
-          "saarbarhet": "IoT-enheter på samme VLAN som SCADA/ICS",
-          "eksisterendeBeskyttelse": "Separate networks",
-          "eksisterendeKontroll": "Network segmentation review",
+          "risikoelement": {
+            "no": "Enhet kan brukes som inngangsport til OT-nettverk",
+            "en": "A device can be used as an entry point into the OT network"
+          },
+          "saarbarhet": {
+            "no": "IoT-enheter på samme VLAN som SCADA/ICS",
+            "en": "IoT devices share the same VLAN as SCADA or ICS systems"
+          },
+          "eksisterendeBeskyttelse": {
+            "no": "Separate nettverk",
+            "en": "Separate networks"
+          },
+          "eksisterendeKontroll": {
+            "no": "nettverk segmentation gjennomgang",
+            "en": "Network segmentation review"
+          },
           "K": 5,
           "I": 5,
           "T": 5,
-          "sannsynlighet": 2,
-          "foreslaatteTiltak": "Air-gapped OT network, industrial DMZ, IDS/IPS, micro-segmentation"
+          "sannsynlighet": 4,
+          "foreslaatteTiltak": {
+            "no": "Air-gapped OT nettverk, industrial DMZ, IDS/IPS, micro-segmentation",
+            "en": "Air-gapped OT network, industrial DMZ, IDS/IPS, micro-segmentation"
+          }
         }
       ]
     },
     {
       "id": "firmware",
-      "navn": "Firmware-sikkerhet",
+      "navn": {
+        "no": "Firmware-sikkerhet",
+        "en": "Firmware Security"
+      },
       "risikoer": [
         {
           "id": "fw-001",
-          "risikoelement": "Usignert eller uverifisert firmware kan installeres",
-          "saarbarhet": "Manglende signature verification, unsigned updates",
-          "eksisterendeBeskyttelse": "Controlled update process",
-          "eksisterendeKontroll": "Manual verification",
+          "risikoelement": {
+            "no": "Usignert eller uverifisert firmware kan installeres",
+            "en": "Usignert or uverifisert firmware can installeres"
+          },
+          "saarbarhet": {
+            "no": "Manglende signature verification, unsigned updates",
+            "en": "Missing signature verification, unsigned updates"
+          },
+          "eksisterendeBeskyttelse": {
+            "no": "Controlled update prosess",
+            "en": "Controlled update process"
+          },
+          "eksisterendeKontroll": {
+            "no": "manuell verification",
+            "en": "Manual verification"
+          },
           "K": 5,
           "I": 5,
           "T": 4,
           "sannsynlighet": 3,
-          "foreslaatteTiltak": "Mandatory code signing, secure boot chain, hardware root of trust (TPM/TEE)"
+          "foreslaatteTiltak": {
+            "no": "Mandatory code signing, secure boot chain, hardware root of trust (TPM/TEE)",
+            "en": "Mandatory code signing, secure boot chain, hardware root of trust (TPM/TEE)"
+          }
         },
         {
           "id": "fw-002",
-          "risikoelement": "Hardkodede credentials eller secrets i firmware",
-          "saarbarhet": "API keys, encryption keys, passwords embedded in binary",
-          "eksisterendeBeskyttelse": "Code review",
-          "eksisterendeKontroll": "Static analysis",
+          "risikoelement": {
+            "no": "Hardkodede credentials eller secrets i firmware",
+            "en": "Hardcoded credentials or secrets in firmware"
+          },
+          "saarbarhet": {
+            "no": "API keys, encryption keys, passwords embedded in binary",
+            "en": "API keys, encryption keys, passwords embedded in binary"
+          },
+          "eksisterendeBeskyttelse": {
+            "no": "Code gjennomgang",
+            "en": "Code review"
+          },
+          "eksisterendeKontroll": {
+            "no": "Static analysis",
+            "en": "Static analysis"
+          },
           "K": 5,
           "I": 4,
           "T": 2,
           "sannsynlighet": 4,
-          "foreslaatteTiltak": "Secure element for key storage, runtime key injection, no hardcoded secrets"
+          "foreslaatteTiltak": {
+            "no": "Secure element for key storage, runtime key injection, no hardcoded secrets",
+            "en": "Secure element for key storage, runtime key injection, no hardcoded secrets"
+          }
         },
         {
           "id": "fw-003",
-          "risikoelement": "Buffer overflow eller memory corruption i embedded kode",
-          "saarbarhet": "Usikker C/C++ kode, manglende bounds checking",
-          "eksisterendeBeskyttelse": "Code review",
-          "eksisterendeKontroll": "Manual testing",
+          "risikoelement": {
+            "no": "Buffer overflow eller memory corruption i embedded kode",
+            "en": "Buffer overflow or memory corruption in embedded code"
+          },
+          "saarbarhet": {
+            "no": "Usikker C/C++ kode, manglende bounds checking",
+            "en": "Insecure C/C++ code, missing bounds checking"
+          },
+          "eksisterendeBeskyttelse": {
+            "no": "Code gjennomgang",
+            "en": "Code review"
+          },
+          "eksisterendeKontroll": {
+            "no": "manuell testing",
+            "en": "Manual testing"
+          },
           "K": 5,
           "I": 5,
           "T": 4,
           "sannsynlighet": 3,
-          "foreslaatteTiltak": "Memory-safe languages (Rust), ASLR, stack canaries, fuzzing, SAST"
+          "foreslaatteTiltak": {
+            "no": "Memory-safe languages (Rust), ASLR, stack canaries, fuzzing, SAST",
+            "en": "Memory-safe languages (Rust), ASLR, stack canaries, fuzzing, SAST"
+          }
         },
         {
           "id": "fw-004",
-          "risikoelement": "Firmware kan dumpes og reverse engineeres",
-          "saarbarhet": "Ukryptert firmware, ingen obfuscation, debug symbols",
-          "eksisterendeBeskyttelse": "Proprietary protocols",
-          "eksisterendeKontroll": "Legal protection (NDAs)",
+          "risikoelement": {
+            "no": "Firmware kan dumpes og reverse engineeres",
+            "en": "Firmware can dumpes and reverse engineeres"
+          },
+          "saarbarhet": {
+            "no": "Ukryptert firmware, ingen obfuscation, debug symbols",
+            "en": "unencrypted firmware, no obfuscation, debug symbols"
+          },
+          "eksisterendeBeskyttelse": {
+            "no": "Proprietary protocols",
+            "en": "Proprietary protocols"
+          },
+          "eksisterendeKontroll": {
+            "no": "Legal protection (NDAs)",
+            "en": "Legal protection (NDAs)"
+          },
           "K": 4,
           "I": 3,
           "T": 1,
           "sannsynlighet": 3,
-          "foreslaatteTiltak": "Encrypted firmware, code obfuscation, strip debug symbols, IP protection"
+          "foreslaatteTiltak": {
+            "no": "Encrypted firmware, code obfuscation, strip debug symbols, IP protection",
+            "en": "Encrypted firmware, code obfuscation, strip debug symbols, IP protection"
+          }
         }
       ]
     },
     {
       "id": "ot-scada",
-      "navn": "OT/SCADA/ICS",
+      "navn": {
+        "no": "OT/SCADA/ICS",
+        "en": "OT and SCADA"
+      },
       "risikoer": [
         {
           "id": "ot-001",
-          "risikoelement": "Legacy OT-system uten security patches",
-          "saarbarhet": "Utdaterte SCADA-systemer, embedded Windows XP, vendor support ended",
-          "eksisterendeBeskyttelse": "Air-gapped network",
-          "eksisterendeKontroll": "Physical access control",
+          "risikoelement": {
+            "no": "Legacy OT-system uten sikkerhetsoppdateringer",
+            "en": "Legacy OT-system without security patches"
+          },
+          "saarbarhet": {
+            "no": "Utdaterte SCADA-systemer, embedded Windows XP, leverandør support ended",
+            "en": "Utdaterte SCADA-systems, embedded Windows XP, vendor support ended"
+          },
+          "eksisterendeBeskyttelse": {
+            "no": "Air-gapped nettverk",
+            "en": "Air-gapped network"
+          },
+          "eksisterendeKontroll": {
+            "no": "Physical tilgang control",
+            "en": "Physical access control"
+          },
           "K": 5,
           "I": 5,
           "T": 5,
           "sannsynlighet": 3,
-          "foreslaatteTiltak": "Virtual patching, network isolation, compensating controls, upgrade path"
+          "foreslaatteTiltak": {
+            "no": "Virtual patching, nettverk isolation, compensating controls, upgrade path",
+            "en": "Virtual patching, network isolation, compensating controls, upgrade path"
+          }
         },
         {
           "id": "ot-002",
-          "risikoelement": "USB eller removable media introduserer malware til OT",
-          "saarbarhet": "USB ports åpne, ingen device control",
-          "eksisterendeBeskyttelse": "Policy mot USB bruk",
-          "eksisterendeKontroll": "Manual enforcement",
+          "risikoelement": {
+            "no": "USB eller removable media introduserer malware til OT",
+            "en": "USB or removable media introduserer malware to OT"
+          },
+          "saarbarhet": {
+            "no": "USB ports åpne, ingen enhet control",
+            "en": "USB ports are open and there is no device control"
+          },
+          "eksisterendeBeskyttelse": {
+            "no": "policy mot USB bruk",
+            "en": "Policy mot USB bruk"
+          },
+          "eksisterendeKontroll": {
+            "no": "manuell enforcement",
+            "en": "Manual enforcement"
+          },
           "K": 5,
           "I": 5,
           "T": 5,
           "sannsynlighet": 3,
-          "foreslaatteTiltak": "USB port blocking, kiosk mode, media sanitization station, endpoint protection"
+          "foreslaatteTiltak": {
+            "no": "USB port blocking, kiosk mode, media sanitization station, endpoint protection",
+            "en": "USB port blocking, kiosk mode, media sanitization station, endpoint protection"
+          }
         },
         {
           "id": "ot-003",
-          "risikoelement": "Ukrypterte industrielle protokoller (Modbus, DNP3)",
-          "saarbarhet": "Legacy protocols uten encryption, man-in-the-middle mulig",
-          "eksisterendeBeskyttelse": "Isolated network",
-          "eksisterendeKontroll": "Physical security",
+          "risikoelement": {
+            "no": "Ukrypterte industrielle protokoller (Modbus, DNP3)",
+            "en": "Ukrypterte industrielle protokoller (Modbus, DNP3)"
+          },
+          "saarbarhet": {
+            "no": "Legacy protocols uten encryption, man-in-the-middle mulig",
+            "en": "Legacy protocols without encryption, man-in-the-middle possible"
+          },
+          "eksisterendeBeskyttelse": {
+            "no": "Isolated nettverk",
+            "en": "Isolated network"
+          },
+          "eksisterendeKontroll": {
+            "no": "Physical security",
+            "en": "Physical security"
+          },
           "K": 5,
           "I": 5,
           "T": 5,
           "sannsynlighet": 2,
-          "foreslaatteTiltak": "Protocol gateways, VPN overlays, IDS signatures, Purdue model segmentation"
+          "foreslaatteTiltak": {
+            "no": "Protocol gateways, VPN overlays, IDS signatures, Purdue model segmentation",
+            "en": "Protocol gateways, VPN overlays, IDS signatures, Purdue model segmentation"
+          }
         },
         {
           "id": "ot-004",
-          "risikoelement": "IT/OT convergence introduserer nye angrepsvektorer",
-          "saarbarhet": "Remote access fra IT til OT, cloud connectivity",
-          "eksisterendeBeskyttelse": "Firewall between IT and OT",
-          "eksisterendeKontroll": "Access logging",
+          "risikoelement": {
+            "no": "IT/OT convergence introduserer nye angrepsvektorer",
+            "en": "IT/OT convergence introduserer nye angrepsvektorer"
+          },
+          "saarbarhet": {
+            "no": "Remote tilgang fra IT til OT, sky connectivity",
+            "en": "Remote access from IT to OT, cloud connectivity"
+          },
+          "eksisterendeBeskyttelse": {
+            "no": "Firewall between IT and OT",
+            "en": "Firewall between IT and OT"
+          },
+          "eksisterendeKontroll": {
+            "no": "tilgang loggføring",
+            "en": "Access logging"
+          },
           "K": 5,
           "I": 5,
           "T": 5,
           "sannsynlighet": 3,
-          "foreslaatteTiltak": "Industrial DMZ, unidirectional gateways, jump hosts, anomaly detection"
+          "foreslaatteTiltak": {
+            "no": "Industrial DMZ, unidirectional gateways, jump hosts, anomaly detection",
+            "en": "Industrial DMZ, unidirectional gateways, jump hosts, anomaly detection"
+          }
         },
         {
           "id": "ot-005",
-          "risikoelement": "Utilsiktet shutdown av kritisk infrastruktur",
-          "saarbarhet": "Manglende change control, uforutsette effekter av endringer",
-          "eksisterendeBeskyttelse": "Change management process",
-          "eksisterendeKontroll": "Testing i lab-miljø",
+          "risikoelement": {
+            "no": "Utilsiktet shutdown av kritisk infrastruktur",
+            "en": "Accidental shutdown of critical infrastruktur"
+          },
+          "saarbarhet": {
+            "no": "Manglende change control, uforutsette effekter av endringer",
+            "en": "Missing change control, uforutsette effekter of endringer"
+          },
+          "eksisterendeBeskyttelse": {
+            "no": "Change management prosess",
+            "en": "Change management process"
+          },
+          "eksisterendeKontroll": {
+            "no": "Testing i lab-miljø",
+            "en": "testing in lab-environment"
+          },
           "K": 3,
           "I": 4,
           "T": 5,
           "sannsynlighet": 2,
-          "foreslaatteTiltak": "Digital twins for testing, staged rollouts, emergency stop procedures"
+          "foreslaatteTiltak": {
+            "no": "Digital twins for testing, staged rollouts, emergency stop procedures",
+            "en": "Digital twins for testing, staged rollouts, emergency stop procedures"
+          }
         }
       ]
     },
     {
       "id": "iot-backend",
-      "navn": "IoT Backend og Cloud",
+      "navn": {
+        "no": "IoT Backend og sky",
+        "en": "IoT Backend"
+      },
       "risikoer": [
         {
           "id": "cloud-iot-001",
-          "risikoelement": "IoT cloud platform kompromittert",
-          "saarbarhet": "Sentral kontroll over alle enheter, single point of failure",
-          "eksisterendeBeskyttelse": "Cloud security best practices",
-          "eksisterendeKontroll": "Penetration testing",
+          "risikoelement": {
+            "no": "IoT sky platform kompromittert",
+            "en": "IoT cloud platform kompromittert"
+          },
+          "saarbarhet": {
+            "no": "Sentral kontroll over alle enheter, single point of failure",
+            "en": "Central control over all devices creates a single point of failure"
+          },
+          "eksisterendeBeskyttelse": {
+            "no": "Beste praksis for skysikkerhet",
+            "en": "Cloud security best practices"
+          },
+          "eksisterendeKontroll": {
+            "no": "Penetration testing",
+            "en": "Penetration testing"
+          },
           "K": 5,
           "I": 5,
           "T": 5,
           "sannsynlighet": 2,
-          "foreslaatteTiltak": "Zero trust architecture, device authentication, encrypted commands, audit logging"
+          "foreslaatteTiltak": {
+            "no": "Zero trust architecture, enhet authentication, encrypted commands, audit loggføring",
+            "en": "Zero trust architecture, device authentication, encrypted commands, audit logging"
+          }
         },
         {
           "id": "cloud-iot-002",
-          "risikoelement": "DDoS-angrep fra botnet av kompromitterte IoT-enheter",
-          "saarbarhet": "Millioner av enheter kan utnyttes til amplification attacks",
-          "eksisterendeBeskyttelse": "Rate limiting",
-          "eksisterendeKontroll": "DDoS monitoring",
+          "risikoelement": {
+            "no": "DDoS-angrep fra botnet av kompromitterte IoT-enheter",
+            "en": "DDoS-angrep from botnet of kompromitterte IoT-devices"
+          },
+          "saarbarhet": {
+            "no": "Millioner av enheter kan utnyttes til amplification attacks",
+            "en": "Millioner of devices can utnyttes to amplification attacks"
+          },
+          "eksisterendeBeskyttelse": {
+            "no": "Rate limiting",
+            "en": "Rate limiting"
+          },
+          "eksisterendeKontroll": {
+            "no": "DDoS overvåking",
+            "en": "DDoS monitoring"
+          },
           "K": 2,
           "I": 2,
           "T": 5,
           "sannsynlighet": 3,
-          "foreslaatteTiltak": "Device health monitoring, anomaly detection, kill switch, DDoS mitigation"
+          "foreslaatteTiltak": {
+            "no": "enhet health overvåking, anomaly detection, kill switch, DDoS mitigation",
+            "en": "Device health monitoring, anomaly detection, kill switch, DDoS mitigation"
+          }
         },
         {
           "id": "cloud-iot-003",
-          "risikoelement": "Sårbart IoT API eksponert på internett",
-          "saarbarhet": "OWASP API Top 10, broken object-level authorization",
-          "eksisterendeBeskyttelse": "API authentication",
-          "eksisterendeKontroll": "API security scanning",
+          "risikoelement": {
+            "no": "Sårbart IoT API eksponert på internett",
+            "en": "A vulnerable IoT API is exposed on the internet"
+          },
+          "saarbarhet": {
+            "no": "OWASP API Top 10, broken object-level authorization",
+            "en": "OWASP API Top 10, broken object-level authorization"
+          },
+          "eksisterendeBeskyttelse": {
+            "no": "API authentication",
+            "en": "API authentication"
+          },
+          "eksisterendeKontroll": {
+            "no": "Sikkerhetsskanning av API",
+            "en": "API security scanning"
+          },
           "K": 5,
           "I": 5,
           "T": 3,
           "sannsynlighet": 4,
-          "foreslaatteTiltak": "API gateway, rate limiting, OAuth scopes, input validation, WAF"
+          "foreslaatteTiltak": {
+            "no": "API gateway, rate limiting, OAuth scopes, input validation, WAF",
+            "en": "API gateway, rate limiting, OAuth scopes, input validation, WAF"
+          }
         },
         {
           "id": "cloud-iot-004",
-          "risikoelement": "Datalekkasje fra telemetri/sensor data",
-          "saarbarhet": "Sensitive data i telemetry, persondata fra sensorer",
-          "eksisterendeBeskyttelse": "Data classification",
-          "eksisterendeKontroll": "GDPR compliance review",
+          "risikoelement": {
+            "no": "Datalekkasje fra telemetri/sensor data",
+            "en": "Datalekkasje from telemetri/sensor data"
+          },
+          "saarbarhet": {
+            "no": "Sensitive data i telemetry, persondata fra sensorer",
+            "en": "Sensitive data in telemetry, personal data from sensorer"
+          },
+          "eksisterendeBeskyttelse": {
+            "no": "Data classification",
+            "en": "Data classification"
+          },
+          "eksisterendeKontroll": {
+            "no": "GDPR compliance gjennomgang",
+            "en": "GDPR compliance review"
+          },
           "K": 5,
           "I": 3,
           "T": 2,
           "sannsynlighet": 3,
-          "foreslaatteTiltak": "Data minimization, edge processing, anonymization, encryption at rest"
+          "foreslaatteTiltak": {
+            "no": "Data minimization, edge processing, anonymization, encryption at rest",
+            "en": "Data minimization, edge processing, anonymization, encryption at rest"
+          }
         }
       ]
     },
     {
       "id": "supply-chain-iot",
-      "navn": "IoT Supply Chain",
+      "navn": {
+        "no": "IoT Supply Chain",
+        "en": "IoT Supply Chain"
+      },
       "risikoer": [
         {
           "id": "iot-supply-001",
-          "risikoelement": "Kompromitterte enheter fra produsent",
-          "saarbarhet": "Malware pre-installed, backdoors i firmware",
-          "eksisterendeBeskyttelse": "Trusted vendors",
-          "eksisterendeKontroll": "Vendor security assessment",
+          "risikoelement": {
+            "no": "Kompromitterte enheter fra produsent",
+            "en": "Kompromitterte devices from produsent"
+          },
+          "saarbarhet": {
+            "no": "Malware pre-installed, backdoors i firmware",
+            "en": "Malware pre-installed, backdoors in firmware"
+          },
+          "eksisterendeBeskyttelse": {
+            "no": "Trusted leverandører",
+            "en": "Trusted vendors"
+          },
+          "eksisterendeKontroll": {
+            "no": "Sikkerhetsvurdering av leverandør",
+            "en": "Vendor security assessment"
+          },
           "K": 5,
           "I": 5,
           "T": 4,
           "sannsynlighet": 1,
-          "foreslaatteTiltak": "Vendor security audit, firmware validation, secure supply chain, attestation"
+          "foreslaatteTiltak": {
+            "no": "Sikkerhetsrevisjon av leverandør, firmwarevalidering, sikker leverandørkjede og attestering",
+            "en": "Vendor security audit, firmware validation, secure supply chain, attestation"
+          }
         },
         {
           "id": "iot-supply-002",
-          "risikoelement": "Counterfeit eller cloned IoT-enheter",
-          "saarbarhet": "Manglende device attestation, ukjent hardware origin",
-          "eksisterendeBeskyttelse": "Purchase from authorized distributors",
-          "eksisterendeKontroll": "Visual inspection",
+          "risikoelement": {
+            "no": "Counterfeit eller cloned IoT-enheter",
+            "en": "Counterfeit or cloned IoT-devices"
+          },
+          "saarbarhet": {
+            "no": "Manglende enhet attestation, ukjent hardware origin",
+            "en": "Missing device attestation, unknown hardware origin"
+          },
+          "eksisterendeBeskyttelse": {
+            "no": "Purchase from authorized distributors",
+            "en": "Purchase from authorized distributors"
+          },
+          "eksisterendeKontroll": {
+            "no": "Visual inspection",
+            "en": "Visual inspection"
+          },
           "K": 4,
           "I": 4,
           "T": 3,
           "sannsynlighet": 2,
-          "foreslaatteTiltak": "Hardware attestation, unique device IDs, secure elements, supply chain verification"
+          "foreslaatteTiltak": {
+            "no": "Hardware attestation, unique enhet IDs, secure elements, supply chain verification",
+            "en": "Hardware attestation, unique device IDs, secure elements, supply chain verification"
+          }
         },
         {
           "id": "iot-supply-003",
-          "risikoelement": "Mangel på firmware/security updates etter EOL",
-          "saarbarhet": "Vendor discontinues support, no update path",
-          "eksisterendeBeskyttelse": "Extended support contracts",
-          "eksisterendeKontroll": "Lifecycle tracking",
+          "risikoelement": {
+            "no": "Mangel på firmware- og sikkerhetsoppdateringer etter EOL",
+            "en": "Mangel on firmware/security updates after EOL"
+          },
+          "saarbarhet": {
+            "no": "leverandør discontinues support, no update path",
+            "en": "Vendor discontinues support, no update path"
+          },
+          "eksisterendeBeskyttelse": {
+            "no": "Extended support kontrakter",
+            "en": "Extended support contracts"
+          },
+          "eksisterendeKontroll": {
+            "no": "Lifecycle sporing",
+            "en": "Lifecycle tracking"
+          },
           "K": 4,
           "I": 4,
           "T": 4,
           "sannsynlighet": 4,
-          "foreslaatteTiltak": "Lifecycle planning, replacement budget, open-source firmware option, long-term support agreements"
+          "foreslaatteTiltak": {
+            "no": "Lifecycle planning, replacement budget, open-source firmware option, long-term support agreements",
+            "en": "Lifecycle planning, replacement budget, open-source firmware option, long-term support agreements"
+          }
         }
       ]
     },
     {
       "id": "edge-computing",
-      "navn": "Edge Computing",
+      "navn": {
+        "no": "Edge Computing",
+        "en": "Edge Computing"
+      },
       "risikoer": [
         {
           "id": "edge-001",
-          "risikoelement": "Kompromittert edge gateway gir tilgang til alle downstream enheter",
-          "saarbarhet": "Edge node som single point of failure, over-privileged",
-          "eksisterendeBeskyttelse": "Hardened edge OS",
-          "eksisterendeKontroll": "Security monitoring",
+          "risikoelement": {
+            "no": "Kompromittert edge gateway gir tilgang til alle downstream enheter",
+            "en": "A compromised edge gateway provides access to all downstream devices"
+          },
+          "saarbarhet": {
+            "no": "Edge node som single point of failure, over-privileged",
+            "en": "Edge node that single point of failure, over-privileged"
+          },
+          "eksisterendeBeskyttelse": {
+            "no": "Hardened edge OS",
+            "en": "Hardened edge OS"
+          },
+          "eksisterendeKontroll": {
+            "no": "Sikkerhetsovervåking",
+            "en": "Security monitoring"
+          },
           "K": 5,
           "I": 5,
           "T": 4,
           "sannsynlighet": 3,
-          "foreslaatteTiltak": "Micro-segmentation, least privilege, attestation, anomaly detection"
+          "foreslaatteTiltak": {
+            "no": "Micro-segmentation, least privilege, attestation, anomaly detection",
+            "en": "Micro-segmentation, least privilege, attestation, anomaly detection"
+          }
         },
         {
           "id": "edge-002",
-          "risikoelement": "Fysisk tilgang til edge-enhet i usikret lokasjon",
-          "saarbarhet": "Edge nodes i remote/public locations, ingen physical security",
-          "eksisterendeBeskyttelse": "Locked cabinets",
-          "eksisterendeKontroll": "Physical checks",
+          "risikoelement": {
+            "no": "Fysisk tilgang til edge-enhet i usikret lokasjon",
+            "en": "Physical access to an edge device in an unsecured location"
+          },
+          "saarbarhet": {
+            "no": "Edge nodes i remote/public locations, ingen physical security",
+            "en": "Edge nodes in remote/public locations, no physical security"
+          },
+          "eksisterendeBeskyttelse": {
+            "no": "Locked cabinets",
+            "en": "Locked cabinets"
+          },
+          "eksisterendeKontroll": {
+            "no": "Physical checks",
+            "en": "Physical checks"
+          },
           "K": 5,
           "I": 4,
           "T": 3,
           "sannsynlighet": 4,
-          "foreslaatteTiltak": "Encrypted storage, tamper detection, secure boot, remote wipe capability"
+          "foreslaatteTiltak": {
+            "no": "Encrypted storage, tamper detection, secure boot, remote wipe capability",
+            "en": "Encrypted storage, tamper detection, secure boot, remote wipe capability"
+          }
         },
         {
           "id": "edge-003",
-          "risikoelement": "Edge ML-modeller kan bli stjålet eller poisoned",
-          "saarbarhet": "Modeller deployert til edge uten beskyttelse",
-          "eksisterendeBeskyttelse": "Model encryption",
-          "eksisterendeKontroll": "Model versioning",
+          "risikoelement": {
+            "no": "Edge ML-modeller kan bli stjålet eller poisoned",
+            "en": "Edge ML-modeller can bli stolen or poisoned"
+          },
+          "saarbarhet": {
+            "no": "Modeller deployert til edge uten beskyttelse",
+            "en": "Models are deployed to edge environments without adequate protection"
+          },
+          "eksisterendeBeskyttelse": {
+            "no": "Model encryption",
+            "en": "Model encryption"
+          },
+          "eksisterendeKontroll": {
+            "no": "Model versioning",
+            "en": "Model versioning"
+          },
           "K": 4,
           "I": 4,
           "T": 2,
           "sannsynlighet": 2,
-          "foreslaatteTiltak": "Model encryption, TEE for inference, model watermarking, federated learning"
+          "foreslaatteTiltak": {
+            "no": "Model encryption, TEE for inference, model watermarking, federated learning",
+            "en": "Model encryption, TEE for inference, model watermarking, federated learning"
+          }
         }
       ]
     }

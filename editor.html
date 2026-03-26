@@ -23,8 +23,17 @@
 <body>
     <div class="container">
         <div class="editor-header">
-            <button id="backBtn" class="btn btn-secondary">← Tilbake til oversikt</button>
-            <span id="savedIndicator" class="saved-indicator">Lagret ✓</span>
+            <div class="header-actions">
+                <button id="backBtn" class="btn btn-secondary" data-i18n="backToOverview">Tilbake til oversikt</button>
+                <span id="savedIndicator" class="saved-indicator" data-i18n="saved">Lagret</span>
+            </div>
+            <label class="language-switcher">
+                <span>Language</span>
+                <select id="languageSelect" class="language-select" aria-label="Language">
+                    <option value="no">NO</option>
+                    <option value="en">EN</option>
+                </select>
+            </label>
         </div>
 
         <!-- Metadata seksjon -->
@@ -33,42 +42,42 @@
 
             <div class="form-grid">
                 <div class="form-group">
-                    <label for="dato">Dato (ÅÅÅÅ-MM-DD):</label>
+                    <label for="dato" data-i18n="analysisDate">Dato (ÅÅÅÅ-MM-DD):</label>
                     <input type="text" id="dato" class="form-control" placeholder="2026-02-26" pattern="\d{4}-\d{2}-\d{2}">
                 </div>
 
                 <div class="form-group">
-                    <label for="tjeneste">Tjeneste/system:</label>
+                    <label for="tjeneste" data-i18n="serviceSystem">Tjeneste/system:</label>
                     <input type="text" id="tjeneste" class="form-control">
                 </div>
 
                 <div class="form-group">
-                    <label for="utfortAv">Utført av:</label>
+                    <label for="utfortAv" data-i18n="performedBy">Utført av:</label>
                     <input type="text" id="utfortAv" class="form-control">
                 </div>
 
                 <div class="form-group">
-                    <label for="deltakere">Deltakere:</label>
+                    <label for="deltakere" data-i18n="participants">Deltakere:</label>
                     <input type="text" id="deltakere" class="form-control">
                 </div>
 
                 <div class="form-group">
-                    <label for="tjenesteeier">Tjenesteeier/systemeier:</label>
+                    <label for="tjenesteeier" data-i18n="serviceOwner">Tjenesteeier/systemeier:</label>
                     <input type="text" id="tjenesteeier" class="form-control">
                 </div>
 
                 <div class="form-group full-width">
-                    <label for="beskrivelse">Beskrivelse:</label>
+                    <label for="beskrivelse" data-i18n="description">Beskrivelse:</label>
                     <textarea id="beskrivelse" class="form-control" rows="3"></textarea>
                 </div>
 
                 <div class="form-group">
-                    <label for="reportTitle">Rapporttittel (valgfri, erstatter "RISKY"):</label>
+                    <label for="reportTitle" data-i18n="reportTitle">Rapporttittel (valgfri, erstatter "RISKY"):</label>
                     <input type="text" id="reportTitle" class="form-control" placeholder="RISKY">
                 </div>
 
                 <div class="form-group">
-                    <label for="reportLogo">Logo (valgfri):</label>
+                    <label for="reportLogo" data-i18n="logoOptional">Logo (valgfri):</label>
 
                     <!-- File upload drop zone -->
                     <div id="logoDropZone" style="
@@ -85,9 +94,9 @@
                             <svg width="48" height="48" style="margin-bottom: 10px; opacity: 0.5;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"></path>
                             </svg>
-                            <p style="margin: 0; font-weight: 500;">Dra og slipp logo her</p>
-                            <p style="margin: 5px 0 0 0; font-size: 0.9em; color: #666;">eller klikk for å velge fil</p>
-                            <p style="margin: 10px 0 0 0; font-size: 0.85em; color: #999;">PNG eller JPG, maks 2 MB</p>
+                            <p style="margin: 0; font-weight: 500;" data-i18n="dragDropLogo">Dra og slipp logo her</p>
+                            <p style="margin: 5px 0 0 0; font-size: 0.9em; color: #666;" data-i18n="chooseFileInstead">eller klikk for å velge fil</p>
+                            <p style="margin: 10px 0 0 0; font-size: 0.85em; color: #999;" data-i18n="logoFileHint">PNG eller JPG, maks 2 MB</p>
                         </div>
                         <div id="logoPreview" style="display: none;">
                             <img id="logoPreviewImg" style="max-width: 150px; max-height: 100px; border-radius: 4px; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
@@ -99,10 +108,10 @@
 
                     <!-- Advanced: Manual URL input (collapsed by default) -->
                     <details style="margin-top: 10px;">
-                        <summary style="cursor: pointer; font-size: 0.9em; color: #666;">Avansert: Bruk URL i stedet</summary>
+                        <summary style="cursor: pointer; font-size: 0.9em; color: #666;" data-i18n="advancedUrl">Avansert: Bruk URL i stedet</summary>
                         <div style="margin-top: 10px; display: flex; gap: 10px; align-items: start;">
                             <input type="text" id="reportLogo" class="form-control" placeholder="data:image/png;base64,..." style="flex: 1; font-size: 0.85em;">
-                            <button type="button" id="testLogoBtn" class="btn btn-secondary btn-sm" style="white-space: nowrap;">Test</button>
+                            <button type="button" id="testLogoBtn" class="btn btn-secondary btn-sm" style="white-space: nowrap;" data-i18n="test">Test</button>
                         </div>
                         <small class="text-muted">Data URL eller ekstern URL (kan gi CORS-feil)</small>
                     </details>
@@ -112,61 +121,61 @@
 
         <!-- Heatmap seksjon -->
         <section class="heatmap-section sticky-heatmap">
-            <h2>RISIKO HEATMAP</h2>
+            <h2 data-i18n="heatmapTitle">RISIKO HEATMAP</h2>
             <canvas id="heatmapCanvas" width="600" height="500"></canvas>
             <div class="heatmap-legend">
-                <span class="legend-item"><span class="legend-color" style="background:#28a745"></span>Grønn (1-6)</span>
-                <span class="legend-item"><span class="legend-color" style="background:#ffc107"></span>Gul (7-12)</span>
-                <span class="legend-item"><span class="legend-color" style="background:#fd7e14"></span>Oransje (13-18)</span>
-                <span class="legend-item"><span class="legend-color" style="background:#dc3545"></span>Rød (19-25)</span>
+                <span class="legend-item"><span class="legend-color" style="background:#28a745"></span><span data-i18n="legendLow">Grønn (1-6)</span></span>
+                <span class="legend-item"><span class="legend-color" style="background:#ffc107"></span><span data-i18n="legendMedium">Gul (7-12)</span></span>
+                <span class="legend-item"><span class="legend-color" style="background:#fd7e14"></span><span data-i18n="legendHigh">Oransje (13-18)</span></span>
+                <span class="legend-item"><span class="legend-color" style="background:#dc3545"></span><span data-i18n="legendCritical">Rød (19-25)</span></span>
             </div>
         </section>
 
         <!-- Statistikk seksjon -->
         <section class="stats-section">
-            <h2>STATISTIKK</h2>
+            <h2 data-i18n="statistics">STATISTIKK</h2>
             <div class="stats-grid">
                 <div class="stat-card">
                     <div class="stat-value" id="statTotal">0</div>
-                    <div class="stat-label">Totalt antall risikoer</div>
+                    <div class="stat-label" data-i18n="totalRisks">Totalt antall risikoer</div>
                 </div>
                 <div class="stat-card stat-red">
                     <div class="stat-value" id="statRed">0</div>
-                    <div class="stat-label">Røde risikoer (19-25)</div>
+                    <div class="stat-label" data-i18n="redRisks">Røde risikoer (19-25)</div>
                     <div class="stat-percent" id="statRedPercent">0%</div>
                 </div>
                 <div class="stat-card stat-orange">
                     <div class="stat-value" id="statOrange">0</div>
-                    <div class="stat-label">Oransje risikoer (13-18)</div>
+                    <div class="stat-label" data-i18n="orangeRisks">Oransje risikoer (13-18)</div>
                     <div class="stat-percent" id="statOrangePercent">0%</div>
                 </div>
                 <div class="stat-card stat-yellow">
                     <div class="stat-value" id="statYellow">0</div>
-                    <div class="stat-label">Gule risikoer (7-12)</div>
+                    <div class="stat-label" data-i18n="yellowRisks">Gule risikoer (7-12)</div>
                     <div class="stat-percent" id="statYellowPercent">0%</div>
                 </div>
                 <div class="stat-card stat-green">
                     <div class="stat-value" id="statGreen">0</div>
-                    <div class="stat-label">Grønne risikoer (1-6)</div>
+                    <div class="stat-label" data-i18n="greenRisks">Grønne risikoer (1-6)</div>
                     <div class="stat-percent" id="statGreenPercent">0%</div>
                 </div>
                 <div class="stat-card">
                     <div class="stat-value" id="statAvgRisk">0.0</div>
-                    <div class="stat-label">Gjennomsnittlig risikonivå</div>
+                    <div class="stat-label" data-i18n="averageRisk">Gjennomsnittlig risikonivå</div>
                 </div>
             </div>
 
             <div class="charts-container">
                 <div class="chart-box">
-                    <h3>Fordeling etter konsekvens</h3>
+                    <h3 data-i18n="consequenceDistribution">Fordeling etter konsekvens</h3>
                     <canvas id="consequenceChart" width="300" height="200"></canvas>
                 </div>
                 <div class="chart-box">
-                    <h3>Fordeling etter sannsynlighet</h3>
+                    <h3 data-i18n="probabilityDistribution">Fordeling etter sannsynlighet</h3>
                     <canvas id="probabilityChart" width="300" height="200"></canvas>
                 </div>
                 <div class="chart-box">
-                    <h3>KIT-analyse fordeling</h3>
+                    <h3 data-i18n="kitDistribution">KIT-analyse fordeling</h3>
                     <canvas id="kitChart" width="300" height="200"></canvas>
                 </div>
             </div>
@@ -174,25 +183,25 @@
 
         <!-- Risikotabell -->
         <section class="risks-section">
-            <h2>RISIKOER</h2>
+            <h2 data-i18n="riskSectionTitle">RISIKOER</h2>
 
             <div class="table-container">
                 <table id="risksTable" class="risks-table">
                     <thead>
                         <tr>
-                            <th>Nr</th>
-                            <th>Risikoelement</th>
-                            <th>Sårbarhet/svakhet</th>
-                            <th>Eksisterende beskyttelse</th>
-                            <th>Eksisterende kontroll</th>
+                            <th data-i18n="riskNumber">Nr</th>
+                            <th data-i18n="riskElement">Risikoelement</th>
+                            <th data-i18n="vulnerabilityWeakness">Sårbarhet/svakhet</th>
+                            <th data-i18n="existingProtectionHeader">Eksisterende beskyttelse</th>
+                            <th data-i18n="existingControlHeader">Eksisterende kontroll</th>
                             <th>K</th>
                             <th>I</th>
                             <th>T</th>
                             <th>K*</th>
                             <th>S*</th>
                             <th>RN*</th>
-                            <th>Foreslåtte tiltak</th>
-                            <th>Handlinger</th>
+                            <th data-i18n="proposedMeasures">Foreslåtte tiltak</th>
+                            <th data-i18n="actions">Handlinger</th>
                         </tr>
                     </thead>
                     <tbody id="risksTableBody">
@@ -203,19 +212,19 @@
             </div>
 
             <div class="add-risk-container">
-                <button id="addRiskBtn" class="btn btn-primary">+ Legg til risiko</button>
-                <button id="importRisksBtn" class="btn btn-secondary">📥 Importer risikoer fra analyse</button>
+                <button id="addRiskBtn" class="btn btn-primary" data-i18n="addRisk">Legg til risiko</button>
+                <button id="importRisksBtn" class="btn btn-secondary" data-i18n="importRisks">Importer risikoer fra analyse</button>
             </div>
         </section>
 
         <!-- KIT-analyse -->
         <section class="kit-section">
-            <h2>KIT-ANALYSE (Konfidensialitet, Integritet, Tilgjengelighet)</h2>
+            <h2 data-i18n="kitTitle">KIT-ANALYSE (Konfidensialitet, Integritet, Tilgjengelighet)</h2>
             <table class="kit-table">
                 <thead>
                     <tr>
-                        <th>Kombinasjon</th>
-                        <th>Antall risikoer</th>
+                        <th data-i18n="combination">Kombinasjon</th>
+                        <th data-i18n="numberOfRisks">Antall risikoer</th>
                     </tr>
                 </thead>
                 <tbody id="kitTableBody">
@@ -226,17 +235,17 @@
 
         <!-- Egendefinert tekstseksjon -->
         <section class="custom-text-section">
-            <h2 contenteditable="true" id="customTextTitle" class="editable-title">TILLEGGSINFORMASJON</h2>
+            <h2 contenteditable="true" id="customTextTitle" class="editable-title" data-i18n="additionalInfo">TILLEGGSINFORMASJON</h2>
             <div class="form-group">
-                <textarea id="customText" class="form-control custom-text-area" rows="8" placeholder="Skriv inn tilleggsinformasjon som skal inkluderes i rapporten..."></textarea>
+                <textarea id="customText" class="form-control custom-text-area" rows="8" data-i18n-placeholder="additionalInfoPlaceholder" placeholder="Skriv inn tilleggsinformasjon som skal inkluderes i rapporten..."></textarea>
             </div>
-            <small class="text-muted">Overskriften og teksten over blir med i PDF- og Excel-rapporter.</small>
+            <small class="text-muted" data-i18n="customTextHint">Overskriften og teksten over blir med i PDF- og Excel-rapporter.</small>
         </section>
 
         <!-- Tiltak og kommentarer -->
         <section id="commentsSection" class="comments-section">
             <div class="comments-section-header">
-                <h2 contenteditable="true" id="commentsSectionTitle" class="editable-title">TILTAK OG KOMMENTARER</h2>
+                <h2 contenteditable="true" id="commentsSectionTitle" class="editable-title" data-i18n="commentsTitle">TILTAK OG KOMMENTARER</h2>
                 <div class="comments-toggle-buttons">
                     <button id="toggleTiltakBtn" class="btn-toggle-type active" onclick="toggleCommentType('tiltak')">Skjul tiltak</button>
                     <button id="toggleKommentarBtn" class="btn-toggle-type active" onclick="toggleCommentType('kommentar')">Skjul kommentarer</button>
@@ -251,43 +260,43 @@
 
         <!-- Eksport -->
         <section class="export-section">
-            <h2>EKSPORT</h2>
+            <h2 data-i18n="export">EKSPORT</h2>
             <div class="export-buttons">
-                <button id="exportPdfBtn" class="btn btn-primary">📄 Eksporter PDF</button>
-                <button id="exportExcelBtn" class="btn btn-primary">📊 Eksporter Excel</button>
-                <button id="exportJsonBtn" class="btn btn-primary">💾 Eksporter JSON</button>
-                <button id="exportAllBtn" class="btn btn-primary btn-highlight">📦 Eksporter alt (ZIP)</button>
+                <button id="exportPdfBtn" class="btn btn-primary" data-i18n="exportPdf">Eksporter PDF</button>
+                <button id="exportExcelBtn" class="btn btn-primary" data-i18n="exportExcel">Eksporter Excel</button>
+                <button id="exportJsonBtn" class="btn btn-primary" data-i18n="exportJsonFull">Eksporter JSON</button>
+                <button id="exportAllBtn" class="btn btn-primary btn-highlight" data-i18n="exportZip">Eksporter alt (ZIP)</button>
             </div>
 
             <div class="acceptance-level-section">
-                <h3>Akseptansenivå og risikorapport</h3>
+                <h3 data-i18n="acceptanceTitle">Akseptansenivå og risikorapport</h3>
                 <div class="acceptance-level-controls">
                     <div class="form-group">
-                        <label for="acceptanceLevel">Akseptansenivå (risikoer over dette nivået vil bli eksportert):</label>
+                        <label for="acceptanceLevel" data-i18n="acceptanceLabel">Akseptansenivå (risikoer over dette nivået vil bli eksportert):</label>
                         <select id="acceptanceLevel" class="form-control" style="max-width: 200px;">
-                            <option value="0">0 - Ingen</option>
-                            <option value="6">6 - Grønn (lav)</option>
-                            <option value="12" selected>12 - Gul (medium)</option>
-                            <option value="18">18 - Oransje (høy)</option>
-                            <option value="19">19 - Rød (kritisk)</option>
+                            <option value="0" data-i18n="acceptanceNone">0 - Ingen</option>
+                            <option value="6" data-i18n="acceptanceGreen">6 - Grønn (lav)</option>
+                            <option value="12" selected data-i18n="acceptanceYellow">12 - Gul (medium)</option>
+                            <option value="18" data-i18n="acceptanceOrange">18 - Oransje (høy)</option>
+                            <option value="19" data-i18n="acceptanceRed">19 - Rød (kritisk)</option>
                         </select>
                     </div>
                     <div class="export-preview">
                         <span id="acceptanceLevelPreview">0 risikoer over nivå 12</span>
                     </div>
-                    <button id="exportMarkdownBtn" class="btn btn-primary">📝 Eksporter høyrisikorappport (Markdown)</button>
+                    <button id="exportMarkdownBtn" class="btn btn-primary" data-i18n="exportHighRiskMarkdown">Eksporter høyrisikorappport (Markdown)</button>
                 </div>
             </div>
         </section>
 
         <!-- Risikobank administrasjon -->
         <section class="bank-admin-section">
-            <h2>RISIKOBANK ADMINISTRASJON</h2>
-            <p class="section-description">Last opp egne risikobanker i JSON-format. Disse vil være tilgjengelige når du legger til nye risikoer.</p>
+            <h2 data-i18n="bankAdminTitle">RISIKOBANK ADMINISTRASJON</h2>
+            <p class="section-description" data-i18n="bankAdminDescription">Last opp egne risikobanker i JSON-format. Disse vil være tilgjengelige når du legger til nye risikoer.</p>
 
             <div class="bank-upload">
                 <input type="file" id="bankFileInput" accept=".json" style="display: none;">
-                <button id="uploadBankBtn" class="btn btn-primary">📁 Last opp risikobank</button>
+                <button id="uploadBankBtn" class="btn btn-primary" data-i18n="uploadBank">Last opp risikobank</button>
                 <span id="uploadStatus" class="upload-status"></span>
             </div>
 
@@ -301,7 +310,7 @@
     <div id="risikobankModal" class="modal-overlay">
         <div class="modal-content">
             <div class="modal-header">
-                <h2>Velg fra risikobank</h2>
+                <h2 data-i18n="selectFromBank">Velg fra risikobank</h2>
                 <button class="modal-close" onclick="closeRisikobankModal()">×</button>
             </div>
             <div class="modal-body">
@@ -316,37 +325,37 @@
     <div id="commentModal" class="comment-modal">
         <div class="comment-modal-content">
             <div class="comment-modal-header">
-                <h3>Legg til tiltak/kommentar</h3>
+                <h3 data-i18n="addCommentModalTitle">Legg til tiltak/kommentar</h3>
                 <button class="modal-close" onclick="closeCommentModal()">×</button>
             </div>
             <div class="comment-modal-body">
                 <div class="comment-form">
                     <div class="comment-form-group">
-                        <label for="commentType">Type:</label>
+                        <label for="commentType" data-i18n="type">Type:</label>
                         <select id="commentType">
-                            <option value="tiltak">Tiltak</option>
-                            <option value="kommentar">Kommentar</option>
-                            <option value="oppfolging">Oppfølging</option>
-                            <option value="intern">Intern kommentar</option>
+                            <option value="tiltak" data-i18n="action">Tiltak</option>
+                            <option value="kommentar" data-i18n="comment">Kommentar</option>
+                            <option value="oppfolging" data-i18n="followUp">Oppfølging</option>
+                            <option value="intern" data-i18n="internalComment">Intern kommentar</option>
                         </select>
                     </div>
 
                     <div class="comment-form-group">
-                        <label for="commentText">Beskrivelse:</label>
-                        <textarea id="commentText" placeholder="Beskriv tiltaket eller kommentaren..."></textarea>
+                        <label for="commentText" data-i18n="descriptionLabel">Beskrivelse:</label>
+                        <textarea id="commentText" data-i18n-placeholder="commentPlaceholder" placeholder="Beskriv tiltaket eller kommentaren..."></textarea>
                     </div>
 
                     <div class="comment-form-group">
-                        <label>Eksterne lenker (valgfritt):</label>
+                        <label data-i18n="externalLinksOptional">Eksterne lenker (valgfritt):</label>
                         <div id="commentLinksContainer"></div>
-                        <button type="button" class="btn-add-link" onclick="addLinkField()">+ Legg til lenke</button>
+                        <button type="button" id="addLinkBtn" class="btn-add-link" onclick="addLinkField()" data-i18n="addLink">Legg til lenke</button>
                     </div>
 
-                    <button type="button" class="btn-save-comment" onclick="saveComment()">Lagre</button>
+                    <button type="button" class="btn-save-comment" onclick="saveComment()" data-i18n="save">Lagre</button>
                 </div>
 
                 <div class="existing-comments">
-                    <h4>Eksisterende tiltak og kommentarer:</h4>
+                    <h4 data-i18n="existingActionsComments">Eksisterende tiltak og kommentarer:</h4>
                     <div id="existingCommentsContainer"></div>
                 </div>
             </div>
@@ -357,11 +366,11 @@
     <div id="importRisksModal" class="modal-overlay" style="display: none;">
         <div class="modal-content">
             <div class="modal-header">
-                <h3>Importer risikoer fra analyse</h3>
+                <h3 data-i18n="importDialogTitle">Importer risikoer fra analyse</h3>
                 <button class="modal-close" onclick="closeImportRisksModal()">×</button>
             </div>
             <div class="modal-body">
-                <p>Velg en analyse å importere risikoer fra:</p>
+                <p data-i18n="selectAnalysisToImport">Velg en analyse å importere risikoer fra:</p>
 
                 <div id="analysisListForImport" class="analysis-import-list">
                     <!-- Analyser vil bli lagt til her -->
@@ -370,23 +379,25 @@
                 <div class="import-options" style="margin-top: 20px;">
                     <label>
                         <input type="radio" name="importMode" value="replace" checked>
-                        <strong>Erstatt</strong> - Fjern eksisterende risikoer og importer nye
+                        <strong data-i18n="replaceModeTitle">Erstatt</strong> - <span data-i18n="replaceModeDescription">Fjern eksisterende risikoer og importer nye</span>
                     </label>
                     <label>
                         <input type="radio" name="importMode" value="append">
-                        <strong>Legg til</strong> - Behold eksisterende og legg til importerte risikoer
+                        <strong data-i18n="appendModeTitle">Legg til</strong> - <span data-i18n="appendModeDescription">Behold eksisterende og legg til importerte risikoer</span>
                     </label>
                 </div>
 
                 <div style="margin-top: 20px; text-align: right; display: flex; gap: 10px; justify-content: flex-end;">
-                    <button class="btn btn-secondary" onclick="closeImportRisksModal()">Avbryt</button>
-                    <button id="confirmImportBtn" class="btn btn-primary" onclick="confirmImportRisks()">Importer risikoer</button>
+                    <button class="btn btn-secondary" onclick="closeImportRisksModal()" data-i18n="cancel">Avbryt</button>
+                    <button id="confirmImportBtn" class="btn btn-primary" onclick="confirmImportRisks()" data-i18n="importRisks">Importer risikoer</button>
                 </div>
             </div>
         </div>
     </div>
 
+    <script src="js/i18n.js"></script>
     <script src="js/app.js"></script>
+    <script src="js/risk-bank-data.js"></script>
     <script src="js/risikobank.js"></script>
     <script src="js/comments.js"></script>
     <script src="js/heatmap.js"></script>
@@ -405,7 +416,7 @@
             currentAnalysisId = urlParams.get('id');
 
             if (!currentAnalysisId) {
-                alert('Ingen analyse-ID funnet');
+                alert(t('noAnalysisIdFound'));
                 window.location.href = 'index.html';
                 return;
             }
@@ -568,7 +579,7 @@
                     const sizeKB = (file.size / 1024).toFixed(1);
                     statusText += ` • ${sizeKB} KB`;
                 }
-                previewStatus.textContent = `✓ Logo lastet: ${statusText}`;
+                previewStatus.textContent = `Logo lastet: ${statusText}`;
                 previewStatus.style.color = '#28a745';
             };
             img.src = dataUrl;
@@ -639,12 +650,12 @@
                 name: document.getElementById('analysisName').textContent,
                 metadata: {
                     ...currentAnalysis.metadata, // Preserve existing metadata fields
-                    dato: document.getElementById('dato').value,
-                    tjeneste: document.getElementById('tjeneste').value,
-                    utfortAv: document.getElementById('utfortAv').value,
-                    deltakere: document.getElementById('deltakere').value,
-                    tjenesteeier: document.getElementById('tjenesteeier').value,
-                    beskrivelse: document.getElementById('beskrivelse').value,
+                    date: document.getElementById('dato').value,
+                    service: document.getElementById('tjeneste').value,
+                    performedBy: document.getElementById('utfortAv').value,
+                    participants: document.getElementById('deltakere').value,
+                    serviceOwner: document.getElementById('tjenesteeier').value,
+                    description: document.getElementById('beskrivelse').value,
                     reportTitle: document.getElementById('reportTitle').value,
                     reportLogo: document.getElementById('reportLogo').value
                 }
@@ -693,72 +704,77 @@
         }
 
         function updateAcceptanceLevelPreview() {
-            if (!currentAnalysis || !currentAnalysis.risikoer) return;
+            if (!currentAnalysis || !currentAnalysis.risks) return;
 
             const level = parseInt(document.getElementById('acceptanceLevel').value);
-            const risksAboveLevel = currentAnalysis.risikoer.filter(r => r.risikonivaa > level);
+            const risksAboveLevel = currentAnalysis.risks.filter(r => r.riskLevel > level);
             const preview = document.getElementById('acceptanceLevelPreview');
-            preview.textContent = `${risksAboveLevel.length} risikoer over nivå ${level}`;
+            preview.textContent = formatTranslation('acceptancePreview', {
+                count: risksAboveLevel.length,
+                level
+            });
         }
 
         function exportHighRisksToMarkdown() {
             if (!currentAnalysis) {
-                alert('Ingen analyse å eksportere');
+                alert(t('noAnalysisToExport'));
                 return;
             }
 
             const level = parseInt(document.getElementById('acceptanceLevel').value);
-            const risksAboveLevel = currentAnalysis.risikoer.filter(r => r.risikonivaa > level);
+            const risksAboveLevel = currentAnalysis.risks.filter(r => r.riskLevel > level);
 
             if (risksAboveLevel.length === 0) {
-                alert(`Ingen risikoer funnet over akseptansenivå ${level}`);
+                alert(formatTranslation('noRisksAboveAcceptance', { level }));
                 return;
             }
 
-            let markdown = `# Høyrisikorapport - ${currentAnalysis.name}\n\n`;
-            markdown += `**Dato:** ${currentAnalysis.metadata.dato || 'Ikke angitt'}\n`;
-            markdown += `**Tjeneste/system:** ${currentAnalysis.metadata.tjeneste || 'Ikke angitt'}\n`;
-            markdown += `**Utført av:** ${currentAnalysis.metadata.utfortAv || 'Ikke angitt'}\n`;
-            markdown += `**Akseptansenivå:** ${level}\n\n`;
+            let markdown = `# ${t('highRiskReportTitle')} - ${currentAnalysis.name}\n\n`;
+            markdown += `**${t('dateLabel')}:** ${currentAnalysis.metadata.date || t('notSpecified')}\n`;
+            markdown += `**${t('serviceSystemLabel')}:** ${currentAnalysis.metadata.service || t('notSpecified')}\n`;
+            markdown += `**${t('performedByLabel')}:** ${currentAnalysis.metadata.performedBy || t('notSpecified')}\n`;
+            markdown += `**${t('acceptanceLevelLabel')}:** ${level}\n\n`;
             markdown += `---\n\n`;
-            markdown += `## Risikoer over akseptansenivå\n\n`;
-            markdown += `Totalt **${risksAboveLevel.length}** risikoer over nivå ${level}.\n\n`;
+            markdown += `## ${t('risksAboveAcceptanceTitle')}\n\n`;
+            markdown += `${formatTranslation('totalRisksAboveAcceptance', { count: `**${risksAboveLevel.length}**`, level })}\n\n`;
 
             // Group by risk level
-            const redRisks = risksAboveLevel.filter(r => r.risikonivaa >= 19);
-            const orangeRisks = risksAboveLevel.filter(r => r.risikonivaa >= 13 && r.risikonivaa <= 18);
-            const yellowRisks = risksAboveLevel.filter(r => r.risikonivaa >= 7 && r.risikonivaa <= 12);
+            const redRisks = risksAboveLevel.filter(r => r.riskLevel >= 19);
+            const orangeRisks = risksAboveLevel.filter(r => r.riskLevel >= 13 && r.riskLevel <= 18);
+            const yellowRisks = risksAboveLevel.filter(r => r.riskLevel >= 7 && r.riskLevel <= 12);
 
             if (redRisks.length > 0) {
-                markdown += `### 🔴 Kritiske risikoer (19-25): ${redRisks.length}\n\n`;
+                markdown += `### ${formatTranslation('criticalRisksGroup', { count: redRisks.length })}\n\n`;
                 redRisks.forEach((risk, idx) => {
                     markdown += formatRiskMarkdown(risk, idx + 1);
                 });
             }
 
             if (orangeRisks.length > 0) {
-                markdown += `### 🟠 Høye risikoer (13-18): ${orangeRisks.length}\n\n`;
+                markdown += `### ${formatTranslation('highRisksGroup', { count: orangeRisks.length })}\n\n`;
                 orangeRisks.forEach((risk, idx) => {
                     markdown += formatRiskMarkdown(risk, idx + 1);
                 });
             }
 
             if (yellowRisks.length > 0) {
-                markdown += `### 🟡 Medium risikoer (7-12): ${yellowRisks.length}\n\n`;
+                markdown += `### ${formatTranslation('mediumRisksGroup', { count: yellowRisks.length })}\n\n`;
                 yellowRisks.forEach((risk, idx) => {
                     markdown += formatRiskMarkdown(risk, idx + 1);
                 });
             }
 
             markdown += `\n---\n\n`;
-            markdown += `*Generert med Risky ${new Date().toISOString().split('T')[0]}*\n`;
+            markdown += `*${formatTranslation('generatedWithRisky', { date: new Date().toISOString().split('T')[0] })}*\n`;
 
             // Download
             const blob = new Blob([markdown], { type: 'text/markdown;charset=utf-8' });
             const url = URL.createObjectURL(blob);
             const a = document.createElement('a');
             a.href = url;
-            a.download = `Risky_Høyrisikorapport_${currentAnalysis.metadata.dato || 'ukjent_dato'}.md`;
+            a.download = formatTranslation('highRiskReportFilename', {
+                date: currentAnalysis.metadata.date || 'unknown_date'
+            });
             document.body.appendChild(a);
             a.click();
             document.body.removeChild(a);
@@ -766,16 +782,16 @@
         }
 
         function formatRiskMarkdown(risk, index) {
-            let md = `#### ${index}. ${risk.risikoelement} (RN: ${risk.risikonivaa})\n\n`;
-            md += `- **Sårbarhet:** ${risk.saarbarhet || 'Ikke angitt'}\n`;
-            md += `- **Konsekvens:** ${risk.konsekvens} | **Sannsynlighet:** ${risk.sannsynlighet}\n`;
+            let md = `#### ${index}. ${risk.riskElement} (RN: ${risk.riskLevel})\n\n`;
+            md += `- **${t('vulnerabilityWeakness')}:** ${risk.vulnerability || t('notSpecified')}\n`;
+            md += `- **${t('consequence')}:** ${risk.consequence} | **${t('probability')}:** ${risk.probability}\n`;
             md += `- **KIT:** K=${risk.K}, I=${risk.I}, T=${risk.T}\n`;
-            md += `- **Eksisterende beskyttelse:** ${risk.eksisterendeBeskyttelse || 'Ingen'}\n`;
-            md += `- **Eksisterende kontroll:** ${risk.eksisterendeKontroll || 'Ingen'}\n`;
-            md += `- **Foreslåtte tiltak:** ${risk.foreslaatteTiltak || 'Ikke angitt'}\n`;
+            md += `- **${t('existingProtectionHeader')}:** ${risk.existingProtection || t('none')}\n`;
+            md += `- **${t('existingControlHeader')}:** ${risk.existingControl || t('none')}\n`;
+            md += `- **${t('proposedMeasures')}:** ${risk.proposedMeasures || t('notSpecified')}\n`;
 
             if (risk.comments && risk.comments.length > 0) {
-                md += `- **Kommentarer:**\n`;
+                md += `- **${t('commentsTitle')}:**\n`;
                 risk.comments.forEach(comment => {
                     md += `  - [${comment.type}] ${comment.text}\n`;
                 });
@@ -786,29 +802,30 @@
         }
 
         function addNewRisk() {
-            const newRisk = {
+            const newRisk = normalizeRisk({
                 id: generateUUID(),
-                nr: currentAnalysis.risikoer.length + 1,
-                risikoelement: '',
-                saarbarhet: '',
-                eksisterendeBeskyttelse: '',
-                eksisterendeKontroll: '',
+                number: currentAnalysis.risks.length + 1,
+                riskElement: '',
+                vulnerability: '',
+                existingProtection: '',
+                existingControl: '',
                 K: 0,
                 I: 0,
                 T: 0,
-                konsekvens: 0,
-                sannsynlighet: 0,
-                risikonivaa: 0,
-                foreslaatteTiltak: ''
-            };
+                consequence: 0,
+                probability: 0,
+                riskLevel: 0,
+                proposedMeasures: ''
+            }, currentAnalysis.risks.length);
 
             // Blur active element to prevent browser from trying to keep it in view
             if (document.activeElement && document.activeElement !== document.body) {
                 document.activeElement.blur();
             }
 
-            currentAnalysis.risikoer.push(newRisk);
-            updateAnalysis(currentAnalysisId, { risikoer: currentAnalysis.risikoer });
+            currentAnalysis.risks.push(newRisk);
+            currentAnalysis.risks = currentAnalysis.risks;
+            updateAnalysis(currentAnalysisId, { risks: currentAnalysis.risks });
             renderRisksTable();
             renderHeatmap();
             renderStatistics();
@@ -842,7 +859,7 @@
         function exportCurrentAnalysisJSON() {
             const dataStr = JSON.stringify(currentAnalysis, null, 2);
             const dataUri = 'data:application/json;charset=utf-8,'+ encodeURIComponent(dataStr);
-            const exportName = `Risky_${currentAnalysis.metadata.tjeneste || 'analyse'}_${currentAnalysis.createdDate}.json`;
+            const exportName = `Risky_${currentAnalysis.metadata.service || 'analyse'}_${currentAnalysis.createdDate}.json`;
 
             const linkElement = document.createElement('a');
             linkElement.setAttribute('href', dataUri);
@@ -855,7 +872,7 @@
             const modal = document.getElementById('importRisksModal');
             const listContainer = document.getElementById('analysisListForImport');
 
-            listContainer.innerHTML = '<p style="text-align: center; color: #666;">Laster...</p>';
+            listContainer.innerHTML = `<p style="text-align: center; color: #666;">${t('loading')}</p>`;
             modal.style.display = 'flex';
 
             try {
@@ -889,7 +906,7 @@
                 // Add baselines section
                 if (baselines.length > 0) {
                     const baselinesHeader = document.createElement('h4');
-                    baselinesHeader.textContent = '📚 Forhåndsdefinerte maler';
+                    baselinesHeader.textContent = t('predefinedTemplates');
                     baselinesHeader.style.cssText = 'margin: 10px 0; padding: 10px; background: #f0f7ff; border-radius: 4px; color: #2e5f8e;';
                     listContainer.appendChild(baselinesHeader);
 
@@ -902,7 +919,7 @@
                 // Add user analyses section
                 if (otherAnalyses.length > 0) {
                     const userHeader = document.createElement('h4');
-                    userHeader.textContent = '📋 Mine analyser';
+                    userHeader.textContent = t('myAnalyses');
                     userHeader.style.cssText = 'margin: 20px 0 10px 0; padding: 10px; background: #f0f7ff; border-radius: 4px; color: #2e5f8e;';
                     listContainer.appendChild(userHeader);
 
@@ -914,12 +931,12 @@
 
                 // If no options available
                 if (baselines.length === 0 && otherAnalyses.length === 0) {
-                    listContainer.innerHTML = '<p style="text-align: center; color: #666;">Ingen analyser tilgjengelig for import.</p>';
+                    listContainer.innerHTML = `<p style="text-align: center; color: #666;">${t('noAnalysesAvailableForImport')}</p>`;
                 }
 
             } catch (error) {
                 console.error('Error loading baselines:', error);
-                listContainer.innerHTML = '<p style="text-align: center; color: #dc3545;">Kunne ikke laste maler. Prøv igjen.</p>';
+                listContainer.innerHTML = `<p style="text-align: center; color: #dc3545;">${t('couldNotLoadTemplates')}</p>`;
             }
         }
 
@@ -927,18 +944,18 @@
             const label = document.createElement('label');
             label.className = 'analysis-import-item';
 
-            const riskCount = analysis.risikoer ? analysis.risikoer.length : 0;
-            const date = analysis.metadata.dato || analysis.createdDate || '';
-            const tjeneste = analysis.metadata.tjeneste || analysis.name || 'Uten navn';
-            const beskrivelse = analysis.metadata.beskrivelse || '';
+            const riskCount = analysis.risks ? analysis.risks.length : 0;
+            const date = analysis.metadata.date || analysis.createdDate || '';
+            const serviceName = analysis.metadata.service || analysis.name || t('untitled');
+            const description = analysis.metadata.description || '';
 
             label.innerHTML = `
                 <input type="radio" name="selectedAnalysis" value="${valueId}" ${isChecked ? 'checked' : ''}>
                 <div class="analysis-import-content">
-                    <h4>${tjeneste} <span class="risk-count">${riskCount} risikoer</span></h4>
-                    <p><strong>Dato:</strong> ${date}</p>
-                    ${analysis.metadata.utfortAv ? `<p><strong>Utført av:</strong> ${analysis.metadata.utfortAv}</p>` : ''}
-                    ${beskrivelse ? `<p style="font-size: 13px; color: #666; font-style: italic;">${beskrivelse}</p>` : ''}
+                    <h4>${serviceName} <span class="risk-count">${riskCount} ${t('risks')}</span></h4>
+                    <p><strong>${t('dateLabel')}:</strong> ${date}</p>
+                    ${analysis.metadata.performedBy ? `<p><strong>${t('performedByLabel')}:</strong> ${analysis.metadata.performedBy}</p>` : ''}
+                    ${description ? `<p style="font-size: 13px; color: #666; font-style: italic;">${description}</p>` : ''}
                 </div>
             `;
 
@@ -948,7 +965,7 @@
         function confirmImportRisks() {
             const selectedRadio = document.querySelector('input[name="selectedAnalysis"]:checked');
             if (!selectedRadio) {
-                alert('Vennligst velg en analyse å importere fra.');
+                alert(t('importSelectAnalysisAlert'));
                 return;
             }
 
@@ -965,7 +982,7 @@
             }
 
             if (!sourceAnalysis) {
-                alert('Kunne ikke finne valgt analyse.');
+                alert(t('importCouldNotFindAnalysis'));
                 return;
             }
 
@@ -981,21 +998,21 @@
             try {
                 console.log('Import started', sourceAnalysis);
 
-                if (!sourceAnalysis.risikoer || sourceAnalysis.risikoer.length === 0) {
-                    alert('Denne analysen har ingen risikoer å importere.');
+                if (!sourceAnalysis.risks || sourceAnalysis.risks.length === 0) {
+                    alert(t('importNoRisksInAnalysis'));
                     closeImportRisksModal();
                     return;
                 }
 
                 const importMode = document.querySelector('input[name="importMode"]:checked').value;
-                const sourceName = sourceAnalysis.metadata.tjeneste || sourceAnalysis.name || 'analysen';
-                const riskCount = sourceAnalysis.risikoer.length;
+                const sourceName = sourceAnalysis.metadata.service || sourceAnalysis.name || t('analysisWithoutName');
+                const riskCount = sourceAnalysis.risks.length;
 
                 let message = '';
                 if (importMode === 'replace') {
-                    message = `Dette vil erstatte alle eksisterende risikoer med ${riskCount} risikoer fra "${sourceName}".\n\nEr du sikker?`;
+                    message = formatTranslation('importReplaceConfirm', { count: riskCount, name: sourceName });
                 } else {
-                    message = `Dette vil legge til ${riskCount} risikoer fra "${sourceName}" til de eksisterende.\n\nFortsette?`;
+                    message = formatTranslation('importAppendConfirm', { count: riskCount, name: sourceName });
                 }
 
                 if (!confirm(message)) {
@@ -1004,61 +1021,47 @@
                 }
 
                 // Deep copy the risks to avoid reference issues
-                const importedRisks = JSON.parse(JSON.stringify(sourceAnalysis.risikoer));
+                const importedRisks = JSON.parse(JSON.stringify(sourceAnalysis.risks));
                 console.log('Imported risks:', importedRisks);
 
-                // Ensure currentAnalysis.risikoer is an array
-                if (!Array.isArray(currentAnalysis.risikoer)) {
-                    currentAnalysis.risikoer = [];
+                // Ensure currentAnalysis.risks is an array
+                if (!Array.isArray(currentAnalysis.risks)) {
+                    currentAnalysis.risks = [];
                 }
 
-                const previousCount = currentAnalysis.risikoer.length;
+                const previousCount = currentAnalysis.risks.length;
 
                 // Generate new IDs and ensure all required fields exist
-                importedRisks.forEach((risk, index) => {
-                    risk.id = 'risk_' + Date.now() + '_' + index + '_' + Math.random().toString(36).substr(2, 9);
+                const importedNormalizedRisks = importedRisks.map((risk, index) => {
+                    const normalizedRisk = normalizeRisk({
+                        ...risk,
+                        id: 'risk_' + Date.now() + '_' + index + '_' + Math.random().toString(36).substr(2, 9)
+                    }, index);
 
-                    // Ensure all required fields exist with proper defaults
-                    risk.risikoelement = risk.risikoelement || '';
-                    risk.saarbarhet = risk.saarbarhet || '';
-                    risk.eksisterendeBeskyttelse = risk.eksisterendeBeskyttelse || '';
-                    risk.eksisterendeKontroll = risk.eksisterendeKontroll || '';
-                    risk.K = risk.K || 0;
-                    risk.I = risk.I || 0;
-                    risk.T = risk.T || 0;
-                    risk.konsekvens = risk.konsekvens || 0;
-                    risk.sannsynlighet = risk.sannsynlighet || 0;
-                    risk.risikonivaa = risk.risikonivaa || 0;
-                    risk.foreslaatteTiltak = risk.foreslaatteTiltak || '';
-                    risk.kommentarer = Array.isArray(risk.kommentarer) ? risk.kommentarer : [];
-
-                    // Set nr field based on mode
-                    if (importMode === 'replace') {
-                        risk.nr = index + 1;
-                    } else {
-                        risk.nr = previousCount + index + 1;
-                    }
+                    normalizedRisk.number = importMode === 'replace'
+                        ? index + 1
+                        : previousCount + index + 1;
+                    return normalizedRisk;
                 });
 
                 if (importMode === 'replace') {
-                    currentAnalysis.risikoer = importedRisks;
+                    currentAnalysis.risks = importedNormalizedRisks;
                 } else {
-                    currentAnalysis.risikoer = [...currentAnalysis.risikoer, ...importedRisks];
+                    currentAnalysis.risks = [...currentAnalysis.risks, ...importedNormalizedRisks];
                 }
-
                 // Renumber ALL risks (in case of replace mode or to fix existing)
-                currentAnalysis.risikoer.forEach((risk, index) => {
-                    risk.nr = index + 1;
+                currentAnalysis.risks.forEach((risk, index) => {
+                    risk.number = index + 1;
                 });
 
-                console.log('New risk count:', currentAnalysis.risikoer.length);
-                console.log('First 3 risks nr before save:', currentAnalysis.risikoer.slice(0, 3).map(r => `id:${r.id.slice(0,10)} nr:${r.nr}`));
+                console.log('New risk count:', currentAnalysis.risks.length);
+                console.log('First 3 risks before save:', currentAnalysis.risks.slice(0, 3).map(r => `id:${r.id.slice(0,10)} number:${r.number}`));
 
                 // Save to localStorage
-                const updatedAnalysis = updateAnalysis(currentAnalysisId, { risikoer: currentAnalysis.risikoer });
+                const updatedAnalysis = updateAnalysis(currentAnalysisId, { risks: currentAnalysis.risks });
                 if (updatedAnalysis) {
                     currentAnalysis = updatedAnalysis;
-                    console.log('Updated from localStorage, first 3 risks nr:', currentAnalysis.risikoer.slice(0, 3).map(r => `id:${r.id.slice(0,10)} nr:${r.nr}`));
+                    console.log('Updated from localStorage, first 3 risks:', currentAnalysis.risks.slice(0, 3).map(r => `id:${r.id.slice(0,10)} number:${r.number}`));
                 } else {
                     console.error('updateAnalysis returned null!');
                 }
@@ -1073,11 +1076,16 @@
 
                 closeImportRisksModal();
 
-                const action = importMode === 'replace' ? 'erstattet med' : 'lagt til';
-                alert(`${riskCount} risikoer ${action} fra "${sourceName}"\n\nTotalt nå: ${currentAnalysis.risikoer.length} risikoer`);
+                const action = importMode === 'replace' ? t('importReplaceResult') : t('importAppendResult');
+                alert(formatTranslation('importCompleted', {
+                    count: riskCount,
+                    action,
+                    name: sourceName,
+                    total: currentAnalysis.risks.length
+                }));
             } catch (error) {
                 console.error('Error importing risks:', error);
-                alert('Det oppsto en feil ved import: ' + error.message);
+                alert(formatTranslation('importError', { message: error.message }));
                 closeImportRisksModal();
             }
         }
@@ -1088,12 +1096,12 @@
             if (!file) return;
 
             const statusEl = document.getElementById('uploadStatus');
-            statusEl.textContent = 'Laster opp...';
+            statusEl.textContent = t('uploadInProgress');
             statusEl.style.color = '#666';
 
             try {
                 const bank = await uploadCustomBank(file);
-                statusEl.textContent = `✓ ${bank.navn} lastet opp!`;
+                statusEl.textContent = formatTranslation('uploadedStatus', { name: getLocalizedValue(bank.name || bank.navn) });
                 statusEl.style.color = '#28a745';
 
                 // Refresh custom banks list
@@ -1106,7 +1114,7 @@
                     statusEl.textContent = '';
                 }, 3000);
             } catch (err) {
-                statusEl.textContent = `✗ Feil: ${err.message}`;
+                statusEl.textContent = formatTranslation('uploadError', { message: err.message });
                 statusEl.style.color = '#dc3545';
             }
         }
@@ -1123,13 +1131,13 @@
             if (customBanks.length === 0) {
                 const p = document.createElement('p');
                 p.className = 'no-banks';
-                p.textContent = 'Ingen egendefinerte risikobanker lastet opp.';
+                p.textContent = t('noCustomBanks');
                 container.appendChild(p);
                 return;
             }
 
             const h3 = document.createElement('h3');
-            h3.textContent = 'Egendefinerte risikobanker:';
+            h3.textContent = t('customBanks');
             container.appendChild(h3);
 
             customBanks.forEach(bank => {
@@ -1140,27 +1148,30 @@
                 info.className = 'bank-info';
 
                 const name = document.createElement('strong');
-                name.textContent = bank.navn;
+                name.textContent = getLocalizedValue(bank.name);
                 info.appendChild(name);
 
-                if (bank.beskrivelse) {
+                if (bank.description) {
                     const desc = document.createElement('p');
-                    desc.textContent = bank.beskrivelse;
+                    desc.textContent = getLocalizedValue(bank.description);
                     info.appendChild(desc);
                 }
 
                 const meta = document.createElement('small');
-                const numKat = bank.kategorier ? bank.kategorier.length : 0;
-                const numRisk = bank.kategorier ? bank.kategorier.reduce((sum, k) => sum + (k.risikoer ? k.risikoer.length : 0), 0) : 0;
-                meta.textContent = `${numKat} kategorier, ${numRisk} risikoer`;
+                const numCategories = bank.categories ? bank.categories.length : 0;
+                const numRisks = bank.categories ? bank.categories.reduce((sum, category) => sum + (category.risks ? category.risks.length : 0), 0) : 0;
+                meta.textContent = formatTranslation('categoryRiskMeta', {
+                    categories: numCategories,
+                    risks: numRisks
+                });
                 info.appendChild(meta);
 
                 const deleteBtn = document.createElement('button');
                 deleteBtn.textContent = '×';
                 deleteBtn.className = 'btn btn-danger btn-icon';
-                deleteBtn.title = 'Slett';
+                deleteBtn.title = t('deleteLabel');
                 deleteBtn.onclick = async () => {
-                    if (confirm(`Er du sikker på at du vil slette "${bank.navn}"?`)) {
+                    if (confirm(formatTranslation('deleteBankConfirm', { name: getLocalizedValue(bank.name) }))) {
                         await deleteCustomBank(bank.id);
                         renderCustomBanks();
                     }
@@ -1174,7 +1185,7 @@
 
         // Statistikk og visualisering
         function renderStatistics() {
-            if (!currentAnalysis || !currentAnalysis.risikoer || currentAnalysis.risikoer.length === 0) {
+            if (!currentAnalysis || !currentAnalysis.risks || currentAnalysis.risks.length === 0) {
                 document.getElementById('statTotal').textContent = '0';
                 document.getElementById('statRed').textContent = '0';
                 document.getElementById('statOrange').textContent = '0';
@@ -1188,7 +1199,7 @@
                 return;
             }
 
-            const risks = currentAnalysis.risikoer;
+            const risks = currentAnalysis.risks;
             const total = risks.length;
 
             // Kategoriser risikoer etter nivå
@@ -1196,7 +1207,7 @@
             let sumRiskLevel = 0;
 
             risks.forEach(risk => {
-                const rn = risk.risikonivaa;
+                const rn = risk.riskLevel;
                 sumRiskLevel += rn;
 
                 if (rn >= 1 && rn <= 6) green++;
@@ -1239,8 +1250,8 @@
             // Count distribution
             const distribution = [0, 0, 0, 0, 0];
             risks.forEach(r => {
-                if (r.konsekvens >= 1 && r.konsekvens <= 5) {
-                    distribution[r.konsekvens - 1]++;
+                if (r.consequence >= 1 && r.consequence <= 5) {
+                    distribution[r.consequence - 1]++;
                 }
             });
 
@@ -1274,7 +1285,7 @@
             // Draw axis label
             ctx.font = 'bold 12px Arial';
             ctx.textAlign = 'center';
-            ctx.fillText('Konsekvens (1-5)', canvas.width / 2, canvas.height - 5);
+            ctx.fillText(t('consequenceAxis'), canvas.width / 2, canvas.height - 5);
         }
 
         function renderProbabilityChart(risks) {
@@ -1287,8 +1298,8 @@
             // Count distribution
             const distribution = [0, 0, 0, 0, 0];
             risks.forEach(r => {
-                if (r.sannsynlighet >= 1 && r.sannsynlighet <= 5) {
-                    distribution[r.sannsynlighet - 1]++;
+                if (r.probability >= 1 && r.probability <= 5) {
+                    distribution[r.probability - 1]++;
                 }
             });
 
@@ -1322,7 +1333,7 @@
             // Draw axis label
             ctx.font = 'bold 12px Arial';
             ctx.textAlign = 'center';
-            ctx.fillText('Sannsynlighet (1-5)', canvas.width / 2, canvas.height - 5);
+            ctx.fillText(t('probabilityAxis'), canvas.width / 2, canvas.height - 5);
         }
 
         function renderKITChart(risks) {
@@ -1380,7 +1391,7 @@
             // Draw axis label
             ctx.font = 'bold 12px Arial';
             ctx.textAlign = 'center';
-            ctx.fillText('Gjennomsnittlig KIT-verdi', canvas.width / 2, canvas.height - 5);
+            ctx.fillText(t('kitAverageAxis'), canvas.width / 2, canvas.height - 5);
         }
 
         // Override loadAnalysis to include custom banks rendering
@@ -1394,19 +1405,19 @@
 
             currentAnalysis = getAnalysisById(currentAnalysisId);
             if (!currentAnalysis) {
-                alert('Analyse ikke funnet');
+                alert(t('analysisNotFound'));
                 window.location.href = 'index.html';
                 return;
             }
 
             // Populer metadata
             document.getElementById('analysisName').textContent = currentAnalysis.name;
-            document.getElementById('dato').value = currentAnalysis.metadata.dato || '';
-            document.getElementById('tjeneste').value = currentAnalysis.metadata.tjeneste || '';
-            document.getElementById('utfortAv').value = currentAnalysis.metadata.utfortAv || '';
-            document.getElementById('deltakere').value = currentAnalysis.metadata.deltakere || '';
-            document.getElementById('tjenesteeier').value = currentAnalysis.metadata.tjenesteeier || '';
-            document.getElementById('beskrivelse').value = currentAnalysis.metadata.beskrivelse || '';
+            document.getElementById('dato').value = currentAnalysis.metadata.date || '';
+            document.getElementById('tjeneste').value = currentAnalysis.metadata.service || '';
+            document.getElementById('utfortAv').value = currentAnalysis.metadata.performedBy || '';
+            document.getElementById('deltakere').value = currentAnalysis.metadata.participants || '';
+            document.getElementById('tjenesteeier').value = currentAnalysis.metadata.serviceOwner || '';
+            document.getElementById('beskrivelse').value = currentAnalysis.metadata.description || '';
             document.getElementById('reportTitle').value = currentAnalysis.metadata.reportTitle || '';
             document.getElementById('reportLogo').value = currentAnalysis.metadata.reportLogo || '';
 
@@ -1416,9 +1427,9 @@
             }
 
             document.getElementById('commentsSectionTitle').textContent =
-                currentAnalysis.metadata.commentsSectionTitle || 'TILTAK OG KOMMENTARER';
+                currentAnalysis.metadata.commentsSectionTitle || t('actionsAndCommentsDefaultTitle');
             document.getElementById('customTextTitle').textContent =
-                currentAnalysis.metadata.customTextTitle || 'TILLEGGSINFORMASJON';
+                currentAnalysis.metadata.customTextTitle || t('additionalInfoDefaultTitle');
             document.getElementById('customText').value =
                 currentAnalysis.metadata.customText || '';
             document.getElementById('acceptanceLevel').value =
@@ -1437,6 +1448,19 @@
             // Render custom banks
             renderCustomBanks();
         }
+
+        window.refreshLocalizedUI = function refreshLocalizedUI() {
+            if (!currentAnalysis) {
+                updateCommentToggleLabels();
+                return;
+            }
+
+            updateAcceptanceLevelPreview();
+            updateCommentToggleLabels();
+            renderCustomBanks();
+            renderComments();
+            renderStatistics();
+        };
     </script>
 </body>
 </html>

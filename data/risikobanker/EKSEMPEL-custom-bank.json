@@ -1,23 +1,47 @@
 {
   "id": "min-bank",
-  "navn": "Min organisasjons risikobank",
-  "beskrivelse": "Eksempel på egendefinert risikobank - kopier og tilpass denne",
+  "navn": {
+    "no": "Min organisasjons risikobank",
+    "en": "My Organization Risk Bank"
+  },
+  "beskrivelse": {
+    "no": "Eksempel på egendefinert risikobank - kopier og tilpass denne",
+    "en": "Example of a custom risk bank. Copy and adapt this file"
+  },
   "kategorier": [
     {
       "id": "min-kategori",
-      "navn": "Min kategori",
+      "navn": {
+        "no": "Min kategori",
+        "en": "My Category"
+      },
       "risikoer": [
         {
           "id": "risk-001",
-          "risikoelement": "Beskriv hva som kan gå galt",
-          "saarbarhet": "Beskriv hvorfor det kan gå galt",
-          "eksisterendeBeskyttelse": "Hva gjør vi allerede for å beskytte oss?",
-          "eksisterendeKontroll": "Hvordan sjekker vi at beskyttelsen fungerer?",
+          "risikoelement": {
+            "no": "Beskriv hva som kan gå galt",
+            "en": "Describe what can go wrong"
+          },
+          "saarbarhet": {
+            "no": "Beskriv hvorfor det kan gå galt",
+            "en": "Describe why it can go wrong"
+          },
+          "eksisterendeBeskyttelse": {
+            "no": "Hva gjør vi allerede for å beskytte oss?",
+            "en": "What do we already do to protect ourselves?"
+          },
+          "eksisterendeKontroll": {
+            "no": "Hvordan sjekker vi at beskyttelsen fungerer?",
+            "en": "How do we verify that the protection works?"
+          },
           "K": 3,
           "I": 2,
           "T": 4,
           "sannsynlighet": 3,
-          "foreslaatteTiltak": "Hva bør vi gjøre for å redusere risikoen?"
+          "foreslaatteTiltak": {
+            "no": "Hva bør vi gjøre for å redusere risikoen?",
+            "en": "What should we do to reduce the risk?"
+          }
         }
       ]
     }

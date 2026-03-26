@@ -19,31 +19,43 @@
 <body>
     <div class="container">
         <header>
-            <h1>RISKY</h1>
-            <p class="subtitle">Risiko- og sårbarhetsanalyse</p>
+            <div class="topbar">
+                <div>
+                    <h1>RISKY</h1>
+                    <p class="subtitle" data-i18n="appSubtitle">Risiko- og sårbarhetsanalyse</p>
+                </div>
+                <label class="language-switcher">
+                    <span>Language</span>
+                    <select id="languageSelect" class="language-select" aria-label="Language">
+                        <option value="no">NO</option>
+                        <option value="en">EN</option>
+                    </select>
+                </label>
+            </div>
         </header>
 
         <div class="actions">
-            <button id="newAnalysisBtn" class="btn btn-primary">+ Ny analyse</button>
-            <button id="importJsonBtn" class="btn btn-secondary">📁 Importer JSON</button>
-            <button id="exportAllBtn" class="btn btn-secondary">💾 Eksporter alle</button>
-            <button id="helpBtn" class="btn btn-secondary">❓ Hjelp</button>
+            <button id="newAnalysisBtn" class="btn btn-primary" data-i18n="newAnalysis">Ny analyse</button>
+            <button id="importJsonBtn" class="btn btn-secondary" data-i18n="importJson">Importer JSON</button>
+            <button id="exportAllBtn" class="btn btn-secondary" data-i18n="exportAll">Eksporter alle</button>
+            <button id="helpBtn" class="btn btn-secondary" data-i18n="help">Hjelp</button>
             <input type="file" id="jsonFileInput" accept=".json" style="display: none;">
         </div>
 
         <section class="analyses-section">
-            <h2>MINE ANALYSER</h2>
+            <h2 data-i18n="myAnalyses">MINE ANALYSER</h2>
             <div id="analysesList" class="analyses-list">
                 <!-- Analyser vil bli lagt til her dynamisk -->
             </div>
             <div id="emptyState" class="empty-state">
-                <p>Ingen analyser ennå. Klikk "Ny analyse" for å komme i gang.</p>
-                <button id="loadExampleBtn" class="btn btn-primary" style="margin-top: 20px;">📚 Last inn eksempelanalyse</button>
-                <p style="margin-top: 10px; font-size: 0.9em; color: #666;">Se hvordan en komplett ROS-analyse ser ut</p>
+                <p data-i18n="noAnalyses">Ingen analyser ennå. Klikk "Ny analyse" for å komme i gang.</p>
+                <button id="loadExampleBtn" class="btn btn-primary" style="margin-top: 20px;" data-i18n="loadExample">Last inn eksempelanalyse</button>
+                <p style="margin-top: 10px; font-size: 0.9em; color: #666;" data-i18n="exampleDescription">Se hvordan en komplett ROS-analyse ser ut</p>
             </div>
         </section>
     </div>
 
+    <script src="js/i18n.js"></script>
     <script src="js/app.js"></script>
     <script>
         // Initialiser startskjerm
@@ -100,9 +112,9 @@
             const meta = document.createElement('div');
             meta.className = 'analysis-meta';
             const created = document.createElement('span');
-            created.textContent = `Opprettet: ${formatDate(analysis.createdDate)}`;
+            created.textContent = `${t('created')}: ${formatDate(analysis.createdDate)}`;
             const modified = document.createElement('span');
-            modified.textContent = `Sist endret: ${formatDate(analysis.lastModified)}`;
+            modified.textContent = `${t('lastModified')}: ${formatDate(analysis.lastModified)}`;
             meta.appendChild(created);
             meta.appendChild(modified);
             card.appendChild(meta);
@@ -110,11 +122,11 @@
             const info = document.createElement('div');
             info.className = 'analysis-info';
             const riskCount = document.createElement('span');
-            riskCount.textContent = `${analysis.risikoer.length} risikoer`;
+            riskCount.textContent = `${analysis.risks.length} ${t('risks')}`;
             info.appendChild(riskCount);
-            if (analysis.metadata.tjeneste) {
+            if (analysis.metadata.service) {
                 const service = document.createElement('span');
-                service.textContent = `Tjeneste: ${analysis.metadata.tjeneste}`;
+                service.textContent = `${t('service')}: ${analysis.metadata.service}`;
                 info.appendChild(service);
             }
             card.appendChild(info);
@@ -124,19 +136,19 @@
 
             const openBtn = document.createElement('button');
             openBtn.className = 'btn btn-primary';
-            openBtn.textContent = 'Åpne';
+            openBtn.textContent = t('open');
             openBtn.onclick = () => openAnalysis(analysis.id);
             actions.appendChild(openBtn);
 
             const exportBtn = document.createElement('button');
             exportBtn.className = 'btn btn-secondary';
-            exportBtn.textContent = 'Eksporter JSON';
+            exportBtn.textContent = t('exportJsonFull');
             exportBtn.onclick = () => exportAnalysis(analysis.id);
             actions.appendChild(exportBtn);
 
             const deleteBtn = document.createElement('button');
             deleteBtn.className = 'btn btn-danger';
-            deleteBtn.textContent = 'Slett';
+            deleteBtn.textContent = t('delete');
             deleteBtn.onclick = () => deleteAnalysis(analysis.id);
             actions.appendChild(deleteBtn);
 
@@ -150,18 +162,18 @@
             const now = new Date().toISOString();
             const newAnalysis = {
                 id: id,
-                name: 'Ny ROS-analyse',
+                name: t('newAnalysisName'),
                 createdDate: now.split('T')[0],
                 lastModified: now,
                 metadata: {
-                    dato: now.split('T')[0],
-                    tjeneste: '',
-                    utfortAv: '',
-                    deltakere: '',
-                    tjenesteeier: '',
-                    beskrivelse: ''
+                    date: now.split('T')[0],
+                    service: '',
+                    performedBy: '',
+                    participants: '',
+                    serviceOwner: '',
+                    description: ''
                 },
-                risikoer: []
+                risks: []
             };
 
             const analyses = getAnalyses();
@@ -183,7 +195,7 @@
             const dataStr = JSON.stringify(analysis, null, 2);
             const dataUri = 'data:application/json;charset=utf-8,'+ encodeURIComponent(dataStr);
 
-            const exportName = `Risky_${analysis.metadata.tjeneste || 'analyse'}_${analysis.createdDate}.json`;
+            const exportName = `Risky_${analysis.metadata.service || 'analyse'}_${analysis.createdDate}.json`;
 
             const linkElement = document.createElement('a');
             linkElement.setAttribute('href', dataUri);
@@ -209,33 +221,33 @@
             let yPos = 35;
             const metadata = analysis.metadata;
 
-            if (metadata.tjeneste) {
-                doc.text(`Tjeneste/system: ${safeText(metadata.tjeneste)}`, 20, yPos);
+            if (metadata.service) {
+                doc.text(`Tjeneste/system: ${safeText(metadata.service)}`, 20, yPos);
                 yPos += 7;
             }
-            if (metadata.dato) {
-                doc.text(`Dato: ${safeText(metadata.dato)}`, 20, yPos);
+            if (metadata.date) {
+                doc.text(`Dato: ${safeText(metadata.date)}`, 20, yPos);
                 yPos += 7;
             }
-            if (metadata.utfortAv) {
-                doc.text(`Utført av: ${safeText(metadata.utfortAv)}`, 20, yPos);
+            if (metadata.performedBy) {
+                doc.text(`Utført av: ${safeText(metadata.performedBy)}`, 20, yPos);
                 yPos += 7;
             }
-            if (metadata.deltakere) {
-                doc.text(`Deltakere: ${safeText(metadata.deltakere)}`, 20, yPos);
+            if (metadata.participants) {
+                doc.text(`Deltakere: ${safeText(metadata.participants)}`, 20, yPos);
                 yPos += 7;
             }
-            if (metadata.tjenesteeier) {
-                doc.text(`Tjenesteeier: ${safeText(metadata.tjenesteeier)}`, 20, yPos);
+            if (metadata.serviceOwner) {
+                doc.text(`Tjenesteeier: ${safeText(metadata.serviceOwner)}`, 20, yPos);
                 yPos += 7;
             }
-            if (metadata.beskrivelse) {
-                const beskrivelse = safeText(metadata.beskrivelse);
-                const splitBeskrivelse = doc.splitTextToSize(beskrivelse, 250);
-                doc.text(`Beskrivelse: ${splitBeskrivelse[0]}`, 20, yPos);
+            if (metadata.description) {
+                const description = safeText(metadata.description);
+                const splitDescription = doc.splitTextToSize(description, 250);
+                doc.text(`Beskrivelse: ${splitDescription[0]}`, 20, yPos);
                 yPos += 7;
-                for (let i = 1; i < splitBeskrivelse.length; i++) {
-                    doc.text(splitBeskrivelse[i], 20, yPos);
+                for (let i = 1; i < splitDescription.length; i++) {
+                    doc.text(splitDescription[i], 20, yPos);
                     yPos += 7;
                 }
             }
@@ -243,19 +255,19 @@
             yPos += 5;
 
             // Risikotabell
-            const tableData = analysis.risikoer.map((risk, index) => [
+            const tableData = analysis.risks.map((risk, index) => [
                 (index + 1).toString(),
-                safeText(risk.risikoelement),
-                safeText(risk.saarbarhet),
-                safeText(risk.eksisterendeBeskyttelse),
-                safeText(risk.eksisterendeKontroll),
+                safeText(risk.riskElement),
+                safeText(risk.vulnerability),
+                safeText(risk.existingProtection),
+                safeText(risk.existingControl),
                 safeText(risk.K),
                 safeText(risk.I),
                 safeText(risk.T),
-                safeText(risk.konsekvens),
-                safeText(risk.sannsynlighet),
-                safeText(risk.risikonivaa),
-                safeText(risk.foreslaatteTiltak)
+                safeText(risk.consequence),
+                safeText(risk.probability),
+                safeText(risk.riskLevel),
+                safeText(risk.proposedMeasures)
             ]);
 
             doc.autoTable({
@@ -284,8 +296,8 @@
 
             // Kommentarer
             try {
-                const risksWithComments = analysis.risikoer.filter(r =>
-                    r.kommentarer && r.kommentarer.some(c => !c.resolved)
+                const risksWithComments = analysis.risks.filter(r =>
+                    r.comments && r.comments.some(c => !c.resolved)
                 );
 
                 if (risksWithComments.length > 0) {
@@ -295,10 +307,10 @@
 
                     let yPosition = 35;
                     risksWithComments.forEach((risk) => {
-                        const visibleComments = risk.kommentarer.filter(c => !c.resolved);
+                        const visibleComments = risk.comments.filter(c => !c.resolved);
                         if (visibleComments.length === 0) return;
 
-                        const riskIndex = analysis.risikoer.indexOf(risk) + 1;
+                        const riskIndex = analysis.risks.indexOf(risk) + 1;
 
                         if (yPosition > 180) {
                             doc.addPage();
@@ -307,7 +319,7 @@
 
                         doc.setFontSize(12);
                         doc.setFont(undefined, 'bold');
-                        doc.text(`Risiko ${riskIndex}: ${safeText(risk.risikoelement)}`, 20, yPosition);
+                        doc.text(`Risiko ${riskIndex}: ${safeText(risk.riskElement)}`, 20, yPosition);
                         yPosition += 7;
 
                         doc.setFont(undefined, 'normal');
@@ -366,12 +378,12 @@
                 ['Risky - Risikoanalyse'],
                 [''],
                 ['Informasjon', 'Verdi'],
-                ['Tjeneste/system', safeText(analysis.metadata.tjeneste)],
-                ['Dato', safeText(analysis.metadata.dato)],
-                ['Utført av', safeText(analysis.metadata.utfortAv)],
-                ['Deltakere', safeText(analysis.metadata.deltakere)],
-                ['Tjenesteeier', safeText(analysis.metadata.tjenesteeier)],
-                ['Beskrivelse', safeText(analysis.metadata.beskrivelse)],
+                ['Tjeneste/system', safeText(analysis.metadata.service)],
+                ['Dato', safeText(analysis.metadata.date)],
+                ['Utført av', safeText(analysis.metadata.performedBy)],
+                ['Deltakere', safeText(analysis.metadata.participants)],
+                ['Tjenesteeier', safeText(analysis.metadata.serviceOwner)],
+                ['Beskrivelse', safeText(analysis.metadata.description)],
                 [''],
                 ['Opprettet', safeText(analysis.createdDate)],
                 ['Sist endret', safeText(analysis.lastModified)]
@@ -389,20 +401,20 @@
                  'K', 'I', 'T', 'K*', 'S*', 'RN*', 'Foreslåtte tiltak']
             ];
 
-            analysis.risikoer.forEach((risk, index) => {
+            analysis.risks.forEach((risk, index) => {
                 risksData.push([
                     index + 1,
-                    safeText(risk.risikoelement),
-                    safeText(risk.saarbarhet),
-                    safeText(risk.eksisterendeBeskyttelse),
-                    safeText(risk.eksisterendeKontroll),
+                    safeText(risk.riskElement),
+                    safeText(risk.vulnerability),
+                    safeText(risk.existingProtection),
+                    safeText(risk.existingControl),
                     safeText(risk.K),
                     safeText(risk.I),
                     safeText(risk.T),
-                    safeText(risk.konsekvens),
-                    safeText(risk.sannsynlighet),
-                    safeText(risk.risikonivaa),
-                    safeText(risk.foreslaatteTiltak)
+                    safeText(risk.consequence),
+                    safeText(risk.probability),
+                    safeText(risk.riskLevel),
+                    safeText(risk.proposedMeasures)
                 ]);
             });
 
@@ -424,7 +436,7 @@
             XLSX.utils.book_append_sheet(wb, wsRisks, 'Risikoer');
 
             // Kommentarer-ark
-            if (analysis.risikoer && analysis.risikoer.some(r => r.kommentarer && r.kommentarer.length > 0)) {
+            if (analysis.risks && analysis.risks.some(r => r.comments && r.comments.length > 0)) {
                 try {
                     const commentsData = [
                         ['Tiltak og kommentarer'],
@@ -434,9 +446,9 @@
 
                     let hasAnyVisibleComments = false;
 
-                    analysis.risikoer.forEach((risk, index) => {
-                        if (risk.kommentarer && risk.kommentarer.length > 0) {
-                            const visibleComments = risk.kommentarer.filter(c => !c.resolved);
+                    analysis.risks.forEach((risk, index) => {
+                        if (risk.comments && risk.comments.length > 0) {
+                            const visibleComments = risk.comments.filter(c => !c.resolved);
                             if (visibleComments.length > 0) {
                                 hasAnyVisibleComments = true;
                                 visibleComments.forEach(comment => {
@@ -444,7 +456,7 @@
                                     const commentText = `[${timestamp}] ${safeText(comment.text)}`;
                                     commentsData.push([
                                         index + 1,
-                                        safeText(risk.risikoelement),
+                                        safeText(risk.riskElement),
                                         commentText
                                     ]);
                                 });
@@ -488,7 +500,7 @@
 
                 for (let i = 0; i < analyses.length; i++) {
                     const analysis = analyses[i];
-                    const folderName = `${i + 1}_${sanitizeFolderName(analysis.metadata.tjeneste || analysis.name || 'analyse')}`;
+                    const folderName = `${i + 1}_${sanitizeFolderName(analysis.metadata.service || analysis.name || 'analyse')}`;
                     const folder = zip.folder(folderName);
 
                     // Generer filer for denne analysen
@@ -496,8 +508,8 @@
                     const excelBlob = generateExcelForAnalysis(analysis);
                     const jsonBlob = new Blob([JSON.stringify(analysis, null, 2)], { type: 'application/json' });
 
-                    const baseName = sanitizeFileName(analysis.metadata.tjeneste || 'analyse');
-                    const dato = analysis.createdDate || 'ukjent';
+                    const baseName = sanitizeFileName(analysis.metadata.service || 'analyse');
+                    const date = analysis.createdDate || 'ukjent';
 
                     folder.file(`Risky_${baseName}_${dato}.pdf`, pdfBlob);
                     folder.file(`Risky_${baseName}_${dato}.xlsx`, excelBlob);
@@ -623,7 +635,7 @@
                 saveAnalyses(analyses);
                 loadAnalysesList();
 
-                alert('✓ Eksempelanalyse lastet inn!\n\n"ROS-analyse - Nettbank for bedriftskunder" er nå tilgjengelig.\n\nDenne analysen demonstrerer alle funksjoner i Risky:\n• 12 risikoer med varierende nivå\n• Kommentarer og tiltak\n• Tilleggsinformasjon\n• Akseptansenivå satt til 12');
+                alert('"ROS-analyse - Nettbank for bedriftskunder" er nå tilgjengelig.\n\nDenne analysen demonstrerer alle funksjoner i Risky:\n• 12 risikoer med varierende nivå\n• Kommentarer og tiltak\n• Tilleggsinformasjon\n• Akseptansenivå satt til 12');
             } catch (err) {
                 alert('Feil ved lasting av eksempelanalyse: ' + err.message);
                 console.error(err);
@@ -635,14 +647,7 @@
                    analysis.id &&
                    analysis.name &&
                    analysis.metadata &&
-                   Array.isArray(analysis.risikoer);
-        }
-
-        function formatDate(dateStr) {
-            // Returner YYYY-MM-DD format direkte
-            if (!dateStr) return '';
-            // Hvis dateStr er ISO string, ta kun dato-delen
-            return dateStr.split('T')[0];
+                   (Array.isArray(analysis.risks) || Array.isArray(analysis.risks));
         }
     </script>
 </body>

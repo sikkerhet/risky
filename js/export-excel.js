@@ -42,12 +42,12 @@ function generateExcelContent() {
     // Add metadata
     metadataData.push(
         ['Analysenavn:', safeText(currentAnalysis.name)],
-        ['Dato:', safeText(currentAnalysis.metadata.dato)],
-        ['Tjeneste/system:', safeText(currentAnalysis.metadata.tjeneste)],
-        ['Utført av:', safeText(currentAnalysis.metadata.utfortAv)],
-        ['Deltakere:', safeText(currentAnalysis.metadata.deltakere)],
-        ['Tjenesteeier/systemeier:', safeText(currentAnalysis.metadata.tjenesteeier)],
-        ['Beskrivelse:', safeText(currentAnalysis.metadata.beskrivelse)],
+        ['Dato:', safeText(currentAnalysis.metadata.date)],
+        ['Tjeneste/system:', safeText(currentAnalysis.metadata.service)],
+        ['Utført av:', safeText(currentAnalysis.metadata.performedBy)],
+        ['Deltakere:', safeText(currentAnalysis.metadata.participants)],
+        ['Tjenesteeier/systemeier:', safeText(currentAnalysis.metadata.serviceOwner)],
+        ['Beskrivelse:', safeText(currentAnalysis.metadata.description)],
         [''],
         ['Opprettet:', safeText(currentAnalysis.createdDate)],
         ['Sist endret:', formatNorwegianDate(currentAnalysis.lastModified)]
@@ -82,7 +82,7 @@ function generateExcelContent() {
     XLSX.utils.book_append_sheet(wb, wsMetadata, 'Metadata');
 
     // Ark 2: Statistikk (ny)
-    const risks = currentAnalysis.risikoer || [];
+    const risks = currentAnalysis.risks || [];
     const total = risks.length;
 
     // Kategoriser risikoer
@@ -90,7 +90,7 @@ function generateExcelContent() {
     let sumRiskLevel = 0;
 
     risks.forEach(risk => {
-        const rn = risk.risikonivaa;
+        const rn = risk.riskLevel;
         sumRiskLevel += rn;
 
         if (rn >= 1 && rn <= 6) green++;
@@ -162,19 +162,19 @@ function generateExcelContent() {
         'Foreslåtte tiltak'
     ];
 
-    const risikoerData = currentAnalysis.risikoer.map(r => [
-        r.nr || 0,
-        safeText(r.risikoelement),
-        safeText(r.saarbarhet),
-        safeText(r.eksisterendeBeskyttelse),
-        safeText(r.eksisterendeKontroll),
+    const risikoerData = currentAnalysis.risks.map(r => [
+        r.number || 0,
+        safeText(r.riskElement),
+        safeText(r.vulnerability),
+        safeText(r.existingProtection),
+        safeText(r.existingControl),
         r.K || 0,
         r.I || 0,
         r.T || 0,
-        r.konsekvens || 0,
-        r.sannsynlighet || 0,
-        r.risikonivaa || 0,
-        safeText(r.foreslaatteTiltak)
+        r.consequence || 0,
+        r.probability || 0,
+        r.riskLevel || 0,
+        safeText(r.proposedMeasures)
     ]);
 
     const wsRisikoer = XLSX.utils.aoa_to_sheet([risikoerHeaders, ...risikoerData]);
@@ -246,7 +246,7 @@ function generateExcelContent() {
     XLSX.utils.book_append_sheet(wb, wsRisikoer, 'Risikoer');
 
     // Ark 4: KIT-analyse
-    const kit = calculateKIT(currentAnalysis.risikoer);
+    const kit = calculateKIT(currentAnalysis.risks);
     const kitData = [
         ['KIT-ANALYSE'],
         ['Konfidensialitet, Integritet, Tilgjengelighet'],
@@ -318,9 +318,9 @@ function generateExcelContent() {
     for (let k = 5; k >= 1; k--) {
         const row = [k.toString()];
         for (let s = 1; s <= 5; s++) {
-            const risksInCell = currentAnalysis.risikoer
-                .filter(r => r.konsekvens === k && r.sannsynlighet === s)
-                .map(r => r.nr)
+            const risksInCell = currentAnalysis.risks
+                .filter(r => r.consequence === k && r.probability === s)
+                .map(r => r.number)
                 .join(', ');
             row.push(risksInCell || '-');
         }
@@ -440,7 +440,7 @@ function generateExcelContent() {
     }
 
     // Ark 7: Tiltak og kommentarer (alltid inkluder alle i eksport)
-    const risksWithComments = currentAnalysis.risikoer.filter(r => r.comments && r.comments.length > 0);
+    const risksWithComments = currentAnalysis.risks.filter(r => r.comments && r.comments.length > 0);
 
     if (risksWithComments.length > 0) {
         try {
@@ -466,7 +466,7 @@ function generateExcelContent() {
                     hasAnyVisibleComments = true;
 
                     if (!riskTitleAdded) {
-                        const riskTitle = `#${risk.nr || 0} - ${safeText(risk.risikoelement)}`;
+                        const riskTitle = `#${risk.number || 0} - ${safeText(risk.riskElement)}`;
                         commentsData.push([riskTitle]);
 
                         // Mark this row for bold styling
@@ -577,8 +577,8 @@ function generateExcelContent() {
     }
 
     // Lagre fil
-    const tjeneste = safeText(currentAnalysis.metadata.tjeneste) || 'analyse';
-    const dato = safeText(currentAnalysis.createdDate) || 'ukjent';
-    const filename = `Risky_${tjeneste}_${dato}.xlsx`;
+    const serviceName = safeText(currentAnalysis.metadata.service) || 'analyse';
+    const date = safeText(currentAnalysis.createdDate) || 'ukjent';
+    const filename = `Risky_${serviceName}_${date}.xlsx`;
     XLSX.writeFile(wb, filename);
 }

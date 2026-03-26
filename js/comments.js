@@ -1,4 +1,4 @@
-// Kommentar-håndtering
+// Comment management
 
 let currentRiskIdForComment = null;
 let currentEditingCommentId = null;
@@ -61,7 +61,7 @@ function addLinkField() {
 
     const titleInput = document.createElement('input');
     titleInput.type = 'text';
-    titleInput.placeholder = 'Beskrivelse (valgfritt)';
+    titleInput.placeholder = t('linkDescriptionOptional');
     titleInput.className = 'link-title';
 
     const removeBtn = document.createElement('button');
@@ -85,7 +85,7 @@ function saveComment() {
     const text = document.getElementById('commentText').value.trim();
 
     if (!text) {
-        alert('Kommentar kan ikke være tom');
+        alert(t('commentCannotBeEmpty'));
         return;
     }
 
@@ -100,7 +100,7 @@ function saveComment() {
         }
     });
 
-    const risk = currentAnalysis.risikoer.find(r => r.id === currentRiskIdForComment);
+    const risk = currentAnalysis.risks.find(r => r.id === currentRiskIdForComment);
     if (!risk) return;
 
     // Initialiser comments array hvis den ikke finnes
@@ -121,7 +121,7 @@ function saveComment() {
     risk.comments.push(comment);
 
     // Oppdater analyse
-    updateAnalysis(currentAnalysisId, { risikoer: currentAnalysis.risikoer });
+    updateAnalysis(currentAnalysisId, { risks: currentAnalysis.risks });
 
     // Re-render
     renderRisksTable();
@@ -140,10 +140,10 @@ function renderExistingComments(riskId) {
     const container = document.getElementById('existingCommentsContainer');
     container.textContent = '';
 
-    const risk = currentAnalysis.risikoer.find(r => r.id === riskId);
+    const risk = currentAnalysis.risks.find(r => r.id === riskId);
     if (!risk || !risk.comments || risk.comments.length === 0) {
         const empty = document.createElement('p');
-        empty.textContent = 'Ingen kommentarer lagt til ennå.';
+        empty.textContent = t('existingCommentsEmpty');
         empty.style.color = '#999';
         empty.style.fontStyle = 'italic';
         container.appendChild(empty);
@@ -175,10 +175,10 @@ function createCommentItem(comment, riskId) {
     const badge = document.createElement('span');
     badge.className = `comment-type-badge ${comment.type}`;
     const typeLabels = {
-        'tiltak': 'Tiltak',
-        'kommentar': 'Kommentar',
-        'oppfolging': 'Oppfølging',
-        'intern': 'Intern kommentar'
+        'tiltak': t('action'),
+        'kommentar': t('comment'),
+        'oppfolging': t('followUp'),
+        'intern': t('internalComment')
     };
     badge.textContent = typeLabels[comment.type] || comment.type;
     leftSection.appendChild(badge);
@@ -187,7 +187,7 @@ function createCommentItem(comment, riskId) {
     if (comment.visible === false) {
         const hiddenBadge = document.createElement('span');
         hiddenBadge.className = 'comment-hidden-badge';
-        hiddenBadge.textContent = '🚫 Skjult i eksport';
+        hiddenBadge.textContent = t('hiddenInExport');
         leftSection.appendChild(hiddenBadge);
     }
 
@@ -198,14 +198,14 @@ function createCommentItem(comment, riskId) {
 
     const toggleBtn = document.createElement('button');
     toggleBtn.className = 'btn-toggle-comment';
-    toggleBtn.textContent = comment.visible === false ? '👁️ Vis' : '🚫 Skjul';
-    toggleBtn.title = comment.visible === false ? 'Vis i eksport' : 'Skjul i eksport';
+    toggleBtn.textContent = comment.visible === false ? t('show') : t('hide');
+    toggleBtn.title = comment.visible === false ? t('showInExport') : t('hideInExport');
     toggleBtn.onclick = () => toggleCommentVisibility(riskId, comment.id);
     buttonSection.appendChild(toggleBtn);
 
     const deleteBtn = document.createElement('button');
     deleteBtn.className = 'btn-delete-comment';
-    deleteBtn.textContent = 'Slett';
+    deleteBtn.textContent = t('deleteLabel');
     deleteBtn.onclick = () => deleteComment(riskId, comment.id);
     buttonSection.appendChild(deleteBtn);
 
@@ -240,7 +240,7 @@ function createCommentItem(comment, riskId) {
 
 // Toggle synlighet på enkelt-kommentar
 function toggleCommentVisibility(riskId, commentId) {
-    const risk = currentAnalysis.risikoer.find(r => r.id === riskId);
+    const risk = currentAnalysis.risks.find(r => r.id === riskId);
     if (!risk || !risk.comments) return;
 
     const comment = risk.comments.find(c => c.id === commentId);
@@ -249,7 +249,7 @@ function toggleCommentVisibility(riskId, commentId) {
     // Toggle visible flag (default til true hvis ikke satt)
     comment.visible = comment.visible === false ? true : false;
 
-    updateAnalysis(currentAnalysisId, { risikoer: currentAnalysis.risikoer });
+    updateAnalysis(currentAnalysisId, { risks: currentAnalysis.risks });
 
     renderRisksTable();
     renderComments();
@@ -262,14 +262,14 @@ function toggleCommentVisibility(riskId, commentId) {
 
 // Slett kommentar
 function deleteComment(riskId, commentId) {
-    if (!confirm('Er du sikker på at du vil slette denne kommentaren?')) return;
+    if (!confirm(t('deleteCommentConfirm'))) return;
 
-    const risk = currentAnalysis.risikoer.find(r => r.id === riskId);
+    const risk = currentAnalysis.risks.find(r => r.id === riskId);
     if (!risk || !risk.comments) return;
 
     risk.comments = risk.comments.filter(c => c.id !== commentId);
 
-    updateAnalysis(currentAnalysisId, { risikoer: currentAnalysis.risikoer });
+    updateAnalysis(currentAnalysisId, { risks: currentAnalysis.risks });
 
     renderRisksTable();
     renderComments();
@@ -289,13 +289,13 @@ function renderComments() {
 
     container.textContent = '';
 
-    // Finn alle risikoer med kommentarer
-    const risksWithComments = currentAnalysis.risikoer.filter(r => r.comments && r.comments.length > 0);
+    // Find all risks with comments
+    const risksWithComments = currentAnalysis.risks.filter(r => r.comments && r.comments.length > 0);
 
     if (risksWithComments.length === 0) {
         const empty = document.createElement('div');
         empty.className = 'no-comments';
-        empty.textContent = 'Ingen tiltak eller kommentarer lagt til ennå.';
+        empty.textContent = t('noCommentsYet');
         container.appendChild(empty);
         return;
     }
@@ -308,7 +308,7 @@ function renderComments() {
 
         const title = document.createElement('div');
         title.className = 'comments-risk-title';
-        title.textContent = `#${risk.nr} - ${risk.risikoelement}`;
+        title.textContent = `#${risk.number} - ${risk.riskElement}`;
 
         let sectionHasComments = false;
 
@@ -340,7 +340,7 @@ function renderComments() {
     if (!hasVisibleComments) {
         const empty = document.createElement('div');
         empty.className = 'no-comments';
-        empty.textContent = 'Ingen synlige tiltak eller kommentarer.';
+        empty.textContent = t('noVisibleComments');
         container.appendChild(empty);
     }
 }
@@ -351,29 +351,29 @@ function toggleCommentType(type) {
         'tiltak': {
             state: () => showTiltak = !showTiltak,
             btnId: 'toggleTiltakBtn',
-            activeText: 'Skjul tiltak',
-            inactiveText: 'Vis tiltak',
+            activeText: t('hideActions'),
+            inactiveText: t('showActions'),
             getState: () => showTiltak
         },
         'kommentar': {
             state: () => showKommentar = !showKommentar,
             btnId: 'toggleKommentarBtn',
-            activeText: 'Skjul kommentarer',
-            inactiveText: 'Vis kommentarer',
+            activeText: t('hideComments'),
+            inactiveText: t('showComments'),
             getState: () => showKommentar
         },
         'oppfolging': {
             state: () => showOppfolging = !showOppfolging,
             btnId: 'toggleOppfolgingBtn',
-            activeText: 'Skjul oppfølging',
-            inactiveText: 'Vis oppfølging',
+            activeText: t('hideFollowUp'),
+            inactiveText: t('showFollowUp'),
             getState: () => showOppfolging
         },
         'intern': {
             state: () => showInternKommentar = !showInternKommentar,
             btnId: 'toggleInternBtn',
-            activeText: 'Skjul intern',
-            inactiveText: 'Vis intern',
+            activeText: t('hideInternal'),
+            inactiveText: t('showInternal'),
             getState: () => showInternKommentar
         }
     };
@@ -407,7 +407,22 @@ function isCommentTypeVisible(type) {
 
 // Tell kommentarer for en risiko
 function getCommentCount(riskId) {
-    const risk = currentAnalysis.risikoer.find(r => r.id === riskId);
+    const risk = currentAnalysis.risks.find(r => r.id === riskId);
     if (!risk || !risk.comments) return 0;
     return risk.comments.length;
+}
+
+function updateCommentToggleLabels() {
+    const states = [
+        { id: 'toggleTiltakBtn', visible: showTiltak, active: t('hideActions'), inactive: t('showActions') },
+        { id: 'toggleKommentarBtn', visible: showKommentar, active: t('hideComments'), inactive: t('showComments') },
+        { id: 'toggleOppfolgingBtn', visible: showOppfolging, active: t('hideFollowUp'), inactive: t('showFollowUp') },
+        { id: 'toggleInternBtn', visible: showInternKommentar, active: t('hideInternal'), inactive: t('showInternal') }
+    ];
+
+    states.forEach(({ id, visible, active, inactive }) => {
+        const button = document.getElementById(id);
+        if (!button) return;
+        button.textContent = visible ? active : inactive;
+    });
 }

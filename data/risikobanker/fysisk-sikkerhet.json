@@ -1,371 +1,803 @@
 {
   "id": "fysisk-sikkerhet",
-  "navn": "Fysisk sikkerhet",
-  "beskrivelse": "Risikoer knyttet til fysisk sikring av lokaler, datasentre, utstyr og personell",
+  "navn": {
+    "no": "Fysisk sikkerhet",
+    "en": "Physical Security"
+  },
+  "beskrivelse": {
+    "no": "Risikoer knyttet til fysisk sikring av lokaler, datasentre, utstyr og personell",
+    "en": "Risks related to physical protection of facilities, data centers, equipment, and personnel"
+  },
   "kategorier": [
     {
       "id": "adgangskontroll",
-      "navn": "Fysisk adgangskontroll",
+      "navn": {
+        "no": "Fysisk adgangskontroll",
+        "en": "Physical Access Control"
+      },
       "risikoer": [
         {
           "id": "physical-001",
-          "risikoelement": "Uautorisert fysisk tilgang til datasenter/serverrom",
-          "saarbarhet": "Svak adgangskontroll, deling av koder, tailgating",
-          "eksisterendeBeskyttelse": "Kortleser ved inngang",
-          "eksisterendeKontroll": "Loggføring av adgang",
+          "risikoelement": {
+            "no": "Uautorisert fysisk tilgang til datasenter/serverrom",
+            "en": "Unauthorized physical access to the data center or server room"
+          },
+          "saarbarhet": {
+            "no": "Svak adgangskontroll, deling av koder, tailgating",
+            "en": "Weak access control, shared codes, and tailgating"
+          },
+          "eksisterendeBeskyttelse": {
+            "no": "Kortleser ved inngang",
+            "en": "Card readers at entrances"
+          },
+          "eksisterendeKontroll": {
+            "no": "Loggføring av adgang",
+            "en": "Access logging"
+          },
           "K": 5,
           "I": 5,
           "T": 5,
           "sannsynlighet": 3,
-          "foreslaatteTiltak": "Biometric access, mantrap/airlock, security guards, CCTV, tailgate detection"
+          "foreslaatteTiltak": {
+            "no": "Biometrisk tilgang, mantrap/airlock, vakthold, CCTV og tailgate-deteksjon",
+            "en": "Biometric access, mantrap/airlock, security guards, CCTV, tailgate detection"
+          }
         },
         {
           "id": "physical-002",
-          "risikoelement": "Tapte eller stjålne adgangskort ikke deaktivert",
-          "saarbarhet": "Langsom rapportering, manglende prosedyre for kort-deaktivering",
-          "eksisterendeBeskyttelse": "Rapporteringsprosedyre",
-          "eksisterendeKontroll": "Månedlig review av aktive kort",
+          "risikoelement": {
+            "no": "Tapte eller stjålne adgangskort ikke deaktivert",
+            "en": "Lost or stolen access cards are not deactivated"
+          },
+          "saarbarhet": {
+            "no": "Langsom rapportering, manglende prosedyre for kort-deaktivering",
+            "en": "Slow reporting and no clear procedure for card deactivation"
+          },
+          "eksisterendeBeskyttelse": {
+            "no": "Rapporteringsprosedyre",
+            "en": "Reporting procedure"
+          },
+          "eksisterendeKontroll": {
+            "no": "Månedlig gjennomgang av aktive kort",
+            "en": "Monthly review of active cards"
+          },
           "K": 5,
           "I": 4,
           "T": 3,
           "sannsynlighet": 4,
-          "foreslaatteTiltak": "Instant card deactivation, 24/7 helpdesk, automatic expiry, multi-factor physical access"
+          "foreslaatteTiltak": {
+            "no": "Instant card deactivation, 24/7 helpdesk, automatic expiry, multi-factor physical tilgang",
+            "en": "Instant card deactivation, 24/7 helpdesk, automatic expiry, multi-factor physical access"
+          }
         },
         {
           "id": "physical-003",
-          "risikoelement": "Besøkende får ukontrollert tilgang til sensitive områder",
-          "saarbarhet": "Manglende escort policy, besøkskort med for mye tilgang",
-          "eksisterendeBeskyttelse": "Besøksregistrering",
-          "eksisterendeKontroll": "Resepsjonsloggbok",
+          "risikoelement": {
+            "no": "Besøkende får ukontrollert tilgang til sensitive områder",
+            "en": "Visitors gain uncontrolled access to sensitive areas"
+          },
+          "saarbarhet": {
+            "no": "Manglende escort policy, besøkskort med for mye tilgang",
+            "en": "No escort policy and visitor badges grant too much access"
+          },
+          "eksisterendeBeskyttelse": {
+            "no": "Besøksregistrering",
+            "en": "Visitor registration"
+          },
+          "eksisterendeKontroll": {
+            "no": "Resepsjonsloggbok",
+            "en": "Reception logbook"
+          },
           "K": 4,
           "I": 4,
           "T": 3,
           "sannsynlighet": 4,
-          "foreslaatteTiltak": "Mandatory escort, visitor badges (time-limited), dedicated visitor areas, sign-in/out"
+          "foreslaatteTiltak": {
+            "no": "Mandatory escort, visitor badges (time-limited), dedicated visitor areas, sign-in/out",
+            "en": "Mandatory escort, visitor badges (time-limited), dedicated visitor areas, sign-in/out"
+          }
         },
         {
           "id": "physical-004",
-          "risikoelement": "Adgang utenom arbeidstid ikke logget eller overvåket",
-          "saarbarhet": "Manglende monitoring etter stengetid, ingen alarmer",
-          "eksisterendeBeskyttelse": "Adgangskortlogging",
-          "eksisterendeKontroll": "Ukentlig logggjennomgang",
+          "risikoelement": {
+            "no": "Adgang utenom arbeidstid ikke logget eller overvåket",
+            "en": "Access outside working hours is not logged or monitored"
+          },
+          "saarbarhet": {
+            "no": "Manglende overvåking etter stengetid, ingen alarmer",
+            "en": "No monitoring after closing hours and no alarms"
+          },
+          "eksisterendeBeskyttelse": {
+            "no": "Adgangskortlogging",
+            "en": "Access card logging"
+          },
+          "eksisterendeKontroll": {
+            "no": "Ukentlig logggjennomgang",
+            "en": "Weekly log review"
+          },
           "K": 4,
           "I": 4,
           "T": 3,
           "sannsynlighet": 3,
-          "foreslaatteTiltak": "Real-time alerts for after-hours access, CCTV integration, SOC monitoring"
+          "foreslaatteTiltak": {
+            "no": "Real-time alerts for after-hours tilgang, CCTV integration, SOC overvåking",
+            "en": "Real-time alerts for after-hours access, CCTV integration, SOC monitoring"
+          }
         },
         {
           "id": "physical-005",
-          "risikoelement": "Nødflukt-dører brukes som ordinær inngang (bypasser kontroll)",
-          "saarbarhet": "Alarm-fatigue, propping av branndører, manglende enforcement",
-          "eksisterendeBeskyttelse": "Door alarms",
-          "eksisterendeKontroll": "Periodiske inspeksjoner",
+          "risikoelement": {
+            "no": "Nødflukt-dører brukes som ordinær inngang (bypasser kontroll)",
+            "en": "Emergency exits are used as normal entrances and bypass access control"
+          },
+          "saarbarhet": {
+            "no": "Alarm-fatigue, propping av branndører, manglende enforcement",
+            "en": "Alarm fatigue, fire doors propped open, and weak enforcement"
+          },
+          "eksisterendeBeskyttelse": {
+            "no": "Door alarms",
+            "en": "Door alarms"
+          },
+          "eksisterendeKontroll": {
+            "no": "Periodiske inspeksjoner",
+            "en": "Periodic inspections"
+          },
           "K": 5,
           "I": 4,
           "T": 3,
           "sannsynlighet": 4,
-          "foreslaatteTiltak": "Delayed egress, instant SOC notification, door position sensors, video verification"
+          "foreslaatteTiltak": {
+            "no": "Delayed egress, instant SOC notification, door position sensors, video verification",
+            "en": "Delayed egress, instant SOC notification, door position sensors, video verification"
+          }
         }
       ]
     },
     {
       "id": "utstyrssikring",
-      "navn": "Utstyrssikring",
+      "navn": {
+        "no": "Utstyrssikring",
+        "en": "Equipment Security"
+      },
       "risikoer": [
         {
           "id": "equip-001",
-          "risikoelement": "Tyveri av bærbare enheter (laptops, telefoner, tablets)",
-          "saarbarhet": "Enheter etterlatt usikret, manglende kabellås",
-          "eksisterendeBeskyttelse": "Awareness-training",
-          "eksisterendeKontroll": "Asset tracking",
+          "risikoelement": {
+            "no": "Tyveri av bærbare enheter (laptops, telefoner, tablets)",
+            "en": "Portable devices such as laptops, phones, and tablets are stolen"
+          },
+          "saarbarhet": {
+            "no": "Enheter etterlatt usikret, manglende kabellås",
+            "en": "Devices are left unsecured and cable locks are missing"
+          },
+          "eksisterendeBeskyttelse": {
+            "no": "Awareness-opplæring",
+            "en": "Awareness-training"
+          },
+          "eksisterendeKontroll": {
+            "no": "Asset sporing",
+            "en": "Asset tracking"
+          },
           "K": 5,
           "I": 4,
           "T": 3,
           "sannsynlighet": 4,
-          "foreslaatteTiltak": "Full disk encryption (mandatory), cable locks, clean desk policy, LoJack/device tracking"
+          "foreslaatteTiltak": {
+            "no": "Full disk encryption (mandatory), cable locks, clean desk policy, LoJack/enhet sporing",
+            "en": "Full disk encryption (mandatory), cable locks, clean desk policy, LoJack/device tracking"
+          }
         },
         {
           "id": "equip-002",
-          "risikoelement": "Servere eller nettverksutstyr stjålet fra datasenter",
-          "saarbarhet": "Rackenheter ikke låst eller boltet, manglende alarmer",
-          "eksisterendeBeskyttelse": "Locked server room",
-          "eksisterendeKontroll": "Inventory checks",
+          "risikoelement": {
+            "no": "Servere eller nettverksutstyr stjålet fra datasenter",
+            "en": "Servers or network equipment are stolen from the data center"
+          },
+          "saarbarhet": {
+            "no": "Rackenheter ikke låst eller boltet, manglende alarmer",
+            "en": "Rack units are not locked or bolted down, and alarms are missing"
+          },
+          "eksisterendeBeskyttelse": {
+            "no": "Locked server room",
+            "en": "Locked server room"
+          },
+          "eksisterendeKontroll": {
+            "no": "Inventory checks",
+            "en": "Inventory checks"
+          },
           "K": 5,
           "I": 5,
           "T": 5,
-          "sannsynlighet": 2,
-          "foreslaatteTiltak": "Rack locks, chassis locks, asset tags with alarms, cage/colocation security"
+          "sannsynlighet": 3,
+          "foreslaatteTiltak": {
+            "no": "Rack locks, chassis locks, asset tags with alarms, cage/colocation security",
+            "en": "Rack locks, chassis locks, asset tags with alarms, cage/colocation security"
+          }
         },
         {
           "id": "equip-003",
-          "risikoelement": "USB eller physical devices brukes for data exfiltration",
-          "saarbarhet": "USB-porter åpne, ingen device control",
-          "eksisterendeBeskyttelse": "USB policy",
-          "eksisterendeKontroll": "Manual enforcement",
+          "risikoelement": {
+            "no": "USB eller physical enheter brukes for data exfiltration",
+            "en": "USB devices or other physical media are used for data exfiltration"
+          },
+          "saarbarhet": {
+            "no": "USB-porter åpne, ingen enhet control",
+            "en": "USB ports are open and there is no device control"
+          },
+          "eksisterendeBeskyttelse": {
+            "no": "USB policy",
+            "en": "USB policy"
+          },
+          "eksisterendeKontroll": {
+            "no": "manuell enforcement",
+            "en": "Manual enforcement"
+          },
           "K": 5,
           "I": 4,
           "T": 2,
           "sannsynlighet": 3,
-          "foreslaatteTiltak": "USB port blocking, DLP, approved device whitelist, endpoint protection"
+          "foreslaatteTiltak": {
+            "no": "Blokker USB-porter der det er mulig, bruk DLP, godkjent enhetsliste og moderne endepunktsbeskyttelse",
+            "en": "USB port blocking, DLP, approved device whitelist, endpoint protection"
+          }
         },
         {
           "id": "equip-004",
-          "risikoelement": "Manglende destruksjon av utstyr ved avhending",
-          "saarbarhet": "Harddisker ikke wiped, enheter solgt/donert med data",
-          "eksisterendeBeskyttelse": "IT disposes of equipment",
-          "eksisterendeKontroll": "Manual wipe checklist",
+          "risikoelement": {
+            "no": "Manglende destruksjon av utstyr ved avhending",
+            "en": "Missing secure destruction of equipment during disposal"
+          },
+          "saarbarhet": {
+            "no": "Harddisker ikke wiped, enheter solgt/donert med data",
+            "en": "Harddisker not wiped, devices solgt/donert with data"
+          },
+          "eksisterendeBeskyttelse": {
+            "no": "IT disposes of equipment",
+            "en": "IT disposes of equipment"
+          },
+          "eksisterendeKontroll": {
+            "no": "manuell wipe sjekkliste",
+            "en": "Manual wipe checklist"
+          },
           "K": 5,
           "I": 4,
           "T": 2,
           "sannsynlighet": 3,
-          "foreslaatteTiltak": "Certified data destruction (NIST 800-88), degaussing, physical destruction, chain of custody"
+          "foreslaatteTiltak": {
+            "no": "Certified data destruction (NIST 800-88), degaussing, physical destruction, chain of custody",
+            "en": "Certified data destruction (NIST 800-88), degaussing, physical destruction, chain of custody"
+          }
         }
       ]
     },
     {
       "id": "miljokontroll",
-      "navn": "Miljøkontroll",
+      "navn": {
+        "no": "Miljøkontroll",
+        "en": "Environmental Controls"
+      },
       "risikoer": [
         {
           "id": "env-001",
-          "risikoelement": "Brann i datasenter ødelegger kritisk utstyr",
-          "saarbarhet": "Manglende brannslokkingssystem, brennbare materialer",
-          "eksisterendeBeskyttelse": "Smoke detectors",
-          "eksisterendeKontroll": "Annual fire drill",
+          "risikoelement": {
+            "no": "Brann i datasenter ødelegger kritisk utstyr",
+            "en": "Fire in the data center destroys critical equipment"
+          },
+          "saarbarhet": {
+            "no": "Manglende brannslokkingssystem, brennbare materialer",
+            "en": "Missing brannslokkingssystem, brennbare materialer"
+          },
+          "eksisterendeBeskyttelse": {
+            "no": "Smoke detectors",
+            "en": "Smoke detectors"
+          },
+          "eksisterendeKontroll": {
+            "no": "årlig fire drill",
+            "en": "Annual fire drill"
+          },
           "K": 3,
           "I": 4,
           "T": 5,
           "sannsynlighet": 1,
-          "foreslaatteTiltak": "FM-200/Inergen suppression, early warning detection, redundant sites, fire-resistant construction"
+          "foreslaatteTiltak": {
+            "no": "FM-200/Inergen suppression, early warning detection, redundant sites, fire-resistant construction",
+            "en": "FM-200/Inergen suppression, early warning detection, redundant sites, fire-resistant construction"
+          }
         },
         {
           "id": "env-002",
-          "risikoelement": "Vannlekkasje fra tak/rør ødelegger servere",
-          "saarbarhet": "Rør over racks, flat tak, manglende leak detection",
-          "eksisterendeBeskyttelse": "Waterproof ceiling",
-          "eksisterendeKontroll": "Visual inspections",
+          "risikoelement": {
+            "no": "Vannlekkasje fra tak/rør ødelegger servere",
+            "en": "Water leakage from roofs or pipes damages servers"
+          },
+          "saarbarhet": {
+            "no": "Rør over racks, flat tak, manglende leak detection",
+            "en": "Pipes above racks, flat roofs, and missing leak detection"
+          },
+          "eksisterendeBeskyttelse": {
+            "no": "Waterproof ceiling",
+            "en": "Waterproof ceiling"
+          },
+          "eksisterendeKontroll": {
+            "no": "Visual inspections",
+            "en": "Visual inspections"
+          },
           "K": 3,
           "I": 4,
           "T": 5,
           "sannsynlighet": 2,
-          "foreslaatteTiltak": "Water leak detection sensors, raised floors, no pipes above racks, drainage"
+          "foreslaatteTiltak": {
+            "no": "Water leak detection sensors, raised floors, no pipes above racks, drainage",
+            "en": "Water leak detection sensors, raised floors, no pipes above racks, drainage"
+          }
         },
         {
           "id": "env-003",
-          "risikoelement": "Overoppheting/kjølesvikt fører til shutdown",
-          "saarbarhet": "Enkeltstående AC, ingen redundans i kjøling",
-          "eksisterendeBeskyttelse": "HVAC system",
-          "eksisterendeKontroll": "Temperature monitoring",
+          "risikoelement": {
+            "no": "Overoppheting/kjølesvikt fører til shutdown",
+            "en": "Overheating or cooling failure leads to shutdown"
+          },
+          "saarbarhet": {
+            "no": "Enkeltstående AC, ingen redundans i kjøling",
+            "en": "Single cooling unit and no redundancy in cooling"
+          },
+          "eksisterendeBeskyttelse": {
+            "no": "HVAC system",
+            "en": "HVAC system"
+          },
+          "eksisterendeKontroll": {
+            "no": "Temperature overvåking",
+            "en": "Temperature monitoring"
+          },
           "K": 2,
           "I": 3,
           "T": 5,
           "sannsynlighet": 3,
-          "foreslaatteTiltak": "Redundant HVAC (N+1), hot/cold aisle containment, temp/humidity alarms, emergency cooling"
+          "foreslaatteTiltak": {
+            "no": "Redundant HVAC (N+1), hot/cold aisle containment, temp/humidity alarms, emergency cooling",
+            "en": "Redundant HVAC (N+1), hot/cold aisle containment, temp/humidity alarms, emergency cooling"
+          }
         },
         {
           "id": "env-004",
-          "risikoelement": "Strømbrudd uten tilstrekkelig backup",
-          "saarbarhet": "Enkelt strømforsyning, UPS runtime for kort",
-          "eksisterendeBeskyttelse": "UPS backup",
-          "eksisterendeKontroll": "Monthly UPS tests",
+          "risikoelement": {
+            "no": "Strømbrudd uten tilstrekkelig backup",
+            "en": "power outages without tilstrekkelig backup"
+          },
+          "saarbarhet": {
+            "no": "Enkelt strømforsyning, UPS runtime for kort",
+            "en": "Single power feed and UPS runtime that is too short"
+          },
+          "eksisterendeBeskyttelse": {
+            "no": "UPS backup",
+            "en": "UPS backup"
+          },
+          "eksisterendeKontroll": {
+            "no": "månedlig UPS tests",
+            "en": "Monthly UPS tests"
+          },
           "K": 2,
           "I": 3,
           "T": 5,
           "sannsynlighet": 3,
-          "foreslaatteTiltak": "Redundant power (A+B feeds), generator backup, extended UPS runtime, automatic failover"
+          "foreslaatteTiltak": {
+            "no": "Redundant power (A+B feeds), generator backup, extended UPS runtime, automatic failover",
+            "en": "Redundant power (A+B feeds), generator backup, extended UPS runtime, automatic failover"
+          }
         },
         {
           "id": "env-005",
-          "risikoelement": "Naturkatastrofe (flom, jordskjelv, storm) ødelegger fasiliteter",
-          "saarbarhet": "Singel site, høyrisikoområde",
-          "eksisterendeBeskyttelse": "Insurance",
-          "eksisterendeKontroll": "Disaster recovery plan",
+          "risikoelement": {
+            "no": "Naturkatastrofe (flom, jordskjelv, storm) ødelegger fasiliteter",
+            "en": "Natural disasters such as floods, earthquakes, or storms damage facilities"
+          },
+          "saarbarhet": {
+            "no": "Singel site, høyrisikoområde",
+            "en": "Single site in a high-risk area"
+          },
+          "eksisterendeBeskyttelse": {
+            "no": "Insurance",
+            "en": "Insurance"
+          },
+          "eksisterendeKontroll": {
+            "no": "Disaster gjenoppretting plan",
+            "en": "Disaster recovery plan"
+          },
           "K": 4,
           "I": 5,
           "T": 5,
           "sannsynlighet": 1,
-          "foreslaatteTiltak": "Geographically distributed datacenters, disaster recovery sites, regular DR testing"
+          "foreslaatteTiltak": {
+            "no": "Geographically distributed datacenters, disaster gjenoppretting sites, regular DR testing",
+            "en": "Geographically distributed datacenters, disaster recovery sites, regular DR testing"
+          }
         }
       ]
     },
     {
       "id": "overvaking",
-      "navn": "Overvåkning",
+      "navn": {
+        "no": "Overvåkning",
+        "en": "Monitoring"
+      },
       "risikoer": [
         {
           "id": "surv-001",
-          "risikoelement": "Manglende CCTV-dekning av kritiske områder",
-          "saarbarhet": "Blinde soner, utdaterte kameraer, dårlig oppløsning",
-          "eksisterendeBeskyttelse": "CCTV i inngangsområder",
-          "eksisterendeKontroll": "Quarterly camera checks",
+          "risikoelement": {
+            "no": "Manglende CCTV-dekning av kritiske områder",
+            "en": "Missing CCTV-dekning of critical areas"
+          },
+          "saarbarhet": {
+            "no": "Blinde soner, utdaterte kameraer, dårlig oppløsning",
+            "en": "Blind spots, outdated cameras, and poor resolution"
+          },
+          "eksisterendeBeskyttelse": {
+            "no": "CCTV i inngangsområder",
+            "en": "CCTV in entrance areas"
+          },
+          "eksisterendeKontroll": {
+            "no": "kvartalsvis camera checks",
+            "en": "Quarterly camera checks"
+          },
           "K": 4,
           "I": 4,
           "T": 3,
           "sannsynlighet": 3,
-          "foreslaatteTiltak": "Full coverage CCTV, HD cameras, motion detection, 90-day retention, SOC integration"
+          "foreslaatteTiltak": {
+            "no": "Full coverage CCTV, HD cameras, motion detection, 90-day retention, SOC integration",
+            "en": "Full coverage CCTV, HD cameras, motion detection, 90-day retention, SOC integration"
+          }
         },
         {
           "id": "surv-002",
-          "risikoelement": "CCTV-opptak ikke lagret eller tilgjengelig ved incident",
-          "saarbarhet": "Kort retention, overskrevet data, manglende backup",
-          "eksisterendeBeskyttelse": "30-day retention",
-          "eksisterendeKontroll": "Manual backup on request",
+          "risikoelement": {
+            "no": "CCTV-opptak ikke lagret eller tilgjengelig ved hendelse",
+            "en": "CCTV-opptak not lagret or tilgjengelig during incident"
+          },
+          "saarbarhet": {
+            "no": "Kort retention, overskrevet data, manglende backup",
+            "en": "short retention, overskrevet data, missing backup"
+          },
+          "eksisterendeBeskyttelse": {
+            "no": "30-day retention",
+            "en": "30-day retention"
+          },
+          "eksisterendeKontroll": {
+            "no": "manuell backup on request",
+            "en": "Manual backup on request"
+          },
           "K": 3,
           "I": 5,
           "T": 2,
           "sannsynlighet": 3,
-          "foreslaatteTiltak": "90+ day retention, redundant storage, encrypted backups, tamper-evident"
+          "foreslaatteTiltak": {
+            "no": "90+ day retention, redundant storage, encrypted backups, tamper-evident",
+            "en": "90+ day retention, redundant storage, encrypted backups, tamper-evident"
+          }
         },
         {
           "id": "surv-003",
-          "risikoelement": "Ingen varsling ved sikkerhetshendelser (uautorisert adgang)",
-          "saarbarhet": "Alarmer kun lokalt, ingen SOC-integrasjon",
-          "eksisterendeBeskyttelse": "Local alarms",
-          "eksisterendeKontroll": "Weekly alarm tests",
+          "risikoelement": {
+            "no": "Ingen varsling ved sikkerhetshendelser (uautorisert adgang)",
+            "en": "No alerting during security incidents such as unauthorized physical access"
+          },
+          "saarbarhet": {
+            "no": "Alarmer kun lokalt, ingen SOC-integrasjon",
+            "en": "Alarmer only local, no SOC-integrasjon"
+          },
+          "eksisterendeBeskyttelse": {
+            "no": "Local alarms",
+            "en": "Local alarms"
+          },
+          "eksisterendeKontroll": {
+            "no": "Weekly alarm tests",
+            "en": "Weekly alarm tests"
+          },
           "K": 4,
           "I": 4,
           "T": 4,
           "sannsynlighet": 3,
-          "foreslaatteTiltak": "24/7 SOC monitoring, instant alerts, security guard response, integration with SIEM"
+          "foreslaatteTiltak": {
+            "no": "24/7 SOC-overvåking, umiddelbare varsler, respons fra vekter og integrasjon med SIEM",
+            "en": "24/7 SOC monitoring, instant alerts, security guard response, integration with SIEM"
+          }
         },
         {
           "id": "surv-004",
-          "risikoelement": "CCTV-system selv kompromittert",
-          "saarbarhet": "Default credentials, utdatert firmware, nettverkstilgang",
-          "eksisterendeBeskyttelse": "Isolated VLAN",
-          "eksisterendeKontroll": "Annual security review",
+          "risikoelement": {
+            "no": "CCTV-system selv kompromittert",
+            "en": "CCTV-system selv kompromittert"
+          },
+          "saarbarhet": {
+            "no": "Default credentials, utdatert firmware, nettverkstilgang",
+            "en": "Default credentials, outdated firmware, and network access"
+          },
+          "eksisterendeBeskyttelse": {
+            "no": "Isolated VLAN",
+            "en": "Isolated VLAN"
+          },
+          "eksisterendeKontroll": {
+            "no": "Årlig sikkerhetsgjennomgang",
+            "en": "Annual security review"
+          },
           "K": 4,
           "I": 5,
           "T": 3,
           "sannsynlighet": 2,
-          "foreslaatteTiltak": "Segmented network, strong auth, firmware updates, encrypted streams, VPN access only"
+          "foreslaatteTiltak": {
+            "no": "Segmented nettverk, strong auth, firmware updates, encrypted streams, VPN tilgang only",
+            "en": "Segmented network, strong auth, firmware updates, encrypted streams, VPN access only"
+          }
         }
       ]
     },
     {
       "id": "dokumenthåndtering",
-      "navn": "Dokumenthåndtering",
+      "navn": {
+        "no": "Dokumenthåndtering",
+        "en": "Document Handling"
+      },
       "risikoer": [
         {
           "id": "doc-001",
-          "risikoelement": "Sensitive dokumenter etterlatt på skrivere/printere",
-          "saarbarhet": "Manglende pull-printing, clean desk ikke håndhevet",
-          "eksisterendeBeskyttelse": "Clean desk policy",
-          "eksisterendeKontroll": "Periodic desk audits",
+          "risikoelement": {
+            "no": "Sensitive dokumenter etterlatt på skrivere/printere",
+            "en": "Sensitive documents are left on printers"
+          },
+          "saarbarhet": {
+            "no": "Manglende pull-printing, clean desk ikke håndhevet",
+            "en": "Missing pull printing and a clean desk policy that is not enforced"
+          },
+          "eksisterendeBeskyttelse": {
+            "no": "Clean desk policy",
+            "en": "Clean desk policy"
+          },
+          "eksisterendeKontroll": {
+            "no": "Periodic desk audits",
+            "en": "Periodic desk audits"
+          },
           "K": 4,
           "I": 3,
           "T": 1,
           "sannsynlighet": 5,
-          "foreslaatteTiltak": "Pull printing (PIN/badge), automatic document shredding, clean desk enforcement"
+          "foreslaatteTiltak": {
+            "no": "Pull printing (PIN/badge), automatic document shredding, clean desk enforcement",
+            "en": "Pull printing (PIN/badge), automatic document shredding, clean desk enforcement"
+          }
         },
         {
           "id": "doc-002",
-          "risikoelement": "Utilstrekkelig destruksjon av papirdokumenter",
-          "saarbarhet": "Dokumenter i vanlig søppel, dumpster diving mulig",
-          "eksisterendeBeskyttelse": "Shredding bins",
-          "eksisterendeKontroll": "Quarterly awareness reminders",
+          "risikoelement": {
+            "no": "Papirdokumenter destrueres ikke forsvarlig",
+            "en": "Paper documents are not destroyed securely"
+          },
+          "saarbarhet": {
+            "no": "Dokumenter i vanlig søppel, dumpster diving mulig",
+            "en": "Documents are discarded in regular waste, making dumpster diving possible"
+          },
+          "eksisterendeBeskyttelse": {
+            "no": "Shredding bins",
+            "en": "Shredding bins"
+          },
+          "eksisterendeKontroll": {
+            "no": "kvartalsvis awareness reminders",
+            "en": "Quarterly awareness reminders"
+          },
           "K": 5,
           "I": 3,
           "T": 1,
           "sannsynlighet": 4,
-          "foreslaatteTiltak": "Cross-cut shredders (DIN P-4+), certified destruction service, locked disposal bins"
+          "foreslaatteTiltak": {
+            "no": "Cross-cut shredders (DIN P-4+), certified destruction service, locked disposal bins",
+            "en": "Cross-cut shredders (DIN P-4+), certified destruction service, locked disposal bins"
+          }
         },
         {
           "id": "doc-003",
-          "risikoelement": "Whiteboards med sensitive info synlig gjennom vinduer",
-          "saarbarhet": "Møterom mot gateplan, ingen privacy film",
-          "eksisterendeBeskyttelse": "Awareness about privacy",
-          "eksisterendeKontroll": "Visual checks",
+          "risikoelement": {
+            "no": "Whiteboards med sensitive info synlig gjennom vinduer",
+            "en": "Whiteboards with sensitive information are visible through windows"
+          },
+          "saarbarhet": {
+            "no": "Møterom mot gateplan, ingen personvern film",
+            "en": "Meeting rooms facing street level and no privacy film"
+          },
+          "eksisterendeBeskyttelse": {
+            "no": "Awareness about personvern",
+            "en": "Awareness about privacy"
+          },
+          "eksisterendeKontroll": {
+            "no": "Visual checks",
+            "en": "Visual checks"
+          },
           "K": 4,
           "I": 2,
           "T": 1,
           "sannsynlighet": 4,
-          "foreslaatteTiltak": "Privacy film on windows, interior meeting rooms, clean whiteboard policy, digital whiteboards"
+          "foreslaatteTiltak": {
+            "no": "personvern film on windows, interior meeting rooms, clean whiteboard policy, digital whiteboards",
+            "en": "Privacy film on windows, interior meeting rooms, clean whiteboard policy, digital whiteboards"
+          }
         }
       ]
     },
     {
       "id": "inngangsportaler",
-      "navn": "Resepsjon og inngang",
+      "navn": {
+        "no": "Resepsjon og inngang",
+        "en": "Entry Points"
+      },
       "risikoer": [
         {
           "id": "reception-001",
-          "risikoelement": "Social engineering ved resepsjon gir uautorisert adgang",
-          "saarbarhet": "Resepsjonist ikke trent i security awareness, høflig-hetsfelle",
-          "eksisterendeBeskyttelse": "Visitor registration",
-          "eksisterendeKontroll": "Security awareness training",
+          "risikoelement": {
+            "no": "Social engineering ved resepsjon gir uautorisert adgang",
+            "en": "Social engineering at reception provides unauthorized access"
+          },
+          "saarbarhet": {
+            "no": "Resepsjonist ikke trent i sikkerhetsbevissthet, høflig-hetsfelle",
+            "en": "Reception staff are not trained in security awareness and are vulnerable to politeness-based social engineering"
+          },
+          "eksisterendeBeskyttelse": {
+            "no": "Visitor registration",
+            "en": "Visitor registration"
+          },
+          "eksisterendeKontroll": {
+            "no": "sikkerhetsbevissthet opplæring",
+            "en": "Security awareness training"
+          },
           "K": 5,
           "I": 4,
           "T": 3,
           "sannsynlighet": 3,
-          "foreslaatteTiltak": "Regular social engineering drills, clear escalation procedures, security culture"
+          "foreslaatteTiltak": {
+            "no": "Regelmessige øvelser i sosial manipulering, tydelige eskaleringsprosedyrer og sikkerhetskultur",
+            "en": "Regular social engineering drills, clear escalation procedures, security culture"
+          }
         },
         {
           "id": "reception-002",
-          "risikoelement": "Pakker eller leveranser inneholder skjult utstyr (bugs, devices)",
-          "saarbarhet": "Ukontrollert mottak av pakker, ingen scanning",
-          "eksisterendeBeskyttelse": "Delivery area separate from office",
-          "eksisterendeKontroll": "Visual inspection",
+          "risikoelement": {
+            "no": "Pakker eller leveranser inneholder skjult utstyr (bugs, enheter)",
+            "en": "Packages or deliveries contain hidden equipment such as bugs or other devices"
+          },
+          "saarbarhet": {
+            "no": "Ukontrollert mottak av pakker, ingen scanning",
+            "en": "Packages are received without sufficient control and are not scanned"
+          },
+          "eksisterendeBeskyttelse": {
+            "no": "Delivery area separate from office",
+            "en": "Delivery area separate from office"
+          },
+          "eksisterendeKontroll": {
+            "no": "Visual inspection",
+            "en": "Visual inspection"
+          },
           "K": 4,
           "I": 4,
           "T": 2,
           "sannsynlighet": 1,
-          "foreslaatteTiltak": "X-ray screening for high-security areas, verified sender policy, mail room procedures"
+          "foreslaatteTiltak": {
+            "no": "Røntgenscreening i områder med høyt sikkerhetsnivå, policy for verifiserte avsendere og rutiner for postmottak",
+            "en": "Use X-ray screening in high-security areas, require verified senders, and establish mail-room procedures"
+          }
         },
         {
           "id": "reception-003",
-          "risikoelement": "Piggybacking/tailgating ved hovedinngang",
-          "saarbarhet": "Stor trafikk, mange ansatte holder døren for andre",
-          "eksisterendeBeskyttelse": "Security signage",
-          "eksisterendeKontroll": "Periodic observations",
+          "risikoelement": {
+            "no": "Piggybacking/tailgating ved hovedinngang",
+            "en": "Piggybacking or tailgating at the main entrance"
+          },
+          "saarbarhet": {
+            "no": "Stor trafikk, mange ansatte holder døren for andre",
+            "en": "Heavy traffic means many employees hold the door open for others"
+          },
+          "eksisterendeBeskyttelse": {
+            "no": "Sikkerhetsskilting",
+            "en": "Security signage"
+          },
+          "eksisterendeKontroll": {
+            "no": "Periodic observations",
+            "en": "Periodic observations"
+          },
           "K": 5,
           "I": 4,
           "T": 3,
           "sannsynlighet": 5,
-          "foreslaatteTiltak": "Turnstiles, mantraps, anti-tailgate sensors, security culture campaigns"
+          "foreslaatteTiltak": {
+            "no": "Sluser, mantraps, anti-tailgate-sensorer og kampanjer for sikkerhetskultur",
+            "en": "Turnstiles, mantraps, anti-tailgate sensors, security culture campaigns"
+          }
         }
       ]
     },
     {
       "id": "remote-sites",
-      "navn": "Remote sites og filialer",
+      "navn": {
+        "no": "Remote sites og filialer",
+        "en": "Remote Sites"
+      },
       "risikoer": [
         {
           "id": "remote-001",
-          "risikoelement": "Mindre kontorer har svakere fysisk sikkerhet",
-          "saarbarhet": "Manglende standardisering, budsjettmessige begrensninger",
-          "eksisterendeBeskyttelse": "Locked doors",
-          "eksisterendeKontroll": "Annual site visits",
+          "risikoelement": {
+            "no": "Mindre kontorer kan lettere bli kompromittert fysisk",
+            "en": "Smaller offices are more easily compromised physically"
+          },
+          "saarbarhet": {
+            "no": "Manglende standardisering, budsjettmessige begrensninger",
+            "en": "Missing standardisering, budsjettmessige begrensninger"
+          },
+          "eksisterendeBeskyttelse": {
+            "no": "Locked doors",
+            "en": "Locked doors"
+          },
+          "eksisterendeKontroll": {
+            "no": "årlig site visits",
+            "en": "Annual site visits"
+          },
           "K": 4,
           "I": 4,
           "T": 4,
           "sannsynlighet": 4,
-          "foreslaatteTiltak": "Corporate security standards for all sites, central monitoring, risk-based controls"
+          "foreslaatteTiltak": {
+            "no": "Felles sikkerhetsstandarder for alle lokasjoner, sentral overvåking og risikobaserte kontroller",
+            "en": "Corporate security standards for all sites, central monitoring, risk-based controls"
+          }
         },
         {
           "id": "remote-002",
-          "risikoelement": "Remote datacom closets/IDF usikret",
-          "saarbarhet": "Nettverksutstyr i låste rom men med bred nøkkeltilgang",
-          "eksisterendeBeskyttelse": "Locked closets",
-          "eksisterendeKontroll": "Periodic inspections",
+          "risikoelement": {
+            "no": "Remote datacom closets/IDF usikret",
+            "en": "Remote data communication closets and IDF rooms are unsecured"
+          },
+          "saarbarhet": {
+            "no": "Nettverksutstyr i låste rom men med bred nøkkeltilgang",
+            "en": "Network equipment is in locked rooms, but too many people have key access"
+          },
+          "eksisterendeBeskyttelse": {
+            "no": "Locked closets",
+            "en": "Locked closets"
+          },
+          "eksisterendeKontroll": {
+            "no": "Periodic inspections",
+            "en": "Periodic inspections"
+          },
           "K": 5,
           "I": 4,
           "T": 4,
           "sannsynlighet": 3,
-          "foreslaatteTiltak": "Card access on IDF rooms, network access control (802.1X), port security, alarms"
+          "foreslaatteTiltak": {
+            "no": "Korttilgang til IDF-rom, nettverkstilgangskontroll (802.1X), portsikkerhet og alarmer",
+            "en": "Card access on IDF rooms, network access control (802.1X), port security, alarms"
+          }
         },
         {
           "id": "remote-003",
-          "risikoelement": "Hjemmekontor mangler fysisk sikkerhet",
-          "saarbarhet": "Ansatte jobber fra usikrede lokasjoner, familie har tilgang",
-          "eksisterendeBeskyttelse": "Work-from-home policy",
-          "eksisterendeKontroll": "Self-certification",
+          "risikoelement": {
+            "no": "Hjemmekontor mangler fysisk sikkerhet",
+            "en": "Hjemmekontor lacks Physical security"
+          },
+          "saarbarhet": {
+            "no": "Ansatte jobber fra usikrede lokasjoner, familie har tilgang",
+            "en": "Employees work from unsecured locations where family members or others may gain access"
+          },
+          "eksisterendeBeskyttelse": {
+            "no": "Work-from-home policy",
+            "en": "Work-from-home policy"
+          },
+          "eksisterendeKontroll": {
+            "no": "Self-certification",
+            "en": "Self-certification"
+          },
           "K": 4,
           "I": 3,
           "T": 2,
           "sannsynlighet": 5,
-          "foreslaatteTiltak": "Endpoint security (EDR), full disk encryption, privacy screens, cable locks, VPN mandatory"
+          "foreslaatteTiltak": {
+            "no": "Endepunktsikkerhet (EDR), full diskkryptering, personvernfilter, kabellåser og obligatorisk VPN",
+            "en": "Endpoint security (EDR), full disk encryption, privacy screens, cable locks, VPN mandatory"
+          }
         }
       ]
     }

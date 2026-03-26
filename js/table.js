@@ -1,16 +1,26 @@
 // Tabell-håndtering for risikoer
 
+function createIconButton(iconMarkup, label, className = 'btn-icon') {
+    const button = document.createElement('button');
+    button.type = 'button';
+    button.className = className;
+    button.title = label;
+    button.setAttribute('aria-label', label);
+    button.innerHTML = `${iconMarkup}<span class="btn-icon-label">${label}</span>`;
+    return button;
+}
+
 function renderRisksTable() {
     const tbody = document.getElementById('risksTableBody');
     if (!tbody || !currentAnalysis) return;
 
     tbody.textContent = '';
 
-    if (currentAnalysis.risikoer.length === 0) {
+    if (currentAnalysis.risks.length === 0) {
         const emptyRow = document.createElement('tr');
         const emptyCell = document.createElement('td');
         emptyCell.colSpan = 13;
-        emptyCell.textContent = 'Ingen risikoer lagt til ennå. Klikk "Legg til risiko" for å starte.';
+        emptyCell.textContent = `${t('riskSectionTitle')}: 0`;
         emptyCell.style.textAlign = 'center';
         emptyCell.style.padding = '20px';
         emptyRow.appendChild(emptyCell);
@@ -18,7 +28,7 @@ function renderRisksTable() {
         return;
     }
 
-    currentAnalysis.risikoer.forEach((risk, index) => {
+    currentAnalysis.risks.forEach((risk, index) => {
         const row = createRiskRow(risk, index);
         tbody.appendChild(row);
     });
@@ -30,42 +40,42 @@ function createRiskRow(risk, index) {
 
     // Nr
     const nrCell = document.createElement('td');
-    nrCell.textContent = risk.nr;
+    nrCell.textContent = risk.number;
     row.appendChild(nrCell);
 
     // Risikoelement
     const elementCell = document.createElement('td');
     const elementInput = document.createElement('textarea');
-    elementInput.value = risk.risikoelement || '';
+    elementInput.value = risk.riskElement || '';
     elementInput.placeholder = 'Beskriv risikoelement...';
-    elementInput.addEventListener('blur', () => updateRisk(risk.id, 'risikoelement', elementInput.value));
+    elementInput.addEventListener('blur', () => updateRisk(risk.id, 'riskElement', elementInput.value));
     elementCell.appendChild(elementInput);
     row.appendChild(elementCell);
 
     // Sårbarhet
     const saarbarhetCell = document.createElement('td');
     const saarbarhetInput = document.createElement('textarea');
-    saarbarhetInput.value = risk.saarbarhet || '';
+    saarbarhetInput.value = risk.vulnerability || '';
     saarbarhetInput.placeholder = 'Beskriv sårbarhet...';
-    saarbarhetInput.addEventListener('blur', () => updateRisk(risk.id, 'saarbarhet', saarbarhetInput.value));
+    saarbarhetInput.addEventListener('blur', () => updateRisk(risk.id, 'vulnerability', saarbarhetInput.value));
     saarbarhetCell.appendChild(saarbarhetInput);
     row.appendChild(saarbarhetCell);
 
     // Eksisterende beskyttelse
     const beskyttelseCell = document.createElement('td');
     const beskyttelseInput = document.createElement('textarea');
-    beskyttelseInput.value = risk.eksisterendeBeskyttelse || '';
+    beskyttelseInput.value = risk.existingProtection || '';
     beskyttelseInput.placeholder = 'Beskriv beskyttelse...';
-    beskyttelseInput.addEventListener('blur', () => updateRisk(risk.id, 'eksisterendeBeskyttelse', beskyttelseInput.value));
+    beskyttelseInput.addEventListener('blur', () => updateRisk(risk.id, 'existingProtection', beskyttelseInput.value));
     beskyttelseCell.appendChild(beskyttelseInput);
     row.appendChild(beskyttelseCell);
 
     // Eksisterende kontroll
     const kontrollCell = document.createElement('td');
     const kontrollInput = document.createElement('textarea');
-    kontrollInput.value = risk.eksisterendeKontroll || '';
+    kontrollInput.value = risk.existingControl || '';
     kontrollInput.placeholder = 'Beskriv kontroll...';
-    kontrollInput.addEventListener('blur', () => updateRisk(risk.id, 'eksisterendeKontroll', kontrollInput.value));
+    kontrollInput.addEventListener('blur', () => updateRisk(risk.id, 'existingControl', kontrollInput.value));
     kontrollCell.appendChild(kontrollInput);
     row.appendChild(kontrollCell);
 
@@ -91,7 +101,7 @@ function createRiskRow(risk, index) {
     // Konsekvens (read-only, beregnet)
     const konsekvensCel = document.createElement('td');
     konsekvensCel.className = 'calculated-field';
-    konsekvensCel.textContent = risk.konsekvens || 0;
+    konsekvensCel.textContent = risk.consequence || 0;
     row.appendChild(konsekvensCel);
 
     // Sannsynlighet
@@ -101,11 +111,11 @@ function createRiskRow(risk, index) {
         const option = document.createElement('option');
         option.value = i;
         option.textContent = i;
-        if (risk.sannsynlighet === i) option.selected = true;
+        if (risk.probability === i) option.selected = true;
         sannsynlighetSelect.appendChild(option);
     }
     sannsynlighetSelect.addEventListener('change', () => {
-        updateRisk(risk.id, 'sannsynlighet', parseInt(sannsynlighetSelect.value));
+        updateRisk(risk.id, 'probability', parseInt(sannsynlighetSelect.value));
         recalculateRisk(risk.id);
     });
     sannsynlighetCell.appendChild(sannsynlighetSelect);
@@ -114,18 +124,18 @@ function createRiskRow(risk, index) {
     // Risikonivå (read-only, beregnet)
     const risikoCell = document.createElement('td');
     risikoCell.className = 'calculated-field';
-    risikoCell.textContent = risk.risikonivaa || 0;
-    risikoCell.style.backgroundColor = getRiskColor(risk.risikonivaa);
-    risikoCell.style.color = risk.risikonivaa >= 13 ? '#fff' : '#000';
+    risikoCell.textContent = risk.riskLevel || 0;
+    risikoCell.style.backgroundColor = getRiskColor(risk.riskLevel);
+    risikoCell.style.color = risk.riskLevel >= 13 ? '#fff' : '#000';
     risikoCell.style.fontWeight = 'bold';
     row.appendChild(risikoCell);
 
     // Foreslåtte tiltak
     const tiltakCell = document.createElement('td');
     const tiltakInput = document.createElement('textarea');
-    tiltakInput.value = risk.foreslaatteTiltak || '';
+    tiltakInput.value = risk.proposedMeasures || '';
     tiltakInput.placeholder = 'Beskriv tiltak...';
-    tiltakInput.addEventListener('blur', () => updateRisk(risk.id, 'foreslaatteTiltak', tiltakInput.value));
+    tiltakInput.addEventListener('blur', () => updateRisk(risk.id, 'proposedMeasures', tiltakInput.value));
     tiltakCell.appendChild(tiltakInput);
     row.appendChild(tiltakCell);
 
@@ -134,16 +144,16 @@ function createRiskRow(risk, index) {
     actionsCell.className = 'actions-cell';
 
     // Sjekk om risikoen er tom (ny risiko)
-    const isEmpty = !risk.risikoelement && !risk.saarbarhet &&
+    const isEmpty = !risk.riskElement && !risk.vulnerability &&
                     risk.K === 0 && risk.I === 0 && risk.T === 0 &&
-                    risk.sannsynlighet === 0;
+                    risk.probability === 0;
 
     // Vis risikobank-knapp kun for tomme risikoer
     if (isEmpty) {
-        const bankBtn = document.createElement('button');
-        bankBtn.textContent = '📁';
-        bankBtn.className = 'btn-icon';
-        bankBtn.title = 'Velg fra risikobank';
+        const bankBtn = createIconButton(
+            '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 7h6l2 2h10v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V7z"></path></svg>',
+            t('selectFromBank')
+        );
         bankBtn.style.background = '#28a745';
         bankBtn.style.color = 'white';
         bankBtn.addEventListener('click', () => openRisikobankModal(risk.id));
@@ -151,11 +161,12 @@ function createRiskRow(risk, index) {
     }
 
     // Kommentar-knapp
-    const commentBtn = document.createElement('button');
     const commentCount = getCommentCount(risk.id);
-    commentBtn.textContent = '💬';
-    commentBtn.className = 'btn-icon btn-comment';
-    commentBtn.title = 'Legg til tiltak/kommentar';
+    const commentBtn = createIconButton(
+        '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H8l-5 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>',
+        t('addComment'),
+        'btn-icon btn-comment'
+    );
     if (commentCount > 0) {
         commentBtn.classList.add('has-comments');
         commentBtn.setAttribute('data-count', commentCount);
@@ -163,27 +174,28 @@ function createRiskRow(risk, index) {
     commentBtn.addEventListener('click', () => openCommentModal(risk.id));
     actionsCell.appendChild(commentBtn);
 
-    const deleteBtn = document.createElement('button');
-    deleteBtn.textContent = '×';
-    deleteBtn.className = 'btn-icon btn-danger';
-    deleteBtn.title = 'Slett';
+    const deleteBtn = createIconButton(
+        '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18"></path><path d="M8 6V4h8v2"></path><path d="M19 6l-1 14H6L5 6"></path><path d="M10 11v6"></path><path d="M14 11v6"></path></svg>',
+        t('delete'),
+        'btn-icon btn-danger'
+    );
     deleteBtn.addEventListener('click', () => deleteRisk(risk.id));
     actionsCell.appendChild(deleteBtn);
 
     if (index > 0) {
-        const upBtn = document.createElement('button');
-        upBtn.textContent = '↑';
-        upBtn.className = 'btn-icon';
-        upBtn.title = 'Flytt opp';
+        const upBtn = createIconButton(
+            '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 19V5"></path><path d="m5 12 7-7 7 7"></path></svg>',
+            t('moveUp')
+        );
         upBtn.addEventListener('click', () => moveRisk(index, index - 1));
         actionsCell.appendChild(upBtn);
     }
 
-    if (index < currentAnalysis.risikoer.length - 1) {
-        const downBtn = document.createElement('button');
-        downBtn.textContent = '↓';
-        downBtn.className = 'btn-icon';
-        downBtn.title = 'Flytt ned';
+    if (index < currentAnalysis.risks.length - 1) {
+        const downBtn = createIconButton(
+            '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14"></path><path d="m19 12-7 7-7-7"></path></svg>',
+            t('moveDown')
+        );
         downBtn.addEventListener('click', () => moveRisk(index, index + 1));
         actionsCell.appendChild(downBtn);
     }
@@ -194,22 +206,21 @@ function createRiskRow(risk, index) {
 }
 
 function updateRisk(riskId, field, value) {
-    const riskIndex = currentAnalysis.risikoer.findIndex(r => r.id === riskId);
+    const riskIndex = currentAnalysis.risks.findIndex(r => r.id === riskId);
     if (riskIndex >= 0) {
-        currentAnalysis.risikoer[riskIndex][field] = value;
-        updateAnalysis(currentAnalysisId, { risikoer: currentAnalysis.risikoer });
+        currentAnalysis.risks[riskIndex][field] = value;
+        updateAnalysis(currentAnalysisId, { risks: currentAnalysis.risks });
         showSavedIndicator();
     }
 }
 
 function recalculateRisk(riskId) {
-    const risk = currentAnalysis.risikoer.find(r => r.id === riskId);
+    const risk = currentAnalysis.risks.find(r => r.id === riskId);
     if (!risk) return;
 
-    risk.konsekvens = calculateKonsekvens(risk.K, risk.I, risk.T);
-    risk.risikonivaa = calculateRisikonivaa(risk.konsekvens, risk.sannsynlighet);
-
-    updateAnalysis(currentAnalysisId, { risikoer: currentAnalysis.risikoer });
+    risk.consequence = calculateKonsekvens(risk.K, risk.I, risk.T);
+    risk.riskLevel = calculateRisikonivaa(risk.consequence, risk.probability);
+    updateAnalysis(currentAnalysisId, { risks: currentAnalysis.risks });
     renderRisksTable();
     renderHeatmap();
     renderStatistics();
@@ -217,14 +228,14 @@ function recalculateRisk(riskId) {
 }
 
 function deleteRisk(riskId) {
-    if (!confirm('Er du sikker på at du vil slette denne risikoen?')) return;
+    if (!confirm(`${t('delete')}?`)) return;
 
-    currentAnalysis.risikoer = currentAnalysis.risikoer.filter(r => r.id !== riskId);
+    currentAnalysis.risks = currentAnalysis.risks.filter(r => r.id !== riskId);
 
     // Renumerer risikoer
-    currentAnalysis.risikoer.forEach((r, i) => r.nr = i + 1);
+    currentAnalysis.risks.forEach((risk, index) => risk.number = index + 1);
 
-    updateAnalysis(currentAnalysisId, { risikoer: currentAnalysis.risikoer });
+    updateAnalysis(currentAnalysisId, { risks: currentAnalysis.risks });
     renderRisksTable();
     renderHeatmap();
     renderStatistics();
@@ -232,14 +243,14 @@ function deleteRisk(riskId) {
 }
 
 function moveRisk(fromIndex, toIndex) {
-    const risks = currentAnalysis.risikoer;
+    const risks = currentAnalysis.risks;
     const [moved] = risks.splice(fromIndex, 1);
     risks.splice(toIndex, 0, moved);
 
     // Renumerer
-    risks.forEach((r, i) => r.nr = i + 1);
+    risks.forEach((risk, index) => risk.number = index + 1);
 
-    updateAnalysis(currentAnalysisId, { risikoer: risks });
+    updateAnalysis(currentAnalysisId, { risks: risks });
     renderRisksTable();
     renderHeatmap();
     renderStatistics();
@@ -251,16 +262,16 @@ function renderKITTable() {
 
     tbody.textContent = '';
 
-    const kit = calculateKIT(currentAnalysis.risikoer);
+    const kit = calculateKIT(currentAnalysis.risks);
 
     const rows = [
-        { label: 'K (kun konfidensialitet)', value: kit.K },
-        { label: 'I (kun integritet)', value: kit.I },
-        { label: 'T (kun tilgjengelighet)', value: kit.T },
+        { label: t('kitConfidentialityOnly'), value: kit.K },
+        { label: t('kitIntegrityOnly'), value: kit.I },
+        { label: t('kitAvailabilityOnly'), value: kit.T },
         { label: 'K+I', value: kit.KI },
         { label: 'K+T', value: kit.KT },
         { label: 'I+T', value: kit.IT },
-        { label: 'K+I+T (alle tre)', value: kit.KIT }
+        { label: t('kitAllThree'), value: kit.KIT }
     ];
 
     rows.forEach(rowData => {
@@ -271,7 +282,7 @@ function renderKITTable() {
         row.appendChild(labelCell);
 
         const valueCell = document.createElement('td');
-        valueCell.textContent = `${rowData.value} risikoer`;
+        valueCell.textContent = `${rowData.value} ${t('risks')}`;
         row.appendChild(valueCell);
 
         tbody.appendChild(row);
@@ -283,11 +294,11 @@ function renderKITTable() {
     totalRow.style.borderTop = '2px solid #333';
 
     const totalLabelCell = document.createElement('td');
-    totalLabelCell.textContent = 'TOTALT';
+    totalLabelCell.textContent = t('totalUppercase');
     totalRow.appendChild(totalLabelCell);
 
     const totalValueCell = document.createElement('td');
-    totalValueCell.textContent = `${kit.total} risikoer`;
+    totalValueCell.textContent = `${kit.total} ${t('risks')}`;
     totalRow.appendChild(totalValueCell);
 
     tbody.appendChild(totalRow);

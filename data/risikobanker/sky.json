@@ -1,191 +1,407 @@
 {
   "id": "skytjeneste",
-  "navn": "Skytjeneste (AWS/Azure/GCP)",
-  "beskrivelse": "Spesifikke risikoer for skytjenester",
+  "navn": {
+    "no": "Skytjeneste (AWS/Azure/GCP)",
+    "en": "Cloud Service (AWS/Azure/GCP)"
+  },
+  "beskrivelse": {
+    "no": "Spesifikke risikoer for skytjenester",
+    "en": "Specific risks for cloud services"
+  },
   "kategorier": [
     {
       "id": "sky-tilgang",
-      "navn": "Sky-tilgangsstyring",
+      "navn": {
+        "no": "Sky-tilgangsstyring",
+        "en": "Cloud Access Management"
+      },
       "risikoer": [
         {
           "id": "sky-001",
-          "risikoelement": "Feilkonfigurerte IAM-roller gir for omfattende tilgang",
-          "saarbarhet": "Kompleks IAM-policy struktur, manglende oversikt",
-          "eksisterendeBeskyttelse": "IAM-policies etter beste praksis",
-          "eksisterendeKontroll": "Kvartalsvis gjennomgang av IAM-roller",
+          "risikoelement": {
+            "no": "Feilkonfigurerte IAM-roller gir for omfattende tilgang",
+            "en": "Misconfigured IAM roles grant excessive access"
+          },
+          "saarbarhet": {
+            "no": "Kompleks IAM-policy struktur, manglende oversikt",
+            "en": "A complex IAM policy structure and limited overview"
+          },
+          "eksisterendeBeskyttelse": {
+            "no": "IAM-policyer etter beste praksis",
+            "en": "IAM policies based on best practice"
+          },
+          "eksisterendeKontroll": {
+            "no": "Kvartalsvis gjennomgang av IAM-roller",
+            "en": "Quarterly review of IAM roles"
+          },
           "K": 5,
           "I": 4,
           "T": 3,
           "sannsynlighet": 3,
-          "foreslaatteTiltak": "Policy-as-code, automated compliance scanning, minste privilegium"
+          "foreslaatteTiltak": {
+            "no": "policy-as-code, automated compliance scanning, minste privilegium",
+            "en": "Policy-as-code, automated compliance scanning, least privilege"
+          }
         },
         {
           "id": "sky-002",
-          "risikoelement": "Rot-kontoer/admin-tilgang kompromittert",
-          "saarbarhet": "Manglende MFA på rot-konto, delte admin-tilganger",
-          "eksisterendeBeskyttelse": "MFA aktivert",
-          "eksisterendeKontroll": "Logging av rot-konto aktivitet",
-          "K": 5,
-          "I": 5,
-          "T": 4,
-          "sannsynlighet": 1,
-          "foreslaatteTiltak": "Hardware MFA for rot-konto, begrenset bruk, break-glass prosedyrer"
-        },
-        {
-          "id": "sky-003",
-          "risikoelement": "Utilsiktet offentlig eksponering av ressurser (S3, storage)",
-          "saarbarhet": "Default public settings, manglende block public access",
-          "eksisterendeBeskyttelse": "Policy mot public buckets",
-          "eksisterendeKontroll": "Automatisk skanning for public resources",
-          "K": 5,
-          "I": 3,
-          "T": 2,
-          "sannsynlighet": 3,
-          "foreslaatteTiltak": "Block public access som standard, automated remediation"
-        },
-        {
-          "id": "sky-004",
-          "risikoelement": "Credential stuffing på cloud admin accounts",
-          "saarbarhet": "Gjenbrukte passord, svak MFA",
-          "eksisterendeBeskyttelse": "Password policy",
-          "eksisterendeKontroll": "Failed login monitoring",
+          "risikoelement": {
+            "no": "Rot-kontoer/admin-tilgang kompromittert",
+            "en": "Root or admin access is compromised"
+          },
+          "saarbarhet": {
+            "no": "Manglende MFA på rot-konto, delte admin-tilganger",
+            "en": "Missing MFA on the root account and shared admin access"
+          },
+          "eksisterendeBeskyttelse": {
+            "no": "MFA aktivert",
+            "en": "MFA enabled"
+          },
+          "eksisterendeKontroll": {
+            "no": "loggføring av rot-konto aktivitet",
+            "en": "Logging of root account activity"
+          },
           "K": 5,
           "I": 5,
           "T": 4,
           "sannsynlighet": 2,
-          "foreslaatteTiltak": "Hardware MFA, conditional access, passwordless authentication"
+          "foreslaatteTiltak": {
+            "no": "Hardware MFA for rot-konto, begrenset bruk, break-glass prosedyrer",
+            "en": "Hardware MFA for the root account, restricted use, and break-glass procedures"
+          }
+        },
+        {
+          "id": "sky-003",
+          "risikoelement": {
+            "no": "Utilsiktet offentlig eksponering av ressurser (S3, storage)",
+            "en": "Accidental public exposure of resources such as S3 buckets or storage accounts"
+          },
+          "saarbarhet": {
+            "no": "Default public settings, manglende block public tilgang",
+            "en": "Default public settings, missing block public access"
+          },
+          "eksisterendeBeskyttelse": {
+            "no": "policy mot public buckets",
+            "en": "Policy against public buckets"
+          },
+          "eksisterendeKontroll": {
+            "no": "Automatisk skanning for public resources",
+            "en": "Automatic scanning for public resources"
+          },
+          "K": 5,
+          "I": 3,
+          "T": 2,
+          "sannsynlighet": 3,
+          "foreslaatteTiltak": {
+            "no": "Block public tilgang som standard, automated remediation",
+            "en": "Block public access by default, automated remediation"
+          }
+        },
+        {
+          "id": "sky-004",
+          "risikoelement": {
+            "no": "Credential stuffing på sky admin accounts",
+            "en": "Credential stuffing on cloud admin accounts"
+          },
+          "saarbarhet": {
+            "no": "Gjenbrukte passord, svak MFA",
+            "en": "Reused passwords, weak MFA"
+          },
+          "eksisterendeBeskyttelse": {
+            "no": "Password policy",
+            "en": "Password policy"
+          },
+          "eksisterendeKontroll": {
+            "no": "Failed login overvåking",
+            "en": "Failed login monitoring"
+          },
+          "K": 5,
+          "I": 5,
+          "T": 4,
+          "sannsynlighet": 2,
+          "foreslaatteTiltak": {
+            "no": "Hardware MFA, conditional tilgang, passwordless authentication",
+            "en": "Hardware MFA, conditional access, passwordless authentication"
+          }
         }
       ]
     },
     {
       "id": "sky-nettverk",
-      "navn": "Sky-nettverk",
+      "navn": {
+        "no": "Sky-nettverk",
+        "en": "Cloud Networking"
+      },
       "risikoer": [
         {
           "id": "sky-net-001",
-          "risikoelement": "Feilkonfigurerte security groups/firewalls",
-          "saarbarhet": "For åpne regler (0.0.0.0/0), manglende segmentering",
-          "eksisterendeBeskyttelse": "Security groups per tjeneste",
-          "eksisterendeKontroll": "Månedlig review av security groups",
+          "risikoelement": {
+            "no": "Feilkonfigurerte security groups eller brannmurer",
+            "en": "Misconfigured security groups/firewalls"
+          },
+          "saarbarhet": {
+            "no": "For åpne regler (0.0.0.0/0), manglende segmentering",
+            "en": "Overly open rules (0.0.0.0/0) and missing segmentation"
+          },
+          "eksisterendeBeskyttelse": {
+            "no": "Security groups per tjeneste",
+            "en": "Security groups per service"
+          },
+          "eksisterendeKontroll": {
+            "no": "Månedlig gjennomgang av security groups",
+            "en": "Monthly review of security groups"
+          },
           "K": 4,
           "I": 3,
           "T": 3,
           "sannsynlighet": 3,
-          "foreslaatteTiltak": "Automatisk deteksjon av for åpne regler, mikrosegmentering"
+          "foreslaatteTiltak": {
+            "no": "Automatisk deteksjon av for åpne regler, mikrosegmentering",
+            "en": "Automatic detection of overly open rules and micro-segmentation"
+          }
         },
         {
           "id": "sky-net-002",
-          "risikoelement": "Manglende kryptering av data i transit mellom tjenester",
-          "saarbarhet": "Ukryptert intern kommunikasjon, manglende TLS",
-          "eksisterendeBeskyttelse": "HTTPS for eksterne endepunkter",
-          "eksisterendeKontroll": "Årlig sikkerhetsaudit",
+          "risikoelement": {
+            "no": "Manglende kryptering av data i transit mellom tjenester",
+            "en": "Missing encryption of data in transit between services"
+          },
+          "saarbarhet": {
+            "no": "Ukryptert intern kommunikasjon, manglende TLS",
+            "en": "Unencrypted internal communication and missing TLS"
+          },
+          "eksisterendeBeskyttelse": {
+            "no": "HTTPS for eksterne endepunkter",
+            "en": "HTTPS for external endpoints"
+          },
+          "eksisterendeKontroll": {
+            "no": "Årlig sikkerhetsaudit",
+            "en": "Annual security audit"
+          },
           "K": 4,
           "I": 3,
           "T": 1,
           "sannsynlighet": 2,
-          "foreslaatteTiltak": "mTLS for all intern kommunikasjon, service mesh"
+          "foreslaatteTiltak": {
+            "no": "MTLS for all intern kommunikasjon, service mesh",
+            "en": "mTLS for all internal communication and a service mesh"
+          }
         },
         {
           "id": "sky-net-003",
-          "risikoelement": "Ukryptert inter-service kommunikasjon",
-          "saarbarhet": "Manglende mTLS mellom mikrotjenester",
-          "eksisterendeBeskyttelse": "Private VPC",
-          "eksisterendeKontroll": "Network monitoring",
+          "risikoelement": {
+            "no": "Ukryptert inter-service kommunikasjon",
+            "en": "Unencrypted inter-service communication"
+          },
+          "saarbarhet": {
+            "no": "Manglende mTLS mellom mikrotjenester",
+            "en": "Missing mTLS between microservices"
+          },
+          "eksisterendeBeskyttelse": {
+            "no": "Private VPC",
+            "en": "Private VPC"
+          },
+          "eksisterendeKontroll": {
+            "no": "Nettverksovervåking",
+            "en": "Network monitoring"
+          },
           "K": 4,
           "I": 3,
           "T": 1,
           "sannsynlighet": 2,
-          "foreslaatteTiltak": "Service mesh (Istio), mTLS enforcement, zero trust"
+          "foreslaatteTiltak": {
+            "no": "Service mesh (Istio), mTLS enforcement, zero trust",
+            "en": "Service mesh (Istio), mTLS enforcement, zero trust"
+          }
         }
       ]
     },
     {
       "id": "sky-data",
-      "navn": "Sky-datalagring",
+      "navn": {
+        "no": "Sky-datalagring",
+        "en": "Cloud Data Security"
+      },
       "risikoer": [
         {
           "id": "sky-data-001",
-          "risikoelement": "Ukrypterte databaser/lagringstjenester",
-          "saarbarhet": "Kryptering ikke aktivert som standard",
-          "eksisterendeBeskyttelse": "Kryptering på kritiske databaser",
-          "eksisterendeKontroll": "Kvartalsvis audit av krypteringsstatus",
+          "risikoelement": {
+            "no": "Ukrypterte databaser/lagringstjenester",
+            "en": "Ukrypterte databaser/lagringstjenester"
+          },
+          "saarbarhet": {
+            "no": "Kryptering ikke aktivert som standard",
+            "en": "encryption not aktivert by default"
+          },
+          "eksisterendeBeskyttelse": {
+            "no": "Kryptering på kritiske databaser",
+            "en": "encryption on critical databaser"
+          },
+          "eksisterendeKontroll": {
+            "no": "Kvartalsvis audit av krypteringsstatus",
+            "en": "Quarterly audit of krypteringsstatus"
+          },
           "K": 5,
           "I": 3,
           "T": 1,
           "sannsynlighet": 2,
-          "foreslaatteTiltak": "Encryption-at-rest som standard, KMS key management"
+          "foreslaatteTiltak": {
+            "no": "Encryption-at-rest som standard, KMS key management",
+            "en": "Encryption-at-rest by default, KMS key management"
+          }
         },
         {
           "id": "sky-data-002",
-          "risikoelement": "Manglende backup eller gjenoppretting i sky",
-          "saarbarhet": "Avhengighet av single region, ingen backup-strategi",
-          "eksisterendeBeskyttelse": "Snapshot av kritiske ressurser",
-          "eksisterendeKontroll": "Månedlig backup-test",
+          "risikoelement": {
+            "no": "Manglende backup eller gjenoppretting i sky",
+            "en": "Missing backup or recovery capability in the cloud"
+          },
+          "saarbarhet": {
+            "no": "Avhengighet av single region, ingen backup-strategi",
+            "en": "dependency of single region, no backup-strategy"
+          },
+          "eksisterendeBeskyttelse": {
+            "no": "Snapshot av kritiske ressurser",
+            "en": "Snapshot of critical resources"
+          },
+          "eksisterendeKontroll": {
+            "no": "Månedlig backup-test",
+            "en": "Monthly backup test"
+          },
           "K": 3,
           "I": 4,
           "T": 5,
           "sannsynlighet": 2,
-          "foreslaatteTiltak": "Multi-region backup, automated disaster recovery testing"
+          "foreslaatteTiltak": {
+            "no": "Multi-region backup, automated disaster gjenoppretting testing",
+            "en": "Multi-region backup, automated disaster recovery testing"
+          }
         },
         {
           "id": "sky-data-003",
-          "risikoelement": "Data residency krav ikke oppfylt",
-          "saarbarhet": "Data lagres i feil region/jurisdiksjon",
-          "eksisterendeBeskyttelse": "Dokumentert data lokasjon",
-          "eksisterendeKontroll": "Årlig audit",
+          "risikoelement": {
+            "no": "Data residency krav ikke oppfylt",
+            "en": "Data residency requirements not fulfilled"
+          },
+          "saarbarhet": {
+            "no": "Data lagres i feil region/jurisdiksjon",
+            "en": "Data is stored in the wrong region or jurisdiction"
+          },
+          "eksisterendeBeskyttelse": {
+            "no": "Dokumentert data lokasjon",
+            "en": "Documented data lokasjon"
+          },
+          "eksisterendeKontroll": {
+            "no": "Årlig audit",
+            "en": "Annual audit"
+          },
           "K": 5,
           "I": 3,
           "T": 2,
           "sannsynlighet": 2,
-          "foreslaatteTiltak": "Region locks, data residency policies, GDPR compliance"
+          "foreslaatteTiltak": {
+            "no": "Region locks, data residency policyer, GDPR compliance",
+            "en": "Region locks, data residency policies, GDPR compliance"
+          }
         }
       ]
     },
     {
       "id": "sky-kostnad",
-      "navn": "Sky-kostnader og ressursstyring",
+      "navn": {
+        "no": "Sky-kostnader og ressursstyring",
+        "en": "Cloud Cost Management"
+      },
       "risikoer": [
         {
           "id": "sky-cost-001",
-          "risikoelement": "Ukontrollert ressurs-forbruk fører til høye kostnader",
-          "saarbarhet": "Manglende budsjett-alarmer, auto-scaling uten grenser",
-          "eksisterendeBeskyttelse": "Månedlig kostnadsrapportering",
-          "eksisterendeKontroll": "Kvartalsvis kostnadsgjennomgang",
+          "risikoelement": {
+            "no": "Ukontrollert ressurs-forbruk fører til høye kostnader",
+            "en": "Uncontrolled resource consumption leads to high costs"
+          },
+          "saarbarhet": {
+            "no": "Manglende budsjett-alarmer, auto-scaling uten grenser",
+            "en": "Missing budget-alarmer, auto-scaling without grenser"
+          },
+          "eksisterendeBeskyttelse": {
+            "no": "Månedlig kostnadsrapportering",
+            "en": "Monthly kostnadsrapportering"
+          },
+          "eksisterendeKontroll": {
+            "no": "Kvartalsvis kostnadsgjennomgang",
+            "en": "Quarterly cost review"
+          },
           "K": 1,
           "I": 1,
           "T": 3,
           "sannsynlighet": 3,
-          "foreslaatteTiltak": "Budget alerts, resource quotas, auto-shutdown av dev/test"
+          "foreslaatteTiltak": {
+            "no": "Budget alerts, resource quotas, auto-shutdown av dev/test",
+            "en": "Budget alerts, resource quotas, auto-shutdown of dev/test"
+          }
         }
       ]
     },
     {
       "id": "sky-compliance",
-      "navn": "Sky-compliance og governance",
+      "navn": {
+        "no": "Sky-compliance og governance",
+        "en": "Cloud Compliance"
+      },
       "risikoer": [
         {
           "id": "sky-comp-001",
-          "risikoelement": "Manglende oversikt over alle cloud-ressurser",
-          "saarbarhet": "Sprawl, zombie resources, manglende tagging",
-          "eksisterendeBeskyttelse": "Monthly inventory",
-          "eksisterendeKontroll": "Cost reports",
+          "risikoelement": {
+            "no": "sky-ressurser er ikke fullstendig kartlagt",
+            "en": "Cloud resources are not mapped completely"
+          },
+          "saarbarhet": {
+            "no": "Sprawl, zombie resources, manglende tagging",
+            "en": "Sprawl, zombie resources, missing tagging"
+          },
+          "eksisterendeBeskyttelse": {
+            "no": "månedlig inventory",
+            "en": "Monthly inventory"
+          },
+          "eksisterendeKontroll": {
+            "no": "Cost reports",
+            "en": "Cost reports"
+          },
           "K": 3,
           "I": 2,
           "T": 2,
           "sannsynlighet": 4,
-          "foreslaatteTiltak": "Resource tagging policy, automated discovery, CMDB"
+          "foreslaatteTiltak": {
+            "no": "Resource tagging policy, automated discovery, CMDB",
+            "en": "Resource tagging policy, automated discovery, CMDB"
+          }
         },
         {
           "id": "sky-comp-002",
-          "risikoelement": "Compliance violations ikke oppdaget",
-          "saarbarhet": "Manglende continuous compliance monitoring",
-          "eksisterendeBeskyttelse": "Annual audit",
-          "eksisterendeKontroll": "Manual checks",
+          "risikoelement": {
+            "no": "Compliance violations ikke oppdaget",
+            "en": "Compliance violations not oppdaget"
+          },
+          "saarbarhet": {
+            "no": "Manglende continuous compliance overvåking",
+            "en": "Missing continuous compliance monitoring"
+          },
+          "eksisterendeBeskyttelse": {
+            "no": "årlig audit",
+            "en": "Annual audit"
+          },
+          "eksisterendeKontroll": {
+            "no": "manuell checks",
+            "en": "Manual checks"
+          },
           "K": 4,
           "I": 4,
           "T": 2,
           "sannsynlighet": 3,
-          "foreslaatteTiltak": "Cloud Security Posture Management (CSPM), automated remediation"
+          "foreslaatteTiltak": {
+            "no": "Cloud Security Posture Management (CSPM) og automatisert utbedring",
+            "en": "Cloud Security Posture Management (CSPM), automated remediation"
+          }
         }
       ]
     }

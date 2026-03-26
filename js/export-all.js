@@ -10,7 +10,7 @@ async function exportAllFormats() {
         // Vis laste-indikator
         const btn = document.getElementById('exportAllBtn');
         const originalText = btn.textContent;
-        btn.textContent = '⏳ Genererer...';
+        btn.textContent = 'Genererer...';
         btn.disabled = true;
 
         // Opprett ZIP-fil
@@ -32,9 +32,9 @@ async function exportAllFormats() {
         const zipBlob = await zip.generateAsync({ type: 'blob' });
 
         // Last ned ZIP
-        const tjeneste = (currentAnalysis.metadata.tjeneste || 'analyse').replace(/[^a-zA-Z0-9æøåÆØÅ_-]/g, '_');
-        const dato = currentAnalysis.createdDate || 'ukjent';
-        const zipFilename = `Risky_${tjeneste}_${dato}_komplett.zip`;
+        const serviceName = (currentAnalysis.metadata.service || 'analysis').replace(/[^a-zA-Z0-9æøåÆØÅ_-]/g, '_');
+        const date = currentAnalysis.createdDate || 'unknown';
+        const zipFilename = `Risky_${serviceName}_${date}_complete.zip`;
 
         const link = document.createElement('a');
         link.href = URL.createObjectURL(zipBlob);
@@ -54,28 +54,28 @@ async function exportAllFormats() {
 
         // Tilbakestill knapp
         const btn = document.getElementById('exportAllBtn');
-        btn.textContent = '📦 Eksporter alt (ZIP)';
+        btn.textContent = 'Eksporter alt (ZIP)';
         btn.disabled = false;
     }
 }
 
 // Hjelpefunksjoner for filnavn
 function getPDFFilename() {
-    const tjeneste = (currentAnalysis.metadata.tjeneste || 'analyse').replace(/[^a-zA-Z0-9æøåÆØÅ_-]/g, '_');
-    const dato = currentAnalysis.createdDate || 'ukjent';
-    return `Risky_${tjeneste}_${dato}.pdf`;
+    const serviceName = (currentAnalysis.metadata.service || 'analysis').replace(/[^a-zA-Z0-9æøåÆØÅ_-]/g, '_');
+    const date = currentAnalysis.createdDate || 'unknown';
+    return `Risky_${serviceName}_${date}.pdf`;
 }
 
 function getExcelFilename() {
-    const tjeneste = (currentAnalysis.metadata.tjeneste || 'analyse').replace(/[^a-zA-Z0-9æøåÆØÅ_-]/g, '_');
-    const dato = currentAnalysis.createdDate || 'ukjent';
-    return `Risky_${tjeneste}_${dato}.xlsx`;
+    const serviceName = (currentAnalysis.metadata.service || 'analysis').replace(/[^a-zA-Z0-9æøåÆØÅ_-]/g, '_');
+    const date = currentAnalysis.createdDate || 'unknown';
+    return `Risky_${serviceName}_${date}.xlsx`;
 }
 
 function getJSONFilename() {
-    const tjeneste = (currentAnalysis.metadata.tjeneste || 'analyse').replace(/[^a-zA-Z0-9æøåÆØÅ_-]/g, '_');
-    const dato = currentAnalysis.createdDate || 'ukjent';
-    return `Risky_${tjeneste}_${dato}.json`;
+    const serviceName = (currentAnalysis.metadata.service || 'analysis').replace(/[^a-zA-Z0-9æøåÆØÅ_-]/g, '_');
+    const date = currentAnalysis.createdDate || 'unknown';
+    return `Risky_${serviceName}_${date}.json`;
 }
 
 // Generer JSON blob
@@ -99,12 +99,12 @@ function generateExcelBlob() {
         ['Risky - Risikoanalyse'],
         [''],
         ['Informasjon', 'Verdi'],
-        ['Tjeneste/system', safeText(currentAnalysis.metadata.tjeneste)],
-        ['Dato', safeText(currentAnalysis.metadata.dato)],
-        ['Utført av', safeText(currentAnalysis.metadata.utfortAv)],
-        ['Deltakere', safeText(currentAnalysis.metadata.deltakere)],
-        ['Tjenesteeier', safeText(currentAnalysis.metadata.tjenesteeier)],
-        ['Beskrivelse', safeText(currentAnalysis.metadata.beskrivelse)],
+        ['Tjeneste/system', safeText(currentAnalysis.metadata.service)],
+        ['Dato', safeText(currentAnalysis.metadata.date)],
+        ['Utført av', safeText(currentAnalysis.metadata.performedBy)],
+        ['Deltakere', safeText(currentAnalysis.metadata.participants)],
+        ['Tjenesteeier', safeText(currentAnalysis.metadata.serviceOwner)],
+        ['Beskrivelse', safeText(currentAnalysis.metadata.description)],
         [''],
         ['Opprettet', safeText(currentAnalysis.createdDate)],
         ['Sist endret', safeText(currentAnalysis.lastModified)]
@@ -122,20 +122,20 @@ function generateExcelBlob() {
          'K', 'I', 'T', 'K*', 'S*', 'RN*', 'Foreslåtte tiltak']
     ];
 
-    currentAnalysis.risikoer.forEach((risk, index) => {
+    currentAnalysis.risks.forEach((risk, index) => {
         risksData.push([
             index + 1,
-            safeText(risk.risikoelement),
-            safeText(risk.saarbarhet),
-            safeText(risk.eksisterendeBeskyttelse),
-            safeText(risk.eksisterendeKontroll),
+            safeText(risk.riskElement),
+            safeText(risk.vulnerability),
+            safeText(risk.existingProtection),
+            safeText(risk.existingControl),
             safeText(risk.K),
             safeText(risk.I),
             safeText(risk.T),
-            safeText(risk.konsekvens),
-            safeText(risk.sannsynlighet),
-            safeText(risk.risikonivaa),
-            safeText(risk.foreslaatteTiltak)
+            safeText(risk.consequence),
+            safeText(risk.probability),
+            safeText(risk.riskLevel),
+            safeText(risk.proposedMeasures)
         ]);
     });
 
@@ -157,7 +157,7 @@ function generateExcelBlob() {
     XLSX.utils.book_append_sheet(wb, wsRisks, 'Risikoer');
 
     // Kommentarer-ark (hvis det finnes kommentarer)
-    if (currentAnalysis.risikoer && currentAnalysis.risikoer.some(r => r.kommentarer && r.kommentarer.length > 0)) {
+    if (currentAnalysis.risks && currentAnalysis.risks.some(r => r.comments && r.comments.length > 0)) {
         try {
             const commentsData = [
                 ['Tiltak og kommentarer'],
@@ -167,9 +167,9 @@ function generateExcelBlob() {
 
             let hasAnyVisibleComments = false;
 
-            currentAnalysis.risikoer.forEach((risk, index) => {
-                if (risk.kommentarer && risk.kommentarer.length > 0) {
-                    const visibleComments = risk.kommentarer.filter(c => !c.resolved);
+            currentAnalysis.risks.forEach((risk, index) => {
+                if (risk.comments && risk.comments.length > 0) {
+                    const visibleComments = risk.comments.filter(c => !c.resolved);
                     if (visibleComments.length > 0) {
                         hasAnyVisibleComments = true;
                         visibleComments.forEach(comment => {
@@ -177,7 +177,7 @@ function generateExcelBlob() {
                             const commentText = `[${timestamp}] ${safeText(comment.text)}`;
                             commentsData.push([
                                 index + 1,
-                                safeText(risk.risikoelement),
+                                safeText(risk.riskElement),
                                 commentText
                             ]);
                         });
@@ -223,33 +223,33 @@ async function generatePDFBlob() {
     let yPos = 35;
     const metadata = currentAnalysis.metadata;
 
-    if (metadata.tjeneste) {
-        doc.text(`Tjeneste/system: ${safeText(metadata.tjeneste)}`, 20, yPos);
+    if (metadata.service) {
+        doc.text(`Tjeneste/system: ${safeText(metadata.service)}`, 20, yPos);
         yPos += 7;
     }
-    if (metadata.dato) {
-        doc.text(`Dato: ${safeText(metadata.dato)}`, 20, yPos);
+    if (metadata.date) {
+        doc.text(`Dato: ${safeText(metadata.date)}`, 20, yPos);
         yPos += 7;
     }
-    if (metadata.utfortAv) {
-        doc.text(`Utført av: ${safeText(metadata.utfortAv)}`, 20, yPos);
+    if (metadata.performedBy) {
+        doc.text(`Utført av: ${safeText(metadata.performedBy)}`, 20, yPos);
         yPos += 7;
     }
-    if (metadata.deltakere) {
-        doc.text(`Deltakere: ${safeText(metadata.deltakere)}`, 20, yPos);
+    if (metadata.participants) {
+        doc.text(`Deltakere: ${safeText(metadata.participants)}`, 20, yPos);
         yPos += 7;
     }
-    if (metadata.tjenesteeier) {
-        doc.text(`Tjenesteeier: ${safeText(metadata.tjenesteeier)}`, 20, yPos);
+    if (metadata.serviceOwner) {
+        doc.text(`Tjenesteeier: ${safeText(metadata.serviceOwner)}`, 20, yPos);
         yPos += 7;
     }
-    if (metadata.beskrivelse) {
-        const beskrivelse = safeText(metadata.beskrivelse);
-        const splitBeskrivelse = doc.splitTextToSize(beskrivelse, 250);
-        doc.text(`Beskrivelse: ${splitBeskrivelse[0]}`, 20, yPos);
+    if (metadata.description) {
+        const description = safeText(metadata.description);
+        const splitDescription = doc.splitTextToSize(description, 250);
+        doc.text(`Beskrivelse: ${splitDescription[0]}`, 20, yPos);
         yPos += 7;
-        for (let i = 1; i < splitBeskrivelse.length; i++) {
-            doc.text(splitBeskrivelse[i], 20, yPos);
+        for (let i = 1; i < splitDescription.length; i++) {
+            doc.text(splitDescription[i], 20, yPos);
             yPos += 7;
         }
     }
@@ -257,19 +257,19 @@ async function generatePDFBlob() {
     yPos += 5;
 
     // Risikotabell
-    const tableData = currentAnalysis.risikoer.map((risk, index) => [
+    const tableData = currentAnalysis.risks.map((risk, index) => [
         (index + 1).toString(),
-        safeText(risk.risikoelement),
-        safeText(risk.saarbarhet),
-        safeText(risk.eksisterendeBeskyttelse),
-        safeText(risk.eksisterendeKontroll),
+        safeText(risk.riskElement),
+        safeText(risk.vulnerability),
+        safeText(risk.existingProtection),
+        safeText(risk.existingControl),
         safeText(risk.K),
         safeText(risk.I),
         safeText(risk.T),
-        safeText(risk.konsekvens),
-        safeText(risk.sannsynlighet),
-        safeText(risk.risikonivaa),
-        safeText(risk.foreslaatteTiltak)
+        safeText(risk.consequence),
+        safeText(risk.probability),
+        safeText(risk.riskLevel),
+        safeText(risk.proposedMeasures)
     ]);
 
     doc.autoTable({
@@ -298,8 +298,8 @@ async function generatePDFBlob() {
 
     // Kommentarer (hvis de finnes)
     try {
-        const risksWithComments = currentAnalysis.risikoer.filter(r =>
-            r.kommentarer && r.kommentarer.some(c => !c.resolved)
+        const risksWithComments = currentAnalysis.risks.filter(r =>
+            r.comments && r.comments.some(c => !c.resolved)
         );
 
         if (risksWithComments.length > 0) {
@@ -309,10 +309,10 @@ async function generatePDFBlob() {
 
             let yPosition = 35;
             risksWithComments.forEach((risk, idx) => {
-                const visibleComments = risk.kommentarer.filter(c => !c.resolved);
+                const visibleComments = risk.comments.filter(c => !c.resolved);
                 if (visibleComments.length === 0) return;
 
-                const riskIndex = currentAnalysis.risikoer.indexOf(risk) + 1;
+                const riskIndex = currentAnalysis.risks.indexOf(risk) + 1;
 
                 if (yPosition > 180) {
                     doc.addPage();
@@ -321,7 +321,7 @@ async function generatePDFBlob() {
 
                 doc.setFontSize(12);
                 doc.setFont(undefined, 'bold');
-                doc.text(`Risiko ${riskIndex}: ${safeText(risk.risikoelement)}`, 20, yPosition);
+                doc.text(`Risiko ${riskIndex}: ${safeText(risk.riskElement)}`, 20, yPosition);
                 yPosition += 7;
 
                 doc.setFont(undefined, 'normal');

@@ -142,11 +142,11 @@ async function generatePDFContent(doc) {
         doc.setTextColor(0, 0, 0);
 
         const metadata = [
-            ['Dato:', safeText(currentAnalysis.metadata.dato)],
-            ['Tjeneste/system:', safeText(currentAnalysis.metadata.tjeneste)],
-            ['Utført av:', safeText(currentAnalysis.metadata.utfortAv)],
-            ['Deltakere:', safeText(currentAnalysis.metadata.deltakere)],
-            ['Tjenesteeier:', safeText(currentAnalysis.metadata.tjenesteeier)]
+            ['Dato:', safeText(currentAnalysis.metadata.date)],
+            ['Tjeneste/system:', safeText(currentAnalysis.metadata.service)],
+            ['Utført av:', safeText(currentAnalysis.metadata.performedBy)],
+            ['Deltakere:', safeText(currentAnalysis.metadata.participants)],
+            ['Tjenesteeier:', safeText(currentAnalysis.metadata.serviceOwner)]
         ];
 
         // Regular metadata fields (single line)
@@ -159,7 +159,7 @@ async function generatePDFContent(doc) {
         });
 
         // Beskrivelse with word wrap
-        const beskrivelse = safeText(currentAnalysis.metadata.beskrivelse);
+        const beskrivelse = safeText(currentAnalysis.metadata.description);
         if (beskrivelse) {
             doc.setFont(undefined, 'bold');
             doc.text('Beskrivelse:', 20, yPos);
@@ -210,7 +210,7 @@ async function generatePDFContent(doc) {
         doc.text('STATISTIKK', 20, yPos);
         yPos += 6;
 
-        const risks = currentAnalysis.risikoer || [];
+        const risks = currentAnalysis.risks || [];
         const total = risks.length;
 
         // Kategoriser risikoer
@@ -218,7 +218,7 @@ async function generatePDFContent(doc) {
         let sumRiskLevel = 0;
 
         risks.forEach(risk => {
-            const rn = risk.risikonivaa;
+            const rn = risk.riskLevel;
             sumRiskLevel += rn;
 
             if (rn >= 1 && rn <= 6) green++;
@@ -290,19 +290,19 @@ async function generatePDFContent(doc) {
         yPos += 10;
 
         // Risikotabell
-        const tableData = currentAnalysis.risikoer.map(r => [
-            r.nr || 0,
-            safeText(r.risikoelement),
-            safeText(r.saarbarhet),
-            safeText(r.eksisterendeBeskyttelse),
-            safeText(r.eksisterendeKontroll),
+        const tableData = currentAnalysis.risks.map(r => [
+            r.number || 0,
+            safeText(r.riskElement),
+            safeText(r.vulnerability),
+            safeText(r.existingProtection),
+            safeText(r.existingControl),
             r.K || 0,
             r.I || 0,
             r.T || 0,
-            r.konsekvens || 0,
-            r.sannsynlighet || 0,
-            r.risikonivaa || 0,
-            safeText(r.foreslaatteTiltak)
+            r.consequence || 0,
+            r.probability || 0,
+            r.riskLevel || 0,
+            safeText(r.proposedMeasures)
         ]);
 
         doc.autoTable({
@@ -362,7 +362,7 @@ async function generatePDFContent(doc) {
         doc.text('KIT-ANALYSE (Konfidensialitet, Integritet, Tilgjengelighet)', 20, yPos);
         yPos += 10;
 
-        const kit = calculateKIT(currentAnalysis.risikoer);
+        const kit = calculateKIT(currentAnalysis.risks);
         const kitData = [
             ['K (kun konfidensialitet)', `${kit.K} risikoer`],
             ['I (kun integritet)', `${kit.I} risikoer`],
@@ -431,7 +431,7 @@ async function generatePDFContent(doc) {
 
     // Legg til kommentarer - Filtrer basert på synlige typer
     try {
-        const risksWithComments = currentAnalysis.risikoer.filter(r => r.comments && r.comments.length > 0);
+        const risksWithComments = currentAnalysis.risks.filter(r => r.comments && r.comments.length > 0);
 
         if (risksWithComments.length > 0) {
             // Sjekk om det finnes noen synlige kommentarer
@@ -482,7 +482,7 @@ async function generatePDFContent(doc) {
                             doc.setFontSize(11);
                             doc.setFont(undefined, 'bold');
                             doc.setTextColor(0, 0, 0);
-                            const titleText = `#${risk.nr || 0} - ${safeText(risk.risikoelement)}`;
+                            const titleText = `#${risk.number || 0} - ${safeText(risk.riskElement)}`;
                             const titleLines = doc.splitTextToSize(titleText, 250);
                             doc.text(titleLines, 20, yPos);
                             yPos += titleLines.length * 5 + 3;
@@ -601,8 +601,8 @@ async function generatePDFContent(doc) {
     }
 
     // Lagre PDF
-    const tjeneste = safeText(currentAnalysis.metadata.tjeneste) || 'analyse';
-    const dato = safeText(currentAnalysis.createdDate) || 'ukjent';
-    const filename = `Risky_${tjeneste}_${dato}.pdf`;
+    const serviceName = safeText(currentAnalysis.metadata.service) || 'analyse';
+    const date = safeText(currentAnalysis.createdDate) || 'ukjent';
+    const filename = `Risky_${serviceName}_${date}.pdf`;
     doc.save(filename);
 }
