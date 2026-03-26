@@ -36,6 +36,7 @@ function renderRisksTable() {
 
 function createRiskRow(risk, index) {
     const row = document.createElement('tr');
+    row.id = `risk-row-${risk.id}`;
     row.dataset.riskId = risk.id;
 
     // Nr

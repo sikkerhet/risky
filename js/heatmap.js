@@ -140,7 +140,7 @@ function drawMultiRiskMarker(ctx, x, y, risks) {
 
         ctx.fillStyle = '#ffffff';
         ctx.beginPath();
-        ctx.arc(labelX, labelY, 8, 0, Math.PI * 2);
+        ctx.arc(labelX, labelY, 11, 0, Math.PI * 2);
         ctx.fill();
 
         ctx.strokeStyle = '#52606d';
@@ -155,8 +155,49 @@ function drawMultiRiskMarker(ctx, x, y, risks) {
             risk,
             x: labelX,
             y: labelY,
-            radius: 8
+            radius: 11
         });
+    });
+}
+
+function getMarkerOffsets(count) {
+    if (count <= 1) {
+        return [{ x: 0, y: 0 }];
+    }
+
+    if (count === 2) {
+        return [
+            { x: -18, y: 0 },
+            { x: 18, y: 0 }
+        ];
+    }
+
+    if (count === 3) {
+        return [
+            { x: 0, y: -18 },
+            { x: -18, y: 16 },
+            { x: 18, y: 16 }
+        ];
+    }
+
+    if (count === 4) {
+        return [
+            { x: -18, y: -18 },
+            { x: 18, y: -18 },
+            { x: -18, y: 18 },
+            { x: 18, y: 18 }
+        ];
+    }
+
+    return [];
+}
+
+function drawClusteredRiskMarkers(ctx, x, y, risks) {
+    const offsets = getMarkerOffsets(risks.length);
+
+    risks.forEach((risk, index) => {
+        const offset = offsets[index] || { x: 0, y: 0 };
+        drawSingleRiskMarker(ctx, x + offset.x, y + offset.y, risk);
     });
 }
 
@@ -227,10 +268,15 @@ function drawRiskMarkers(ctx, canvas, layout) {
     Object.values(groupedRisks).forEach((risks) => {
         const firstRisk = risks[0];
         const x = layout.margin + (firstRisk.probability - 0.5) * layout.cellWidth;
-        const y = canvas.height - layout.margin - (firstRisk.consequence - 0.5) * layout.cellHeight + 22;
+        const y = canvas.height - layout.margin - (firstRisk.consequence - 0.5) * layout.cellHeight;
 
         if (risks.length === 1) {
             drawSingleRiskMarker(ctx, x, y, firstRisk);
+            return;
+        }
+
+        if (risks.length <= 4) {
+            drawClusteredRiskMarkers(ctx, x, y, risks);
             return;
         }
 
@@ -313,6 +359,26 @@ function setupHeatmapClick() {
 
     canvas.style.cursor = 'default';
     canvas.dataset.clickBound = 'true';
+}
+
+function scrollToRisk(riskId) {
+    const row = document.getElementById(`risk-row-${riskId}`) ||
+        document.querySelector(`[data-risk-id="${riskId}"]`);
+
+    if (!row) {
+        return;
+    }
+
+    document.querySelectorAll('.risk-row-target').forEach((element) => {
+        element.classList.remove('risk-row-target');
+    });
+
+    row.classList.add('risk-row-target');
+    row.scrollIntoView({ behavior: 'smooth', block: 'center' });
+
+    window.setTimeout(() => {
+        row.classList.remove('risk-row-target');
+    }, 1800);
 }
 
 function showRiskSelector(risks, x, y) {
