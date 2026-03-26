@@ -128,8 +128,14 @@ async function getBaselineAnalysesData() {
     const embeddedBaselines = Array.isArray(window.EMBEDDED_BASELINES) ? window.EMBEDDED_BASELINES : [];
     const baselineFiles = [
         'baseline-it-tjeneste.json',
+        'baseline-identitet-tilgang.json',
         'baseline-sky.json',
+        'baseline-kontinuitet-beredskap.json',
         'baseline-persondata.json',
+        'baseline-saas.json',
+        'baseline-ai-tjeneste.json',
+        'baseline-integrasjoner.json',
+        'baseline-devops-cicd.json',
         'baseline-webapp.json',
         'baseline-database.json',
         'baseline-mobile.json'

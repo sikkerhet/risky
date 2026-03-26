@@ -1,5 +1,6 @@
 const HEATMAP_GRID_SIZE = 5;
 const HEATMAP_MARGIN = 80;
+let heatmapHitAreas = [];
 
 function getHeatmapLayout(canvas) {
     const gridWidth = canvas.width - 2 * HEATMAP_MARGIN;
@@ -92,6 +93,14 @@ function drawSingleRiskMarker(ctx, x, y, risk) {
     ctx.textAlign = 'center';
     ctx.textBaseline = 'middle';
     ctx.fillText(String(risk.number), x, y);
+
+    heatmapHitAreas.push({
+        type: 'risk',
+        risk,
+        x,
+        y,
+        radius: 15
+    });
 }
 
 function drawMultiRiskMarker(ctx, x, y, risks) {
@@ -111,6 +120,14 @@ function drawMultiRiskMarker(ctx, x, y, risks) {
     ctx.textAlign = 'center';
     ctx.textBaseline = 'middle';
     ctx.fillText(String(risks.length), x, y);
+
+    heatmapHitAreas.push({
+        type: 'group',
+        risks,
+        x,
+        y,
+        radius
+    });
 
     ctx.font = '600 10px "Segoe UI", sans-serif';
     const angleStep = (Math.PI * 2) / risks.length;
@@ -132,7 +149,72 @@ function drawMultiRiskMarker(ctx, x, y, risks) {
 
         ctx.fillStyle = '#1f2933';
         ctx.fillText(String(risk.number), labelX, labelY);
+
+        heatmapHitAreas.push({
+            type: 'risk',
+            risk,
+            x: labelX,
+            y: labelY,
+            radius: 8
+        });
     });
+}
+
+function getRisksInHeatmapCell(probability, consequence) {
+    if (!currentAnalysis || !Array.isArray(currentAnalysis.risks)) {
+        return [];
+    }
+
+    return currentAnalysis.risks.filter((risk) =>
+        risk.probability === probability && risk.consequence === consequence
+    );
+}
+
+function getHeatmapPointerPosition(event, canvas) {
+    const rect = canvas.getBoundingClientRect();
+    const scaleX = canvas.width / rect.width;
+    const scaleY = canvas.height / rect.height;
+
+    return {
+        x: (event.clientX - rect.left) * scaleX,
+        y: (event.clientY - rect.top) * scaleY
+    };
+}
+
+function getHeatmapCellFromPosition(x, y, canvas, layout) {
+    if (
+        x < layout.margin ||
+        x > canvas.width - layout.margin ||
+        y < layout.margin ||
+        y > canvas.height - layout.margin
+    ) {
+        return null;
+    }
+
+    const probability = Math.min(
+        HEATMAP_GRID_SIZE,
+        Math.max(1, Math.floor((x - layout.margin) / layout.cellWidth) + 1)
+    );
+    const consequence = Math.min(
+        HEATMAP_GRID_SIZE,
+        Math.max(1, HEATMAP_GRID_SIZE - Math.floor((y - layout.margin) / layout.cellHeight))
+    );
+
+    return { probability, consequence };
+}
+
+function getHeatmapHitTarget(x, y) {
+    for (let index = heatmapHitAreas.length - 1; index >= 0; index -= 1) {
+        const area = heatmapHitAreas[index];
+        const dx = x - area.x;
+        const dy = y - area.y;
+
+        if ((dx * dx) + (dy * dy) <= area.radius * area.radius) {
+            return area;
+        }
+    }
+
+    return null;
 }
 
 function drawRiskMarkers(ctx, canvas, layout) {
@@ -162,6 +244,7 @@ function renderHeatmap() {
 
     const ctx = canvas.getContext('2d');
     const layout = getHeatmapLayout(canvas);
+    heatmapHitAreas = [];
 
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     drawHeatmapGrid(ctx, canvas, layout);
@@ -173,26 +256,53 @@ function setupHeatmapClick() {
     const canvas = document.getElementById('heatmapCanvas');
     if (!canvas || canvas.dataset.clickBound === 'true') return;
 
-    canvas.addEventListener('click', (event) => {
-        const rect = canvas.getBoundingClientRect();
-        const x = event.clientX - rect.left;
-        const y = event.clientY - rect.top;
+    const updateCursor = (event) => {
         const layout = getHeatmapLayout(canvas);
+        const { x, y } = getHeatmapPointerPosition(event, canvas);
+        const hitTarget = getHeatmapHitTarget(x, y);
 
-        if (
-            x < layout.margin ||
-            x > canvas.width - layout.margin ||
-            y < layout.margin ||
-            y > canvas.height - layout.margin
-        ) {
+        if (hitTarget) {
+            canvas.style.cursor = 'pointer';
+            return { hitTarget };
+        }
+
+        const cell = getHeatmapCellFromPosition(x, y, canvas, layout);
+
+        if (!cell) {
+            canvas.style.cursor = 'default';
+            return null;
+        }
+
+        const risksInCell = getRisksInHeatmapCell(cell.probability, cell.consequence);
+        canvas.style.cursor = risksInCell.length > 0 ? 'pointer' : 'default';
+        return { ...cell, risksInCell };
+    };
+
+    canvas.addEventListener('mousemove', updateCursor);
+    canvas.addEventListener('mouseleave', () => {
+        canvas.style.cursor = 'default';
+    });
+
+    canvas.addEventListener('click', (event) => {
+        const heatmapTarget = updateCursor(event);
+
+        if (!heatmapTarget) {
             return;
         }
 
-        const probability = Math.floor((x - layout.margin) / layout.cellWidth) + 1;
-        const consequence = HEATMAP_GRID_SIZE - Math.floor((y - layout.margin) / layout.cellHeight);
-        const risksInCell = currentAnalysis.risks.filter((risk) =>
-            risk.probability === probability && risk.consequence === consequence
-        );
+        if (heatmapTarget.hitTarget) {
+            if (heatmapTarget.hitTarget.type === 'risk') {
+                scrollToRisk(heatmapTarget.hitTarget.risk.id);
+                return;
+            }
+
+            if (heatmapTarget.hitTarget.type === 'group') {
+                showRiskSelector(heatmapTarget.hitTarget.risks, event.clientX, event.clientY);
+                return;
+            }
+        }
+
+        const { risksInCell } = heatmapTarget;
 
         if (risksInCell.length === 1) {
             scrollToRisk(risksInCell[0].id);
@@ -201,7 +311,7 @@ function setupHeatmapClick() {
         }
     });
 
-    canvas.style.cursor = 'pointer';
+    canvas.style.cursor = 'default';
     canvas.dataset.clickBound = 'true';
 }
 
