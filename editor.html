@@ -397,6 +397,7 @@
 
     <script src="js/i18n.js"></script>
     <script src="js/app.js"></script>
+    <script src="js/baseline-data.js"></script>
     <script src="js/risk-bank-data.js"></script>
     <script src="js/risikobank.js"></script>
     <script src="js/comments.js"></script>
@@ -876,19 +877,7 @@
             modal.style.display = 'flex';
 
             try {
-                // Load baseline analyses
-                const baselineFiles = [
-                    'baseline-it-tjeneste.json',
-                    'baseline-sky.json',
-                    'baseline-persondata.json',
-                    'baseline-webapp.json',
-                    'baseline-database.json',
-                    'baseline-mobile.json'
-                ];
-                const baselinePromises = baselineFiles.map(file =>
-                    fetch(`data/baselines/${file}`).then(r => r.json()).catch(() => null)
-                );
-                const baselines = (await Promise.all(baselinePromises)).filter(b => b !== null);
+                const baselines = await getBaselineAnalysesData();
 
                 // Get user's own analyses
                 const allAnalyses = getAnalyses();

@@ -103,6 +103,54 @@ function serializeAnalysis(analysis) {
     };
 }
 
+async function loadJsonWithFallback(url, embeddedData = null) {
+    try {
+        const response = await fetch(url);
+        if (!response.ok) {
+            throw new Error(`Could not load ${url}`);
+        }
+        return await response.json();
+    } catch (error) {
+        if (embeddedData) {
+            return JSON.parse(JSON.stringify(embeddedData));
+        }
+        throw error;
+    }
+}
+
+async function getExampleAnalysisData() {
+    const embeddedExample = window.EMBEDDED_EXAMPLE_ANALYSIS || null;
+    const analysis = await loadJsonWithFallback('data/eksempel-analyse.json', embeddedExample);
+    return normalizeAnalysis(analysis);
+}
+
+async function getBaselineAnalysesData() {
+    const embeddedBaselines = Array.isArray(window.EMBEDDED_BASELINES) ? window.EMBEDDED_BASELINES : [];
+    const baselineFiles = [
+        'baseline-it-tjeneste.json',
+        'baseline-sky.json',
+        'baseline-persondata.json',
+        'baseline-webapp.json',
+        'baseline-database.json',
+        'baseline-mobile.json'
+    ];
+
+    const loadedBaselines = await Promise.all(
+        baselineFiles.map(async (file, index) => {
+            const embedded = embeddedBaselines[index] || null;
+            try {
+                const baseline = await loadJsonWithFallback(`data/baselines/${file}`, embedded);
+                return normalizeAnalysis(baseline);
+            } catch (error) {
+                console.warn(`Could not load baseline ${file}:`, error);
+                return null;
+            }
+        })
+    );
+
+    return loadedBaselines.filter(Boolean);
+}
+
 function getAnalyses() {
     const stored = localStorage.getItem(STORAGE_KEY);
     const analyses = stored ? JSON.parse(stored) : [];

@@ -57,6 +57,7 @@
 
     <script src="js/i18n.js"></script>
     <script src="js/app.js"></script>
+    <script src="js/baseline-data.js"></script>
     <script>
         // Initialiser startskjerm
         document.addEventListener('DOMContentLoaded', () => {
@@ -613,12 +614,7 @@
 
         async function loadExampleAnalysis() {
             try {
-                const response = await fetch('data/eksempel-analyse.json');
-                if (!response.ok) {
-                    throw new Error('Kunne ikke laste eksempelanalyse');
-                }
-
-                const exampleAnalysis = await response.json();
+                const exampleAnalysis = await getExampleAnalysisData();
                 const analyses = getAnalyses();
 
                 // Sjekk om eksempelanalysen allerede finnes
@@ -647,7 +643,7 @@
                    analysis.id &&
                    analysis.name &&
                    analysis.metadata &&
-                   (Array.isArray(analysis.risks) || Array.isArray(analysis.risks));
+                   (Array.isArray(analysis.risks) || Array.isArray(analysis.risikoer));
         }
     </script>
 </body>
