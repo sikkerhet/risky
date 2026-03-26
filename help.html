@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Risky - Hjelp</title>
+    <title>Risky - Help</title>
     <link rel="stylesheet" href="css/main.css">
     <style>
         .help-container {
@@ -12,8 +12,22 @@
             padding: 40px 20px;
         }
         .help-header {
-            text-align: center;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 20px;
             margin-bottom: 40px;
+        }
+        .help-header-text {
+            flex: 1;
+            text-align: center;
+        }
+        .help-language {
+            display: flex;
+            gap: 8px;
+        }
+        .lang-btn {
+            min-width: 54px;
         }
         .help-section {
             margin-bottom: 40px;
@@ -74,400 +88,688 @@
         .tip strong {
             color: #856404;
         }
+        @media (max-width: 720px) {
+            .help-header {
+                flex-direction: column;
+                align-items: stretch;
+            }
+            .help-header-text {
+                text-align: left;
+            }
+            .help-language {
+                justify-content: flex-end;
+            }
+        }
     </style>
 </head>
 <body>
     <div class="help-container">
-        <button onclick="window.close()" class="btn btn-secondary back-btn">← Lukk hjelp</button>
+        <button id="closeTopBtn" onclick="window.close()" class="btn btn-secondary back-btn">← Close Help</button>
 
         <div class="help-header">
-            <h1>RISKY</h1>
-            <p class="subtitle">Brukerveiledning for risiko- og sårbarhetsanalyse</p>
-        </div>
-
-        <div class="help-section">
-            <h2>Kom i gang</h2>
-            <p>Risky er et verktøy for å lage profesjonelle Risiko- og Sårbarhetsanalyser (ROS) basert på 5x5 matrise-modellen.</p>
-
-            <h3>Opprett ny analyse</h3>
-            <ol>
-                <li>Klikk på <strong>"+ Ny analyse"</strong> i oversikten</li>
-                <li>Fyll ut metadata: tjeneste, dato, utført av, deltakere, tjenesteeier, beskrivelse</li>
-                <li>Legg til risikoer fra risikobanken eller opprett egne</li>
-                <li>Vurder K (Konfidensialitet), I (Integritet), T (Tilgjengelighet)</li>
-                <li>Vurder sannsynlighet (S*)</li>
-                <li>Systemet beregner automatisk konsekvens (K*) og risikonivå (RN*)</li>
-            </ol>
-
-            <div class="tip">
-                <strong>Tips:</strong> Alle endringer lagres automatisk i nettleserens localStorage. Du trenger ikke å "lagre" manuelt.
+            <div class="help-header-text">
+                <h1>RISKY</h1>
+                <p id="subtitle" class="subtitle"></p>
+            </div>
+            <div class="help-language">
+                <button id="langNoBtn" class="btn btn-secondary lang-btn" type="button">NO</button>
+                <button id="langEnBtn" class="btn btn-secondary lang-btn" type="button">EN</button>
             </div>
         </div>
 
-        <div class="help-section">
-            <h2>Risikobanker</h2>
-            <p>Risky kommer med <strong>322 profesjonelle risikoer</strong> fordelt i to systemer:</p>
+        <div id="helpContent"></div>
 
-            <h3>Modulære risikobanker (271 risikoer i 10 banker)</h3>
-            <p>Brukes via risikobank-velgeren (📁-knappen på tomme risikoer):</p>
-
-            <div class="feature-grid">
-                <div class="feature-card">
-                    <h4>Teknologi & Infrastruktur</h4>
-                    <ul style="font-size: 13px; margin: 10px 0;">
-                        <li>Generell IT-tjeneste (39)</li>
-                        <li>Skytjenester (13)</li>
-                        <li>Lokal server/on-prem (10)</li>
-                        <li>KI-tjenester og Agentic AI (34)</li>
-                        <li>SaaS-tjenester (34)</li>
-                        <li>Integrasjoner (35)</li>
-                    </ul>
-                </div>
-                <div class="feature-card">
-                    <h4>Organisasjon & Styring</h4>
-                    <ul style="font-size: 13px; margin: 10px 0;">
-                        <li>Governance (29)</li>
-                        <li>Personell (33)</li>
-                        <li>Kontinuitet og BCP (32)</li>
-                    </ul>
-                </div>
-                <div class="feature-card">
-                    <h4>Compliance</h4>
-                    <ul style="font-size: 13px; margin: 10px 0;">
-                        <li>Persondata/GDPR (12)</li>
-                    </ul>
-                </div>
-            </div>
-
-            <h3>Baseline-maler (51 risikoer i 6 maler)</h3>
-            <p>Brukes via import-funksjonen (📥 Importer risikoer):</p>
-
-            <div class="feature-grid">
-                <div class="feature-card">
-                    <h4>Baseline - IT-tjeneste (10)</h4>
-                    <p>Kompakt samling for generelle IT-tjenester</p>
-                </div>
-                <div class="feature-card">
-                    <h4>Baseline - Sky (8)</h4>
-                    <p>Cloud-spesifikke risikoer for AWS/Azure/GCP</p>
-                </div>
-                <div class="feature-card">
-                    <h4>Baseline - Persondata (8)</h4>
-                    <p>GDPR og personvernrisikoer</p>
-                </div>
-                <div class="feature-card">
-                    <h4>Baseline - Webapp/API (10)</h4>
-                    <p>OWASP Top 10 for webapplikasjoner</p>
-                </div>
-                <div class="feature-card">
-                    <h4>Baseline - Database (7)</h4>
-                    <p>Database-sikkerhet (SQL og NoSQL)</p>
-                </div>
-                <div class="feature-card">
-                    <h4>Baseline - Mobilapp (8)</h4>
-                    <p>OWASP Mobile Top 10 for iOS/Android</p>
-                </div>
-            </div>
-
-            <h3>Bruke hovedrisikobanken</h3>
-            <ol>
-                <li>Klikk <strong>"📁 Velg fra risikobank"</strong> på en tom risiko</li>
-                <li>Velg relevant bank (f.eks. "Skytjeneste" for AWS/Azure)</li>
-                <li>Velg kategori (f.eks. "Sky-tilgangsstyring")</li>
-                <li>Velg risiko fra listen</li>
-                <li>Alle felt fylles automatisk ut - du kan redigere dem etterpå</li>
-            </ol>
-
-            <h3>Bruke baseline-maler</h3>
-            <ol>
-                <li>Klikk <strong>"📥 Importer risikoer fra analyse"</strong></li>
-                <li>Velg en baseline-mal (f.eks. "Baseline - Webapp/API")</li>
-                <li>Velg "Erstatt" eller "Legg til"</li>
-                <li>Alle risikoer importeres automatisk</li>
-                <li>Du kan kombinere flere baselines ved å velge "Legg til"</li>
-            </ol>
-
-            <h3>Laste opp egne risikobanker</h3>
-            <p>Under "Risikobank administrasjon" i editoren kan du laste opp egne JSON-baserte risikobanker.</p>
-        </div>
-
-        <div class="help-section">
-            <h2>Importer risikoer fra andre analyser</h2>
-            <p>Gjenbruk risikoer fra tidligere analyser eller start med profesjonelle baseline-maler.</p>
-
-            <h3>📚 Forhåndsdefinerte baseline-maler</h3>
-            <p>Risky kommer med <strong>6 baseline-maler</strong> med til sammen <strong>51 profesjonelle risikoer</strong>:</p>
-
-            <div class="feature-grid">
-                <div class="feature-card">
-                    <h4>Baseline - Generell IT-tjeneste (10)</h4>
-                    <p style="font-size: 13px;">Tilgangsstyring, sårbarhetshåndtering, logging, backup, BCP/DR, applikasjonssikkerhet, kryptering, awareness, secrets</p>
-                </div>
-                <div class="feature-card">
-                    <h4>Baseline - Skytjeneste (8)</h4>
-                    <p style="font-size: 13px;">IAM, S3/storage exposure, kryptering, logging, network segmentering, tagging, IMDS</p>
-                </div>
-                <div class="feature-card">
-                    <h4>Baseline - Persondata/GDPR (8)</h4>
-                    <p style="font-size: 13px;">Behandlingsgrunnlag, informasjonsplikt, rettigheter, lagringstid, DBA, tredjeland, DPIA, breach notification</p>
-                </div>
-                <div class="feature-card">
-                    <h4>Baseline - Webapp/API (10)</h4>
-                    <p style="font-size: 13px;">OWASP Top 10: Access control, injection, XSS, CSRF, SSRF, kryptografi, sårbare komponenter, sessions, design</p>
-                </div>
-                <div class="feature-card">
-                    <h4>Baseline - Database (7)</h4>
-                    <p style="font-size: 13px;">Privilegier, eksponering, kryptering at rest, audit logging, backup, SQL injection, credentials</p>
-                </div>
-                <div class="feature-card">
-                    <h4>Baseline - Mobilapp (8)</h4>
-                    <p style="font-size: 13px;">OWASP Mobile: Storage, kryptering, autentisering, autorisasjon, input validering, reverse engineering, biblioteker, backup</p>
-                </div>
-            </div>
-
-            <h3>Hvordan importere</h3>
-            <ol>
-                <li>I editor, klikk <strong>"📥 Importer risikoer fra analyse"</strong></li>
-                <li>Velg fra <strong>📚 Forhåndsdefinerte maler</strong> eller <strong>📋 Mine analyser</strong></li>
-                <li>Velg import-modus:
-                    <ul>
-                        <li><strong>Erstatt</strong> - Fjerner alle eksisterende risikoer og erstatter med importerte</li>
-                        <li><strong>Legg til</strong> - Beholder eksisterende risikoer og legger til importerte</li>
-                    </ul>
-                </li>
-                <li>Klikk <strong>"Importer risikoer"</strong></li>
-            </ol>
-
-            <h3>Bruksscenarioer</h3>
-            <ul>
-                <li><strong>Mal-analyser:</strong> Opprett "TEMPLATE - Standard IT-tjeneste" med vanlige risikoer, importer til nye analyser</li>
-                <li><strong>Baseline-analyser:</strong> Start nye prosjekter med baseline, legg til prosjektspesifikke risikoer</li>
-                <li><strong>Gjenbruk:</strong> Kopier risikoer fra relaterte analyser for konsistens</li>
-            </ul>
-
-            <div class="tip">
-                <strong>Tips:</strong> Kombiner flere baselines! Start med "Baseline - Webapp/API", importer med "Legg til", deretter importer "Baseline - Database" også med "Legg til".
-            </div>
-        </div>
-
-        <div class="help-section">
-            <h2>Heatmap og visualisering</h2>
-            <p>Heatmapet viser risikoplassering i en 5x5 matrise med fargekoding:</p>
-            <ul>
-                <li><strong style="color: #28a745;">Grønn (1-6):</strong> Lav risiko</li>
-                <li><strong style="color: #ffc107;">Gul (7-12):</strong> Middels risiko</li>
-                <li><strong style="color: #fd7e14;">Oransje (13-18):</strong> Høy risiko</li>
-                <li><strong style="color: #dc3545;">Rød (19-25):</strong> Kritisk risiko</li>
-            </ul>
-
-            <div class="tip">
-                <strong>Tips:</strong> Klikk på en sirkel i heatmapet for å hoppe direkte til risikoen i tabellen!
-            </div>
-
-            <h3>Grupperte risikoer</h3>
-            <p>Når flere risikoer havner på samme posisjon i heatmapet:</p>
-            <ul>
-                <li>Vises som én stor sirkel med antall (f.eks. "3×")</li>
-                <li>Små nummererte sirkler rundt viser hver enkelt risiko</li>
-                <li>Klikk på den store sirkelen eller en av de små for å hoppe til risikoen</li>
-            </ul>
-        </div>
-
-        <div class="help-section">
-            <h2>Statistikk og analyse</h2>
-            <p>Risky gir deg omfattende statistikk og visualiseringer for bedre innsikt i risikobildet.</p>
-
-            <h3>Statistikk-panel</h3>
-            <p>Få oversikt over risikofordelingen med disse nøkkeltallene:</p>
-            <ul>
-                <li><strong>Totalt antall risikoer:</strong> Samlet oversikt</li>
-                <li><strong>Røde risikoer (19-25):</strong> Kritiske risikoer som krever umiddelbar oppfølging</li>
-                <li><strong>Oransje risikoer (13-18):</strong> Høye risikoer med prioritert håndtering</li>
-                <li><strong>Gule risikoer (7-12):</strong> Medium risikoer for planlagt oppfølging</li>
-                <li><strong>Grønne risikoer (1-6):</strong> Lave risikoer med akseptabelt nivå</li>
-                <li><strong>Gjennomsnittlig risikonivå:</strong> Helhetlig risikovurdering</li>
-            </ul>
-
-            <h3>Visualiseringer</h3>
-            <p>Tre diagrammer gir deg dypere innsikt:</p>
-            <ul>
-                <li><strong>Fordeling etter konsekvens:</strong> Ser hvordan risikoene fordeler seg på konsekvens-skalaen (1-5)</li>
-                <li><strong>Fordeling etter sannsynlighet:</strong> Viser sannsynlighetsfordelingen på tvers av risikoer</li>
-                <li><strong>KIT-analyse fordeling:</strong> Gjennomsnittlige verdier for Konfidensialitet, Integritet og Tilgjengelighet</li>
-            </ul>
-
-            <div class="tip">
-                <strong>Tips:</strong> Statistikken oppdateres automatisk når du legger til, endrer eller sletter risikoer!
-            </div>
-        </div>
-
-        <div class="help-section">
-            <h2>Tilleggsinformasjon</h2>
-            <p>Legg til fritekst som blir inkludert i rapporter - perfekt for sammendrag, konklusjoner eller kontekst.</p>
-
-            <h3>Slik bruker du det</h3>
-            <ol>
-                <li>Klikk på overskriften "TILLEGGSINFORMASJON" for å endre den</li>
-                <li>Skriv inn din tekst i tekstfeltet</li>
-                <li>Teksten lagres automatisk og inkluderes i PDF- og Excel-eksport</li>
-            </ol>
-
-            <h3>Bruksområder</h3>
-            <ul>
-                <li>Sammendrag av risikoanalysen</li>
-                <li>Konklusjoner og anbefalinger</li>
-                <li>Kontekstinformasjon om tjenesten/systemet</li>
-                <li>Referanser til andre dokumenter</li>
-                <li>Møtenotater eller beslutninger</li>
-            </ul>
-        </div>
-
-        <div class="help-section">
-            <h2>Akseptansenivå og høyrisikorapport</h2>
-            <p>Definer akseptabelt risikonivå og eksporter en fokusert rapport over risikoer som må håndteres.</p>
-
-            <h3>Sette akseptansenivå</h3>
-            <p>Velg mellom fire nivåer:</p>
-            <ul>
-                <li><strong>Nivå 6 (Grønn):</strong> Alle risikoer over lav risiko</li>
-                <li><strong>Nivå 12 (Gul):</strong> Alle medium, høye og kritiske risikoer (standard)</li>
-                <li><strong>Nivå 18 (Oransje):</strong> Kun høye og kritiske risikoer</li>
-                <li><strong>Nivå 19 (Rød):</strong> Kun kritiske risikoer</li>
-            </ul>
-
-            <h3>Høyrisikorapport (Markdown)</h3>
-            <p>Eksporter en strukturert rapport i Markdown-format med:</p>
-            <ul>
-                <li>Automatisk gruppering etter risikonivå (kritisk, høy, medium)</li>
-                <li>Komplett informasjon for hver risiko inkludert KIT-verdier</li>
-                <li>Foreslåtte tiltak og eksisterende kontroller</li>
-                <li>Alle tilhørende kommentarer</li>
-                <li>Tidsstempel og metadata</li>
-            </ul>
-
-            <div class="tip">
-                <strong>Tips:</strong> Markdown-rapporten kan enkelt konverteres til PDF, Word eller HTML med verktøy som Pandoc eller VS Code!
-            </div>
-        </div>
-
-        <div class="help-section">
-            <h2>Tiltak og kommentarer</h2>
-            <p>Under "Tiltak og kommentarer" kan du legge til strukturerte oppfølgingspunkter på hver risiko.</p>
-
-            <h3>Fire typer kommentarer</h3>
-            <ul>
-                <li><strong>📋 Tiltak:</strong> Konkrete tiltak som skal gjennomføres</li>
-                <li><strong>💬 Kommentar:</strong> Generelle notater og observasjoner</li>
-                <li><strong>🔍 Oppfølging:</strong> Oppgaver som krever videre undersøkelse</li>
-                <li><strong>🔒 Intern kommentar:</strong> Sensitiv informasjon som ikke skal eksporteres</li>
-            </ul>
-
-            <h3>Eksterne lenker</h3>
-            <p>Du kan lenke til eksterne systemer ved å inkludere full URL i kommentarteksten:</p>
-            <ul>
-                <li>GitHub issues: <code>https://github.com/org/repo/issues/123</code></li>
-                <li>Jira: <code>https://jira.example.com/browse/PROJ-456</code></li>
-                <li>Dokumentasjon, arkiv, osv.</li>
-            </ul>
-            <p>Lenker blir automatisk klikkbare og åpnes i ny fane.</p>
-
-            <h3>Løse kommentarer</h3>
-            <p>Når et tiltak er gjennomført, klikk <strong>"✓ Løst"</strong>. Løste kommentarer skjules fra visning men beholdes i dataene.</p>
-        </div>
-
-        <div class="help-section">
-            <h2>Eksport og deling</h2>
-
-            <h3>I editor (enkelt analyse)</h3>
-            <ul>
-                <li><strong>📄 Eksporter PDF:</strong> Profesjonell rapport med metadata, risikotabell, kommentarer og sidetall</li>
-                <li><strong>📊 Eksporter Excel:</strong> Regneark med 3 ark (Metadata, Risikoer, Tiltak og kommentarer)</li>
-                <li><strong>💾 Eksporter JSON:</strong> Komplett datastruktur for backup eller deling</li>
-                <li><strong>📦 Eksporter alt (ZIP):</strong> Alle tre formater i én ZIP-fil</li>
-            </ul>
-
-            <h3>I oversikt (alle analyser)</h3>
-            <ul>
-                <li><strong>💾 Eksporter alle:</strong> ZIP-fil med mapper per analyse</li>
-                <li>Hver mappe inneholder PDF, Excel og JSON</li>
-                <li>Mapper nummereres: <code>1_MinTjeneste/</code>, <code>2_AnnenTjeneste/</code>, osv.</li>
-            </ul>
-
-            <div class="tip">
-                <strong>Filnavn format:</strong> <code>Risky_[tjeneste]_[dato].[format]</code>
-            </div>
-        </div>
-
-        <div class="help-section">
-            <h2>Import og backup</h2>
-
-            <h3>Importere analyser</h3>
-            <ol>
-                <li>Klikk <strong>"📁 Importer JSON"</strong> i oversikten</li>
-                <li>Velg en JSON-fil (enkelt analyse eller flere)</li>
-                <li>Hvis analysen finnes fra før, får du valg om å overskrive</li>
-            </ol>
-
-            <h3>Backup og gjenoppretting</h3>
-            <p>Alle data lagres i nettleserens localStorage. For å ta backup:</p>
-            <ol>
-                <li>Eksporter alle analyser som ZIP eller JSON</li>
-                <li>Lagre filen et trygt sted</li>
-                <li>Ved gjenoppretting: Bruk "Importer JSON"</li>
-            </ol>
-
-            <div class="tip">
-                <strong>Viktig:</strong> localStorage er per nettleser og domene. Hvis du bytter nettleser eller sletter nettleserdata, mister du analysene med mindre du har eksportert dem først!
-            </div>
-        </div>
-
-        <div class="help-section">
-            <h2>Tastaturhurtigtaster</h2>
-            <p>Effektiviser arbeidsflyten med tastaturhurtigtaster:</p>
-            <ul>
-                <li><strong>Tab:</strong> Naviger mellom felt i tabellen</li>
-                <li><strong>Enter:</strong> Bekreft endringer i auto-resize tekstfelt</li>
-                <li><strong>Ctrl+S / Cmd+S:</strong> (Ingen handling - auto-lagring er aktivert)</li>
-            </ul>
-        </div>
-
-        <div class="help-section">
-            <h2>Ofte stilte spørsmål</h2>
-
-            <h3>Hvorfor vises ikke mine analyser?</h3>
-            <p>Sjekk at du er i samme nettleser og ikke har slettet nettleserdata (cookies/localStorage).</p>
-
-            <h3>Kan jeg bruke Risky offline?</h3>
-            <p>Ja! Risky fungerer helt uten internett etter første lasting. Alle data lagres lokalt.</p>
-
-            <h3>Hvordan sletter jeg en analyse?</h3>
-            <p>I oversikten, klikk <strong>"🗑️"</strong> på analysekortet. Du får en bekreftelsesdialog.</p>
-
-            <h3>Kan jeg dele analyser med andre?</h3>
-            <p>Ja, eksporter analysen som PDF, Excel eller JSON og send filen. Mottaker kan importere JSON-filen i sitt eget Risky.</p>
-
-            <h3>Hvor mange analyser kan jeg ha?</h3>
-            <p>Begrenset kun av nettleserens localStorage (typisk 5-10 MB). Dette holder til hundrevis av analyser.</p>
-
-            <h3>Støtter Risky samarbeid?</h3>
-            <p>Ikke direkte. Risky er designet for enkeltstående bruk. For samarbeid: eksporter JSON, del filen, og importer endringer tilbake.</p>
-        </div>
-
-        <div class="help-section">
-            <h2>Teknisk informasjon</h2>
-            <p><strong>Versjon:</strong> 1.0</p>
-            <p><strong>Teknologi:</strong> Vanilla JavaScript, HTML5, CSS3</p>
-            <p><strong>Lagring:</strong> localStorage (lokal i nettleser)</p>
-            <p><strong>Biblioteker:</strong></p>
-            <ul>
-                <li>jsPDF + autotable - PDF-generering</li>
-                <li>SheetJS (xlsx) - Excel-generering</li>
-                <li>JSZip - ZIP-fil komprimering</li>
-            </ul>
-            <p><strong>Nettleserstøtte:</strong> Moderne nettlesere (Chrome, Firefox, Edge, Safari)</p>
-        </div>
-
-        <button onclick="window.close()" class="btn btn-primary" style="width: 100%; margin-top: 20px;">← Lukk hjelp</button>
+        <button id="closeBottomBtn" onclick="window.close()" class="btn btn-primary" style="width: 100%; margin-top: 20px;">← Close Help</button>
     </div>
+
+    <script>
+        const LANGUAGE_STORAGE_KEY = 'ros_language';
+
+        const helpTranslations = {
+            no: {
+                pageTitle: 'Risky - Hjelp',
+                closeHelp: '← Lukk hjelp',
+                subtitle: 'Brukerveiledning for risiko- og sårbarhetsanalyse',
+                sections: `
+                    <div class="help-section">
+                        <h2>Kom i gang</h2>
+                        <p>Risky er et verktøy for å lage profesjonelle risiko- og sårbarhetsanalyser (ROS) basert på en 5x5-matrise.</p>
+
+                        <h3>Opprett ny analyse</h3>
+                        <ol>
+                            <li>Klikk på <strong>"+ Ny analyse"</strong> i oversikten.</li>
+                            <li>Fyll ut metadata: tjeneste, dato, utført av, deltakere, tjenesteeier og beskrivelse.</li>
+                            <li>Legg til risikoer fra risikobanken eller opprett egne.</li>
+                            <li>Vurder K (konfidensialitet), I (integritet) og T (tilgjengelighet).</li>
+                            <li>Vurder sannsynlighet.</li>
+                            <li>Systemet beregner automatisk konsekvens og risikonivå.</li>
+                        </ol>
+
+                        <div class="tip">
+                            <strong>Tips:</strong> Alle endringer lagres automatisk i nettleserens localStorage. Du trenger ikke å lagre manuelt.
+                        </div>
+                    </div>
+
+                    <div class="help-section">
+                        <h2>Risikobanker</h2>
+                        <p>Risky kommer med et omfattende bibliotek av forhåndsdefinerte risikoer fordelt på modulære banker og baseline-maler.</p>
+
+                        <h3>Modulære risikobanker</h3>
+                        <p>Disse brukes via risikobank-velgeren på tomme risikoer.</p>
+
+                        <div class="feature-grid">
+                            <div class="feature-card">
+                                <h4>Teknologi og infrastruktur</h4>
+                                <ul style="font-size: 13px; margin: 10px 0;">
+                                    <li>Generell IT-tjeneste</li>
+                                    <li>Skytjeneste</li>
+                                    <li>Lokal server / on-prem</li>
+                                    <li>KI-tjenester og agentisk AI</li>
+                                    <li>SaaS</li>
+                                    <li>Integrasjoner</li>
+                                    <li>DevOps og CI/CD</li>
+                                    <li>IoT / Embedded</li>
+                                    <li>Fysisk sikkerhet</li>
+                                </ul>
+                            </div>
+                            <div class="feature-card">
+                                <h4>Organisasjon og styring</h4>
+                                <ul style="font-size: 13px; margin: 10px 0;">
+                                    <li>Governance</li>
+                                    <li>Personell</li>
+                                    <li>Kontinuitet og BCP</li>
+                                    <li>Supply Chain</li>
+                                </ul>
+                            </div>
+                            <div class="feature-card">
+                                <h4>Personvern og regelverk</h4>
+                                <ul style="font-size: 13px; margin: 10px 0;">
+                                    <li>Persondata / GDPR</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <h3>Baseline-maler</h3>
+                        <p>Disse brukes via importfunksjonen for å starte raskt med en ferdig samling risikoer.</p>
+
+                        <div class="feature-grid">
+                            <div class="feature-card">
+                                <h4>Baseline - IT-tjeneste</h4>
+                                <p>Kompakt startpakke for generelle IT-tjenester.</p>
+                            </div>
+                            <div class="feature-card">
+                                <h4>Baseline - Sky</h4>
+                                <p>Risikoer for AWS, Azure og GCP.</p>
+                            </div>
+                            <div class="feature-card">
+                                <h4>Baseline - Persondata</h4>
+                                <p>GDPR- og personvernrelaterte risikoer.</p>
+                            </div>
+                            <div class="feature-card">
+                                <h4>Baseline - Webapp / API</h4>
+                                <p>Vanlige web- og API-risikoer.</p>
+                            </div>
+                            <div class="feature-card">
+                                <h4>Baseline - Database</h4>
+                                <p>Database- og lagringsrelaterte risikoer.</p>
+                            </div>
+                            <div class="feature-card">
+                                <h4>Baseline - Mobilapp</h4>
+                                <p>Vanlige mobilapprisikoer.</p>
+                            </div>
+                        </div>
+
+                        <h3>Bruke risikobanken</h3>
+                        <ol>
+                            <li>Klikk på <strong>velg fra risikobank</strong> på en tom risiko.</li>
+                            <li>Velg relevant bank.</li>
+                            <li>Velg kategori.</li>
+                            <li>Velg risiko fra listen.</li>
+                            <li>Feltene fylles ut automatisk og kan redigeres etterpå.</li>
+                        </ol>
+
+                        <h3>Bruke baseline-maler</h3>
+                        <ol>
+                            <li>Klikk på <strong>Importer risikoer fra analyse</strong>.</li>
+                            <li>Velg en baseline-mal.</li>
+                            <li>Velg <strong>Erstatt</strong> eller <strong>Legg til</strong>.</li>
+                            <li>Risikoene importeres automatisk.</li>
+                        </ol>
+
+                        <h3>Egne risikobanker</h3>
+                        <p>Under risikobankadministrasjon i editoren kan du laste opp egne JSON-baserte risikobanker.</p>
+                    </div>
+
+                    <div class="help-section">
+                        <h2>Import og gjenbruk</h2>
+                        <p>Du kan gjenbruke risikoer fra tidligere analyser eller starte med baseline-maler.</p>
+
+                        <h3>Hvordan importere</h3>
+                        <ol>
+                            <li>Klikk <strong>Importer risikoer fra analyse</strong> i editoren.</li>
+                            <li>Velg fra forhåndsdefinerte maler eller dine egne analyser.</li>
+                            <li>Velg importmodus:
+                                <ul>
+                                    <li><strong>Erstatt</strong> fjerner eksisterende risikoer og erstatter dem med importerte.</li>
+                                    <li><strong>Legg til</strong> beholder eksisterende risikoer og legger til de nye.</li>
+                                </ul>
+                            </li>
+                            <li>Klikk <strong>Importer risikoer</strong>.</li>
+                        </ol>
+
+                        <div class="tip">
+                            <strong>Tips:</strong> Du kan kombinere flere baseline-maler ved å bruke <strong>Legg til</strong>.
+                        </div>
+                    </div>
+
+                    <div class="help-section">
+                        <h2>Heatmap og visualisering</h2>
+                        <p>Heatmapet viser plasseringen til hver risiko i en 5x5-matrise.</p>
+                        <ul>
+                            <li><strong style="color: #28a745;">Grønn (1-6):</strong> Lav risiko</li>
+                            <li><strong style="color: #ffc107;">Gul (7-12):</strong> Middels risiko</li>
+                            <li><strong style="color: #fd7e14;">Oransje (13-18):</strong> Høy risiko</li>
+                            <li><strong style="color: #dc3545;">Rød (19-25):</strong> Kritisk risiko</li>
+                        </ul>
+
+                        <div class="tip">
+                            <strong>Tips:</strong> Klikk på en sirkel i heatmapet for å hoppe direkte til risikoen i tabellen.
+                        </div>
+
+                        <h3>Grupperte risikoer</h3>
+                        <p>Når flere risikoer havner på samme posisjon:</p>
+                        <ul>
+                            <li>De vises som én større sirkel med antall.</li>
+                            <li>Mindre nummererte sirkler rundt viser enkeltrisikoene.</li>
+                            <li>Du kan klikke på gruppen eller en enkelt sirkel for å hoppe til riktig rad.</li>
+                        </ul>
+                    </div>
+
+                    <div class="help-section">
+                        <h2>Statistikk og analyse</h2>
+                        <p>Risky gir deg løpende statistikk og visualiseringer for bedre oversikt over risikobildet.</p>
+
+                        <h3>Statistikkpanel</h3>
+                        <ul>
+                            <li><strong>Totalt antall risikoer:</strong> samlet oversikt</li>
+                            <li><strong>Røde risikoer:</strong> kritiske risikoer med umiddelbart oppfølgingsbehov</li>
+                            <li><strong>Oransje risikoer:</strong> høye risikoer som bør prioriteres</li>
+                            <li><strong>Gule risikoer:</strong> middels risikoer for planlagt oppfølging</li>
+                            <li><strong>Grønne risikoer:</strong> lave risikoer på et akseptabelt nivå</li>
+                            <li><strong>Gjennomsnittlig risikonivå:</strong> overordnet nivå på analysen</li>
+                        </ul>
+
+                        <h3>Visualiseringer</h3>
+                        <ul>
+                            <li><strong>Fordeling etter konsekvens</strong></li>
+                            <li><strong>Fordeling etter sannsynlighet</strong></li>
+                            <li><strong>KIT-fordeling</strong></li>
+                        </ul>
+                    </div>
+
+                    <div class="help-section">
+                        <h2>Tilleggsinformasjon</h2>
+                        <p>Du kan legge inn fritekst som tas med i rapporter, for eksempel sammendrag, konklusjoner og bakgrunnsinformasjon.</p>
+
+                        <h3>Slik bruker du det</h3>
+                        <ol>
+                            <li>Klikk på overskriften for å endre den.</li>
+                            <li>Skriv inn ønsket tekst.</li>
+                            <li>Innholdet lagres automatisk og tas med i PDF- og Excel-eksport.</li>
+                        </ol>
+                    </div>
+
+                    <div class="help-section">
+                        <h2>Akseptansenivå og høyrisikorapport</h2>
+                        <p>Definer hvilket risikonivå som skal anses som akseptabelt, og eksporter en fokusert rapport for risikoer over dette nivået.</p>
+
+                        <h3>Akseptansenivå</h3>
+                        <ul>
+                            <li><strong>Nivå 6:</strong> alt over lav risiko</li>
+                            <li><strong>Nivå 12:</strong> medium, høy og kritisk risiko</li>
+                            <li><strong>Nivå 18:</strong> høy og kritisk risiko</li>
+                            <li><strong>Nivå 19:</strong> kun kritisk risiko</li>
+                        </ul>
+
+                        <h3>Høyrisikorapport</h3>
+                        <p>Markdown-eksporten samler risikoer over valgt akseptansenivå med tiltak, kontroller og kommentarer.</p>
+                    </div>
+
+                    <div class="help-section">
+                        <h2>Tiltak og kommentarer</h2>
+                        <p>Under tiltak og kommentarer kan du legge inn oppfølgingspunkter knyttet til hver risiko.</p>
+
+                        <h3>Kommentarstyper</h3>
+                        <ul>
+                            <li><strong>Tiltak:</strong> konkrete forbedringstiltak</li>
+                            <li><strong>Kommentar:</strong> notater og observasjoner</li>
+                            <li><strong>Oppfølging:</strong> ting som må undersøkes videre</li>
+                            <li><strong>Intern kommentar:</strong> informasjon som ikke skal eksporteres</li>
+                        </ul>
+
+                        <h3>Eksterne lenker</h3>
+                        <p>Hvis du limer inn en full URL i kommentarteksten, blir den automatisk klikkbar.</p>
+                    </div>
+
+                    <div class="help-section">
+                        <h2>Eksport og deling</h2>
+
+                        <h3>I editoren</h3>
+                        <ul>
+                            <li><strong>PDF:</strong> komplett rapport</li>
+                            <li><strong>Excel:</strong> flersidig regneark</li>
+                            <li><strong>JSON:</strong> backup og importformat</li>
+                            <li><strong>ZIP:</strong> samlet eksport av flere formater</li>
+                            <li><strong>Markdown:</strong> fokusert høyrisikorapport</li>
+                        </ul>
+
+                        <h3>I oversikten</h3>
+                        <ul>
+                            <li>Du kan eksportere alle analyser samlet som ZIP.</li>
+                            <li>Hver analyse får sin egen mappe med PDF, Excel og JSON.</li>
+                        </ul>
+
+                        <div class="tip">
+                            <strong>Filnavnformat:</strong> <code>Risky_[tjeneste]_[dato].[format]</code>
+                        </div>
+                    </div>
+
+                    <div class="help-section">
+                        <h2>Import og backup</h2>
+
+                        <h3>Importere analyser</h3>
+                        <ol>
+                            <li>Klikk <strong>Importer JSON</strong> i oversikten.</li>
+                            <li>Velg en eller flere JSON-filer.</li>
+                            <li>Hvis analysen finnes fra før, får du valg om å overskrive.</li>
+                        </ol>
+
+                        <h3>Backup og gjenoppretting</h3>
+                        <p>Alle data lagres i nettleserens localStorage. Hvis du vil sikre dataene dine eksplisitt, bør du eksportere JSON eller ZIP jevnlig.</p>
+
+                        <div class="tip">
+                            <strong>Viktig:</strong> localStorage er knyttet til nettleser og domene. Hvis du bytter nettleser eller sletter nettleserdata, forsvinner analysene med mindre du har eksportert dem.
+                        </div>
+                    </div>
+
+                    <div class="help-section">
+                        <h2>Tastaturhurtigtaster</h2>
+                        <ul>
+                            <li><strong>Tab:</strong> flytt mellom felt</li>
+                            <li><strong>Enter:</strong> bekreft endringer i tekstfelt som autoskalerer</li>
+                            <li><strong>Ctrl+S / Cmd+S:</strong> ingen egen handling, auto-lagring er aktiv</li>
+                        </ul>
+                    </div>
+
+                    <div class="help-section">
+                        <h2>Ofte stilte spørsmål</h2>
+
+                        <h3>Hvorfor vises ikke analysene mine?</h3>
+                        <p>Kontroller at du bruker samme nettleser og at nettleserdata ikke er slettet.</p>
+
+                        <h3>Kan jeg bruke Risky offline?</h3>
+                        <p>Ja. Risky fungerer uten backend og kan brukes lokalt i nettleseren.</p>
+
+                        <h3>Kan jeg dele analyser med andre?</h3>
+                        <p>Ja. Eksporter analysen som JSON, PDF eller Excel, og del filen.</p>
+
+                        <h3>Støtter Risky samarbeid?</h3>
+                        <p>Ikke direkte i sanntid. Vanlig arbeidsmåte er å eksportere JSON, dele filen og importere den hos mottaker.</p>
+                    </div>
+
+                    <div class="help-section">
+                        <h2>Teknisk informasjon</h2>
+                        <p><strong>Versjon:</strong> 2.0.0</p>
+                        <p><strong>Teknologi:</strong> Vanilla JavaScript, HTML5 og CSS3</p>
+                        <p><strong>Lagring:</strong> localStorage</p>
+                        <p><strong>Biblioteker:</strong></p>
+                        <ul>
+                            <li>jsPDF + AutoTable for PDF</li>
+                            <li>SheetJS (xlsx) for Excel</li>
+                            <li>JSZip for ZIP-eksport</li>
+                        </ul>
+                        <p><strong>Nettleserstøtte:</strong> moderne nettlesere som Chrome, Firefox, Edge og Safari</p>
+                    </div>
+                `
+            },
+            en: {
+                pageTitle: 'Risky - Help',
+                closeHelp: '← Close Help',
+                subtitle: 'User guide for structured risk and vulnerability analysis',
+                sections: `
+                    <div class="help-section">
+                        <h2>Getting Started</h2>
+                        <p>Risky is a browser-based tool for professional risk and vulnerability assessments built around a 5x5 matrix model.</p>
+
+                        <h3>Create A New Analysis</h3>
+                        <ol>
+                            <li>Click <strong>"+ New Analysis"</strong> in the overview.</li>
+                            <li>Fill in metadata such as service, date, performed by, participants, owner, and description.</li>
+                            <li>Add risks from the risk bank or create your own.</li>
+                            <li>Score K (confidentiality), I (integrity), and T (availability).</li>
+                            <li>Set probability.</li>
+                            <li>The system calculates consequence and risk level automatically.</li>
+                        </ol>
+
+                        <div class="tip">
+                            <strong>Tip:</strong> All changes are saved automatically in browser localStorage. No manual save is needed.
+                        </div>
+                    </div>
+
+                    <div class="help-section">
+                        <h2>Risk Banks</h2>
+                        <p>Risky includes an extensive library of predefined risks across modular banks and baseline templates.</p>
+
+                        <h3>Modular Risk Banks</h3>
+                        <p>These are used through the risk-bank picker on empty risks.</p>
+
+                        <div class="feature-grid">
+                            <div class="feature-card">
+                                <h4>Technology and Infrastructure</h4>
+                                <ul style="font-size: 13px; margin: 10px 0;">
+                                    <li>General IT Service</li>
+                                    <li>Cloud Service</li>
+                                    <li>Local Server / On-premises</li>
+                                    <li>AI Services and Agentic AI</li>
+                                    <li>SaaS</li>
+                                    <li>Integrations</li>
+                                    <li>DevOps and CI/CD</li>
+                                    <li>IoT / Embedded</li>
+                                    <li>Physical Security</li>
+                                </ul>
+                            </div>
+                            <div class="feature-card">
+                                <h4>Organization and Governance</h4>
+                                <ul style="font-size: 13px; margin: 10px 0;">
+                                    <li>Governance</li>
+                                    <li>Personnel</li>
+                                    <li>Continuity and BCP</li>
+                                    <li>Supply Chain</li>
+                                </ul>
+                            </div>
+                            <div class="feature-card">
+                                <h4>Privacy and Regulation</h4>
+                                <ul style="font-size: 13px; margin: 10px 0;">
+                                    <li>Personal Data / GDPR</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <h3>Baseline Templates</h3>
+                        <p>These are used through the import flow when you want a fast starting point.</p>
+
+                        <div class="feature-grid">
+                            <div class="feature-card">
+                                <h4>Baseline - IT Service</h4>
+                                <p>Compact starter set for general IT services.</p>
+                            </div>
+                            <div class="feature-card">
+                                <h4>Baseline - Cloud</h4>
+                                <p>Risks for AWS, Azure, and GCP environments.</p>
+                            </div>
+                            <div class="feature-card">
+                                <h4>Baseline - Personal Data</h4>
+                                <p>GDPR and privacy-related risks.</p>
+                            </div>
+                            <div class="feature-card">
+                                <h4>Baseline - Web App / API</h4>
+                                <p>Common web application and API risks.</p>
+                            </div>
+                            <div class="feature-card">
+                                <h4>Baseline - Database</h4>
+                                <p>Database and storage-related risks.</p>
+                            </div>
+                            <div class="feature-card">
+                                <h4>Baseline - Mobile App</h4>
+                                <p>Common mobile application risks.</p>
+                            </div>
+                        </div>
+
+                        <h3>Using The Risk Bank</h3>
+                        <ol>
+                            <li>Click <strong>Select From Risk Bank</strong> on an empty risk.</li>
+                            <li>Select the relevant bank.</li>
+                            <li>Select a category.</li>
+                            <li>Select a risk from the list.</li>
+                            <li>The fields are populated automatically and can be edited afterwards.</li>
+                        </ol>
+
+                        <h3>Using Baseline Templates</h3>
+                        <ol>
+                            <li>Click <strong>Import Risks From Analysis</strong>.</li>
+                            <li>Select a baseline template.</li>
+                            <li>Choose <strong>Replace</strong> or <strong>Add</strong>.</li>
+                            <li>The risks are imported automatically.</li>
+                        </ol>
+
+                        <h3>Custom Risk Banks</h3>
+                        <p>You can upload your own JSON-based risk banks from the risk-bank administration area in the editor.</p>
+                    </div>
+
+                    <div class="help-section">
+                        <h2>Import and Reuse</h2>
+                        <p>You can reuse risks from earlier analyses or start from baseline templates.</p>
+
+                        <h3>How To Import</h3>
+                        <ol>
+                            <li>Click <strong>Import Risks From Analysis</strong> in the editor.</li>
+                            <li>Select either predefined templates or one of your existing analyses.</li>
+                            <li>Choose import mode:
+                                <ul>
+                                    <li><strong>Replace</strong> removes existing risks and replaces them.</li>
+                                    <li><strong>Add</strong> keeps existing risks and appends new ones.</li>
+                                </ul>
+                            </li>
+                            <li>Click <strong>Import Risks</strong>.</li>
+                        </ol>
+
+                        <div class="tip">
+                            <strong>Tip:</strong> You can combine multiple baseline templates by using <strong>Add</strong>.
+                        </div>
+                    </div>
+
+                    <div class="help-section">
+                        <h2>Heatmap and Visualization</h2>
+                        <p>The heatmap shows each risk in a 5x5 matrix.</p>
+                        <ul>
+                            <li><strong style="color: #28a745;">Green (1-6):</strong> Low risk</li>
+                            <li><strong style="color: #ffc107;">Yellow (7-12):</strong> Medium risk</li>
+                            <li><strong style="color: #fd7e14;">Orange (13-18):</strong> High risk</li>
+                            <li><strong style="color: #dc3545;">Red (19-25):</strong> Critical risk</li>
+                        </ul>
+
+                        <div class="tip">
+                            <strong>Tip:</strong> Click a circle in the heatmap to jump directly to the matching row in the table.
+                        </div>
+
+                        <h3>Grouped Risks</h3>
+                        <p>When multiple risks share the same position:</p>
+                        <ul>
+                            <li>They are shown as one larger circle with a count.</li>
+                            <li>Smaller numbered circles around it represent individual risks.</li>
+                            <li>You can click either the group or one of the smaller circles to jump to the correct row.</li>
+                        </ul>
+                    </div>
+
+                    <div class="help-section">
+                        <h2>Statistics and Analysis</h2>
+                        <p>Risky provides live statistics and visual summaries of the current risk picture.</p>
+
+                        <h3>Statistics Panel</h3>
+                        <ul>
+                            <li><strong>Total risks:</strong> overall count</li>
+                            <li><strong>Red risks:</strong> critical risks requiring immediate follow-up</li>
+                            <li><strong>Orange risks:</strong> high risks that should be prioritized</li>
+                            <li><strong>Yellow risks:</strong> medium risks for planned handling</li>
+                            <li><strong>Green risks:</strong> low risks at an acceptable level</li>
+                            <li><strong>Average risk level:</strong> overall risk level for the analysis</li>
+                        </ul>
+
+                        <h3>Visualizations</h3>
+                        <ul>
+                            <li><strong>Distribution by consequence</strong></li>
+                            <li><strong>Distribution by probability</strong></li>
+                            <li><strong>KIT distribution</strong></li>
+                        </ul>
+                    </div>
+
+                    <div class="help-section">
+                        <h2>Additional Information</h2>
+                        <p>You can add free text that is included in reports, for example summaries, conclusions, or background context.</p>
+
+                        <h3>How To Use It</h3>
+                        <ol>
+                            <li>Click the section heading to rename it.</li>
+                            <li>Enter the text you want.</li>
+                            <li>The content is saved automatically and included in PDF and Excel exports.</li>
+                        </ol>
+                    </div>
+
+                    <div class="help-section">
+                        <h2>Acceptance Level and High-Risk Report</h2>
+                        <p>Define which risk level is acceptable and export a focused report for risks above that level.</p>
+
+                        <h3>Acceptance Level</h3>
+                        <ul>
+                            <li><strong>Level 6:</strong> everything above low risk</li>
+                            <li><strong>Level 12:</strong> medium, high, and critical risk</li>
+                            <li><strong>Level 18:</strong> high and critical risk only</li>
+                            <li><strong>Level 19:</strong> critical risk only</li>
+                        </ul>
+
+                        <h3>High-Risk Report</h3>
+                        <p>The Markdown export collects all risks above the chosen threshold together with measures, controls, and comments.</p>
+                    </div>
+
+                    <div class="help-section">
+                        <h2>Measures and Comments</h2>
+                        <p>Under measures and comments you can document structured follow-up items for each risk.</p>
+
+                        <h3>Comment Types</h3>
+                        <ul>
+                            <li><strong>Measure:</strong> concrete actions to carry out</li>
+                            <li><strong>Comment:</strong> general notes and observations</li>
+                            <li><strong>Follow-up:</strong> items that require further investigation</li>
+                            <li><strong>Internal comment:</strong> information that should not be exported</li>
+                        </ul>
+
+                        <h3>External Links</h3>
+                        <p>If you paste a full URL into a comment, it becomes clickable automatically.</p>
+                    </div>
+
+                    <div class="help-section">
+                        <h2>Export and Sharing</h2>
+
+                        <h3>In The Editor</h3>
+                        <ul>
+                            <li><strong>PDF:</strong> complete report</li>
+                            <li><strong>Excel:</strong> multi-sheet workbook</li>
+                            <li><strong>JSON:</strong> backup and import format</li>
+                            <li><strong>ZIP:</strong> bundled export of multiple formats</li>
+                            <li><strong>Markdown:</strong> focused high-risk report</li>
+                        </ul>
+
+                        <h3>In The Overview</h3>
+                        <ul>
+                            <li>You can export all analyses together as a ZIP file.</li>
+                            <li>Each analysis gets its own folder with PDF, Excel, and JSON.</li>
+                        </ul>
+
+                        <div class="tip">
+                            <strong>Filename format:</strong> <code>Risky_[service]_[date].[format]</code>
+                        </div>
+                    </div>
+
+                    <div class="help-section">
+                        <h2>Import and Backup</h2>
+
+                        <h3>Importing Analyses</h3>
+                        <ol>
+                            <li>Click <strong>Import JSON</strong> in the overview.</li>
+                            <li>Select one or more JSON files.</li>
+                            <li>If an analysis already exists, you can choose whether to overwrite it.</li>
+                        </ol>
+
+                        <h3>Backup and Restore</h3>
+                        <p>All data is stored in browser localStorage. If you want explicit backups, export JSON or ZIP regularly.</p>
+
+                        <div class="tip">
+                            <strong>Important:</strong> localStorage is tied to browser and domain. If you change browser or clear browser data, the analyses are lost unless they were exported first.
+                        </div>
+                    </div>
+
+                    <div class="help-section">
+                        <h2>Keyboard Shortcuts</h2>
+                        <ul>
+                            <li><strong>Tab:</strong> move between fields</li>
+                            <li><strong>Enter:</strong> confirm changes in auto-resizing text fields</li>
+                            <li><strong>Ctrl+S / Cmd+S:</strong> no dedicated action, auto-save is already active</li>
+                        </ul>
+                    </div>
+
+                    <div class="help-section">
+                        <h2>Frequently Asked Questions</h2>
+
+                        <h3>Why are my analyses missing?</h3>
+                        <p>Check that you are using the same browser and that browser data has not been cleared.</p>
+
+                        <h3>Can I use Risky offline?</h3>
+                        <p>Yes. Risky works without a backend and can be used locally in the browser.</p>
+
+                        <h3>Can I share analyses with others?</h3>
+                        <p>Yes. Export the analysis as JSON, PDF, or Excel and share the file.</p>
+
+                        <h3>Does Risky support collaboration?</h3>
+                        <p>Not as a real-time multi-user app. The normal workflow is to export JSON, share the file, and import it on the other side.</p>
+                    </div>
+
+                    <div class="help-section">
+                        <h2>Technical Information</h2>
+                        <p><strong>Version:</strong> 2.0.0</p>
+                        <p><strong>Technology:</strong> Vanilla JavaScript, HTML5, and CSS3</p>
+                        <p><strong>Storage:</strong> localStorage</p>
+                        <p><strong>Libraries:</strong></p>
+                        <ul>
+                            <li>jsPDF + AutoTable for PDF</li>
+                            <li>SheetJS (xlsx) for Excel</li>
+                            <li>JSZip for ZIP export</li>
+                        </ul>
+                        <p><strong>Browser support:</strong> modern browsers such as Chrome, Firefox, Edge, and Safari</p>
+                    </div>
+                `
+            }
+        };
+
+        function getCurrentLanguage() {
+            return localStorage.getItem(LANGUAGE_STORAGE_KEY) === 'en' ? 'en' : 'no';
+        }
+
+        function setLanguage(language) {
+            localStorage.setItem(LANGUAGE_STORAGE_KEY, language);
+            renderHelp(language);
+        }
+
+        function renderHelp(language) {
+            const content = helpTranslations[language] || helpTranslations.no;
+            document.documentElement.lang = language;
+            document.title = content.pageTitle;
+            document.getElementById('subtitle').textContent = content.subtitle;
+            document.getElementById('closeTopBtn').textContent = content.closeHelp;
+            document.getElementById('closeBottomBtn').textContent = content.closeHelp;
+            document.getElementById('helpContent').innerHTML = content.sections;
+
+            document.getElementById('langNoBtn').className = language === 'no'
+                ? 'btn btn-primary lang-btn'
+                : 'btn btn-secondary lang-btn';
+            document.getElementById('langEnBtn').className = language === 'en'
+                ? 'btn btn-primary lang-btn'
+                : 'btn btn-secondary lang-btn';
+        }
+
+        document.getElementById('langNoBtn').addEventListener('click', () => setLanguage('no'));
+        document.getElementById('langEnBtn').addEventListener('click', () => setLanguage('en'));
+
+        renderHelp(getCurrentLanguage());
+    </script>
 </body>
 </html>
