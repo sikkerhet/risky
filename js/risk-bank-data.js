@@ -1,5 +1,54 @@
 window.EMBEDDED_RISK_BANKS = [
   {
+    "id": "min-bank",
+    "navn": {
+      "no": "Min organisasjons risikobank",
+      "en": "My Organization Risk Bank"
+    },
+    "beskrivelse": {
+      "no": "Eksempel på egendefinert risikobank - kopier og tilpass denne",
+      "en": "Example of a custom risk bank. Copy and adapt this file"
+    },
+    "kategorier": [
+      {
+        "id": "min-kategori",
+        "navn": {
+          "no": "Min kategori",
+          "en": "My Category"
+        },
+        "risikoer": [
+          {
+            "id": "risk-001",
+            "risikoelement": {
+              "no": "Beskriv hva som kan gå galt",
+              "en": "Describe what can go wrong"
+            },
+            "saarbarhet": {
+              "no": "Beskriv hvorfor det kan gå galt",
+              "en": "Describe why it can go wrong"
+            },
+            "eksisterendeBeskyttelse": {
+              "no": "Hva gjør vi allerede for å beskytte oss?",
+              "en": "What do we already do to protect ourselves?"
+            },
+            "eksisterendeKontroll": {
+              "no": "Hvordan sjekker vi at beskyttelsen fungerer?",
+              "en": "How do we verify that the protection works?"
+            },
+            "K": 3,
+            "I": 2,
+            "T": 4,
+            "sannsynlighet": 3,
+            "foreslaatteTiltak": {
+              "no": "Hva bør vi gjøre for å redusere risikoen?",
+              "en": "What should we do to reduce the risk?"
+            }
+          }
+        ]
+      }
+    ]
+  },
+  {
     "id": "ai-tjenester",
     "navn": {
       "no": "KI-tjenester og agentisk AI",
@@ -65,7 +114,7 @@ window.EMBEDDED_RISK_BANKS = [
             "K": 5,
             "I": 3,
             "T": 1,
-            "sannsynlighet": 3,
+            "sannsynlighet": 4,
             "foreslaatteTiltak": {
               "no": "Oppdagelse og sladding av PII, dataminimering og separate modeller for ulike sensitivitetsnivåer",
               "en": "PII detection/redaction, data minimization, separate models per sensitivity level"
@@ -146,7 +195,7 @@ window.EMBEDDED_RISK_BANKS = [
             "K": 4,
             "I": 5,
             "T": 2,
-            "sannsynlighet": 3,
+            "sannsynlighet": 4,
             "foreslaatteTiltak": {
               "no": "Isoler eksternt innhold, skil mellom privilegier og krev eksplisitt bekreftelse for sensitive handlinger",
               "en": "Isolate external content, privilege separation, action confirmation for sensitive operations"
@@ -223,7 +272,7 @@ window.EMBEDDED_RISK_BANKS = [
             },
             "saarbarhet": {
               "no": "Agenten har verktøytilgang uten tilstrekkelige beskyttelsesmekanismer",
-              "en": "Agent har tool access without tilstrekkelige guardrails"
+              "en": "The agent has tool access without sufficient guardrails"
             },
             "eksisterendeBeskyttelse": {
               "no": "Skrivebeskyttede verktøy der det er mulig",
@@ -246,11 +295,11 @@ window.EMBEDDED_RISK_BANKS = [
             "id": "agent-002",
             "risikoelement": {
               "no": "Privilegieeskalering - agenten får mer tilgang enn tiltenkt",
-              "en": "Privilege escalation - agent gets mer access than tiltenkt"
+              "en": "Privilege escalation gives the agent more access than intended"
             },
             "saarbarhet": {
               "no": "Verktøyrettigheter er ikke granulære nok, og verktøy kan kjedes sammen",
-              "en": "Tool permissions not granular nok, chaining of tools"
+              "en": "Tool permissions are not granular enough, and tools can be chained together"
             },
             "eksisterendeBeskyttelse": {
               "no": "Rollebasert verktøytilgang",
@@ -273,7 +322,7 @@ window.EMBEDDED_RISK_BANKS = [
             "id": "agent-003",
             "risikoelement": {
               "no": "Uendelige løkker og ressursutmattelse",
-              "en": "Uendelige loops and resource exhaustion"
+              "en": "Endless loops and resource exhaustion"
             },
             "saarbarhet": {
               "no": "Agenten kan gå i løkke eller bruke for mye ressurser",
@@ -358,7 +407,7 @@ window.EMBEDDED_RISK_BANKS = [
             },
             "saarbarhet": {
               "no": "Agenter kommuniserer uten tilstrekkelig verifisering av tillit",
-              "en": "Agents kommuniserer without tilstrekkelig trust verification"
+              "en": "Agents communicate without sufficient trust verification"
             },
             "eksisterendeBeskyttelse": {
               "no": "Agentautentisering",
@@ -448,7 +497,7 @@ window.EMBEDDED_RISK_BANKS = [
             },
             "saarbarhet": {
               "no": "Modellen er ikke robust mot adversarial perturbations",
-              "en": "Modell not robust mot adversarial perturbations"
+              "en": "The model is not robust against adversarial perturbations"
             },
             "eksisterendeBeskyttelse": {
               "no": "Validering av input",
@@ -471,11 +520,11 @@ window.EMBEDDED_RISK_BANKS = [
             "id": "model-002",
             "risikoelement": {
               "no": "Data poisoning - treningsdata er kompromittert",
-              "en": "Data poisoning - training data kompromittert"
+              "en": "Data poisoning compromises training data"
             },
             "saarbarhet": {
               "no": "Ubetrodde eller uvaliderte data i treningssettet",
-              "en": "Untrusted or uvalidert data in training set"
+              "en": "Untrusted or unvalidated data in the training set"
             },
             "eksisterendeBeskyttelse": {
               "no": "Begrensninger på datakilder",
@@ -498,11 +547,11 @@ window.EMBEDDED_RISK_BANKS = [
             "id": "model-003",
             "risikoelement": {
               "no": "Model drift - treffsikkerheten svekkes over tid",
-              "en": "Model operations - accuracy degraderer over time"
+              "en": "Model drift reduces accuracy over time"
             },
             "saarbarhet": {
               "no": "Fordelingsskifte mellom treningsdata og produksjonsdata",
-              "en": "Distribution shift mellom training and production data"
+              "en": "Distribution shift between training and production data"
             },
             "eksisterendeBeskyttelse": {
               "no": "Kvartalsvis retrening",
@@ -518,7 +567,7 @@ window.EMBEDDED_RISK_BANKS = [
             "sannsynlighet": 4,
             "foreslaatteTiltak": {
               "no": "Kontinuerlig overvåking, drift-deteksjon, automatisert retrening, A/B-testing og kanariutrulling",
-              "en": "Continuous monitoring, operations detection, automated retraining, A/B testing, canary deployments"
+              "en": "Continuous monitoring, drift detection, automated retraining, A/B testing, and canary deployments"
             }
           },
           {
@@ -529,7 +578,7 @@ window.EMBEDDED_RISK_BANKS = [
             },
             "saarbarhet": {
               "no": "Kompromitterte ML-biblioteker og forhåndstrente modeller",
-              "en": "Kompromitterte ML-biblioteker, pre-trained models"
+              "en": "Compromised ML libraries and pre-trained models"
             },
             "eksisterendeBeskyttelse": {
               "no": "Skanning av avhengigheter",
@@ -552,11 +601,11 @@ window.EMBEDDED_RISK_BANKS = [
             "id": "model-005",
             "risikoelement": {
               "no": "Infrastruktur for modellservering er kompromittert",
-              "en": "Model serving infrastructure kompromittert"
+              "en": "Model serving infrastructure is compromised"
             },
             "saarbarhet": {
               "no": "Inference-endepunkter er ikke tilstrekkelig sikret",
-              "en": "Inference endpoints not tilstrekkelig sikret"
+              "en": "Inference endpoints are not sufficiently secured"
             },
             "eksisterendeBeskyttelse": {
               "no": "API-autentisering",
@@ -588,11 +637,11 @@ window.EMBEDDED_RISK_BANKS = [
             "id": "data-001",
             "risikoelement": {
               "no": "Memorisering av sensitive treningsdata",
-              "en": "Memorization of sensitive treningsdata"
+              "en": "Memorization of sensitive training data"
             },
             "saarbarhet": {
               "no": "Modellen memorerer ordrette eksempler fra treningsdata",
-              "en": "Modell memorerer verbatim training examples"
+              "en": "The model memorizes verbatim training examples"
             },
             "eksisterendeBeskyttelse": {
               "no": "Fjerning av PII fra treningsdata",
@@ -641,12 +690,12 @@ window.EMBEDDED_RISK_BANKS = [
           {
             "id": "data-003",
             "risikoelement": {
-              "no": "Membership inference - avdekke hvem som var i treningssettet",
-              "en": "Membership inference - avdekke who that var in training set"
+              "no": "Medlemskapsinferens - avdekke hvem som var i treningssettet",
+              "en": "Membership inference reveals whether someone was in the training set"
             },
             "saarbarhet": {
               "no": "En angriper kan utlede om et individ var i treningsdata",
-              "en": "Adversary can dedusere about a individ var in training data"
+              "en": "An attacker can infer whether an individual was part of the training data"
             },
             "eksisterendeBeskyttelse": {
               "no": "Aggregerte modellresultater",
@@ -732,11 +781,11 @@ window.EMBEDDED_RISK_BANKS = [
             "id": "bias-001",
             "risikoelement": {
               "no": "Diskriminerende beslutninger på grunn av skjeve treningsdata",
-              "en": "Diskriminerende decisions pga. biased training data"
+              "en": "Discriminatory decisions are caused by biased training data"
             },
             "saarbarhet": {
               "no": "Treningsdata gjenspeiler historisk skjevhet og diskriminering",
-              "en": "Training data reflekterer historisk bias/diskriminering"
+              "en": "Training data reflects historical bias and discrimination"
             },
             "eksisterendeBeskyttelse": {
               "no": "Mangfold i treningsdata",
@@ -751,19 +800,19 @@ window.EMBEDDED_RISK_BANKS = [
             "T": 1,
             "sannsynlighet": 4,
             "foreslaatteTiltak": {
-              "no": "Rettferdighetsmål som demographic parity og equalized odds, teknikker for å redusere bias og varierte datasett",
+              "no": "Rettferdighetsmål som demografisk paritet og like feilrater, teknikker for å redusere skjevhet og varierte datasett",
               "en": "Fairness metrics (demographic parity, equalized odds), bias mitigation techniques, diverse datasets"
             }
           },
           {
             "id": "bias-002",
             "risikoelement": {
-              "no": "Feedback loops forsterker eksisterende bias",
-              "en": "Feedback loops forsterker eksisterende bias"
+              "no": "Tilbakekoblingssløyfer forsterker eksisterende skjevhet",
+              "en": "Feedback loops reinforce existing bias"
             },
             "saarbarhet": {
-              "no": "Modellprediksjoner påvirker fremtidige data og forsterker eksisterende bias",
-              "en": "Model predictions affects future data that reinforcer bias"
+              "no": "Modellprediksjoner påvirker fremtidige data og forsterker eksisterende skjevhet",
+              "en": "Model predictions affect future data and reinforce existing bias"
             },
             "eksisterendeBeskyttelse": {
               "no": "Varierte treningskilder",
@@ -778,7 +827,7 @@ window.EMBEDDED_RISK_BANKS = [
             "T": 2,
             "sannsynlighet": 4,
             "foreslaatteTiltak": {
-              "no": "Counterfactual fairness, intervensjonsstrategier og jevnlig retrening med korrigerte data",
+              "no": "Kontrafaktisk rettferdighet, intervensjonsstrategier og jevnlig retrening med korrigerte data",
               "en": "Counterfactual fairness, intervention strategies, regular retraining with corrected data"
             }
           },
@@ -786,11 +835,11 @@ window.EMBEDDED_RISK_BANKS = [
             "id": "bias-003",
             "risikoelement": {
               "no": "Manglende representasjon av minoritetsgrupper",
-              "en": "Missing representasjon of minoritetsgrupper"
+              "en": "Insufficient representation of minority groups"
             },
             "saarbarhet": {
               "no": "Undergrupper er underrepresentert i trenings- og testdata",
-              "en": "Subgrupper underrepresentert in training/test data"
+              "en": "Subgroups are underrepresented in training and test data"
             },
             "eksisterendeBeskyttelse": {
               "no": "Minimumsstørrelse på utvalg",
@@ -813,7 +862,7 @@ window.EMBEDDED_RISK_BANKS = [
             "id": "bias-004",
             "risikoelement": {
               "no": "Manglende åpenhet om KI-beslutninger",
-              "en": "Missing transparency about AI-decisions"
+              "en": "Lack of transparency in AI decisions"
             },
             "saarbarhet": {
               "no": "Brukere kan ikke forstå eller utfordre AI-beslutninger",
@@ -821,7 +870,7 @@ window.EMBEDDED_RISK_BANKS = [
             },
             "eksisterendeBeskyttelse": {
               "no": "Informasjon om bruk av KI",
-              "en": "Disclaimer about AI-bruk"
+              "en": "Disclosure that AI is being used"
             },
             "eksisterendeKontroll": {
               "no": "Kvartalsvis gjennomgang av beslutninger",
@@ -832,7 +881,7 @@ window.EMBEDDED_RISK_BANKS = [
             "T": 1,
             "sannsynlighet": 4,
             "foreslaatteTiltak": {
-              "no": "Forklarbar KI som SHAP og LIME, begrunnelser for beslutninger, klagemekanismer og model cards",
+              "no": "Forklarbar KI som SHAP og LIME, begrunnelser for beslutninger, klagemekanismer og modellkort",
               "en": "Explainable AI (SHAP, LIME), decision justifications, appeal mechanisms, model cards"
             }
           }
@@ -895,7 +944,7 @@ window.EMBEDDED_RISK_BANKS = [
             "T": 2,
             "sannsynlighet": 4,
             "foreslaatteTiltak": {
-              "no": "Model cards, datasheets for datasett, systemkort, versjonering og revisjonsspor",
+              "no": "Modellkort, datasettbeskrivelser, systemkort, versjonering og revisjonsspor",
               "en": "Model cards, datasheets for datasets, system cards, versioning, audit trails"
             }
           },
@@ -949,7 +998,7 @@ window.EMBEDDED_RISK_BANKS = [
             "T": 3,
             "sannsynlighet": 4,
             "foreslaatteTiltak": {
-              "no": "KI-spesifikke testrammeverk, red teaming, chaos engineering for KI og trinnvis utrulling",
+              "no": "KI-spesifikke testrammeverk, rødlagstesting, kaostesting for KI og trinnvis utrulling",
               "en": "AI-specific testing frameworks, red-teaming, chaos engineering for AI, staged rollouts"
             }
           },
@@ -961,7 +1010,7 @@ window.EMBEDDED_RISK_BANKS = [
             },
             "saarbarhet": {
               "no": "Avhengighet av en bestemt LLM-leverandør eller KI-plattform",
-              "en": "dependency of specific LLM provider or AI platform"
+              "en": "Dependence on a specific LLM provider or AI platform"
             },
             "eksisterendeBeskyttelse": {
               "no": "Kontraktsforhandlinger",
@@ -1006,7 +1055,7 @@ window.EMBEDDED_RISK_BANKS = [
             "id": "cicd-001",
             "risikoelement": {
               "no": "Kompromittert CI/CD-pipeline injiserer ondsinnet kode",
-              "en": "Kompromittert CI/CD-pipeline injiserer ondsinnet code"
+              "en": "A compromised CI/CD pipeline injects malicious code"
             },
             "saarbarhet": {
               "no": "Manglende signing av artifacts, svak tilgangskontroll på pipeline",
@@ -1033,11 +1082,11 @@ window.EMBEDDED_RISK_BANKS = [
             "id": "cicd-002",
             "risikoelement": {
               "no": "Secrets eksponert i CI/CD logs eller environment variables",
-              "en": "Secrets eksponert in CI/CD logs or environment variables"
+              "en": "Secrets are exposed in CI/CD logs or environment variables"
             },
             "saarbarhet": {
               "no": "Hardkodede secrets, secrets i plaintext logs, ekko av env vars",
-              "en": "Hardcoded secrets, secrets in plaintext logs, ekko of env vars"
+              "en": "Hardcoded secrets, secrets in plaintext logs, and echoed environment variables"
             },
             "eksisterendeBeskyttelse": {
               "no": "Secret scanning i repos",
@@ -1045,7 +1094,7 @@ window.EMBEDDED_RISK_BANKS = [
             },
             "eksisterendeKontroll": {
               "no": "Periodisk gjennomgang av logs",
-              "en": "Periodisk review of logs"
+              "en": "Periodic review of logs"
             },
             "K": 5,
             "I": 4,
@@ -1064,7 +1113,7 @@ window.EMBEDDED_RISK_BANKS = [
             },
             "saarbarhet": {
               "no": "Manglende approvals, ingen utrulling gates, direktegang fra dev til prod",
-              "en": "Missing approvals, no deployment gates, direktegang from dev to prod"
+              "en": "Missing approvals, no deployment gates, and direct promotion from development to production"
             },
             "eksisterendeBeskyttelse": {
               "no": "manuell approval for prod",
@@ -1087,11 +1136,11 @@ window.EMBEDDED_RISK_BANKS = [
             "id": "cicd-004",
             "risikoelement": {
               "no": "Drift av usignerte eller uverifiserte artifacts",
-              "en": "operations of usignerte or uverifiserte artifacts"
+              "en": "Unsigned or unverified artifacts are deployed"
             },
             "saarbarhet": {
               "no": "Ingen signatursjekk på binaries, manglende provenance",
-              "en": "No signaturcheck on binaries, missing provenance"
+              "en": "No signature checks on binaries and missing provenance"
             },
             "eksisterendeBeskyttelse": {
               "no": "Artifacts fra trusted pipeline",
@@ -1099,7 +1148,7 @@ window.EMBEDDED_RISK_BANKS = [
             },
             "eksisterendeKontroll": {
               "no": "manuell verifisering ved kritiske releases",
-              "en": "Manual verifisering during critical releases"
+              "en": "Manual verification during critical releases"
             },
             "K": 5,
             "I": 5,
@@ -1114,7 +1163,7 @@ window.EMBEDDED_RISK_BANKS = [
             "id": "cicd-005",
             "risikoelement": {
               "no": "Lateral movement fra kompromittert build agent",
-              "en": "Lateral movement from kompromittert build agent"
+              "en": "Lateral movement from a compromised build agent"
             },
             "saarbarhet": {
               "no": "Build agents med for mange tilganger, delte credentials",
@@ -1154,7 +1203,7 @@ window.EMBEDDED_RISK_BANKS = [
             },
             "saarbarhet": {
               "no": "Utviklere committer.env-filer, hardkoder credentials",
-              "en": "Utviklere committer.env-filer, hardkoder credentials"
+              "en": "Developers commit .env files and hardcode credentials"
             },
             "eksisterendeBeskyttelse": {
               "no": ".gitignore for sensitive files",
@@ -1181,7 +1230,7 @@ window.EMBEDDED_RISK_BANKS = [
             },
             "saarbarhet": {
               "no": "Manglende sikkerhetsfokus i gjennomganger og tidspress",
-              "en": "Missing security focus in reviews, tidspress"
+              "en": "Missing security focus in reviews and time pressure"
             },
             "eksisterendeBeskyttelse": {
               "no": "Mandatory code gjennomgang",
@@ -1204,7 +1253,7 @@ window.EMBEDDED_RISK_BANKS = [
             "id": "code-003",
             "risikoelement": {
               "no": "Manglende branch protection tillater force push til main",
-              "en": "Missing branch protection tillater force push to main"
+              "en": "Missing branch protection allows force-pushes to the main branch"
             },
             "saarbarhet": {
               "no": "Åpen main branch uten krav til gjennomganger",
@@ -1212,7 +1261,7 @@ window.EMBEDDED_RISK_BANKS = [
             },
             "eksisterendeBeskyttelse": {
               "no": "Branch protection på viktige repos",
-              "en": "Branch protection on viktige repositories"
+              "en": "Branch protection on critical repositories"
             },
             "eksisterendeKontroll": {
               "no": "Audit logs",
@@ -1945,7 +1994,7 @@ window.EMBEDDED_RISK_BANKS = [
             "K": 3,
             "I": 4,
             "T": 5,
-            "sannsynlighet": 1,
+            "sannsynlighet": 2,
             "foreslaatteTiltak": {
               "no": "FM-200/Inergen suppression, early warning detection, redundant sites, fire-resistant construction",
               "en": "FM-200/Inergen suppression, early warning detection, redundant sites, fire-resistant construction"
@@ -2009,7 +2058,7 @@ window.EMBEDDED_RISK_BANKS = [
             "id": "env-004",
             "risikoelement": {
               "no": "Strømbrudd uten tilstrekkelig backup",
-              "en": "power outages without tilstrekkelig backup"
+              "en": "Power outages occur without sufficient backup capacity"
             },
             "saarbarhet": {
               "no": "Enkelt strømforsyning, UPS runtime for kort",
@@ -2099,11 +2148,11 @@ window.EMBEDDED_RISK_BANKS = [
             "id": "surv-002",
             "risikoelement": {
               "no": "CCTV-opptak ikke lagret eller tilgjengelig ved hendelse",
-              "en": "CCTV-opptak not lagret or tilgjengelig during incident"
+              "en": "CCTV footage is not stored or available during an incident"
             },
             "saarbarhet": {
               "no": "Kort retention, overskrevet data, manglende backup",
-              "en": "short retention, overskrevet data, missing backup"
+              "en": "Short retention, overwritten data, and missing backups"
             },
             "eksisterendeBeskyttelse": {
               "no": "30-day retention",
@@ -2118,7 +2167,7 @@ window.EMBEDDED_RISK_BANKS = [
             "T": 2,
             "sannsynlighet": 3,
             "foreslaatteTiltak": {
-              "no": "90+ day retention, redundant storage, encrypted backups, tamper-evident",
+              "no": "90+ dagers lagringstid, redundant lagring, krypterte sikkerhetskopier og manipulasjonssikring",
               "en": "90+ day retention, redundant storage, encrypted backups, tamper-evident"
             }
           },
@@ -2192,11 +2241,11 @@ window.EMBEDDED_RISK_BANKS = [
               "en": "Sensitive documents are left on printers"
             },
             "saarbarhet": {
-              "no": "Manglende pull-printing, clean desk ikke håndhevet",
+              "no": "Manglende sikker utskrift og clean desk-praksis håndheves ikke",
               "en": "Missing pull printing and a clean desk policy that is not enforced"
             },
             "eksisterendeBeskyttelse": {
-              "no": "Clean desk policy",
+              "no": "Clean desk-praksis",
               "en": "Clean desk policy"
             },
             "eksisterendeKontroll": {
@@ -2262,7 +2311,7 @@ window.EMBEDDED_RISK_BANKS = [
             "T": 1,
             "sannsynlighet": 4,
             "foreslaatteTiltak": {
-              "no": "personvern film on windows, interior meeting rooms, clean whiteboard policy, digital whiteboards",
+              "no": "personvernfilm på vinduer, innvendige møterom, clean whiteboard-policy og digitale tavler",
               "en": "Privacy film on windows, interior meeting rooms, clean whiteboard policy, digital whiteboards"
             }
           }
@@ -2430,7 +2479,7 @@ window.EMBEDDED_RISK_BANKS = [
               "en": "Employees work from unsecured locations where family members or others may gain access"
             },
             "eksisterendeBeskyttelse": {
-              "no": "Work-from-home policy",
+              "no": "Retningslinjer for hjemmekontor",
               "en": "Work-from-home policy"
             },
             "eksisterendeKontroll": {
@@ -2516,7 +2565,7 @@ window.EMBEDDED_RISK_BANKS = [
             "K": 4,
             "I": 3,
             "T": 2,
-            "sannsynlighet": 3,
+            "sannsynlighet": 4,
             "foreslaatteTiltak": {
               "no": "Automatisk deaktivering ved avslutning, full integrasjon med HR-system",
               "en": "Automatic deactivation during offboarding and full integration with the HR system"
@@ -2543,7 +2592,7 @@ window.EMBEDDED_RISK_BANKS = [
             "K": 3,
             "I": 3,
             "T": 1,
-            "sannsynlighet": 3,
+            "sannsynlighet": 4,
             "foreslaatteTiltak": {
               "no": "Implementere roller-basert tilgangsstyring (RBAC), minste privilegium",
               "en": "Implement role-based access control (RBAC) and least privilege"
@@ -3638,7 +3687,7 @@ window.EMBEDDED_RISK_BANKS = [
             "T": 3,
             "sannsynlighet": 3,
             "foreslaatteTiltak": {
-              "no": "Utarbeide sikkerhetsstrategi godkjent av ledelsen, 3-årig roadmap, målsettinger og suksesskriterier",
+              "no": "Utarbeide sikkerhetsstrategi godkjent av ledelsen, treårig veikart, målsettinger og suksesskriterier",
               "en": "Develop a security strategy approved by executive management, with a three-year roadmap, clear goals, and success criteria"
             }
           },
@@ -3743,7 +3792,7 @@ window.EMBEDDED_RISK_BANKS = [
               "en": "No one knows who is responsible for datasets and systems"
             },
             "eksisterendeBeskyttelse": {
-              "no": "System owners dokumentert noen steder",
+              "no": "Systemeiere er dokumentert enkelte steder",
               "en": "System owners are documented in some places"
             },
             "eksisterendeKontroll": {
@@ -3755,7 +3804,7 @@ window.EMBEDDED_RISK_BANKS = [
             "T": 3,
             "sannsynlighet": 4,
             "foreslaatteTiltak": {
-              "no": "Data eierskap model (data owners, data stewards, data custodians), RACI matrix, asset register",
+              "no": "Modell for dataeierskap (dataeier, dataforvalter og databehandler), RACI-matrise og eiendelsregister",
               "en": "Data ownership model (data owners, data stewards, data custodians), RACI matrix, asset register"
             }
           },
@@ -3853,7 +3902,7 @@ window.EMBEDDED_RISK_BANKS = [
             "id": "policy-001",
             "risikoelement": {
               "no": "Sikkerhetspolicyer mangler eller er utdaterte",
-              "en": "Sikkerhetspolicyer lacks or is utdaterte"
+              "en": "Security policies are missing or outdated"
             },
             "saarbarhet": {
               "no": "Ingen klare regler for sikker oppførsel",
@@ -3861,7 +3910,7 @@ window.EMBEDDED_RISK_BANKS = [
             },
             "eksisterendeBeskyttelse": {
               "no": "Noen gamle policyer",
-              "en": "Anyone gamle policies"
+              "en": "Some older policies exist"
             },
             "eksisterendeKontroll": {
               "no": "Ad-hoc oppdateringer",
@@ -6294,7 +6343,7 @@ window.EMBEDDED_RISK_BANKS = [
             "K": 4,
             "I": 4,
             "T": 2,
-            "sannsynlighet": 2,
+            "sannsynlighet": 3,
             "foreslaatteTiltak": {
               "no": "Sikre geografisk spredning av kritisk infrastruktur over ulike regioner, multi-region strategi for skytjenester",
               "en": "Ensure geographic separation of critical infrastructure across regions and use a multi-region strategy for cloud services"
@@ -6438,7 +6487,7 @@ window.EMBEDDED_RISK_BANKS = [
             "K": 5,
             "I": 4,
             "T": 4,
-            "sannsynlighet": 2,
+            "sannsynlighet": 3,
             "foreslaatteTiltak": {
               "no": "Implementere 3-2-1 backup-strategi med offline eller air-gapped kopi, immutable backups",
               "en": "Implement a 3-2-1 backup strategy with an offline or air-gapped copy and immutable backups"
@@ -6596,7 +6645,7 @@ window.EMBEDDED_RISK_BANKS = [
             },
             "saarbarhet": {
               "no": "Mangelfull loggføring av beslutninger, tiltak og tidslinje under krise",
-              "en": "Mangelfull logging of decisions, tiltak and tidslinje under krise"
+              "en": "Insufficient logging of decisions, actions, and the incident timeline during a crisis"
             },
             "eksisterendeBeskyttelse": {
               "no": "hendelse tickets og meldinger",
@@ -6604,7 +6653,7 @@ window.EMBEDDED_RISK_BANKS = [
             },
             "eksisterendeKontroll": {
               "no": "Sporadisk loggføring",
-              "en": "Sporadisk logging"
+              "en": "Sporadic logging"
             },
             "K": 2,
             "I": 2,
@@ -6628,19 +6677,19 @@ window.EMBEDDED_RISK_BANKS = [
             "id": "test-001",
             "risikoelement": {
               "no": "BCP/DR-plan aldri testet",
-              "en": "BCP/DR-plan aldri tested"
+              "en": "The BCP/DR plan is never tested"
             },
             "saarbarhet": {
               "no": "Planen er kun teoretisk, ukjent om den faktisk fungerer i praksis",
-              "en": "Planen is only teoretisk, unknown about den actual fungerer in praksis"
+              "en": "The plan is only theoretical, and it is unknown whether it actually works in practice"
             },
             "eksisterendeBeskyttelse": {
               "no": "Dokumentert plan eksisterer",
-              "en": "Documented plan eksisterer"
+              "en": "A documented plan exists"
             },
             "eksisterendeKontroll": {
               "no": "Ingen strukturerte tester",
-              "en": "No strukturerte tester"
+              "en": "No structured tests"
             },
             "K": 4,
             "I": 4,
@@ -6655,7 +6704,7 @@ window.EMBEDDED_RISK_BANKS = [
             "id": "test-002",
             "risikoelement": {
               "no": "Tabletop exercises aldri gjennomført",
-              "en": "Tabletop exercises aldri completed"
+              "en": "Tabletop exercises have never been conducted"
             },
             "saarbarhet": {
               "no": "Kriseteam har ikke øvd på samarbeid og beslutningsprosesser i simulerte kriser",
@@ -6682,7 +6731,7 @@ window.EMBEDDED_RISK_BANKS = [
             "id": "test-003",
             "risikoelement": {
               "no": "Funn fra tester ikke fulgt opp",
-              "en": "Findings from tester not fulgt opp"
+              "en": "Findings from exercises are not followed up"
             },
             "saarbarhet": {
               "no": "Svakheter identifiseres i tester, men ikke lukkes før neste test",
@@ -6694,7 +6743,7 @@ window.EMBEDDED_RISK_BANKS = [
             },
             "eksisterendeKontroll": {
               "no": "Rapportering av funn",
-              "en": "Rapportering of findings"
+              "en": "Reporting of findings"
             },
             "K": 3,
             "I": 3,
@@ -6709,7 +6758,7 @@ window.EMBEDDED_RISK_BANKS = [
             "id": "test-004",
             "risikoelement": {
               "no": "Tester dekker ikke realistiske scenarioer",
-              "en": "Tester dekker not realistiske scenarioer"
+              "en": "Exercises do not cover realistic scenarios"
             },
             "saarbarhet": {
               "no": "Øvelser fokuserer på enkle feil, ikke komplekse eller kaskadefeil",
@@ -6717,11 +6766,11 @@ window.EMBEDDED_RISK_BANKS = [
             },
             "eksisterendeBeskyttelse": {
               "no": "Enkle failover-tester",
-              "en": "Enkle failover-tester"
+              "en": "Simple failover tests"
             },
             "eksisterendeKontroll": {
               "no": "Sjekkliste for standard scenarioer",
-              "en": "Sjekkliste for standard scenarioer"
+              "en": "Checklist for standard scenarios"
             },
             "K": 3,
             "I": 3,
@@ -6736,19 +6785,19 @@ window.EMBEDDED_RISK_BANKS = [
             "id": "test-005",
             "risikoelement": {
               "no": "Nøkkelpersonell deltar ikke i øvelser",
-              "en": "Key personnel deltar not in exercises"
+              "en": "Key personnel do not participate in exercises"
             },
             "saarbarhet": {
               "no": "Kritiske roller (ledelse, kommunikasjon, tekniske eksperter) ikke involvert i testing",
-              "en": "Critical roles (ledelse, communications, tekniske eksperter) not involvert in testing"
+              "en": "Critical roles such as management, communications, and technical experts are not involved in testing"
             },
             "eksisterendeBeskyttelse": {
               "no": "Teknisk team tester failover",
-              "en": "technical team tester failover"
+              "en": "The technical team tests failover"
             },
             "eksisterendeKontroll": {
               "no": "Driftsteam deltar",
-              "en": "Driftsteam deltar"
+              "en": "Operations staff participate"
             },
             "K": 3,
             "I": 3,
@@ -6756,7 +6805,7 @@ window.EMBEDDED_RISK_BANKS = [
             "sannsynlighet": 3,
             "foreslaatteTiltak": {
               "no": "Sikre deltagelse fra alle roller i CMT, rotere deltagere for å bygge bredere kompetanse",
-              "en": "Sikre deltagelse from all roles in CMT, rotere deltagere for to bygge bredere expertise"
+              "en": "Ensure participation from all roles in the CMT and rotate participants to build broader expertise"
             }
           }
         ]
@@ -6772,11 +6821,11 @@ window.EMBEDDED_RISK_BANKS = [
             "id": "lev-res-001",
             "risikoelement": {
               "no": "Single point of failure hos kritisk leverandør",
-              "en": "Single point of failure hos critical vendor"
+              "en": "Single point of failure with a critical vendor"
             },
             "saarbarhet": {
               "no": "Én leverandør for kritisk tjeneste uten redundans eller alternativ",
-              "en": "Én vendor for critical service without redundancy or alternativ"
+              "en": "A single vendor provides a critical service without redundancy or an alternative"
             },
             "eksisterendeBeskyttelse": {
               "no": "SLA med leverandør",
@@ -6819,7 +6868,7 @@ window.EMBEDDED_RISK_BANKS = [
             "sannsynlighet": 3,
             "foreslaatteTiltak": {
               "no": "Kreve BCP/DR-dokumentasjon fra kritiske leverandører, inkludere i leverandør due diligence, årlig oppdatering",
-              "en": "Kreve BCP/DR-documentation from critical vendors, include in vendor due diligence, annual updating"
+              "en": "Require BCP/DR documentation from critical vendors, include it in vendor due diligence, and update it annually"
             }
           },
           {
@@ -6853,7 +6902,7 @@ window.EMBEDDED_RISK_BANKS = [
             "id": "lev-res-004",
             "risikoelement": {
               "no": "Kaskadeeffekt fra underleverandør",
-              "en": "Kaskadeeffekt from subcontractor"
+              "en": "Cascade effects from subcontractors"
             },
             "saarbarhet": {
               "no": "Leverandørens underleverandører (4th party) påvirker vår tjeneste uten at vi er klar over avhengigheten",
@@ -6861,7 +6910,7 @@ window.EMBEDDED_RISK_BANKS = [
             },
             "eksisterendeBeskyttelse": {
               "no": "Direkte leverandør-relasjon",
-              "en": "Direct vendor-relasjon"
+              "en": "Direct vendor relationship"
             },
             "eksisterendeKontroll": {
               "no": "Ikke kartlagt underleverandører",
@@ -6873,7 +6922,7 @@ window.EMBEDDED_RISK_BANKS = [
             "sannsynlighet": 3,
             "foreslaatteTiltak": {
               "no": "Kreve transparens om kritiske underleverandører, inkludere i leverandør risk vurdering, 4th party disclosure",
-              "en": "Kreve transparens about critical subcontractors, include in vendor risk assessment, 4th party disclosure"
+              "en": "Require transparency about critical subcontractors, include them in vendor risk assessments, and require fourth-party disclosure"
             }
           },
           {
@@ -6888,7 +6937,7 @@ window.EMBEDDED_RISK_BANKS = [
             },
             "eksisterendeBeskyttelse": {
               "no": "Kontrakt med oppsigelsesfrist",
-              "en": "Kontrakt with oppsigelsesfrist"
+              "en": "A contract includes a notice period"
             },
             "eksisterendeKontroll": {
               "no": "Ikke overvåket leverandørs finansielle helse",
@@ -6955,7 +7004,7 @@ window.EMBEDDED_RISK_BANKS = [
             },
             "eksisterendeKontroll": {
               "no": "Manuell gjennomgang av logger ved mistanke",
-              "en": "Manual review of logs during mistanke"
+              "en": "Manual review of logs during suspected incidents"
             },
             "K": 4,
             "I": 4,
@@ -7444,7 +7493,7 @@ window.EMBEDDED_RISK_BANKS = [
               "en": "Missing purpose limitation and overly broad data collection"
             },
             "eksisterendeBeskyttelse": {
-              "no": "personvern policy",
+              "no": "Retningslinjer for personvern",
               "en": "Privacy policy"
             },
             "eksisterendeKontroll": {
@@ -7471,7 +7520,7 @@ window.EMBEDDED_RISK_BANKS = [
               "en": "Collects more data than necessary"
             },
             "eksisterendeBeskyttelse": {
-              "no": "personvern policy",
+              "no": "Retningslinjer for personvern",
               "en": "Privacy policy"
             },
             "eksisterendeKontroll": {
@@ -7802,7 +7851,7 @@ window.EMBEDDED_RISK_BANKS = [
             "T": 2,
             "sannsynlighet": 3,
             "foreslaatteTiltak": {
-              "no": "Background screening policy, politiattest for sensitive roller, education verification, employment history check",
+              "no": "Retningslinjer for bakgrunnssjekk, politiattest for sensitive roller, verifisering av utdanning og kontroll av ansettelseshistorikk",
               "en": "Establish a background screening policy, require criminal record checks where lawful and relevant, verify education, and verify employment history"
             }
           },
@@ -7821,7 +7870,7 @@ window.EMBEDDED_RISK_BANKS = [
               "en": "General onboarding"
             },
             "eksisterendeKontroll": {
-              "no": "Welcome email med policyer",
+              "no": "Velkomstepost med retningslinjer",
               "en": "Welcome email with policies"
             },
             "K": 3,
@@ -7989,7 +8038,7 @@ window.EMBEDDED_RISK_BANKS = [
               "en": "An employee copies data before departure"
             },
             "eksisterendeBeskyttelse": {
-              "no": "DLP policyer",
+              "no": "DLP-retningslinjer",
               "en": "DLP policies"
             },
             "eksisterendeKontroll": {
@@ -8070,7 +8119,7 @@ window.EMBEDDED_RISK_BANKS = [
               "en": "A poor working environment increases motivation for sabotage"
             },
             "eksisterendeBeskyttelse": {
-              "no": "HR policyer",
+              "no": "HR-retningslinjer",
               "en": "HR policies"
             },
             "eksisterendeKontroll": {
@@ -8187,7 +8236,7 @@ window.EMBEDDED_RISK_BANKS = [
               "en": "Employees use weak or reused passwords"
             },
             "eksisterendeBeskyttelse": {
-              "no": "Password policy, complexity krav",
+              "no": "Passordpolicy med krav til kompleksitet",
               "en": "Password policy, complexity requirements"
             },
             "eksisterendeKontroll": {
@@ -8254,7 +8303,7 @@ window.EMBEDDED_RISK_BANKS = [
               "en": "VPN required"
             },
             "eksisterendeKontroll": {
-              "no": "Remote work policy",
+              "no": "Retningslinjer for fjernarbeid",
               "en": "Remote work policy"
             },
             "K": 4,
@@ -8277,7 +8326,7 @@ window.EMBEDDED_RISK_BANKS = [
               "en": "Private devices are used for work data without sufficient control"
             },
             "eksisterendeBeskyttelse": {
-              "no": "policy mot BYOD",
+              "no": "Retningslinjer mot BYOD",
               "en": "Policy mot BYOD"
             },
             "eksisterendeKontroll": {
@@ -8331,7 +8380,7 @@ window.EMBEDDED_RISK_BANKS = [
               "en": "Family members use work devices and children install games or other software"
             },
             "eksisterendeBeskyttelse": {
-              "no": "policy mot deling",
+              "no": "Retningslinjer mot deling",
               "en": "Policy against account sharing"
             },
             "eksisterendeKontroll": {
@@ -8343,7 +8392,7 @@ window.EMBEDDED_RISK_BANKS = [
             "T": 3,
             "sannsynlighet": 3,
             "foreslaatteTiltak": {
-              "no": "enhet assignment policy, separate user accounts, awareness, technical controls (no admin rights), MDM enforcement",
+              "no": "Retningslinjer for enhetstildeling, separate brukerkontoer, bevisstgjøring, tekniske kontroller uten administratorrettigheter og håndheving gjennom MDM",
               "en": "Device assignment policy, separate user accounts, awareness, technical controls (no admin rights), MDM enforcement"
             }
           },
@@ -8385,7 +8434,7 @@ window.EMBEDDED_RISK_BANKS = [
               "en": "Rotasjonsordninger makes security measures inkonsistente"
             },
             "eksisterendeBeskyttelse": {
-              "no": "Same policyer for all",
+              "no": "Samme retningslinjer for alle",
               "en": "Same policies for all"
             },
             "eksisterendeKontroll": {
@@ -8421,7 +8470,7 @@ window.EMBEDDED_RISK_BANKS = [
               "en": "Sensitive documents or screens are visible to visitors or cleaning staff"
             },
             "eksisterendeBeskyttelse": {
-              "no": "Clean desk policy",
+              "no": "Clean desk-policy",
               "en": "Clean desk policy"
             },
             "eksisterendeKontroll": {
@@ -8460,7 +8509,7 @@ window.EMBEDDED_RISK_BANKS = [
             "T": 2,
             "sannsynlighet": 3,
             "foreslaatteTiltak": {
-              "no": "Mandatory escort policy, visible visitor badges, tilgang restrictions for visitors, photo ID requirement, logbook",
+              "no": "Obligatorisk ledsagerordning, synlige besøkskort, tilgangsbegrensninger for besøkende, krav om legitimasjon og besøkslogg",
               "en": "Mandatory escort policy, visible visitor badges, access restrictions for visitors, photo ID requirement, logbook"
             }
           },
@@ -8529,7 +8578,7 @@ window.EMBEDDED_RISK_BANKS = [
               "en": "Employees plugger inn funnet USB without check"
             },
             "eksisterendeBeskyttelse": {
-              "no": "USB policy",
+              "no": "USB-retningslinjer",
               "en": "USB policy"
             },
             "eksisterendeKontroll": {
@@ -8560,7 +8609,7 @@ window.EMBEDDED_RISK_BANKS = [
               "en": "Shredders available"
             },
             "eksisterendeKontroll": {
-              "no": "policy on document disposal",
+              "no": "Retningslinjer for dokumentdestruksjon",
               "en": "Policy on document disposal"
             },
             "K": 4,
@@ -8568,7 +8617,7 @@ window.EMBEDDED_RISK_BANKS = [
             "T": 1,
             "sannsynlighet": 3,
             "foreslaatteTiltak": {
-              "no": "Mandatory shredding for confidential, secure disposal bins, certified destruction service, digital-first policyer",
+              "no": "Obligatorisk makulering av konfidensielle dokumenter, sikre avfallsbeholdere, sertifisert destruksjonstjeneste og digital-først-retningslinjer",
               "en": "Mandatory shredding for confidential, secure disposal bins, certified destruction service, digital-first policies"
             }
           }
@@ -8759,9 +8808,9 @@ window.EMBEDDED_RISK_BANKS = [
             "K": 5,
             "I": 5,
             "T": 2,
-            "sannsynlighet": 2,
+            "sannsynlighet": 3,
             "foreslaatteTiltak": {
-              "no": "Database per tenant, schema isolation, policy-based tilgang control, automated testing av isolasjon",
+              "no": "Egen database per tenant, skjemaisolasjon, policybasert tilgangskontroll og automatisert testing av isolasjon",
               "en": "A database per tenant, schema isolation, policy-based access control, and automated testing of isolation"
             }
           },
@@ -8786,7 +8835,7 @@ window.EMBEDDED_RISK_BANKS = [
             "K": 5,
             "I": 5,
             "T": 2,
-            "sannsynlighet": 2,
+            "sannsynlighet": 3,
             "foreslaatteTiltak": {
               "no": "Enforced tenant context, JWT claims validation, API gateway tenant filtering",
               "en": "Enforced tenant context, JWT claims validation, API gateway tenant filtering"
@@ -8986,7 +9035,7 @@ window.EMBEDDED_RISK_BANKS = [
             "T": 2,
             "sannsynlighet": 3,
             "foreslaatteTiltak": {
-              "no": "Automated provisioning/deprovisioning, data deletion verification, account lifecycle management, retention policyer",
+              "no": "Automatisert provisjonering og avvikling, verifisering av datasletting, livssyklusstyring for kontoer og retningslinjer for datalagring",
               "en": "Automated provisioning/deprovisioning, data deletion verification, account lifecycle management, retention policies"
             }
           },
@@ -9041,7 +9090,7 @@ window.EMBEDDED_RISK_BANKS = [
             "sannsynlighet": 3,
             "foreslaatteTiltak": {
               "no": "Per-tenant SLA sporing, synthetic overvåking, auto-credits for SLA breaches, status page per kunde",
-              "en": "Per-tenant SLA tracking, synthetic monitoring, auto-credits for SLA breaches, status page per kunde"
+              "en": "Per-tenant SLA tracking, synthetic monitoring, automatic credits for SLA breaches, and a status page for each customer segment"
             }
           },
           {
@@ -9092,7 +9141,7 @@ window.EMBEDDED_RISK_BANKS = [
             },
             "eksisterendeBeskyttelse": {
               "no": "policy mot uautorisert SaaS",
-              "en": "Policy mot unauthorized SaaS"
+              "en": "Policy against unauthorized SaaS use"
             },
             "eksisterendeKontroll": {
               "no": "Nettverksovervåking og utgiftsgjennomganger",
@@ -9409,7 +9458,7 @@ window.EMBEDDED_RISK_BANKS = [
             "T": 1,
             "sannsynlighet": 3,
             "foreslaatteTiltak": {
-              "no": "DLP policyer, data classification, sync overvåking, field-level sync control, data residency validation",
+              "no": "DLP-retningslinjer, dataklassifisering, overvåking av synkronisering, feltnivåkontroll for synkronisering og validering av datalokasjon",
               "en": "DLP policies, data classification, sync monitoring, field-level sync control, data residency validation"
             }
           },
@@ -9457,7 +9506,7 @@ window.EMBEDDED_RISK_BANKS = [
             },
             "saarbarhet": {
               "no": "Vet ikke hvilke data som er lagret hvor",
-              "en": "Vet not hvilke data that is lagret hvor"
+              "en": "It is unclear which data is stored where"
             },
             "eksisterendeBeskyttelse": {
               "no": "manuell data inventory",
@@ -9472,7 +9521,7 @@ window.EMBEDDED_RISK_BANKS = [
             "T": 2,
             "sannsynlighet": 4,
             "foreslaatteTiltak": {
-              "no": "CASB data discovery, data classification in SaaS, DLP policyer, automated data mapping",
+              "no": "CASB-basert dataoppdagelse, dataklassifisering i SaaS, DLP-retningslinjer og automatisert datakartlegging",
               "en": "CASB data discovery, data classification in SaaS, DLP policies, automated data mapping"
             }
           },
@@ -9480,11 +9529,11 @@ window.EMBEDDED_RISK_BANKS = [
             "id": "data-gov-002",
             "risikoelement": {
               "no": "Feil data retention i SaaS-tjenester",
-              "en": "Errors data retention in SaaS-services"
+              "en": "Incorrect data retention in SaaS services"
             },
             "saarbarhet": {
-              "no": "Data beholdes lengre eller kortere enn policy",
-              "en": "Data beholdes lengre or kortere than policy"
+              "no": "Data beholdes lengre eller kortere enn retningslinjene tilsier",
+              "en": "Data is retained either longer or shorter than the policy allows"
             },
             "eksisterendeBeskyttelse": {
               "no": "leverandør standard retention",
@@ -9499,7 +9548,7 @@ window.EMBEDDED_RISK_BANKS = [
             "T": 2,
             "sannsynlighet": 3,
             "foreslaatteTiltak": {
-              "no": "Custom retention policyer, automated deletion, retention compliance overvåking, legal hold procedures",
+              "no": "Tilpassede retningslinjer for datalagring, automatisert sletting, overvåking av etterlevelse og prosedyrer for bevaringspålegg",
               "en": "Custom retention policies, automated deletion, retention compliance monitoring, legal hold procedures"
             }
           },
@@ -9526,7 +9575,7 @@ window.EMBEDDED_RISK_BANKS = [
             "T": 1,
             "sannsynlighet": 4,
             "foreslaatteTiltak": {
-              "no": "DLP for SaaS, external sharing policyer, link expiry enforcement, sharing audit logs, CASB controls",
+              "no": "DLP for SaaS, retningslinjer for ekstern deling, håndheving av utløpstid på lenker, revisjonslogger for deling og CASB-kontroller",
               "en": "DLP for SaaS, external sharing policies, link expiry enforcement, sharing audit logs, CASB controls"
             }
           },
@@ -9670,7 +9719,7 @@ window.EMBEDDED_RISK_BANKS = [
             "T": 4,
             "sannsynlighet": 2,
             "foreslaatteTiltak": {
-              "no": "Infrastructure-as-code for SaaS config, config backup tools, version control for configs, disaster gjenoppretting testing",
+              "no": "Infrastructure as code for SaaS-konfigurasjon, verktøy for konfigurasjonskopier, versjonskontroll for konfigurasjoner og testing av katastrofegjenoppretting",
               "en": "Infrastructure-as-code for SaaS config, config backup tools, version control for configs, disaster recovery testing"
             }
           },
@@ -9746,7 +9795,7 @@ window.EMBEDDED_RISK_BANKS = [
             "T": 3,
             "sannsynlighet": 3,
             "foreslaatteTiltak": {
-              "no": "policy-as-code, automated compliance scanning, minste privilegium",
+              "no": "policy-as-code, automatisert etterlevelsesskanning og minste privilegium",
               "en": "Policy-as-code, automated compliance scanning, least privilege"
             }
           },
@@ -10007,7 +10056,7 @@ window.EMBEDDED_RISK_BANKS = [
             "T": 2,
             "sannsynlighet": 2,
             "foreslaatteTiltak": {
-              "no": "Region locks, data residency policyer, GDPR compliance",
+              "no": "Regionlåser, retningslinjer for datalokasjon og GDPR-etterlevelse",
               "en": "Region locks, data residency policies, GDPR compliance"
             }
           }
@@ -10151,7 +10200,7 @@ window.EMBEDDED_RISK_BANKS = [
               "en": "Annual vendor review"
             },
             "K": 3,
-            "I": 3,
+            "I": 4,
             "T": 5,
             "sannsynlighet": 3,
             "foreslaatteTiltak": {
@@ -10278,8 +10327,8 @@ window.EMBEDDED_RISK_BANKS = [
               "en": "Employees user SaaS-services without IT-approval"
             },
             "eksisterendeBeskyttelse": {
-              "no": "policy mot unauthorized IT",
-              "en": "Policy mot unauthorized IT"
+              "no": "Retningslinjer mot uautorisert IT",
+              "en": "Policy against unauthorized IT"
             },
             "eksisterendeKontroll": {
               "no": "Expense report gjennomgang",
@@ -10533,7 +10582,7 @@ window.EMBEDDED_RISK_BANKS = [
             "T": 4,
             "sannsynlighet": 3,
             "foreslaatteTiltak": {
-              "no": "Monitor project health, consider forking, commercial support, alternative libraries",
+              "no": "Overvåke prosjektets helse, vurdere forking, kommersiell støtte og alternative biblioteker",
               "en": "Monitor project health, consider forking, commercial support, alternative libraries"
             }
           },

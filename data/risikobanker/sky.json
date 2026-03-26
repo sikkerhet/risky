@@ -39,7 +39,7 @@
           "T": 3,
           "sannsynlighet": 3,
           "foreslaatteTiltak": {
-            "no": "policy-as-code, automated compliance scanning, minste privilegium",
+            "no": "policy-as-code, automatisert etterlevelsesskanning og minste privilegium",
             "en": "Policy-as-code, automated compliance scanning, least privilege"
           }
         },
@@ -300,7 +300,7 @@
           "T": 2,
           "sannsynlighet": 2,
           "foreslaatteTiltak": {
-            "no": "Region locks, data residency policyer, GDPR compliance",
+            "no": "Regionlåser, retningslinjer for datalokasjon og GDPR-etterlevelse",
             "en": "Region locks, data residency policies, GDPR compliance"
           }
         }

@@ -64,7 +64,7 @@
           "K": 5,
           "I": 3,
           "T": 1,
-          "sannsynlighet": 3,
+          "sannsynlighet": 4,
           "foreslaatteTiltak": {
             "no": "Oppdagelse og sladding av PII, dataminimering og separate modeller for ulike sensitivitetsnivåer",
             "en": "PII detection/redaction, data minimization, separate models per sensitivity level"
@@ -145,7 +145,7 @@
           "K": 4,
           "I": 5,
           "T": 2,
-          "sannsynlighet": 3,
+          "sannsynlighet": 4,
           "foreslaatteTiltak": {
             "no": "Isoler eksternt innhold, skil mellom privilegier og krev eksplisitt bekreftelse for sensitive handlinger",
             "en": "Isolate external content, privilege separation, action confirmation for sensitive operations"
@@ -222,7 +222,7 @@
           },
           "saarbarhet": {
             "no": "Agenten har verktøytilgang uten tilstrekkelige beskyttelsesmekanismer",
-            "en": "Agent har tool access without tilstrekkelige guardrails"
+            "en": "The agent has tool access without sufficient guardrails"
           },
           "eksisterendeBeskyttelse": {
             "no": "Skrivebeskyttede verktøy der det er mulig",
@@ -245,11 +245,11 @@
           "id": "agent-002",
           "risikoelement": {
             "no": "Privilegieeskalering - agenten får mer tilgang enn tiltenkt",
-            "en": "Privilege escalation - agent gets mer access than tiltenkt"
+            "en": "Privilege escalation gives the agent more access than intended"
           },
           "saarbarhet": {
             "no": "Verktøyrettigheter er ikke granulære nok, og verktøy kan kjedes sammen",
-            "en": "Tool permissions not granular nok, chaining of tools"
+            "en": "Tool permissions are not granular enough, and tools can be chained together"
           },
           "eksisterendeBeskyttelse": {
             "no": "Rollebasert verktøytilgang",
@@ -272,7 +272,7 @@
           "id": "agent-003",
           "risikoelement": {
             "no": "Uendelige løkker og ressursutmattelse",
-            "en": "Uendelige loops and resource exhaustion"
+            "en": "Endless loops and resource exhaustion"
           },
           "saarbarhet": {
             "no": "Agenten kan gå i løkke eller bruke for mye ressurser",
@@ -357,7 +357,7 @@
           },
           "saarbarhet": {
             "no": "Agenter kommuniserer uten tilstrekkelig verifisering av tillit",
-            "en": "Agents kommuniserer without tilstrekkelig trust verification"
+            "en": "Agents communicate without sufficient trust verification"
           },
           "eksisterendeBeskyttelse": {
             "no": "Agentautentisering",
@@ -447,7 +447,7 @@
           },
           "saarbarhet": {
             "no": "Modellen er ikke robust mot adversarial perturbations",
-            "en": "Modell not robust mot adversarial perturbations"
+            "en": "The model is not robust against adversarial perturbations"
           },
           "eksisterendeBeskyttelse": {
             "no": "Validering av input",
@@ -470,11 +470,11 @@
           "id": "model-002",
           "risikoelement": {
             "no": "Data poisoning - treningsdata er kompromittert",
-            "en": "Data poisoning - training data kompromittert"
+            "en": "Data poisoning compromises training data"
           },
           "saarbarhet": {
             "no": "Ubetrodde eller uvaliderte data i treningssettet",
-            "en": "Untrusted or uvalidert data in training set"
+            "en": "Untrusted or unvalidated data in the training set"
           },
           "eksisterendeBeskyttelse": {
             "no": "Begrensninger på datakilder",
@@ -497,11 +497,11 @@
           "id": "model-003",
           "risikoelement": {
             "no": "Model drift - treffsikkerheten svekkes over tid",
-            "en": "Model operations - accuracy degraderer over time"
+            "en": "Model drift reduces accuracy over time"
           },
           "saarbarhet": {
             "no": "Fordelingsskifte mellom treningsdata og produksjonsdata",
-            "en": "Distribution shift mellom training and production data"
+            "en": "Distribution shift between training and production data"
           },
           "eksisterendeBeskyttelse": {
             "no": "Kvartalsvis retrening",
@@ -517,7 +517,7 @@
           "sannsynlighet": 4,
           "foreslaatteTiltak": {
             "no": "Kontinuerlig overvåking, drift-deteksjon, automatisert retrening, A/B-testing og kanariutrulling",
-            "en": "Continuous monitoring, operations detection, automated retraining, A/B testing, canary deployments"
+            "en": "Continuous monitoring, drift detection, automated retraining, A/B testing, and canary deployments"
           }
         },
         {
@@ -528,7 +528,7 @@
           },
           "saarbarhet": {
             "no": "Kompromitterte ML-biblioteker og forhåndstrente modeller",
-            "en": "Kompromitterte ML-biblioteker, pre-trained models"
+            "en": "Compromised ML libraries and pre-trained models"
           },
           "eksisterendeBeskyttelse": {
             "no": "Skanning av avhengigheter",
@@ -551,11 +551,11 @@
           "id": "model-005",
           "risikoelement": {
             "no": "Infrastruktur for modellservering er kompromittert",
-            "en": "Model serving infrastructure kompromittert"
+            "en": "Model serving infrastructure is compromised"
           },
           "saarbarhet": {
             "no": "Inference-endepunkter er ikke tilstrekkelig sikret",
-            "en": "Inference endpoints not tilstrekkelig sikret"
+            "en": "Inference endpoints are not sufficiently secured"
           },
           "eksisterendeBeskyttelse": {
             "no": "API-autentisering",
@@ -587,11 +587,11 @@
           "id": "data-001",
           "risikoelement": {
             "no": "Memorisering av sensitive treningsdata",
-            "en": "Memorization of sensitive treningsdata"
+            "en": "Memorization of sensitive training data"
           },
           "saarbarhet": {
             "no": "Modellen memorerer ordrette eksempler fra treningsdata",
-            "en": "Modell memorerer verbatim training examples"
+            "en": "The model memorizes verbatim training examples"
           },
           "eksisterendeBeskyttelse": {
             "no": "Fjerning av PII fra treningsdata",
@@ -640,12 +640,12 @@
         {
           "id": "data-003",
           "risikoelement": {
-            "no": "Membership inference - avdekke hvem som var i treningssettet",
-            "en": "Membership inference - avdekke who that var in training set"
+            "no": "Medlemskapsinferens - avdekke hvem som var i treningssettet",
+            "en": "Membership inference reveals whether someone was in the training set"
           },
           "saarbarhet": {
             "no": "En angriper kan utlede om et individ var i treningsdata",
-            "en": "Adversary can dedusere about a individ var in training data"
+            "en": "An attacker can infer whether an individual was part of the training data"
           },
           "eksisterendeBeskyttelse": {
             "no": "Aggregerte modellresultater",
@@ -731,11 +731,11 @@
           "id": "bias-001",
           "risikoelement": {
             "no": "Diskriminerende beslutninger på grunn av skjeve treningsdata",
-            "en": "Diskriminerende decisions pga. biased training data"
+            "en": "Discriminatory decisions are caused by biased training data"
           },
           "saarbarhet": {
             "no": "Treningsdata gjenspeiler historisk skjevhet og diskriminering",
-            "en": "Training data reflekterer historisk bias/diskriminering"
+            "en": "Training data reflects historical bias and discrimination"
           },
           "eksisterendeBeskyttelse": {
             "no": "Mangfold i treningsdata",
@@ -750,19 +750,19 @@
           "T": 1,
           "sannsynlighet": 4,
           "foreslaatteTiltak": {
-            "no": "Rettferdighetsmål som demographic parity og equalized odds, teknikker for å redusere bias og varierte datasett",
+            "no": "Rettferdighetsmål som demografisk paritet og like feilrater, teknikker for å redusere skjevhet og varierte datasett",
             "en": "Fairness metrics (demographic parity, equalized odds), bias mitigation techniques, diverse datasets"
           }
         },
         {
           "id": "bias-002",
           "risikoelement": {
-            "no": "Feedback loops forsterker eksisterende bias",
-            "en": "Feedback loops forsterker eksisterende bias"
+            "no": "Tilbakekoblingssløyfer forsterker eksisterende skjevhet",
+            "en": "Feedback loops reinforce existing bias"
           },
           "saarbarhet": {
-            "no": "Modellprediksjoner påvirker fremtidige data og forsterker eksisterende bias",
-            "en": "Model predictions affects future data that reinforcer bias"
+            "no": "Modellprediksjoner påvirker fremtidige data og forsterker eksisterende skjevhet",
+            "en": "Model predictions affect future data and reinforce existing bias"
           },
           "eksisterendeBeskyttelse": {
             "no": "Varierte treningskilder",
@@ -777,7 +777,7 @@
           "T": 2,
           "sannsynlighet": 4,
           "foreslaatteTiltak": {
-            "no": "Counterfactual fairness, intervensjonsstrategier og jevnlig retrening med korrigerte data",
+            "no": "Kontrafaktisk rettferdighet, intervensjonsstrategier og jevnlig retrening med korrigerte data",
             "en": "Counterfactual fairness, intervention strategies, regular retraining with corrected data"
           }
         },
@@ -785,11 +785,11 @@
           "id": "bias-003",
           "risikoelement": {
             "no": "Manglende representasjon av minoritetsgrupper",
-            "en": "Missing representasjon of minoritetsgrupper"
+            "en": "Insufficient representation of minority groups"
           },
           "saarbarhet": {
             "no": "Undergrupper er underrepresentert i trenings- og testdata",
-            "en": "Subgrupper underrepresentert in training/test data"
+            "en": "Subgroups are underrepresented in training and test data"
           },
           "eksisterendeBeskyttelse": {
             "no": "Minimumsstørrelse på utvalg",
@@ -812,7 +812,7 @@
           "id": "bias-004",
           "risikoelement": {
             "no": "Manglende åpenhet om KI-beslutninger",
-            "en": "Missing transparency about AI-decisions"
+            "en": "Lack of transparency in AI decisions"
           },
           "saarbarhet": {
             "no": "Brukere kan ikke forstå eller utfordre AI-beslutninger",
@@ -820,7 +820,7 @@
           },
           "eksisterendeBeskyttelse": {
             "no": "Informasjon om bruk av KI",
-            "en": "Disclaimer about AI-bruk"
+            "en": "Disclosure that AI is being used"
           },
           "eksisterendeKontroll": {
             "no": "Kvartalsvis gjennomgang av beslutninger",
@@ -831,7 +831,7 @@
           "T": 1,
           "sannsynlighet": 4,
           "foreslaatteTiltak": {
-            "no": "Forklarbar KI som SHAP og LIME, begrunnelser for beslutninger, klagemekanismer og model cards",
+            "no": "Forklarbar KI som SHAP og LIME, begrunnelser for beslutninger, klagemekanismer og modellkort",
             "en": "Explainable AI (SHAP, LIME), decision justifications, appeal mechanisms, model cards"
           }
         }
@@ -894,7 +894,7 @@
           "T": 2,
           "sannsynlighet": 4,
           "foreslaatteTiltak": {
-            "no": "Model cards, datasheets for datasett, systemkort, versjonering og revisjonsspor",
+            "no": "Modellkort, datasettbeskrivelser, systemkort, versjonering og revisjonsspor",
             "en": "Model cards, datasheets for datasets, system cards, versioning, audit trails"
           }
         },
@@ -948,7 +948,7 @@
           "T": 3,
           "sannsynlighet": 4,
           "foreslaatteTiltak": {
-            "no": "KI-spesifikke testrammeverk, red teaming, chaos engineering for KI og trinnvis utrulling",
+            "no": "KI-spesifikke testrammeverk, rødlagstesting, kaostesting for KI og trinnvis utrulling",
             "en": "AI-specific testing frameworks, red-teaming, chaos engineering for AI, staged rollouts"
           }
         },
@@ -960,7 +960,7 @@
           },
           "saarbarhet": {
             "no": "Avhengighet av en bestemt LLM-leverandør eller KI-plattform",
-            "en": "dependency of specific LLM provider or AI platform"
+            "en": "Dependence on a specific LLM provider or AI platform"
           },
           "eksisterendeBeskyttelse": {
             "no": "Kontraktsforhandlinger",

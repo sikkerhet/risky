@@ -66,7 +66,7 @@
           "T": 3,
           "sannsynlighet": 3,
           "foreslaatteTiltak": {
-            "no": "Utarbeide sikkerhetsstrategi godkjent av ledelsen, 3-årig roadmap, målsettinger og suksesskriterier",
+            "no": "Utarbeide sikkerhetsstrategi godkjent av ledelsen, treårig veikart, målsettinger og suksesskriterier",
             "en": "Develop a security strategy approved by executive management, with a three-year roadmap, clear goals, and success criteria"
           }
         },
@@ -171,7 +171,7 @@
             "en": "No one knows who is responsible for datasets and systems"
           },
           "eksisterendeBeskyttelse": {
-            "no": "System owners dokumentert noen steder",
+            "no": "Systemeiere er dokumentert enkelte steder",
             "en": "System owners are documented in some places"
           },
           "eksisterendeKontroll": {
@@ -183,7 +183,7 @@
           "T": 3,
           "sannsynlighet": 4,
           "foreslaatteTiltak": {
-            "no": "Data eierskap model (data owners, data stewards, data custodians), RACI matrix, asset register",
+            "no": "Modell for dataeierskap (dataeier, dataforvalter og databehandler), RACI-matrise og eiendelsregister",
             "en": "Data ownership model (data owners, data stewards, data custodians), RACI matrix, asset register"
           }
         },
@@ -281,7 +281,7 @@
           "id": "policy-001",
           "risikoelement": {
             "no": "Sikkerhetspolicyer mangler eller er utdaterte",
-            "en": "Sikkerhetspolicyer lacks or is utdaterte"
+            "en": "Security policies are missing or outdated"
           },
           "saarbarhet": {
             "no": "Ingen klare regler for sikker oppførsel",
@@ -289,7 +289,7 @@
           },
           "eksisterendeBeskyttelse": {
             "no": "Noen gamle policyer",
-            "en": "Anyone gamle policies"
+            "en": "Some older policies exist"
           },
           "eksisterendeKontroll": {
             "no": "Ad-hoc oppdateringer",

@@ -35,7 +35,7 @@
             "en": "Annual vendor review"
           },
           "K": 3,
-          "I": 3,
+          "I": 4,
           "T": 5,
           "sannsynlighet": 3,
           "foreslaatteTiltak": {
@@ -162,8 +162,8 @@
             "en": "Employees user SaaS-services without IT-approval"
           },
           "eksisterendeBeskyttelse": {
-            "no": "policy mot unauthorized IT",
-            "en": "Policy mot unauthorized IT"
+            "no": "Retningslinjer mot uautorisert IT",
+            "en": "Policy against unauthorized IT"
           },
           "eksisterendeKontroll": {
             "no": "Expense report gjennomgang",
@@ -417,7 +417,7 @@
           "T": 4,
           "sannsynlighet": 3,
           "foreslaatteTiltak": {
-            "no": "Monitor project health, consider forking, commercial support, alternative libraries",
+            "no": "Overvåke prosjektets helse, vurdere forking, kommersiell støtte og alternative biblioteker",
             "en": "Monitor project health, consider forking, commercial support, alternative libraries"
           }
         },

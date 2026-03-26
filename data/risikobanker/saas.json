@@ -37,9 +37,9 @@
           "K": 5,
           "I": 5,
           "T": 2,
-          "sannsynlighet": 2,
+          "sannsynlighet": 3,
           "foreslaatteTiltak": {
-            "no": "Database per tenant, schema isolation, policy-based tilgang control, automated testing av isolasjon",
+            "no": "Egen database per tenant, skjemaisolasjon, policybasert tilgangskontroll og automatisert testing av isolasjon",
             "en": "A database per tenant, schema isolation, policy-based access control, and automated testing of isolation"
           }
         },
@@ -64,7 +64,7 @@
           "K": 5,
           "I": 5,
           "T": 2,
-          "sannsynlighet": 2,
+          "sannsynlighet": 3,
           "foreslaatteTiltak": {
             "no": "Enforced tenant context, JWT claims validation, API gateway tenant filtering",
             "en": "Enforced tenant context, JWT claims validation, API gateway tenant filtering"
@@ -264,7 +264,7 @@
           "T": 2,
           "sannsynlighet": 3,
           "foreslaatteTiltak": {
-            "no": "Automated provisioning/deprovisioning, data deletion verification, account lifecycle management, retention policyer",
+            "no": "Automatisert provisjonering og avvikling, verifisering av datasletting, livssyklusstyring for kontoer og retningslinjer for datalagring",
             "en": "Automated provisioning/deprovisioning, data deletion verification, account lifecycle management, retention policies"
           }
         },
@@ -319,7 +319,7 @@
           "sannsynlighet": 3,
           "foreslaatteTiltak": {
             "no": "Per-tenant SLA sporing, synthetic overvåking, auto-credits for SLA breaches, status page per kunde",
-            "en": "Per-tenant SLA tracking, synthetic monitoring, auto-credits for SLA breaches, status page per kunde"
+            "en": "Per-tenant SLA tracking, synthetic monitoring, automatic credits for SLA breaches, and a status page for each customer segment"
           }
         },
         {
@@ -370,7 +370,7 @@
           },
           "eksisterendeBeskyttelse": {
             "no": "policy mot uautorisert SaaS",
-            "en": "Policy mot unauthorized SaaS"
+            "en": "Policy against unauthorized SaaS use"
           },
           "eksisterendeKontroll": {
             "no": "Nettverksovervåking og utgiftsgjennomganger",
@@ -687,7 +687,7 @@
           "T": 1,
           "sannsynlighet": 3,
           "foreslaatteTiltak": {
-            "no": "DLP policyer, data classification, sync overvåking, field-level sync control, data residency validation",
+            "no": "DLP-retningslinjer, dataklassifisering, overvåking av synkronisering, feltnivåkontroll for synkronisering og validering av datalokasjon",
             "en": "DLP policies, data classification, sync monitoring, field-level sync control, data residency validation"
           }
         },
@@ -735,7 +735,7 @@
           },
           "saarbarhet": {
             "no": "Vet ikke hvilke data som er lagret hvor",
-            "en": "Vet not hvilke data that is lagret hvor"
+            "en": "It is unclear which data is stored where"
           },
           "eksisterendeBeskyttelse": {
             "no": "manuell data inventory",
@@ -750,7 +750,7 @@
           "T": 2,
           "sannsynlighet": 4,
           "foreslaatteTiltak": {
-            "no": "CASB data discovery, data classification in SaaS, DLP policyer, automated data mapping",
+            "no": "CASB-basert dataoppdagelse, dataklassifisering i SaaS, DLP-retningslinjer og automatisert datakartlegging",
             "en": "CASB data discovery, data classification in SaaS, DLP policies, automated data mapping"
           }
         },
@@ -758,11 +758,11 @@
           "id": "data-gov-002",
           "risikoelement": {
             "no": "Feil data retention i SaaS-tjenester",
-            "en": "Errors data retention in SaaS-services"
+            "en": "Incorrect data retention in SaaS services"
           },
           "saarbarhet": {
-            "no": "Data beholdes lengre eller kortere enn policy",
-            "en": "Data beholdes lengre or kortere than policy"
+            "no": "Data beholdes lengre eller kortere enn retningslinjene tilsier",
+            "en": "Data is retained either longer or shorter than the policy allows"
           },
           "eksisterendeBeskyttelse": {
             "no": "leverandør standard retention",
@@ -777,7 +777,7 @@
           "T": 2,
           "sannsynlighet": 3,
           "foreslaatteTiltak": {
-            "no": "Custom retention policyer, automated deletion, retention compliance overvåking, legal hold procedures",
+            "no": "Tilpassede retningslinjer for datalagring, automatisert sletting, overvåking av etterlevelse og prosedyrer for bevaringspålegg",
             "en": "Custom retention policies, automated deletion, retention compliance monitoring, legal hold procedures"
           }
         },
@@ -804,7 +804,7 @@
           "T": 1,
           "sannsynlighet": 4,
           "foreslaatteTiltak": {
-            "no": "DLP for SaaS, external sharing policyer, link expiry enforcement, sharing audit logs, CASB controls",
+            "no": "DLP for SaaS, retningslinjer for ekstern deling, håndheving av utløpstid på lenker, revisjonslogger for deling og CASB-kontroller",
             "en": "DLP for SaaS, external sharing policies, link expiry enforcement, sharing audit logs, CASB controls"
           }
         },
@@ -948,7 +948,7 @@
           "T": 4,
           "sannsynlighet": 2,
           "foreslaatteTiltak": {
-            "no": "Infrastructure-as-code for SaaS config, config backup tools, version control for configs, disaster gjenoppretting testing",
+            "no": "Infrastructure as code for SaaS-konfigurasjon, verktøy for konfigurasjonskopier, versjonskontroll for konfigurasjoner og testing av katastrofegjenoppretting",
             "en": "Infrastructure-as-code for SaaS config, config backup tools, version control for configs, disaster recovery testing"
           }
         },

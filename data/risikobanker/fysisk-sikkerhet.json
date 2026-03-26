@@ -298,7 +298,7 @@
           "K": 3,
           "I": 4,
           "T": 5,
-          "sannsynlighet": 1,
+          "sannsynlighet": 2,
           "foreslaatteTiltak": {
             "no": "FM-200/Inergen suppression, early warning detection, redundant sites, fire-resistant construction",
             "en": "FM-200/Inergen suppression, early warning detection, redundant sites, fire-resistant construction"
@@ -362,7 +362,7 @@
           "id": "env-004",
           "risikoelement": {
             "no": "Strømbrudd uten tilstrekkelig backup",
-            "en": "power outages without tilstrekkelig backup"
+            "en": "Power outages occur without sufficient backup capacity"
           },
           "saarbarhet": {
             "no": "Enkelt strømforsyning, UPS runtime for kort",
@@ -452,11 +452,11 @@
           "id": "surv-002",
           "risikoelement": {
             "no": "CCTV-opptak ikke lagret eller tilgjengelig ved hendelse",
-            "en": "CCTV-opptak not lagret or tilgjengelig during incident"
+            "en": "CCTV footage is not stored or available during an incident"
           },
           "saarbarhet": {
             "no": "Kort retention, overskrevet data, manglende backup",
-            "en": "short retention, overskrevet data, missing backup"
+            "en": "Short retention, overwritten data, and missing backups"
           },
           "eksisterendeBeskyttelse": {
             "no": "30-day retention",
@@ -471,7 +471,7 @@
           "T": 2,
           "sannsynlighet": 3,
           "foreslaatteTiltak": {
-            "no": "90+ day retention, redundant storage, encrypted backups, tamper-evident",
+            "no": "90+ dagers lagringstid, redundant lagring, krypterte sikkerhetskopier og manipulasjonssikring",
             "en": "90+ day retention, redundant storage, encrypted backups, tamper-evident"
           }
         },
@@ -545,11 +545,11 @@
             "en": "Sensitive documents are left on printers"
           },
           "saarbarhet": {
-            "no": "Manglende pull-printing, clean desk ikke håndhevet",
+            "no": "Manglende sikker utskrift og clean desk-praksis håndheves ikke",
             "en": "Missing pull printing and a clean desk policy that is not enforced"
           },
           "eksisterendeBeskyttelse": {
-            "no": "Clean desk policy",
+            "no": "Clean desk-praksis",
             "en": "Clean desk policy"
           },
           "eksisterendeKontroll": {
@@ -615,7 +615,7 @@
           "T": 1,
           "sannsynlighet": 4,
           "foreslaatteTiltak": {
-            "no": "personvern film on windows, interior meeting rooms, clean whiteboard policy, digital whiteboards",
+            "no": "personvernfilm på vinduer, innvendige møterom, clean whiteboard-policy og digitale tavler",
             "en": "Privacy film on windows, interior meeting rooms, clean whiteboard policy, digital whiteboards"
           }
         }
@@ -783,7 +783,7 @@
             "en": "Employees work from unsecured locations where family members or others may gain access"
           },
           "eksisterendeBeskyttelse": {
-            "no": "Work-from-home policy",
+            "no": "Retningslinjer for hjemmekontor",
             "en": "Work-from-home policy"
           },
           "eksisterendeKontroll": {

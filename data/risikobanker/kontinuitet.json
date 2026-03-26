@@ -145,7 +145,7 @@
           "K": 4,
           "I": 4,
           "T": 2,
-          "sannsynlighet": 2,
+          "sannsynlighet": 3,
           "foreslaatteTiltak": {
             "no": "Sikre geografisk spredning av kritisk infrastruktur over ulike regioner, multi-region strategi for skytjenester",
             "en": "Ensure geographic separation of critical infrastructure across regions and use a multi-region strategy for cloud services"
@@ -289,7 +289,7 @@
           "K": 5,
           "I": 4,
           "T": 4,
-          "sannsynlighet": 2,
+          "sannsynlighet": 3,
           "foreslaatteTiltak": {
             "no": "Implementere 3-2-1 backup-strategi med offline eller air-gapped kopi, immutable backups",
             "en": "Implement a 3-2-1 backup strategy with an offline or air-gapped copy and immutable backups"
@@ -447,7 +447,7 @@
           },
           "saarbarhet": {
             "no": "Mangelfull loggføring av beslutninger, tiltak og tidslinje under krise",
-            "en": "Mangelfull logging of decisions, tiltak and tidslinje under krise"
+            "en": "Insufficient logging of decisions, actions, and the incident timeline during a crisis"
           },
           "eksisterendeBeskyttelse": {
             "no": "hendelse tickets og meldinger",
@@ -455,7 +455,7 @@
           },
           "eksisterendeKontroll": {
             "no": "Sporadisk loggføring",
-            "en": "Sporadisk logging"
+            "en": "Sporadic logging"
           },
           "K": 2,
           "I": 2,
@@ -479,19 +479,19 @@
           "id": "test-001",
           "risikoelement": {
             "no": "BCP/DR-plan aldri testet",
-            "en": "BCP/DR-plan aldri tested"
+            "en": "The BCP/DR plan is never tested"
           },
           "saarbarhet": {
             "no": "Planen er kun teoretisk, ukjent om den faktisk fungerer i praksis",
-            "en": "Planen is only teoretisk, unknown about den actual fungerer in praksis"
+            "en": "The plan is only theoretical, and it is unknown whether it actually works in practice"
           },
           "eksisterendeBeskyttelse": {
             "no": "Dokumentert plan eksisterer",
-            "en": "Documented plan eksisterer"
+            "en": "A documented plan exists"
           },
           "eksisterendeKontroll": {
             "no": "Ingen strukturerte tester",
-            "en": "No strukturerte tester"
+            "en": "No structured tests"
           },
           "K": 4,
           "I": 4,
@@ -506,7 +506,7 @@
           "id": "test-002",
           "risikoelement": {
             "no": "Tabletop exercises aldri gjennomført",
-            "en": "Tabletop exercises aldri completed"
+            "en": "Tabletop exercises have never been conducted"
           },
           "saarbarhet": {
             "no": "Kriseteam har ikke øvd på samarbeid og beslutningsprosesser i simulerte kriser",
@@ -533,7 +533,7 @@
           "id": "test-003",
           "risikoelement": {
             "no": "Funn fra tester ikke fulgt opp",
-            "en": "Findings from tester not fulgt opp"
+            "en": "Findings from exercises are not followed up"
           },
           "saarbarhet": {
             "no": "Svakheter identifiseres i tester, men ikke lukkes før neste test",
@@ -545,7 +545,7 @@
           },
           "eksisterendeKontroll": {
             "no": "Rapportering av funn",
-            "en": "Rapportering of findings"
+            "en": "Reporting of findings"
           },
           "K": 3,
           "I": 3,
@@ -560,7 +560,7 @@
           "id": "test-004",
           "risikoelement": {
             "no": "Tester dekker ikke realistiske scenarioer",
-            "en": "Tester dekker not realistiske scenarioer"
+            "en": "Exercises do not cover realistic scenarios"
           },
           "saarbarhet": {
             "no": "Øvelser fokuserer på enkle feil, ikke komplekse eller kaskadefeil",
@@ -568,11 +568,11 @@
           },
           "eksisterendeBeskyttelse": {
             "no": "Enkle failover-tester",
-            "en": "Enkle failover-tester"
+            "en": "Simple failover tests"
           },
           "eksisterendeKontroll": {
             "no": "Sjekkliste for standard scenarioer",
-            "en": "Sjekkliste for standard scenarioer"
+            "en": "Checklist for standard scenarios"
           },
           "K": 3,
           "I": 3,
@@ -587,19 +587,19 @@
           "id": "test-005",
           "risikoelement": {
             "no": "Nøkkelpersonell deltar ikke i øvelser",
-            "en": "Key personnel deltar not in exercises"
+            "en": "Key personnel do not participate in exercises"
           },
           "saarbarhet": {
             "no": "Kritiske roller (ledelse, kommunikasjon, tekniske eksperter) ikke involvert i testing",
-            "en": "Critical roles (ledelse, communications, tekniske eksperter) not involvert in testing"
+            "en": "Critical roles such as management, communications, and technical experts are not involved in testing"
           },
           "eksisterendeBeskyttelse": {
             "no": "Teknisk team tester failover",
-            "en": "technical team tester failover"
+            "en": "The technical team tests failover"
           },
           "eksisterendeKontroll": {
             "no": "Driftsteam deltar",
-            "en": "Driftsteam deltar"
+            "en": "Operations staff participate"
           },
           "K": 3,
           "I": 3,
@@ -607,7 +607,7 @@
           "sannsynlighet": 3,
           "foreslaatteTiltak": {
             "no": "Sikre deltagelse fra alle roller i CMT, rotere deltagere for å bygge bredere kompetanse",
-            "en": "Sikre deltagelse from all roles in CMT, rotere deltagere for to bygge bredere expertise"
+            "en": "Ensure participation from all roles in the CMT and rotate participants to build broader expertise"
           }
         }
       ]
@@ -623,11 +623,11 @@
           "id": "lev-res-001",
           "risikoelement": {
             "no": "Single point of failure hos kritisk leverandør",
-            "en": "Single point of failure hos critical vendor"
+            "en": "Single point of failure with a critical vendor"
           },
           "saarbarhet": {
             "no": "Én leverandør for kritisk tjeneste uten redundans eller alternativ",
-            "en": "Én vendor for critical service without redundancy or alternativ"
+            "en": "A single vendor provides a critical service without redundancy or an alternative"
           },
           "eksisterendeBeskyttelse": {
             "no": "SLA med leverandør",
@@ -670,7 +670,7 @@
           "sannsynlighet": 3,
           "foreslaatteTiltak": {
             "no": "Kreve BCP/DR-dokumentasjon fra kritiske leverandører, inkludere i leverandør due diligence, årlig oppdatering",
-            "en": "Kreve BCP/DR-documentation from critical vendors, include in vendor due diligence, annual updating"
+            "en": "Require BCP/DR documentation from critical vendors, include it in vendor due diligence, and update it annually"
           }
         },
         {
@@ -704,7 +704,7 @@
           "id": "lev-res-004",
           "risikoelement": {
             "no": "Kaskadeeffekt fra underleverandør",
-            "en": "Kaskadeeffekt from subcontractor"
+            "en": "Cascade effects from subcontractors"
           },
           "saarbarhet": {
             "no": "Leverandørens underleverandører (4th party) påvirker vår tjeneste uten at vi er klar over avhengigheten",
@@ -712,7 +712,7 @@
           },
           "eksisterendeBeskyttelse": {
             "no": "Direkte leverandør-relasjon",
-            "en": "Direct vendor-relasjon"
+            "en": "Direct vendor relationship"
           },
           "eksisterendeKontroll": {
             "no": "Ikke kartlagt underleverandører",
@@ -724,7 +724,7 @@
           "sannsynlighet": 3,
           "foreslaatteTiltak": {
             "no": "Kreve transparens om kritiske underleverandører, inkludere i leverandør risk vurdering, 4th party disclosure",
-            "en": "Kreve transparens about critical subcontractors, include in vendor risk assessment, 4th party disclosure"
+            "en": "Require transparency about critical subcontractors, include them in vendor risk assessments, and require fourth-party disclosure"
           }
         },
         {
@@ -739,7 +739,7 @@
           },
           "eksisterendeBeskyttelse": {
             "no": "Kontrakt med oppsigelsesfrist",
-            "en": "Kontrakt with oppsigelsesfrist"
+            "en": "A contract includes a notice period"
           },
           "eksisterendeKontroll": {
             "no": "Ikke overvåket leverandørs finansielle helse",
@@ -806,7 +806,7 @@
           },
           "eksisterendeKontroll": {
             "no": "Manuell gjennomgang av logger ved mistanke",
-            "en": "Manual review of logs during mistanke"
+            "en": "Manual review of logs during suspected incidents"
           },
           "K": 4,
           "I": 4,

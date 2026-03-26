@@ -64,7 +64,7 @@
           "K": 4,
           "I": 3,
           "T": 2,
-          "sannsynlighet": 3,
+          "sannsynlighet": 4,
           "foreslaatteTiltak": {
             "no": "Automatisk deaktivering ved avslutning, full integrasjon med HR-system",
             "en": "Automatic deactivation during offboarding and full integration with the HR system"
@@ -91,7 +91,7 @@
           "K": 3,
           "I": 3,
           "T": 1,
-          "sannsynlighet": 3,
+          "sannsynlighet": 4,
           "foreslaatteTiltak": {
             "no": "Implementere roller-basert tilgangsstyring (RBAC), minste privilegium",
             "en": "Implement role-based access control (RBAC) and least privilege"

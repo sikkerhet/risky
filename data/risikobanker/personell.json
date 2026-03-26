@@ -39,7 +39,7 @@
           "T": 2,
           "sannsynlighet": 3,
           "foreslaatteTiltak": {
-            "no": "Background screening policy, politiattest for sensitive roller, education verification, employment history check",
+            "no": "Retningslinjer for bakgrunnssjekk, politiattest for sensitive roller, verifisering av utdanning og kontroll av ansettelseshistorikk",
             "en": "Establish a background screening policy, require criminal record checks where lawful and relevant, verify education, and verify employment history"
           }
         },
@@ -58,7 +58,7 @@
             "en": "General onboarding"
           },
           "eksisterendeKontroll": {
-            "no": "Welcome email med policyer",
+            "no": "Velkomstepost med retningslinjer",
             "en": "Welcome email with policies"
           },
           "K": 3,
@@ -226,7 +226,7 @@
             "en": "An employee copies data before departure"
           },
           "eksisterendeBeskyttelse": {
-            "no": "DLP policyer",
+            "no": "DLP-retningslinjer",
             "en": "DLP policies"
           },
           "eksisterendeKontroll": {
@@ -307,7 +307,7 @@
             "en": "A poor working environment increases motivation for sabotage"
           },
           "eksisterendeBeskyttelse": {
-            "no": "HR policyer",
+            "no": "HR-retningslinjer",
             "en": "HR policies"
           },
           "eksisterendeKontroll": {
@@ -424,7 +424,7 @@
             "en": "Employees use weak or reused passwords"
           },
           "eksisterendeBeskyttelse": {
-            "no": "Password policy, complexity krav",
+            "no": "Passordpolicy med krav til kompleksitet",
             "en": "Password policy, complexity requirements"
           },
           "eksisterendeKontroll": {
@@ -491,7 +491,7 @@
             "en": "VPN required"
           },
           "eksisterendeKontroll": {
-            "no": "Remote work policy",
+            "no": "Retningslinjer for fjernarbeid",
             "en": "Remote work policy"
           },
           "K": 4,
@@ -514,7 +514,7 @@
             "en": "Private devices are used for work data without sufficient control"
           },
           "eksisterendeBeskyttelse": {
-            "no": "policy mot BYOD",
+            "no": "Retningslinjer mot BYOD",
             "en": "Policy mot BYOD"
           },
           "eksisterendeKontroll": {
@@ -568,7 +568,7 @@
             "en": "Family members use work devices and children install games or other software"
           },
           "eksisterendeBeskyttelse": {
-            "no": "policy mot deling",
+            "no": "Retningslinjer mot deling",
             "en": "Policy against account sharing"
           },
           "eksisterendeKontroll": {
@@ -580,7 +580,7 @@
           "T": 3,
           "sannsynlighet": 3,
           "foreslaatteTiltak": {
-            "no": "enhet assignment policy, separate user accounts, awareness, technical controls (no admin rights), MDM enforcement",
+            "no": "Retningslinjer for enhetstildeling, separate brukerkontoer, bevisstgjøring, tekniske kontroller uten administratorrettigheter og håndheving gjennom MDM",
             "en": "Device assignment policy, separate user accounts, awareness, technical controls (no admin rights), MDM enforcement"
           }
         },
@@ -622,7 +622,7 @@
             "en": "Rotasjonsordninger makes security measures inkonsistente"
           },
           "eksisterendeBeskyttelse": {
-            "no": "Same policyer for all",
+            "no": "Samme retningslinjer for alle",
             "en": "Same policies for all"
           },
           "eksisterendeKontroll": {
@@ -658,7 +658,7 @@
             "en": "Sensitive documents or screens are visible to visitors or cleaning staff"
           },
           "eksisterendeBeskyttelse": {
-            "no": "Clean desk policy",
+            "no": "Clean desk-policy",
             "en": "Clean desk policy"
           },
           "eksisterendeKontroll": {
@@ -697,7 +697,7 @@
           "T": 2,
           "sannsynlighet": 3,
           "foreslaatteTiltak": {
-            "no": "Mandatory escort policy, visible visitor badges, tilgang restrictions for visitors, photo ID requirement, logbook",
+            "no": "Obligatorisk ledsagerordning, synlige besøkskort, tilgangsbegrensninger for besøkende, krav om legitimasjon og besøkslogg",
             "en": "Mandatory escort policy, visible visitor badges, access restrictions for visitors, photo ID requirement, logbook"
           }
         },
@@ -766,7 +766,7 @@
             "en": "Employees plugger inn funnet USB without check"
           },
           "eksisterendeBeskyttelse": {
-            "no": "USB policy",
+            "no": "USB-retningslinjer",
             "en": "USB policy"
           },
           "eksisterendeKontroll": {
@@ -797,7 +797,7 @@
             "en": "Shredders available"
           },
           "eksisterendeKontroll": {
-            "no": "policy on document disposal",
+            "no": "Retningslinjer for dokumentdestruksjon",
             "en": "Policy on document disposal"
           },
           "K": 4,
@@ -805,7 +805,7 @@
           "T": 1,
           "sannsynlighet": 3,
           "foreslaatteTiltak": {
-            "no": "Mandatory shredding for confidential, secure disposal bins, certified destruction service, digital-first policyer",
+            "no": "Obligatorisk makulering av konfidensielle dokumenter, sikre avfallsbeholdere, sertifisert destruksjonstjeneste og digital-først-retningslinjer",
             "en": "Mandatory shredding for confidential, secure disposal bins, certified destruction service, digital-first policies"
           }
         }

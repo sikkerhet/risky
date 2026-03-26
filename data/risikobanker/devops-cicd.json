@@ -20,7 +20,7 @@
           "id": "cicd-001",
           "risikoelement": {
             "no": "Kompromittert CI/CD-pipeline injiserer ondsinnet kode",
-            "en": "Kompromittert CI/CD-pipeline injiserer ondsinnet code"
+            "en": "A compromised CI/CD pipeline injects malicious code"
           },
           "saarbarhet": {
             "no": "Manglende signing av artifacts, svak tilgangskontroll på pipeline",
@@ -47,11 +47,11 @@
           "id": "cicd-002",
           "risikoelement": {
             "no": "Secrets eksponert i CI/CD logs eller environment variables",
-            "en": "Secrets eksponert in CI/CD logs or environment variables"
+            "en": "Secrets are exposed in CI/CD logs or environment variables"
           },
           "saarbarhet": {
             "no": "Hardkodede secrets, secrets i plaintext logs, ekko av env vars",
-            "en": "Hardcoded secrets, secrets in plaintext logs, ekko of env vars"
+            "en": "Hardcoded secrets, secrets in plaintext logs, and echoed environment variables"
           },
           "eksisterendeBeskyttelse": {
             "no": "Secret scanning i repos",
@@ -59,7 +59,7 @@
           },
           "eksisterendeKontroll": {
             "no": "Periodisk gjennomgang av logs",
-            "en": "Periodisk review of logs"
+            "en": "Periodic review of logs"
           },
           "K": 5,
           "I": 4,
@@ -78,7 +78,7 @@
           },
           "saarbarhet": {
             "no": "Manglende approvals, ingen utrulling gates, direktegang fra dev til prod",
-            "en": "Missing approvals, no deployment gates, direktegang from dev to prod"
+            "en": "Missing approvals, no deployment gates, and direct promotion from development to production"
           },
           "eksisterendeBeskyttelse": {
             "no": "manuell approval for prod",
@@ -101,11 +101,11 @@
           "id": "cicd-004",
           "risikoelement": {
             "no": "Drift av usignerte eller uverifiserte artifacts",
-            "en": "operations of usignerte or uverifiserte artifacts"
+            "en": "Unsigned or unverified artifacts are deployed"
           },
           "saarbarhet": {
             "no": "Ingen signatursjekk på binaries, manglende provenance",
-            "en": "No signaturcheck on binaries, missing provenance"
+            "en": "No signature checks on binaries and missing provenance"
           },
           "eksisterendeBeskyttelse": {
             "no": "Artifacts fra trusted pipeline",
@@ -113,7 +113,7 @@
           },
           "eksisterendeKontroll": {
             "no": "manuell verifisering ved kritiske releases",
-            "en": "Manual verifisering during critical releases"
+            "en": "Manual verification during critical releases"
           },
           "K": 5,
           "I": 5,
@@ -128,7 +128,7 @@
           "id": "cicd-005",
           "risikoelement": {
             "no": "Lateral movement fra kompromittert build agent",
-            "en": "Lateral movement from kompromittert build agent"
+            "en": "Lateral movement from a compromised build agent"
           },
           "saarbarhet": {
             "no": "Build agents med for mange tilganger, delte credentials",
@@ -168,7 +168,7 @@
           },
           "saarbarhet": {
             "no": "Utviklere committer.env-filer, hardkoder credentials",
-            "en": "Utviklere committer.env-filer, hardkoder credentials"
+            "en": "Developers commit .env files and hardcode credentials"
           },
           "eksisterendeBeskyttelse": {
             "no": ".gitignore for sensitive files",
@@ -195,7 +195,7 @@
           },
           "saarbarhet": {
             "no": "Manglende sikkerhetsfokus i gjennomganger og tidspress",
-            "en": "Missing security focus in reviews, tidspress"
+            "en": "Missing security focus in reviews and time pressure"
           },
           "eksisterendeBeskyttelse": {
             "no": "Mandatory code gjennomgang",
@@ -218,7 +218,7 @@
           "id": "code-003",
           "risikoelement": {
             "no": "Manglende branch protection tillater force push til main",
-            "en": "Missing branch protection tillater force push to main"
+            "en": "Missing branch protection allows force-pushes to the main branch"
           },
           "saarbarhet": {
             "no": "Åpen main branch uten krav til gjennomganger",
@@ -226,7 +226,7 @@
           },
           "eksisterendeBeskyttelse": {
             "no": "Branch protection på viktige repos",
-            "en": "Branch protection on viktige repositories"
+            "en": "Branch protection on critical repositories"
           },
           "eksisterendeKontroll": {
             "no": "Audit logs",
