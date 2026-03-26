@@ -2,7 +2,7 @@
 
 async function exportAllFormats() {
     if (!currentAnalysis) {
-        alert('Ingen analyse å eksportere');
+        alert(t('noAnalysisToExport'));
         return;
     }
 
@@ -10,7 +10,7 @@ async function exportAllFormats() {
         // Vis laste-indikator
         const btn = document.getElementById('exportAllBtn');
         const originalText = btn.textContent;
-        btn.textContent = 'Genererer...';
+        btn.textContent = t('exportAllGenerating');
         btn.disabled = true;
 
         // Opprett ZIP-fil
@@ -50,11 +50,11 @@ async function exportAllFormats() {
 
     } catch (error) {
         console.error('Feil ved eksport av alle formater:', error);
-        alert('Det oppsto en feil ved eksport. Se konsollen for detaljer.');
+        alert(t('exportErrorGeneric'));
 
         // Tilbakestill knapp
         const btn = document.getElementById('exportAllBtn');
-        btn.textContent = 'Eksporter alt (ZIP)';
+        btn.textContent = t('exportZip');
         btn.disabled = false;
     }
 }
@@ -96,30 +96,30 @@ function generateExcelBlob() {
 
     // Metadata-ark
     const metadataData = [
-        ['Risky - Risikoanalyse'],
+        ['Risky'],
         [''],
-        ['Informasjon', 'Verdi'],
-        ['Tjeneste/system', safeText(currentAnalysis.metadata.service)],
-        ['Dato', safeText(currentAnalysis.metadata.date)],
-        ['Utført av', safeText(currentAnalysis.metadata.performedBy)],
-        ['Deltakere', safeText(currentAnalysis.metadata.participants)],
-        ['Tjenesteeier', safeText(currentAnalysis.metadata.serviceOwner)],
-        ['Beskrivelse', safeText(currentAnalysis.metadata.description)],
+        [t('informationHeader'), t('valueHeader')],
+        [t('serviceSystemLabel'), safeText(currentAnalysis.metadata.service)],
+        [t('dateLabel'), safeText(currentAnalysis.metadata.date)],
+        [t('performedByLabel'), safeText(currentAnalysis.metadata.performedBy)],
+        [t('participants'), safeText(currentAnalysis.metadata.participants)],
+        [t('serviceOwnerPdfLabel'), safeText(currentAnalysis.metadata.serviceOwner)],
+        [t('description'), safeText(currentAnalysis.metadata.description)],
         [''],
-        ['Opprettet', safeText(currentAnalysis.createdDate)],
-        ['Sist endret', safeText(currentAnalysis.lastModified)]
+        [t('created'), safeText(currentAnalysis.createdDate)],
+        [t('lastModified'), safeText(currentAnalysis.lastModified)]
     ];
 
     const wsMetadata = XLSX.utils.aoa_to_sheet(metadataData);
     if (!wsMetadata['!cols']) wsMetadata['!cols'] = [];
     wsMetadata['!cols'][0] = { wch: 20 };
     wsMetadata['!cols'][1] = { wch: 60 };
-    XLSX.utils.book_append_sheet(wb, wsMetadata, 'Metadata');
+    XLSX.utils.book_append_sheet(wb, wsMetadata, t('worksheetMetadata'));
 
     // Risikoer-ark
     const risksData = [
-        ['Nr', 'Risikoelement', 'Sårbarhet/svakhet', 'Eksisterende beskyttelse', 'Eksisterende kontroll',
-         'K', 'I', 'T', 'K*', 'S*', 'RN*', 'Foreslåtte tiltak']
+        [t('riskNumber'), t('riskElement'), t('vulnerabilityWeakness'), t('existingProtectionHeader'), t('existingControlHeader'),
+         'K', 'I', 'T', t('pdfConsequenceShort'), t('pdfProbabilityShort'), t('pdfRiskLevelShort'), t('proposedMeasures')]
     ];
 
     currentAnalysis.risks.forEach((risk, index) => {
@@ -154,15 +154,15 @@ function generateExcelBlob() {
     wsRisks['!cols'][10] = { wch: 5 };
     wsRisks['!cols'][11] = { wch: 30 };
 
-    XLSX.utils.book_append_sheet(wb, wsRisks, 'Risikoer');
+    XLSX.utils.book_append_sheet(wb, wsRisks, t('worksheetRisks'));
 
     // Kommentarer-ark (hvis det finnes kommentarer)
     if (currentAnalysis.risks && currentAnalysis.risks.some(r => r.comments && r.comments.length > 0)) {
         try {
             const commentsData = [
-                ['Tiltak og kommentarer'],
+                [t('actionsAndCommentsDefaultTitle')],
                 [''],
-                ['Risiko Nr', 'Risikoelement', 'Kommentar']
+                [t('riskNumberHeader'), t('riskElement'), t('commentsColumnHeader')]
             ];
 
             let hasAnyVisibleComments = false;
@@ -193,7 +193,7 @@ function generateExcelBlob() {
                 wsComments['!cols'][0] = { wch: 20 };
                 wsComments['!cols'][1] = { wch: 50 };
                 wsComments['!cols'][2] = { wch: 60 };
-                XLSX.utils.book_append_sheet(wb, wsComments, 'Tiltak og kommentarer');
+                XLSX.utils.book_append_sheet(wb, wsComments, t('worksheetComments'));
             }
         } catch (e) {
             console.error('Error creating comments sheet:', e);
@@ -224,29 +224,29 @@ async function generatePDFBlob() {
     const metadata = currentAnalysis.metadata;
 
     if (metadata.service) {
-        doc.text(`Tjeneste/system: ${safeText(metadata.service)}`, 20, yPos);
+        doc.text(`${t('serviceSystemLabel')}: ${safeText(metadata.service)}`, 20, yPos);
         yPos += 7;
     }
     if (metadata.date) {
-        doc.text(`Dato: ${safeText(metadata.date)}`, 20, yPos);
+        doc.text(`${t('dateLabel')}: ${safeText(metadata.date)}`, 20, yPos);
         yPos += 7;
     }
     if (metadata.performedBy) {
-        doc.text(`Utført av: ${safeText(metadata.performedBy)}`, 20, yPos);
+        doc.text(`${t('performedByLabel')}: ${safeText(metadata.performedBy)}`, 20, yPos);
         yPos += 7;
     }
     if (metadata.participants) {
-        doc.text(`Deltakere: ${safeText(metadata.participants)}`, 20, yPos);
+        doc.text(`${t('participants')}: ${safeText(metadata.participants)}`, 20, yPos);
         yPos += 7;
     }
     if (metadata.serviceOwner) {
-        doc.text(`Tjenesteeier: ${safeText(metadata.serviceOwner)}`, 20, yPos);
+        doc.text(`${t('serviceOwnerPdfLabel')}: ${safeText(metadata.serviceOwner)}`, 20, yPos);
         yPos += 7;
     }
     if (metadata.description) {
         const description = safeText(metadata.description);
         const splitDescription = doc.splitTextToSize(description, 250);
-        doc.text(`Beskrivelse: ${splitDescription[0]}`, 20, yPos);
+        doc.text(`${t('description')}: ${splitDescription[0]}`, 20, yPos);
         yPos += 7;
         for (let i = 1; i < splitDescription.length; i++) {
             doc.text(splitDescription[i], 20, yPos);
@@ -274,7 +274,7 @@ async function generatePDFBlob() {
 
     doc.autoTable({
         startY: yPos,
-        head: [['Nr', 'Risikoelement', 'Sårbarhet', 'Beskyttelse', 'Kontroll', 'K', 'I', 'T', 'K*', 'S*', 'RN*', 'Tiltak']],
+        head: [[t('riskNumber'), t('riskElement'), t('vulnerabilityWeakness'), t('existingProtectionHeader'), t('existingControlHeader'), 'K', 'I', 'T', t('pdfConsequenceShort'), t('pdfProbabilityShort'), t('pdfRiskLevelShort'), t('proposedMeasures')]],
         body: tableData,
         styles: { fontSize: 8, cellPadding: 2 },
         headStyles: { fillColor: [46, 95, 142], textColor: 255 },
@@ -305,7 +305,7 @@ async function generatePDFBlob() {
         if (risksWithComments.length > 0) {
             doc.addPage();
             doc.setFontSize(16);
-            doc.text('Tiltak og kommentarer', 20, 20);
+            doc.text(t('actionsAndCommentsDefaultTitle'), 20, 20);
 
             let yPosition = 35;
             risksWithComments.forEach((risk, idx) => {
@@ -321,7 +321,7 @@ async function generatePDFBlob() {
 
                 doc.setFontSize(12);
                 doc.setFont(undefined, 'bold');
-                doc.text(`Risiko ${riskIndex}: ${safeText(risk.riskElement)}`, 20, yPosition);
+                doc.text(`${t('riskSectionTitle')} ${riskIndex}: ${safeText(risk.riskElement)}`, 20, yPosition);
                 yPosition += 7;
 
                 doc.setFont(undefined, 'normal');
@@ -333,7 +333,7 @@ async function generatePDFBlob() {
                         yPosition = 20;
                     }
 
-                    const timestamp = comment.timestamp ? new Date(comment.timestamp).toLocaleString('no-NO') : '';
+                    const timestamp = comment.timestamp ? new Date(comment.timestamp).toLocaleString(getCurrentLanguage() === 'en' ? 'en-GB' : 'no-NO') : '';
                     const commentText = `• [${timestamp}] ${safeText(comment.text)}`;
                     const splitText = doc.splitTextToSize(commentText, 250);
 
@@ -360,7 +360,7 @@ async function generatePDFBlob() {
         doc.setPage(i);
         doc.setFontSize(9);
         doc.setTextColor(100, 100, 100);
-        doc.text(`Side ${i} av ${totalPages}`, 148, 200, { align: 'center' });
+        doc.text(formatTranslation('pdfPageOf', { current: i, total: totalPages }), 148, 200, { align: 'center' });
     }
 
     // Returner blob

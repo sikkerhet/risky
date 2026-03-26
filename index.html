@@ -534,7 +534,7 @@
 
             } catch (error) {
                 console.error('Feil ved eksport:', error);
-                alert('Det oppsto en feil ved eksport. Se konsollen for detaljer.');
+                alert(t('exportErrorGeneric'));
                 btn.textContent = originalText;
                 btn.disabled = false;
             }
@@ -549,7 +549,7 @@
         }
 
         function deleteAnalysis(id) {
-            if (!confirm('Er du sikker på at du vil slette denne analysen?')) return;
+            if (!confirm(t('deleteAnalysisConfirm'))) return;
 
             const analyses = getAnalyses();
             const filtered = analyses.filter(a => a.id !== id);
@@ -574,7 +574,7 @@
                             if (validateAnalysis(analysis)) {
                                 const existing = analyses.findIndex(a => a.id === analysis.id);
                                 if (existing >= 0) {
-                                    if (confirm(`Analyse "${analysis.name}" finnes allerede. Overskrive?`)) {
+                                    if (confirm(formatTranslation('analysisExistsOverwriteConfirm', { name: analysis.name }))) {
                                         analyses[existing] = analysis;
                                     }
                                 } else {
@@ -587,23 +587,23 @@
                         if (validateAnalysis(imported)) {
                             const existing = analyses.findIndex(a => a.id === imported.id);
                             if (existing >= 0) {
-                                if (confirm(`Analyse "${imported.name}" finnes allerede. Overskrive?`)) {
+                                if (confirm(formatTranslation('analysisExistsOverwriteConfirm', { name: imported.name }))) {
                                     analyses[existing] = imported;
                                 }
                             } else {
                                 analyses.push(imported);
                             }
                         } else {
-                            alert('Ugyldig analyse-fil');
+                            alert(t('invalidAnalysisFile'));
                             return;
                         }
                     }
 
                     saveAnalyses(analyses);
                     loadAnalysesList();
-                    alert('Import fullført!');
+                    alert(t('importCompletedSimple'));
                 } catch (err) {
-                    alert('Feil ved import: ' + err.message);
+                    alert(formatTranslation('importErrorSimple', { message: err.message }));
                 }
             };
             reader.readAsText(file);
@@ -620,7 +620,7 @@
                 // Sjekk om eksempelanalysen allerede finnes
                 const existing = analyses.findIndex(a => a.id === exampleAnalysis.id);
                 if (existing >= 0) {
-                    if (!confirm('Eksempelanalysen finnes allerede. Vil du overskrive den?')) {
+                    if (!confirm(t('exampleAnalysisExistsConfirm'))) {
                         return;
                     }
                     analyses[existing] = exampleAnalysis;
@@ -631,9 +631,9 @@
                 saveAnalyses(analyses);
                 loadAnalysesList();
 
-                alert('"ROS-analyse - Nettbank for bedriftskunder" er nå tilgjengelig.\n\nDenne analysen demonstrerer alle funksjoner i Risky:\n• 12 risikoer med varierende nivå\n• Kommentarer og tiltak\n• Tilleggsinformasjon\n• Akseptansenivå satt til 12');
+                alert(t('exampleAnalysisLoaded'));
             } catch (err) {
-                alert('Feil ved lasting av eksempelanalyse: ' + err.message);
+                alert(formatTranslation('exampleAnalysisLoadError', { message: err.message }));
                 console.error(err);
             }
         }

@@ -527,14 +527,14 @@
             // Validate file type
             const validTypes = ['image/png', 'image/jpeg', 'image/jpg'];
             if (!validTypes.includes(file.type)) {
-                alert('Ugyldig filtype. Vennligst bruk PNG eller JPG.');
+                alert(t('invalidLogoFileType'));
                 return;
             }
 
             // Validate file size (2 MB max)
             const maxSize = 2 * 1024 * 1024; // 2 MB
             if (file.size > maxSize) {
-                alert('Filen er for stor. Maksimal størrelse er 2 MB.');
+                alert(t('logoFileTooLarge'));
                 return;
             }
 
@@ -556,7 +556,7 @@
             };
 
             reader.onerror = () => {
-                alert('Kunne ikke lese filen. Prøv igjen.');
+                alert(t('logoFileReadError'));
             };
 
             reader.readAsDataURL(file);
@@ -580,7 +580,7 @@
                     const sizeKB = (file.size / 1024).toFixed(1);
                     statusText += ` • ${sizeKB} KB`;
                 }
-                previewStatus.textContent = `Logo lastet: ${statusText}`;
+                previewStatus.textContent = formatTranslation('logoLoadedStatus', { status: statusText });
                 previewStatus.style.color = '#28a745';
             };
             img.src = dataUrl;
@@ -609,7 +609,7 @@
             const logoUrl = document.getElementById('reportLogo').value.trim();
 
             if (!logoUrl) {
-                alert('Vennligst oppgi en logo URL først, eller last opp en fil');
+                alert(t('provideLogoUrlFirst'));
                 return;
             }
 
@@ -624,7 +624,7 @@
             // Valider YYYY-MM-DD format
             const datePattern = /^\d{4}-\d{2}-\d{2}$/;
             if (dato && !datePattern.test(dato)) {
-                alert('Dato må være i format ÅÅÅÅ-MM-DD (f.eks. 2026-02-26)');
+                alert(t('invalidDateFormat'));
                 datoInput.focus();
                 return;
             }
@@ -637,7 +637,7 @@
                 const day = parseInt(parts[2]);
 
                 if (month < 1 || month > 12 || day < 1 || day > 31) {
-                    alert('Ugyldig dato');
+                    alert(t('invalidDate'));
                     datoInput.focus();
                     return;
                 }

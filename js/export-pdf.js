@@ -2,12 +2,12 @@
 
 async function exportToPDF() {
     if (!currentAnalysis) {
-        alert('Ingen analyse å eksportere');
+        alert(t('noAnalysisToExport'));
         return;
     }
 
     if (!window.jspdf) {
-        alert('jsPDF-biblioteket er ikke lastet. Sjekk internettforbindelsen og last siden på nytt.');
+        alert(t('pdfLibraryMissing'));
         console.error('jsPDF library not found on window.jspdf');
         return;
     }
@@ -18,7 +18,7 @@ async function exportToPDF() {
 
         await generatePDFContent(doc);
     } catch (error) {
-        alert('Feil ved generering av PDF: ' + error.message);
+        alert(`${t('pdfGenerationError')}: ${error.message}`);
         console.error('PDF export error:', error);
     }
 }
@@ -133,7 +133,7 @@ async function generatePDFContent(doc) {
         yPos += 8;
     } catch (e) {
         console.error('Error in header section:', e);
-        throw new Error('Feil i header-seksjonen');
+        throw new Error(t('pdfHeaderSectionError'));
     }
 
     try {
@@ -142,11 +142,11 @@ async function generatePDFContent(doc) {
         doc.setTextColor(0, 0, 0);
 
         const metadata = [
-            ['Dato:', safeText(currentAnalysis.metadata.date)],
-            ['Tjeneste/system:', safeText(currentAnalysis.metadata.service)],
-            ['Utført av:', safeText(currentAnalysis.metadata.performedBy)],
-            ['Deltakere:', safeText(currentAnalysis.metadata.participants)],
-            ['Tjenesteeier:', safeText(currentAnalysis.metadata.serviceOwner)]
+            [`${t('dateLabel')}:`, safeText(currentAnalysis.metadata.date)],
+            [`${t('serviceSystemLabel')}:`, safeText(currentAnalysis.metadata.service)],
+            [`${t('performedByLabel')}:`, safeText(currentAnalysis.metadata.performedBy)],
+            [`${t('participants')}:`, safeText(currentAnalysis.metadata.participants)],
+            [`${t('serviceOwnerPdfLabel')}:`, safeText(currentAnalysis.metadata.serviceOwner)]
         ];
 
         // Regular metadata fields (single line)
@@ -159,15 +159,15 @@ async function generatePDFContent(doc) {
         });
 
         // Beskrivelse with word wrap
-        const beskrivelse = safeText(currentAnalysis.metadata.description);
-        if (beskrivelse) {
+        const description = safeText(currentAnalysis.metadata.description);
+        if (description) {
             doc.setFont(undefined, 'bold');
-            doc.text('Beskrivelse:', 20, yPos);
+            doc.text(`${t('description')}:`, 20, yPos);
             doc.setFont(undefined, 'normal');
 
             // Split text to fit width (page width - left margin - label width - padding)
             const maxWidth = 276 - 60; // A4 landscape width (297mm) - margins - label column
-            const lines = doc.splitTextToSize(beskrivelse, maxWidth);
+            const lines = doc.splitTextToSize(description, maxWidth);
             doc.text(lines, 60, yPos);
             yPos += lines.length * 5;
         }
@@ -175,14 +175,14 @@ async function generatePDFContent(doc) {
         yPos += 3;
     } catch (e) {
         console.error('Error in metadata section:', e);
-        throw new Error('Feil i metadata-seksjonen');
+        throw new Error(t('pdfMetadataSectionError'));
     }
 
     try {
         // Heatmap
         doc.setFontSize(14);
         doc.setFont(undefined, 'bold');
-        doc.text('RISIKO HEATMAP', 20, yPos);
+        doc.text(t('pdfHeatmapTitle'), 20, yPos);
         yPos += 3;
 
         const canvas = document.getElementById('heatmapCanvas');
@@ -193,7 +193,7 @@ async function generatePDFContent(doc) {
         }
     } catch (e) {
         console.error('Error in heatmap section:', e);
-        throw new Error('Feil i heatmap-seksjonen');
+        throw new Error(t('pdfHeatmapSectionError'));
     }
 
     try {
@@ -207,7 +207,7 @@ async function generatePDFContent(doc) {
 
         doc.setFontSize(14);
         doc.setFont(undefined, 'bold');
-        doc.text('STATISTIKK', 20, yPos);
+        doc.text(t('statistics').toUpperCase(), 20, yPos);
         yPos += 6;
 
         const risks = currentAnalysis.risks || [];
@@ -233,12 +233,12 @@ async function generatePDFContent(doc) {
         doc.setFont(undefined, 'normal');
 
         const stats = [
-            ['Totalt antall risikoer:', total.toString()],
-            ['Røde risikoer (19-25):', `${red} (${total > 0 ? Math.round(red/total*100) : 0}%)`],
-            ['Oransje risikoer (13-18):', `${orange} (${total > 0 ? Math.round(orange/total*100) : 0}%)`],
-            ['Gule risikoer (7-12):', `${yellow} (${total > 0 ? Math.round(yellow/total*100) : 0}%)`],
-            ['Grønne risikoer (1-6):', `${green} (${total > 0 ? Math.round(green/total*100) : 0}%)`],
-            ['Gjennomsnittlig risikonivå:', avgRisk]
+            [`${t('totalRisks')}:`, total.toString()],
+            [`${t('redRisks')}:`, `${red} (${total > 0 ? Math.round(red/total*100) : 0}%)`],
+            [`${t('orangeRisks')}:`, `${orange} (${total > 0 ? Math.round(orange/total*100) : 0}%)`],
+            [`${t('yellowRisks')}:`, `${yellow} (${total > 0 ? Math.round(yellow/total*100) : 0}%)`],
+            [`${t('greenRisks')}:`, `${green} (${total > 0 ? Math.round(green/total*100) : 0}%)`],
+            [`${t('averageRisk')}:`, avgRisk]
         ];
 
         stats.forEach(([label, value]) => {
@@ -277,7 +277,7 @@ async function generatePDFContent(doc) {
         yPos += 50;
     } catch (e) {
         console.error('Error in statistics section:', e);
-        throw new Error('Feil i statistikk-seksjonen');
+        throw new Error(t('pdfStatisticsSectionError'));
     }
 
     try {
@@ -286,7 +286,7 @@ async function generatePDFContent(doc) {
         yPos = 20;
 
         doc.setFontSize(14);
-        doc.text('RISIKOER', 20, yPos);
+        doc.text(t('riskSectionTitle').toUpperCase(), 20, yPos);
         yPos += 10;
 
         // Risikotabell
@@ -307,7 +307,20 @@ async function generatePDFContent(doc) {
 
         doc.autoTable({
             startY: yPos,
-            head: [['Nr', 'Risikoelement', 'Sårbarhet', 'Beskyttelse', 'Kontroll', 'K', 'I', 'T', 'K*', 'S*', 'RN*', 'Tiltak']],
+            head: [[
+                t('riskNumber'),
+                t('riskElement'),
+                t('vulnerabilityWeakness'),
+                t('existingProtectionHeader'),
+                t('existingControlHeader'),
+                'K',
+                'I',
+                'T',
+                t('pdfConsequenceShort'),
+                t('pdfProbabilityShort'),
+                t('pdfRiskLevelShort'),
+                t('proposedMeasures')
+            ]],
             body: tableData,
             styles: { fontSize: 8, cellPadding: 2 },
             headStyles: { fillColor: [0, 123, 255], textColor: 255 },
@@ -343,7 +356,7 @@ async function generatePDFContent(doc) {
         });
     } catch (e) {
         console.error('Error in risks table section:', e);
-        throw new Error('Feil i risiko-tabell-seksjonen');
+        throw new Error(t('pdfRiskTableSectionError'));
     }
 
     try {
@@ -359,24 +372,24 @@ async function generatePDFContent(doc) {
 
         doc.setFontSize(14);
         doc.setFont(undefined, 'bold');
-        doc.text('KIT-ANALYSE (Konfidensialitet, Integritet, Tilgjengelighet)', 20, yPos);
+        doc.text(t('kitTitle').toUpperCase(), 20, yPos);
         yPos += 10;
 
         const kit = calculateKIT(currentAnalysis.risks);
         const kitData = [
-            ['K (kun konfidensialitet)', `${kit.K} risikoer`],
-            ['I (kun integritet)', `${kit.I} risikoer`],
-            ['T (kun tilgjengelighet)', `${kit.T} risikoer`],
-            ['K+I', `${kit.KI} risikoer`],
-            ['K+T', `${kit.KT} risikoer`],
-            ['I+T', `${kit.IT} risikoer`],
-            ['K+I+T (alle tre)', `${kit.KIT} risikoer`],
-            ['TOTALT', `${kit.total} risikoer`]
+            [t('kitConfidentialityOnly'), `${kit.K} ${t('risks')}`],
+            [t('kitIntegrityOnly'), `${kit.I} ${t('risks')}`],
+            [t('kitAvailabilityOnly'), `${kit.T} ${t('risks')}`],
+            ['K+I', `${kit.KI} ${t('risks')}`],
+            ['K+T', `${kit.KT} ${t('risks')}`],
+            ['I+T', `${kit.IT} ${t('risks')}`],
+            [t('kitAllThree'), `${kit.KIT} ${t('risks')}`],
+            [t('totalUppercase'), `${kit.total} ${t('risks')}`]
         ];
 
         doc.autoTable({
             startY: yPos,
-            head: [['Kombinasjon', 'Antall']],
+            head: [[t('combination'), t('numberOfRisks')]],
             body: kitData,
             styles: { fontSize: 10 },
             headStyles: { fillColor: [108, 117, 125] },
@@ -392,7 +405,7 @@ async function generatePDFContent(doc) {
         });
     } catch (e) {
         console.error('Error in KIT analysis section:', e);
-        throw new Error('Feil i KIT-analyse-seksjonen');
+        throw new Error(t('pdfKitSectionError'));
     }
 
     // Legg til egendefinert tekstseksjon
@@ -407,7 +420,7 @@ async function generatePDFContent(doc) {
             doc.setFontSize(14);
             doc.setFont(undefined, 'bold');
             doc.setTextColor(0, 0, 0);
-            doc.text(customTextTitle || 'TILLEGGSINFORMASJON', 20, yPos);
+            doc.text(customTextTitle || t('additionalInfoDefaultTitle'), 20, yPos);
             yPos += 10;
 
             doc.setFontSize(10);
@@ -426,7 +439,7 @@ async function generatePDFContent(doc) {
         }
     } catch (e) {
         console.error('Error in custom text section:', e);
-        throw new Error('Feil i egendefinert tekst-seksjonen');
+        throw new Error(t('pdfAdditionalInfoSectionError'));
     }
 
     // Legg til kommentarer - Filtrer basert på synlige typer
@@ -454,7 +467,7 @@ async function generatePDFContent(doc) {
             doc.setFontSize(12);
             doc.setFont(undefined, 'bold');
             doc.setTextColor(0, 0, 0);
-            const sectionTitle = currentAnalysis.metadata.commentsSectionTitle || 'TILTAK OG KOMMENTARER';
+            const sectionTitle = currentAnalysis.metadata.commentsSectionTitle || t('actionsAndCommentsDefaultTitle');
             doc.text(sectionTitle, 20, yPos);
             yPos += 10;
 
@@ -519,10 +532,10 @@ async function generatePDFContent(doc) {
                         doc.setFont(undefined, 'bold');
 
                         const typeConfig = {
-                            'tiltak': { color: [40, 167, 69], label: 'TILTAK:' },
-                            'kommentar': { color: [23, 162, 184], label: 'KOMMENTAR:' },
-                            'oppfolging': { color: [253, 126, 20], label: 'OPPFØLGING:' },
-                            'intern': { color: [108, 117, 125], label: 'INTERN KOMMENTAR:' }
+                            'tiltak': { color: [40, 167, 69], label: `${t('action').toUpperCase()}:` },
+                            'kommentar': { color: [23, 162, 184], label: `${t('comment').toUpperCase()}:` },
+                            'oppfolging': { color: [253, 126, 20], label: `${t('followUp').toUpperCase()}:` },
+                            'intern': { color: [108, 117, 125], label: `${t('internalComment').toUpperCase()}:` }
                         };
 
                         const config = typeConfig[comment.type] || typeConfig['kommentar'];
@@ -544,7 +557,7 @@ async function generatePDFContent(doc) {
                         if (comment.links && Array.isArray(comment.links) && comment.links.length > 0) {
                             doc.setFont(undefined, 'bold');
                             doc.setTextColor(100, 100, 100);
-                            doc.text('Lenker:', 25, yPos);
+                            doc.text(`${t('pdfLinksLabel')}:`, 25, yPos);
                             yPos += 5;
 
                             comment.links.forEach((link, linkIdx) => {
@@ -597,12 +610,12 @@ async function generatePDFContent(doc) {
         doc.setPage(i);
         doc.setFontSize(9);
         doc.setTextColor(100, 100, 100);
-        doc.text(`Side ${i} av ${totalPages}`, 148, 200, { align: 'center' });
+        doc.text(formatTranslation('pdfPageOf', { current: i, total: totalPages }), 148, 200, { align: 'center' });
     }
 
     // Lagre PDF
-    const serviceName = safeText(currentAnalysis.metadata.service) || 'analyse';
-    const date = safeText(currentAnalysis.createdDate) || 'ukjent';
+    const serviceName = safeText(currentAnalysis.metadata.service) || t('analysisWithoutName');
+    const date = safeText(currentAnalysis.createdDate) || t('unknown');
     const filename = `Risky_${serviceName}_${date}.pdf`;
     doc.save(filename);
 }

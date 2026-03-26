@@ -2,12 +2,12 @@
 
 function exportToExcel() {
     if (!currentAnalysis) {
-        alert('Ingen analyse å eksportere');
+        alert(t('noAnalysisToExport'));
         return;
     }
 
     if (!window.XLSX) {
-        alert('Excel-biblioteket er ikke lastet. Sjekk internettforbindelsen og last siden på nytt.');
+        alert(t('excelLibraryMissing'));
         console.error('XLSX library not found');
         return;
     }
@@ -15,7 +15,7 @@ function exportToExcel() {
     try {
         generateExcelContent();
     } catch (error) {
-        alert('Feil ved generering av Excel: ' + error.message);
+        alert(`${t('excelGenerationError')}: ${error.message}`);
         console.error('Excel export error:', error);
     }
 }
@@ -41,16 +41,16 @@ function generateExcelContent() {
 
     // Add metadata
     metadataData.push(
-        ['Analysenavn:', safeText(currentAnalysis.name)],
-        ['Dato:', safeText(currentAnalysis.metadata.date)],
-        ['Tjeneste/system:', safeText(currentAnalysis.metadata.service)],
-        ['Utført av:', safeText(currentAnalysis.metadata.performedBy)],
-        ['Deltakere:', safeText(currentAnalysis.metadata.participants)],
-        ['Tjenesteeier/systemeier:', safeText(currentAnalysis.metadata.serviceOwner)],
-        ['Beskrivelse:', safeText(currentAnalysis.metadata.description)],
+        [`${t('analysisNameLabel')}:`, safeText(currentAnalysis.name)],
+        [`${t('dateLabel')}:`, safeText(currentAnalysis.metadata.date)],
+        [`${t('serviceSystemLabel')}:`, safeText(currentAnalysis.metadata.service)],
+        [`${t('performedByLabel')}:`, safeText(currentAnalysis.metadata.performedBy)],
+        [`${t('participants')}:`, safeText(currentAnalysis.metadata.participants)],
+        [`${t('serviceOwner')}:`, safeText(currentAnalysis.metadata.serviceOwner)],
+        [`${t('description')}:`, safeText(currentAnalysis.metadata.description)],
         [''],
-        ['Opprettet:', safeText(currentAnalysis.createdDate)],
-        ['Sist endret:', formatNorwegianDate(currentAnalysis.lastModified)]
+        [`${t('created')}:`, safeText(currentAnalysis.createdDate)],
+        [`${t('lastModified')}:`, formatNorwegianDate(currentAnalysis.lastModified)]
     );
 
     const wsMetadata = XLSX.utils.aoa_to_sheet(metadataData);
@@ -79,7 +79,7 @@ function generateExcelContent() {
         }
     });
 
-    XLSX.utils.book_append_sheet(wb, wsMetadata, 'Metadata');
+    XLSX.utils.book_append_sheet(wb, wsMetadata, t('worksheetMetadata'));
 
     // Ark 2: Statistikk (ny)
     const risks = currentAnalysis.risks || [];
@@ -102,16 +102,16 @@ function generateExcelContent() {
     const avgRisk = total > 0 ? (sumRiskLevel / total).toFixed(1) : '0.0';
 
     const statsData = [
-        ['STATISTIKK'],
+        [t('statistics').toUpperCase()],
         [''],
-        ['Totalt antall risikoer:', total],
+        [`${t('totalRisks')}:`, total],
         [''],
-        ['Røde risikoer (19-25):', red, total > 0 ? `${Math.round(red/total*100)}%` : '0%'],
-        ['Oransje risikoer (13-18):', orange, total > 0 ? `${Math.round(orange/total*100)}%` : '0%'],
-        ['Gule risikoer (7-12):', yellow, total > 0 ? `${Math.round(yellow/total*100)}%` : '0%'],
-        ['Grønne risikoer (1-6):', green, total > 0 ? `${Math.round(green/total*100)}%` : '0%'],
+        [`${t('redRisks')}:`, red, total > 0 ? `${Math.round(red/total*100)}%` : '0%'],
+        [`${t('orangeRisks')}:`, orange, total > 0 ? `${Math.round(orange/total*100)}%` : '0%'],
+        [`${t('yellowRisks')}:`, yellow, total > 0 ? `${Math.round(yellow/total*100)}%` : '0%'],
+        [`${t('greenRisks')}:`, green, total > 0 ? `${Math.round(green/total*100)}%` : '0%'],
         [''],
-        ['Gjennomsnittlig risikonivå:', avgRisk]
+        [`${t('averageRisk')}:`, avgRisk]
     ];
 
     const wsStats = XLSX.utils.aoa_to_sheet(statsData);
@@ -144,22 +144,22 @@ function generateExcelContent() {
     if (wsStats['A7']) wsStats['A7'].s = { font: { bold: true, color: { rgb: 'FFC107' } } }; // Yellow
     if (wsStats['A8']) wsStats['A8'].s = { font: { bold: true, color: { rgb: '28A745' } } }; // Green
 
-    XLSX.utils.book_append_sheet(wb, wsStats, 'Statistikk');
+    XLSX.utils.book_append_sheet(wb, wsStats, t('worksheetStatistics'));
 
     // Ark 3: Risikoer
     const risikoerHeaders = [
-        'Nr',
-        'Risikoelement',
-        'Sårbarhet/svakhet',
-        'Eksisterende beskyttelse',
-        'Eksisterende kontroll',
+        t('riskNumber'),
+        t('riskElement'),
+        t('vulnerabilityWeakness'),
+        t('existingProtectionHeader'),
+        t('existingControlHeader'),
         'K',
         'I',
         'T',
-        'Konsekvens',
-        'Sannsynlighet',
-        'Risikonivå',
-        'Foreslåtte tiltak'
+        t('consequence'),
+        t('probability'),
+        t('pdfRiskLevelShort'),
+        t('proposedMeasures')
     ];
 
     const risikoerData = currentAnalysis.risks.map(r => [
@@ -243,24 +243,24 @@ function generateExcelContent() {
         }
     }
 
-    XLSX.utils.book_append_sheet(wb, wsRisikoer, 'Risikoer');
+    XLSX.utils.book_append_sheet(wb, wsRisikoer, t('worksheetRisks'));
 
     // Ark 4: KIT-analyse
     const kit = calculateKIT(currentAnalysis.risks);
     const kitData = [
-        ['KIT-ANALYSE'],
-        ['Konfidensialitet, Integritet, Tilgjengelighet'],
+        [t('kitTitle').toUpperCase()],
+        [t('kitTitle')],
         [''],
-        ['Kombinasjon', 'Antall risikoer'],
-        ['K (kun konfidensialitet)', kit.K],
-        ['I (kun integritet)', kit.I],
-        ['T (kun tilgjengelighet)', kit.T],
+        [t('combination'), t('numberOfRisks')],
+        [t('kitConfidentialityOnly'), kit.K],
+        [t('kitIntegrityOnly'), kit.I],
+        [t('kitAvailabilityOnly'), kit.T],
         ['K+I', kit.KI],
         ['K+T', kit.KT],
         ['I+T', kit.IT],
-        ['K+I+T (alle tre)', kit.KIT],
+        [t('kitAllThree'), kit.KIT],
         [''],
-        ['TOTALT', kit.total]
+        [t('totalUppercase'), kit.total]
     ];
 
     const wsKit = XLSX.utils.aoa_to_sheet(kitData);
@@ -305,13 +305,13 @@ function generateExcelContent() {
         }
     });
 
-    XLSX.utils.book_append_sheet(wb, wsKit, 'KIT-analyse');
+    XLSX.utils.book_append_sheet(wb, wsKit, t('worksheetKit'));
 
     // Ark 5: Heatmap (5x5 matrise med risikonumre)
     const heatmapData = [
-        ['RISIKO HEATMAP'],
+        [t('pdfHeatmapTitle')],
         [''],
-        ['Konsekvens / Sannsynlighet', '1', '2', '3', '4', '5']
+        [`${t('consequence')} / ${t('probability')}`, '1', '2', '3', '4', '5']
     ];
 
     // Create heatmap grid
@@ -398,10 +398,10 @@ function generateExcelContent() {
         }
     }
 
-    XLSX.utils.book_append_sheet(wb, wsHeatmap, 'Heatmap');
+    XLSX.utils.book_append_sheet(wb, wsHeatmap, t('worksheetHeatmap'));
 
     // Ark 6: Egendefinert tekst
-    const customTextTitle = currentAnalysis.metadata.customTextTitle || 'TILLEGGSINFORMASJON';
+    const customTextTitle = currentAnalysis.metadata.customTextTitle || t('additionalInfoDefaultTitle');
     const customText = currentAnalysis.metadata.customText || '';
 
     if (customText.trim()) {
@@ -436,7 +436,7 @@ function generateExcelContent() {
             };
         }
 
-        XLSX.utils.book_append_sheet(wb, wsCustomText, 'Tilleggsinformasjon');
+        XLSX.utils.book_append_sheet(wb, wsCustomText, t('worksheetAdditionalInfo'));
     }
 
     // Ark 7: Tiltak og kommentarer (alltid inkluder alle i eksport)
@@ -444,7 +444,7 @@ function generateExcelContent() {
 
     if (risksWithComments.length > 0) {
         try {
-            const sectionTitle = currentAnalysis.metadata.commentsSectionTitle || 'TILTAK OG KOMMENTARER';
+            const sectionTitle = currentAnalysis.metadata.commentsSectionTitle || t('actionsAndCommentsDefaultTitle');
             const commentsData = [[sectionTitle], ['']];
             let hasAnyVisibleComments = false;
             const styleMap = {}; // Track cells that need styling
@@ -483,10 +483,10 @@ function generateExcelContent() {
                     }
 
                     const typeLabels = {
-                        'tiltak': { label: 'TILTAK:', color: '28A745' },
-                        'kommentar': { label: 'KOMMENTAR:', color: '17A2B8' },
-                        'oppfolging': { label: 'OPPFØLGING:', color: 'FD7E14' },
-                        'intern': { label: 'INTERN KOMMENTAR:', color: '6C757D' }
+                        'tiltak': { label: `${t('action').toUpperCase()}:`, color: '28A745' },
+                        'kommentar': { label: `${t('comment').toUpperCase()}:`, color: '17A2B8' },
+                        'oppfolging': { label: `${t('followUp').toUpperCase()}:`, color: 'FD7E14' },
+                        'intern': { label: `${t('internalComment').toUpperCase()}:`, color: '6C757D' }
                     };
                     const typeConfig = typeLabels[comment.type] || { label: comment.type.toUpperCase() + ':', color: '000000' };
 
@@ -510,7 +510,7 @@ function generateExcelContent() {
                     currentRow++;
 
                     if (comment.links && comment.links.length > 0) {
-                        commentsData.push(['    Lenker:']);
+                        commentsData.push([`    ${t('pdfLinksLabel')}:`]);
                         currentRow++;
 
                         comment.links.forEach(link => {
@@ -569,7 +569,7 @@ function generateExcelContent() {
                 }
             });
 
-            XLSX.utils.book_append_sheet(wb, wsComments, 'Tiltak og kommentarer');
+            XLSX.utils.book_append_sheet(wb, wsComments, t('worksheetComments'));
         } catch (e) {
             console.error('Error creating comments sheet:', e);
             // Skip comments sheet if there's an error
@@ -577,8 +577,8 @@ function generateExcelContent() {
     }
 
     // Lagre fil
-    const serviceName = safeText(currentAnalysis.metadata.service) || 'analyse';
-    const date = safeText(currentAnalysis.createdDate) || 'ukjent';
+    const serviceName = safeText(currentAnalysis.metadata.service) || t('analysisWithoutName');
+    const date = safeText(currentAnalysis.createdDate) || t('unknown');
     const filename = `Risky_${serviceName}_${date}.xlsx`;
     XLSX.writeFile(wb, filename);
 }
