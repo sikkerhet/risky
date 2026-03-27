@@ -192,25 +192,25 @@ function getMarkerOffsets(count) {
 
     if (count === 2) {
         return [
-            { x: -18, y: 0 },
-            { x: 18, y: 0 }
+            { x: -24, y: 0 },
+            { x: 24, y: 0 }
         ];
     }
 
     if (count === 3) {
         return [
-            { x: 0, y: -18 },
-            { x: -18, y: 16 },
-            { x: 18, y: 16 }
+            { x: 0, y: -24 },
+            { x: -22, y: 18 },
+            { x: 22, y: 18 }
         ];
     }
 
     if (count === 4) {
         return [
-            { x: -18, y: -18 },
-            { x: 18, y: -18 },
-            { x: -18, y: 18 },
-            { x: 18, y: 18 }
+            { x: -22, y: -22 },
+            { x: 22, y: -22 },
+            { x: -22, y: 22 },
+            { x: 22, y: 22 }
         ];
     }
 
@@ -327,8 +327,11 @@ function renderHeatmapOverlay(canvas) {
         button.className = `heatmap-marker-btn heatmap-marker-${area.type}`;
         button.style.left = `${area.x * scaleX}px`;
         button.style.top = `${area.y * scaleY}px`;
-        button.style.width = `${area.radius * 2 * scaleX}px`;
-        button.style.height = `${area.radius * 2 * scaleY}px`;
+        const hitSize = area.type === 'risk'
+            ? Math.max(42, area.radius * 2 * Math.max(scaleX, scaleY) + 12)
+            : Math.max(48, area.radius * 2 * Math.max(scaleX, scaleY) + 8);
+        button.style.width = `${hitSize}px`;
+        button.style.height = `${hitSize}px`;
 
         if (area.type === 'risk') {
             button.textContent = String(area.risk.number);
