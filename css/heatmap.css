@@ -35,12 +35,13 @@
     position: absolute;
     inset: 0;
     pointer-events: none;
+    z-index: 2;
 }
 
 .heatmap-marker-btn {
     position: absolute;
     transform: translate(-50%, -50%);
-    border-radius: 999px;
+    border-radius: 12px;
     border: 2px solid #1f2933;
     background: #ffffff;
     color: #1f2933;
@@ -52,6 +53,8 @@
     cursor: pointer;
     pointer-events: auto;
     box-shadow: 0 2px 8px rgba(15, 23, 42, 0.16);
+    z-index: 3;
+    touch-action: manipulation;
 }
 
 .heatmap-marker-btn:hover {

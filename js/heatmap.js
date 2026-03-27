@@ -192,25 +192,25 @@ function getMarkerOffsets(count) {
 
     if (count === 2) {
         return [
-            { x: -24, y: 0 },
-            { x: 24, y: 0 }
+            { x: -30, y: 0 },
+            { x: 30, y: 0 }
         ];
     }
 
     if (count === 3) {
         return [
-            { x: 0, y: -24 },
-            { x: -22, y: 18 },
-            { x: 22, y: 18 }
+            { x: 0, y: -28 },
+            { x: -28, y: 22 },
+            { x: 28, y: 22 }
         ];
     }
 
     if (count === 4) {
         return [
-            { x: -22, y: -22 },
-            { x: 22, y: -22 },
-            { x: -22, y: 22 },
-            { x: 22, y: 22 }
+            { x: -28, y: -28 },
+            { x: 28, y: -28 },
+            { x: -28, y: 28 },
+            { x: 28, y: 28 }
         ];
     }
 
@@ -433,6 +433,7 @@ function setupHeatmapClick() {
     });
 
     canvas.style.cursor = 'default';
+    canvas.style.pointerEvents = 'none';
     canvas.dataset.clickBound = 'true';
 
     if (window.__heatmapResizeBound !== true) {
