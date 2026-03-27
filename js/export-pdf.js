@@ -32,6 +32,18 @@ async function generatePDFContent(doc) {
         return String(value);
     };
 
+    const getContainedSize = (width, height, maxWidth, maxHeight) => {
+        if (!width || !height) {
+            return { width: 0, height: 0 };
+        }
+
+        const scale = Math.min(maxWidth / width, maxHeight / height, 1);
+        return {
+            width: width * scale,
+            height: height * scale
+        };
+    };
+
     // Helper function to load image from URL
     const loadImage = (url) => {
         return new Promise((resolve, reject) => {
@@ -73,19 +85,15 @@ async function generatePDFContent(doc) {
                 const img = await loadImage(reportLogo);
                 console.log('Logo loaded successfully:', img.width + 'x' + img.height);
 
-                // Calculate dimensions
-                const maxWidth = 150;
-                let imgWidth = img.width;
-                let imgHeight = img.height;
-
-                // Scale down if needed
-                if (imgWidth > maxWidth) {
-                    const scale = maxWidth / imgWidth;
-                    imgWidth = maxWidth;
-                    imgHeight = imgHeight * scale;
-                }
-
-                const imgX = 148 - (imgWidth / 2); // Center horizontally
+                // Keep the logo inside a fixed header box so it never dominates the page.
+                const logoBoxWidth = 80;
+                const logoBoxHeight = 24;
+                const contained = getContainedSize(img.width, img.height, logoBoxWidth, logoBoxHeight);
+                const imgWidth = contained.width;
+                const imgHeight = contained.height;
+                const centerX = 148;
+                const imgX = centerX - (imgWidth / 2);
+                const imgY = yPos;
 
                 // Try to detect image format
                 let format = 'PNG';
@@ -97,8 +105,8 @@ async function generatePDFContent(doc) {
                     format = 'JPEG';
                 }
 
-                doc.addImage(img, format, imgX, yPos, imgWidth, imgHeight);
-                yPos += imgHeight + 5;
+                doc.addImage(img, format, imgX, imgY, imgWidth, imgHeight);
+                yPos += imgHeight + 6;
                 console.log('Logo added to PDF successfully');
             } catch (logoError) {
                 console.warn('Could not load logo, using text instead:', logoError.message);
@@ -129,8 +137,9 @@ async function generatePDFContent(doc) {
         // Always show analysis name
         doc.setFontSize(16);
         doc.setTextColor(0, 0, 0);
-        doc.text(safeText(currentAnalysis.name), 148, yPos, { align: 'center' });
-        yPos += 8;
+        const analysisNameLines = doc.splitTextToSize(safeText(currentAnalysis.name), 220);
+        doc.text(analysisNameLines, 148, yPos, { align: 'center' });
+        yPos += analysisNameLines.length * 6 + 3;
     } catch (e) {
         console.error('Error in header section:', e);
         throw new Error(t('pdfHeaderSectionError'));
