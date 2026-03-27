@@ -2,6 +2,31 @@ const HEATMAP_GRID_SIZE = 5;
 const HEATMAP_MARGIN = 80;
 let heatmapHitAreas = [];
 
+function ensureHeatmapWrapper(canvas) {
+    if (canvas.parentElement && canvas.parentElement.classList.contains('heatmap-canvas-wrap')) {
+        return canvas.parentElement;
+    }
+
+    const wrapper = document.createElement('div');
+    wrapper.className = 'heatmap-canvas-wrap';
+    canvas.parentNode.insertBefore(wrapper, canvas);
+    wrapper.appendChild(canvas);
+    return wrapper;
+}
+
+function getHeatmapOverlay(canvas) {
+    const wrapper = ensureHeatmapWrapper(canvas);
+    let overlay = wrapper.querySelector('.heatmap-overlay');
+
+    if (!overlay) {
+        overlay = document.createElement('div');
+        overlay.className = 'heatmap-overlay';
+        wrapper.appendChild(overlay);
+    }
+
+    return overlay;
+}
+
 function getHeatmapLayout(canvas) {
     const gridWidth = canvas.width - 2 * HEATMAP_MARGIN;
     const gridHeight = canvas.height - 2 * HEATMAP_MARGIN;
@@ -284,6 +309,52 @@ function drawRiskMarkers(ctx, canvas, layout) {
     });
 }
 
+function renderHeatmapOverlay(canvas) {
+    const overlay = getHeatmapOverlay(canvas);
+    const wrapper = overlay.parentElement;
+    const displayWidth = wrapper.clientWidth || canvas.getBoundingClientRect().width || canvas.width;
+    const displayHeight = (displayWidth / canvas.width) * canvas.height;
+    const scaleX = displayWidth / canvas.width;
+    const scaleY = displayHeight / canvas.height;
+
+    overlay.textContent = '';
+    overlay.style.width = `${displayWidth}px`;
+    overlay.style.height = `${displayHeight}px`;
+
+    heatmapHitAreas.forEach((area) => {
+        const button = document.createElement('button');
+        button.type = 'button';
+        button.className = `heatmap-marker-btn heatmap-marker-${area.type}`;
+        button.style.left = `${area.x * scaleX}px`;
+        button.style.top = `${area.y * scaleY}px`;
+        button.style.width = `${area.radius * 2 * scaleX}px`;
+        button.style.height = `${area.radius * 2 * scaleY}px`;
+
+        if (area.type === 'risk') {
+            button.textContent = String(area.risk.number);
+            button.setAttribute('aria-label', `${t('riskNumber')} ${area.risk.number}`);
+            button.title = `${area.risk.number}. ${area.risk.riskElement || ''}`;
+            button.addEventListener('click', (event) => {
+                event.preventDefault();
+                event.stopPropagation();
+                scrollToRisk(area.risk.id);
+            });
+        } else {
+            button.textContent = String(area.risks.length);
+            button.setAttribute('aria-label', `${area.risks.length} ${t('risksInCell')}`);
+            button.title = `${area.risks.length} ${t('risksInCell')}`;
+            button.addEventListener('click', (event) => {
+                event.preventDefault();
+                event.stopPropagation();
+                const rect = button.getBoundingClientRect();
+                showRiskSelector(area.risks, rect.left + rect.width / 2, rect.top + rect.height / 2);
+            });
+        }
+
+        overlay.appendChild(button);
+    });
+}
+
 function renderHeatmap() {
     const canvas = document.getElementById('heatmapCanvas');
     if (!canvas) return;
@@ -296,6 +367,7 @@ function renderHeatmap() {
     drawHeatmapGrid(ctx, canvas, layout);
     drawHeatmapAxes(ctx, canvas, layout);
     drawRiskMarkers(ctx, canvas, layout);
+    renderHeatmapOverlay(canvas);
 }
 
 function setupHeatmapClick() {
@@ -359,6 +431,13 @@ function setupHeatmapClick() {
 
     canvas.style.cursor = 'default';
     canvas.dataset.clickBound = 'true';
+
+    if (window.__heatmapResizeBound !== true) {
+        window.addEventListener('resize', () => {
+            renderHeatmap();
+        });
+        window.__heatmapResizeBound = true;
+    }
 }
 
 function scrollToRisk(riskId) {
