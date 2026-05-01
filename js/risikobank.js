@@ -2,6 +2,8 @@
 
 let risikobank = null;
 let currentRiskIdForBank = null;
+let selectedBankId = null;
+let selectedCategoryId = null;
 
 const CUSTOM_BANKS_KEY = 'ros_custom_banks';
 const DEFAULT_BANK_FILES = [
@@ -388,6 +390,7 @@ async function openRisikobankModal(riskId) {
     currentRiskIdForBank = riskId;
     const modal = document.getElementById('risikobankModal');
     modal.classList.add('active');
+    setupRiskBankFilters();
 
     if (!risikobank || !Array.isArray(risikobank.banks) || risikobank.banks.length === 0) {
         risikobank = null;
@@ -397,7 +400,7 @@ async function openRisikobankModal(riskId) {
     // Render første bank som default
     if (risikobank && risikobank.banks.length > 0) {
         renderBankTabs();
-        selectBank(risikobank.banks[0].id);
+        selectBank(selectedBankId || risikobank.banks[0].id);
     } else {
         const list = document.getElementById('risikoListe');
         const bankSelector = document.getElementById('bankSelector');
@@ -437,6 +440,19 @@ function setupRisikobankModal() {
     });
 }
 
+function setupRiskBankFilters() {
+    const searchInput = document.getElementById('bankSearchInput');
+    const levelFilter = document.getElementById('bankRiskLevelFilter');
+    const allBanksToggle = document.getElementById('bankSearchAllBanks');
+
+    [searchInput, levelFilter, allBanksToggle].forEach((control) => {
+        if (!control || control.dataset.bound === 'true') return;
+        const eventName = control.tagName === 'SELECT' || control.type === 'checkbox' ? 'change' : 'input';
+        control.addEventListener(eventName, renderSelectedRiskBankView);
+        control.dataset.bound = 'true';
+    });
+}
+
 // Render bank-tabs
 function renderBankTabs() {
     const container = document.getElementById('bankSelector');
@@ -445,7 +461,7 @@ function renderBankTabs() {
     risikobank.banks.forEach((bank, index) => {
         const tab = document.createElement('button');
         tab.className = 'bank-tab';
-        if (index === 0) tab.classList.add('active');
+        if ((selectedBankId && selectedBankId === bank.id) || (!selectedBankId && index === 0)) tab.classList.add('active');
         tab.textContent = getLocalizedValue(bank.name);
         tab.onclick = () => selectBank(bank.id);
         container.appendChild(tab);
@@ -454,24 +470,20 @@ function renderBankTabs() {
 
 // Velg bank
 function selectBank(bankId) {
+    const bank = risikobank.banks.find(b => b.id === bankId) || risikobank.banks[0];
+    if (!bank) return;
+
+    selectedBankId = bank.id;
+    selectedCategoryId = null;
     // Oppdater aktiv tab
     document.querySelectorAll('.bank-tab').forEach(tab => {
         tab.classList.remove('active');
-        if (tab.textContent === getLocalizedValue(risikobank.banks.find(b => b.id === bankId).name)) {
+        if (tab.textContent === getLocalizedValue(bank.name)) {
             tab.classList.add('active');
         }
     });
 
-    const bank = risikobank.banks.find(b => b.id === bankId);
-    if (!bank) return;
-
-    // Render kategorier
-    renderCategories(bank.categories);
-
-    // Velg første kategori automatisk
-    if (bank.categories.length > 0) {
-        selectCategory(bank.categories[0].id, bank.categories);
-    }
+    renderSelectedRiskBankView();
 }
 
 function renderCategories(categories) {
@@ -481,32 +493,101 @@ function renderCategories(categories) {
     categories.forEach((category, index) => {
         const chip = document.createElement('button');
         chip.className = 'kategori-chip';
-        if (index === 0) chip.classList.add('active');
+        const isActive = (selectedCategoryId && selectedCategoryId === category.id) || (!selectedCategoryId && index === 0);
+        if (isActive) {
+            chip.classList.add('active');
+            selectedCategoryId = category.id;
+        }
         chip.textContent = getLocalizedValue(category.name);
-        chip.onclick = () => selectCategory(category.id, categories, chip);
+        chip.onclick = () => {
+            selectedCategoryId = category.id;
+            renderSelectedRiskBankView();
+        };
         container.appendChild(chip);
     });
 }
 
-function selectCategory(categoryId, categories, selectedChip = null) {
-    // Oppdater aktiv chip
-    document.querySelectorAll('.kategori-chip').forEach(chip => {
-        chip.classList.remove('active');
-    });
-    if (selectedChip) {
-        selectedChip.classList.add('active');
-    }
-
-    const category = categories.find((item) => item.id === categoryId);
-    if (!category) return;
-
-    // Render risikoer
-    renderRiskCards(category.risks);
+function getRiskBankSearchState() {
+    return {
+        query: (document.getElementById('bankSearchInput')?.value || '').trim().toLowerCase(),
+        level: document.getElementById('bankRiskLevelFilter')?.value || 'all',
+        allBanks: document.getElementById('bankSearchAllBanks')?.checked || false
+    };
 }
 
-function renderRiskCards(risks) {
+function getRiskLevelKey(riskLevel) {
+    if (riskLevel >= 19) return 'critical';
+    if (riskLevel >= 13) return 'high';
+    if (riskLevel >= 7) return 'medium';
+    return 'low';
+}
+
+function riskMatchesBankFilters(risk, searchState) {
+    const rn = calculateRisikonivaa(calculateKonsekvens(risk.K, risk.I, risk.T), risk.probability);
+    if (searchState.level !== 'all' && getRiskLevelKey(rn) !== searchState.level) {
+        return false;
+    }
+
+    if (!searchState.query) {
+        return true;
+    }
+
+    const searchableText = [
+        getLocalizedValue(risk.riskElement),
+        getLocalizedValue(risk.vulnerability),
+        getLocalizedValue(risk.existingProtection),
+        getLocalizedValue(risk.existingControl),
+        getLocalizedValue(risk.proposedMeasures)
+    ].join(' ').toLowerCase();
+
+    return searchableText.includes(searchState.query);
+}
+
+function getCurrentBank() {
+    if (!risikobank || !Array.isArray(risikobank.banks)) return null;
+    return risikobank.banks.find((bank) => bank.id === selectedBankId) || risikobank.banks[0] || null;
+}
+
+function renderSelectedRiskBankView() {
+    const bank = getCurrentBank();
+    if (!bank) return;
+
+    const searchState = getRiskBankSearchState();
+    const bankSelector = document.getElementById('bankSelector');
+    const categorySelector = document.getElementById('kategoriSelector');
+
+    if (bankSelector) {
+        bankSelector.style.display = searchState.allBanks ? 'none' : '';
+    }
+    if (categorySelector) {
+        categorySelector.style.display = searchState.allBanks ? 'none' : '';
+    }
+
+    if (searchState.allBanks) {
+        const allRisks = risikobank.banks.flatMap((itemBank) =>
+            (itemBank.categories || []).flatMap((category) =>
+                (category.risks || []).map((risk) => ({ risk, bank: itemBank, category }))
+            )
+        );
+        renderRiskCards(allRisks.filter((item) => riskMatchesBankFilters(item.risk, searchState)), true);
+        return;
+    }
+
+    renderCategories(bank.categories || []);
+
+    const category = (bank.categories || []).find((item) => item.id === selectedCategoryId);
+    const risks = category ? category.risks || [] : [];
+    renderRiskCards(risks.filter((risk) => riskMatchesBankFilters(risk, searchState)));
+}
+
+function renderRiskCards(risks, showSource = false) {
     const container = document.getElementById('risikoListe');
+    const resultMeta = document.getElementById('riskBankResultMeta');
     container.textContent = '';
+
+    if (resultMeta) {
+        resultMeta.textContent = formatTranslation('riskBankResultCount', { count: risks.length });
+    }
 
     if (risks.length === 0) {
         const empty = document.createElement('div');
@@ -517,18 +598,25 @@ function renderRiskCards(risks) {
     }
 
     risks.forEach((risk) => {
-        const card = createRiskCard(risk);
+        const card = createRiskCard(showSource ? risk.risk : risk, showSource ? risk : null);
         container.appendChild(card);
     });
 }
 
-function createRiskCard(risk) {
+function createRiskCard(risk, source = null) {
     const card = document.createElement('div');
     card.className = 'risiko-card';
 
     const title = document.createElement('h4');
     title.textContent = getLocalizedValue(risk.riskElement);
     card.appendChild(title);
+
+    if (source) {
+        const sourceText = document.createElement('div');
+        sourceText.className = 'risiko-source';
+        sourceText.textContent = `${getLocalizedValue(source.bank.name)} / ${getLocalizedValue(source.category.name)}`;
+        card.appendChild(sourceText);
+    }
 
     const vulnerability = document.createElement('div');
     vulnerability.className = 'risiko-saarbarhet';
@@ -578,13 +666,47 @@ function createRiskCard(risk) {
 
     card.appendChild(meta);
 
-    // Klikk for å velge
-    card.onclick = () => {
+    const useButton = document.createElement('button');
+    useButton.type = 'button';
+    useButton.className = 'btn btn-primary btn-use-risk';
+    useButton.textContent = t('useRisk');
+    useButton.addEventListener('click', (event) => {
+        event.stopPropagation();
         selectRiskFromBank(risk);
         closeRisikobankModal();
-    };
+    });
+    card.appendChild(useButton);
 
     return card;
+}
+
+function isCurrentRiskEmpty(risk) {
+    return !risk.riskElement && !risk.vulnerability && !risk.existingProtection &&
+        !risk.existingControl && !risk.proposedMeasures &&
+        risk.K === 0 && risk.I === 0 && risk.T === 0 && risk.probability === 0;
+}
+
+function mergeBankRiskIntoCurrentRisk(risk, bankRisk, mode) {
+    const fields = [
+        ['riskElement', getLocalizedValue(bankRisk.riskElement)],
+        ['vulnerability', getLocalizedValue(bankRisk.vulnerability)],
+        ['existingProtection', getLocalizedValue(bankRisk.existingProtection)],
+        ['existingControl', getLocalizedValue(bankRisk.existingControl)],
+        ['proposedMeasures', getLocalizedValue(bankRisk.proposedMeasures)]
+    ];
+
+    fields.forEach(([field, value]) => {
+        if (mode === 'replace' || !risk[field]) {
+            risk[field] = value;
+        }
+    });
+
+    if (mode === 'replace' || (risk.K === 0 && risk.I === 0 && risk.T === 0 && risk.probability === 0)) {
+        risk.K = bankRisk.K;
+        risk.I = bankRisk.I;
+        risk.T = bankRisk.T;
+        risk.probability = bankRisk.probability;
+    }
 }
 
 // Velg risiko fra bank og fyll ut
@@ -597,16 +719,11 @@ function selectRiskFromBank(bankRisk) {
     // Lagre ID for scrolling senere
     const riskId = risk.id;
 
-    // Fyll ut alle felt fra risikobanken
-    risk.riskElement = getLocalizedValue(bankRisk.riskElement);
-    risk.vulnerability = getLocalizedValue(bankRisk.vulnerability);
-    risk.existingProtection = getLocalizedValue(bankRisk.existingProtection);
-    risk.existingControl = getLocalizedValue(bankRisk.existingControl);
-    risk.K = bankRisk.K;
-    risk.I = bankRisk.I;
-    risk.T = bankRisk.T;
-    risk.probability = bankRisk.probability;
-    risk.proposedMeasures = getLocalizedValue(bankRisk.proposedMeasures);
+    const mergeMode = isCurrentRiskEmpty(risk)
+        ? 'replace'
+        : (confirm(t('replaceRiskFromBankConfirm')) ? 'replace' : 'fillEmpty');
+
+    mergeBankRiskIntoCurrentRisk(risk, bankRisk, mergeMode);
 
     // Beregn konsekvens og risikonivå
     risk.consequence = calculateKonsekvens(risk.K, risk.I, risk.T);
@@ -620,74 +737,21 @@ function selectRiskFromBank(bankRisk) {
         document.activeElement.blur();
     }
 
-    // Scroll til ankeret på slutten før vi oppdaterer
-    const anchor = document.getElementById('tableAnchor');
-    if (anchor) {
-        anchor.scrollIntoView({ behavior: 'instant', block: 'end' });
-    }
+    renderRisksTable();
+    renderHeatmap();
+    renderStatistics();
+    renderKITTable();
 
-    // Finn den eksisterende raden og oppdater den direkte (ikke re-render hele tabellen)
-    const existingRow = document.querySelector(`tr[data-risk-id="${riskId}"]`);
-    if (existingRow) {
-        // Oppdater feltene direkte
-        const textareas = existingRow.querySelectorAll('textarea');
-        if (textareas[0]) textareas[0].value = risk.riskElement;
-        if (textareas[1]) textareas[1].value = risk.vulnerability;
-        if (textareas[2]) textareas[2].value = risk.existingProtection;
-        if (textareas[3]) textareas[3].value = risk.existingControl;
-        if (textareas[4]) textareas[4].value = risk.proposedMeasures;
+    requestAnimationFrame(() => {
+        const updatedRow = document.querySelector(`tr[data-risk-id="${riskId}"]`);
+        if (!updatedRow) return;
 
-        // Oppdater KIT dropdowns
-        const selects = existingRow.querySelectorAll('select');
-        if (selects[0]) selects[0].value = risk.K;
-        if (selects[1]) selects[1].value = risk.I;
-        if (selects[2]) selects[2].value = risk.T;
-        if (selects[3]) selects[3].value = risk.probability;
-
-        // Oppdater konsekvens og risikonivå celler
-        const konsCell = existingRow.querySelector('td:nth-child(10)');
-        const rnCell = existingRow.querySelector('td:nth-child(11)');
-        if (konsCell) {
-            konsCell.textContent = risk.consequence;
-            konsCell.style.fontWeight = 'bold';
-        }
-        if (rnCell) {
-            rnCell.textContent = risk.riskLevel;
-            rnCell.style.color = getRiskColor(risk.riskLevel);
-            rnCell.style.fontWeight = 'bold';
-        }
-
-        // Oppdater kun heatmap, statistikk og KIT (ikke hele tabellen)
-        renderHeatmap();
-        renderStatistics();
-        renderKITTable();
-
-        // Scroll til og highlight den oppdaterte risikoen
-        existingRow.scrollIntoView({ behavior: 'instant', block: 'center' });
-
-        // Highlight rad i et par sekunder
-        existingRow.style.backgroundColor = '#e8f5e9';
+        updatedRow.scrollIntoView({ behavior: 'instant', block: 'center' });
+        updatedRow.style.backgroundColor = '#e8f5e9';
         setTimeout(() => {
-            existingRow.style.backgroundColor = '';
+            updatedRow.style.backgroundColor = '';
         }, 2000);
-    } else {
-        // Fallback: re-render alt hvis raden ikke finnes
-        renderRisksTable();
-        renderHeatmap();
-        renderStatistics();
-        renderKITTable();
-
-        requestAnimationFrame(() => {
-            const updatedRow = document.querySelector(`tr[data-risk-id="${riskId}"]`);
-            if (updatedRow) {
-                updatedRow.scrollIntoView({ behavior: 'instant', block: 'center' });
-                updatedRow.style.backgroundColor = '#e8f5e9';
-                setTimeout(() => {
-                    updatedRow.style.backgroundColor = '';
-                }, 2000);
-            }
-        });
-    }
+    });
 }
 
 // Eksponér custom bank-funksjoner globalt for bruk i editor.html

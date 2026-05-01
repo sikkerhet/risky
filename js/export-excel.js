@@ -20,7 +20,7 @@ function exportToExcel() {
     }
 }
 
-function generateExcelContent() {
+function buildExcelWorkbook() {
     // Helper function to safely get text value
     const safeText = (value) => {
         if (value === null || value === undefined) return '';
@@ -28,7 +28,6 @@ function generateExcelContent() {
     };
 
     const safeSheetName = (name) => safeText(name).replace(/[\\/*?:[\]]/g, ' ').slice(0, 31) || 'Sheet';
-    const safeFilenamePart = (value) => safeText(value).replace(/[<>:"/\\|?*\u0000-\u001F]/g, '_').trim();
     const riskCategory = (riskLevel) => getRiskLevel(riskLevel || 0);
     const sectionHeaderStyle = {
         font: { bold: true, sz: 14, color: { rgb: '1F2933' } },
@@ -76,7 +75,7 @@ function generateExcelContent() {
     const avgRisk = total > 0 ? (sumRiskLevel / total).toFixed(1) : '0.0';
     const acceptanceLevel = Number(currentAnalysis.metadata.acceptanceLevel || 0);
     const topRisks = [...risks]
-        .filter((risk) => (risk.riskLevel || 0) >= acceptanceLevel)
+        .filter((risk) => (risk.riskLevel || 0) > acceptanceLevel)
         .sort((a, b) => (b.riskLevel || 0) - (a.riskLevel || 0))
         .slice(0, 10);
 
@@ -84,7 +83,7 @@ function generateExcelContent() {
     const summaryTitle = safeText(currentAnalysis.metadata.reportTitle) || safeText(currentAnalysis.name) || t('summaryTitle');
     const summaryData = [
         [summaryTitle],
-        [t('generatedWithRisky', { date: formatNorwegianDate(new Date().toISOString()) })],
+        [formatTranslation('generatedWithRisky', { date: formatNorwegianDate(new Date().toISOString()) })],
         [''],
         [t('summaryPreparedFor'), safeText(currentAnalysis.metadata.service) || safeText(currentAnalysis.name)],
         [`${t('dateLabel')}:`, safeText(currentAnalysis.metadata.date)],
@@ -95,9 +94,9 @@ function generateExcelContent() {
         [''],
         [t('statistics').toUpperCase()],
         [t('totalRisks'), total],
-        [t('criticalRisksGroup', { count: red })],
-        [t('highRisksGroup', { count: orange })],
-        [t('mediumRisksGroup', { count: yellow })],
+        [formatTranslation('criticalRisksGroup', { count: red })],
+        [formatTranslation('highRisksGroup', { count: orange })],
+        [formatTranslation('mediumRisksGroup', { count: yellow })],
         [t('greenRisks'), green],
         [t('averageRisk'), avgRisk],
         [''],
@@ -592,48 +591,58 @@ function generateExcelContent() {
                 });
             });
 
-            if (commentsRows.length === 0) {
-                return;
-            }
+            if (commentsRows.length > 0) {
+                const wsComments = XLSX.utils.aoa_to_sheet([commentsHeaders, ...commentsRows]);
 
-            const wsComments = XLSX.utils.aoa_to_sheet([commentsHeaders, ...commentsRows]);
+                if (!wsComments['!cols']) wsComments['!cols'] = [];
+                wsComments['!cols'][0] = { wch: 10 };
+                wsComments['!cols'][1] = { wch: 36 };
+                wsComments['!cols'][2] = { wch: 16 };
+                wsComments['!cols'][3] = { wch: 60 };
+                wsComments['!cols'][4] = { wch: 20 };
+                wsComments['!cols'][5] = { wch: 14 };
+                wsComments['!cols'][6] = { wch: 50 };
+                wsComments['!freeze'] = { xSplit: 0, ySplit: 1 };
+                wsComments['!autofilter'] = { ref: wsComments['!ref'] };
 
-            if (!wsComments['!cols']) wsComments['!cols'] = [];
-            wsComments['!cols'][0] = { wch: 10 };
-            wsComments['!cols'][1] = { wch: 36 };
-            wsComments['!cols'][2] = { wch: 16 };
-            wsComments['!cols'][3] = { wch: 60 };
-            wsComments['!cols'][4] = { wch: 20 };
-            wsComments['!cols'][5] = { wch: 14 };
-            wsComments['!cols'][6] = { wch: 50 };
-            wsComments['!freeze'] = { xSplit: 0, ySplit: 1 };
-            wsComments['!autofilter'] = { ref: wsComments['!ref'] };
-
-            ['A1', 'B1', 'C1', 'D1', 'E1', 'F1', 'G1'].forEach((cell) => {
-                if (wsComments[cell]) {
-                    wsComments[cell].s = neutralTableHeaderStyle;
-                }
-            });
-
-            const commentsRange = XLSX.utils.decode_range(wsComments['!ref']);
-            for (let R = 1; R <= commentsRange.e.r; ++R) {
-                ['B', 'D', 'G'].forEach((column) => {
-                    const cell = wsComments[`${column}${R + 1}`];
-                    if (cell) {
-                        cell.s = {
-                            ...(cell.s || {}),
-                            alignment: { wrapText: true, vertical: 'top' }
-                        };
+                ['A1', 'B1', 'C1', 'D1', 'E1', 'F1', 'G1'].forEach((cell) => {
+                    if (wsComments[cell]) {
+                        wsComments[cell].s = neutralTableHeaderStyle;
                     }
                 });
-            }
 
-            XLSX.utils.book_append_sheet(wb, wsComments, safeSheetName(t('worksheetComments')));
+                const commentsRange = XLSX.utils.decode_range(wsComments['!ref']);
+                for (let R = 1; R <= commentsRange.e.r; ++R) {
+                    ['B', 'D', 'G'].forEach((column) => {
+                        const cell = wsComments[`${column}${R + 1}`];
+                        if (cell) {
+                            cell.s = {
+                                ...(cell.s || {}),
+                                alignment: { wrapText: true, vertical: 'top' }
+                            };
+                        }
+                    });
+                }
+
+                XLSX.utils.book_append_sheet(wb, wsComments, safeSheetName(t('worksheetComments')));
+            }
         } catch (e) {
             console.error('Error creating comments sheet:', e);
             // Skip comments sheet if there's an error
         }
     }
+
+    return wb;
+}
+
+function generateExcelContent() {
+    const wb = buildExcelWorkbook();
+
+    const safeText = (value) => {
+        if (value === null || value === undefined) return '';
+        return String(value);
+    };
+    const safeFilenamePart = (value) => safeText(value).replace(/[<>:"/\\|?*\u0000-\u001F]/g, '_').trim();
 
     // Lagre fil
     const serviceName = safeFilenamePart(currentAnalysis.metadata.service) || t('analysisWithoutName');

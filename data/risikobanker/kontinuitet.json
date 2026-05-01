@@ -1,7 +1,7 @@
 {
   "id": "kontinuitet",
   "navn": {
-    "no": "Business Continuity og resiliens",
+    "no": "Kontinuitet og resiliens",
     "en": "Business Continuity and Resilience"
   },
   "beskrivelse": {
@@ -66,7 +66,7 @@
           "T": 3,
           "sannsynlighet": 4,
           "foreslaatteTiltak": {
-            "no": "Gjennomføre Business Impact Analysis (BIA) med avhengighetskartlegging, vedlikeholde dependency map",
+            "no": "Gjennomføre Business Impact Analysis (BIA) med avhengighetskartlegging og vedlikeholde avhengighetskart",
             "en": "Conduct a Business Impact Analysis (BIA) with dependency mapping and maintain a dependency map"
           }
         },
@@ -77,7 +77,7 @@
             "en": "Missing RTO/RPO definitions"
           },
           "saarbarhet": {
-            "no": "gjenoppretting Time Objective og gjenoppretting Point Objective ikke definert for kritiske systemer",
+            "no": "Recovery Time Objective og Recovery Point Objective er ikke definert for kritiske systemer",
             "en": "Recovery Time Objective and Recovery Point Objective are not defined for critical systems"
           },
           "eksisterendeBeskyttelse": {
@@ -766,7 +766,7 @@
         {
           "id": "ir-001",
           "risikoelement": {
-            "no": "Manglende hendelse respons plan",
+            "no": "Manglende incident response plan",
             "en": "Missing incident response plan"
           },
           "saarbarhet": {
@@ -786,7 +786,7 @@
           "T": 4,
           "sannsynlighet": 4,
           "foreslaatteTiltak": {
-            "no": "Etablere formell hendelse respons Plan (IRP) basert på NIST/SANS, definere faser: forberedelse, deteksjon, containment, eradication, gjenoppretting, lessons learned",
+            "no": "Etablere formell incident response plan (IRP) basert på NIST/SANS og definere faser: forberedelse, deteksjon, containment, eradication, gjenoppretting og lessons learned",
             "en": "establish formell Incident Response plan (IRP) based on NIST/SANS, define faser: forberedelse, detection, containment, eradication, recovery, lessons learned"
           }
         },
@@ -801,7 +801,7 @@
             "en": "Incidents oppdages sent or only during tilfeldighet, lang dwell time for angrep"
           },
           "eksisterendeBeskyttelse": {
-            "no": "Noe loggføring og basic alerts",
+            "no": "Noe loggføring og enkle varsler",
             "en": "some logging and basic alerts"
           },
           "eksisterendeKontroll": {
@@ -813,7 +813,7 @@
           "T": 4,
           "sannsynlighet": 4,
           "foreslaatteTiltak": {
-            "no": "Implementere SIEM eller Security Analytics, definere use cases for deteksjon og etablere 24/7-overvåking eller SOC",
+            "no": "Implementere SIEM eller Security Analytics, definere brukstilfeller for deteksjon og etablere 24/7-overvåking eller SOC",
             "en": "Implement SIEM or security analytics, define concrete detection use cases, and establish 24/7 monitoring or a SOC"
           }
         },
@@ -832,7 +832,7 @@
             "en": "technical team can investigate systems"
           },
           "eksisterendeKontroll": {
-            "no": "Ingen formell forensics-kompetanse",
+            "no": "Ingen formell digital etterforskningskompetanse",
             "en": "No formell forensics-expertise"
           },
           "K": 3,
@@ -840,7 +840,7 @@
           "T": 4,
           "sannsynlighet": 3,
           "foreslaatteTiltak": {
-            "no": "Etablere forensics-beredskap (verktøy, kompetanse eller retainer med ekstern), dokumentere chain of custody prosedyrer",
+            "no": "Etablere digital etterforskningsberedskap med verktøy, kompetanse eller ekstern retainer, og dokumentere chain of custody-prosedyrer",
             "en": "Establish digital forensics readiness, including tools, competence, or an external retainer, and document chain-of-custody procedures"
           }
         },
@@ -855,7 +855,7 @@
             "en": "Incidents are handled, but there is no structured learning and the same errors recur"
           },
           "eksisterendeBeskyttelse": {
-            "no": "hendelse tickets dokumenterer hendelse",
+            "no": "Hendelsessaker dokumenterer hendelsen",
             "en": "Incident tickets document the incident"
           },
           "eksisterendeKontroll": {
@@ -867,7 +867,7 @@
           "T": 3,
           "sannsynlighet": 4,
           "foreslaatteTiltak": {
-            "no": "Etablere obligatorisk post-hendelse gjennomgang (PIR) for alle P1/P2 hendelser, blameless post-mortem kultur, trackable action items",
+            "no": "Etablere obligatorisk post-hendelsegjennomgang (PIR) for alle P1/P2-hendelser, blameless post-mortem-kultur og sporbare tiltakspunkter",
             "en": "Establish mandatory post-incident reviews for all P1 and P2 incidents, use a blameless post-mortem culture, and track action items to closure"
           }
         },
@@ -905,7 +905,7 @@
             "en": "Insufficient capacity during large-scale incidents"
           },
           "saarbarhet": {
-            "no": "Team overveldes ved større hendelser, ikke skalert for langvarig respons",
+            "no": "Teamet overveldes ved større hendelser og er ikke skalert for langvarig respons",
             "en": "The team is overwhelmed during larger incidents and is not scaled for prolonged response"
           },
           "eksisterendeBeskyttelse": {
@@ -921,7 +921,7 @@
           "T": 3,
           "sannsynlighet": 3,
           "foreslaatteTiltak": {
-            "no": "Etablere surge capacity plan (ekstra ressurser, eksterne konsulenter), retainer med IR-firma, cross-opplæring for bredere bemanning",
+            "no": "Etablere surge capacity-plan med ekstra ressurser og eksterne konsulenter, retainer med IR-firma og kryssopplæring for bredere bemanning",
             "en": "Establish a surge capacity plan with additional resources and external consultants, maintain a retainer with an incident response firm, and cross-train staff for broader coverage"
           }
         }

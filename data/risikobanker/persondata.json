@@ -324,7 +324,7 @@
             "en": "Personal data alltid in identifiserbar form"
           },
           "eksisterendeBeskyttelse": {
-            "no": "tilgang controls",
+            "no": "Tilgangskontroller",
             "en": "Access controls"
           },
           "eksisterendeKontroll": {
@@ -351,7 +351,7 @@
             "en": "Not in stand to varsle innen 72 timer"
           },
           "eksisterendeBeskyttelse": {
-            "no": "hendelse respons plan",
+            "no": "Incident response plan",
             "en": "Incident response plan"
           },
           "eksisterendeKontroll": {

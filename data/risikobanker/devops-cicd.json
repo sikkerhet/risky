@@ -163,11 +163,11 @@
         {
           "id": "code-001",
           "risikoelement": {
-            "no": "Secrets committed til source control (API keys, passwords)",
+            "no": "Secrets commitet til source control (API keys, passwords)",
             "en": "Secrets committed to source control (API keys, passwords)"
           },
           "saarbarhet": {
-            "no": "Utviklere committer.env-filer, hardkoder credentials",
+            "no": "Utviklere committer .env-filer og hardkoder credentials",
             "en": "Developers commit .env files and hardcode credentials"
           },
           "eksisterendeBeskyttelse": {

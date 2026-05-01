@@ -210,7 +210,7 @@
           "T": 2,
           "sannsynlighet": 4,
           "foreslaatteTiltak": {
-            "no": "Data minimization, need-to-know basis, API-scoped tilgang",
+            "no": "Dataminimering, need-to-know basis og API-avgrenset tilgang",
             "en": "Data minimization, need-to-know basis, API-scoped access"
           }
         },
@@ -311,7 +311,7 @@
             "en": "Uncontrolled access through API keys to third parties"
           },
           "saarbarhet": {
-            "no": "Statiske API keys, over-privilegerte tokens",
+            "no": "Statiske API keys og overprivilegerte tokens",
             "en": "Statiske API keys, over-privilegerte tokens"
           },
           "eksisterendeBeskyttelse": {
@@ -338,7 +338,7 @@
             "en": "The vendor's API is compromised or shut down"
           },
           "saarbarhet": {
-            "no": "Hard dependency på external API, ingen fallback",
+            "no": "Hard dependency på ekstern API, uten fallback",
             "en": "Hard dependency on external API, no fallback"
           },
           "eksisterendeBeskyttelse": {
@@ -498,7 +498,7 @@
           "T": 5,
           "sannsynlighet": 2,
           "foreslaatteTiltak": {
-            "no": "Runtime protection (RASP), virtual patching, fast patch cycle, SBOM for hendelse respons",
+            "no": "Runtime protection (RASP), virtual patching, rask patch cycle og SBOM for incident response",
             "en": "Runtime protection (RASP), virtual patching, fast patch cycle, SBOM for incident response"
           }
         }

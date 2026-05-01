@@ -1,5 +1,10 @@
 // Tabell-håndtering for risikoer
 
+const riskTableView = {
+    showAboveAcceptanceOnly: false,
+    sort: 'number'
+};
+
 function createIconButton(iconMarkup, label, className = 'btn-icon') {
     const button = document.createElement('button');
     button.type = 'button';
@@ -16,11 +21,28 @@ function renderRisksTable() {
 
     tbody.textContent = '';
 
-    if (currentAnalysis.risks.length === 0) {
+    const acceptanceLevel = Number(currentAnalysis.metadata.acceptanceLevel || 0);
+    let visibleRisks = [...currentAnalysis.risks];
+
+    if (riskTableView.showAboveAcceptanceOnly) {
+        visibleRisks = visibleRisks.filter((risk) => (risk.riskLevel || 0) > acceptanceLevel);
+    }
+
+    if (riskTableView.sort === 'risk-desc') {
+        visibleRisks.sort((a, b) => (b.riskLevel || 0) - (a.riskLevel || 0) || (a.number || 0) - (b.number || 0));
+    } else if (riskTableView.sort === 'risk-asc') {
+        visibleRisks.sort((a, b) => (a.riskLevel || 0) - (b.riskLevel || 0) || (a.number || 0) - (b.number || 0));
+    }
+
+    updateRiskTableViewMeta(visibleRisks.length, currentAnalysis.risks.length);
+
+    if (currentAnalysis.risks.length === 0 || visibleRisks.length === 0) {
         const emptyRow = document.createElement('tr');
         const emptyCell = document.createElement('td');
         emptyCell.colSpan = 13;
-        emptyCell.textContent = `${t('riskSectionTitle')}: 0`;
+        emptyCell.textContent = currentAnalysis.risks.length === 0
+            ? `${t('riskSectionTitle')}: 0`
+            : t('noRisksMatchCurrentView');
         emptyCell.style.textAlign = 'center';
         emptyCell.style.padding = '20px';
         emptyRow.appendChild(emptyCell);
@@ -28,13 +50,25 @@ function renderRisksTable() {
         return;
     }
 
-    currentAnalysis.risks.forEach((risk, index) => {
-        const row = createRiskRow(risk, index);
+    const canReorder = !riskTableView.showAboveAcceptanceOnly && riskTableView.sort === 'number';
+
+    visibleRisks.forEach((risk) => {
+        const actualIndex = currentAnalysis.risks.findIndex((item) => item.id === risk.id);
+        const row = createRiskRow(risk, actualIndex, canReorder);
         tbody.appendChild(row);
     });
 }
 
-function createRiskRow(risk, index) {
+function updateRiskTableViewMeta(visibleCount, totalCount) {
+    const meta = document.getElementById('riskTableViewMeta');
+    if (!meta) return;
+    meta.textContent = formatTranslation('riskTableViewMeta', {
+        visible: visibleCount,
+        total: totalCount
+    });
+}
+
+function createRiskRow(risk, index, canReorder = true) {
     const row = document.createElement('tr');
     row.id = `risk-row-${risk.id}`;
     row.dataset.riskId = risk.id;
@@ -149,17 +183,14 @@ function createRiskRow(risk, index) {
                     risk.K === 0 && risk.I === 0 && risk.T === 0 &&
                     risk.probability === 0;
 
-    // Vis risikobank-knapp kun for tomme risikoer
-    if (isEmpty) {
-        const bankBtn = createIconButton(
-            '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 7h6l2 2h10v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V7z"></path></svg>',
-            t('selectFromBank')
-        );
-        bankBtn.style.background = '#28a745';
-        bankBtn.style.color = 'white';
-        bankBtn.addEventListener('click', () => openRisikobankModal(risk.id));
-        actionsCell.appendChild(bankBtn);
-    }
+    const bankBtn = createIconButton(
+        '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 7h6l2 2h10v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V7z"></path></svg>',
+        isEmpty ? t('selectFromBank') : t('fillFromBank')
+    );
+    bankBtn.style.background = isEmpty ? '#28a745' : '#2e5f8e';
+    bankBtn.style.color = 'white';
+    bankBtn.addEventListener('click', () => openRisikobankModal(risk.id));
+    actionsCell.appendChild(bankBtn);
 
     // Kommentar-knapp
     const commentCount = getCommentCount(risk.id);
@@ -183,7 +214,7 @@ function createRiskRow(risk, index) {
     deleteBtn.addEventListener('click', () => deleteRisk(risk.id));
     actionsCell.appendChild(deleteBtn);
 
-    if (index > 0) {
+    if (canReorder && index > 0) {
         const upBtn = createIconButton(
             '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 19V5"></path><path d="m5 12 7-7 7 7"></path></svg>',
             t('moveUp')
@@ -192,7 +223,7 @@ function createRiskRow(risk, index) {
         actionsCell.appendChild(upBtn);
     }
 
-    if (index < currentAnalysis.risks.length - 1) {
+    if (canReorder && index < currentAnalysis.risks.length - 1) {
         const downBtn = createIconButton(
             '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14"></path><path d="m19 12-7 7-7-7"></path></svg>',
             t('moveDown')

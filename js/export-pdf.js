@@ -81,9 +81,7 @@ async function generatePDFContent(doc) {
         // Try to load and display logo if URL is provided
         if (reportLogo) {
             try {
-                console.log('Attempting to load logo from:', reportLogo);
                 const img = await loadImage(reportLogo);
-                console.log('Logo loaded successfully:', img.width + 'x' + img.height);
 
                 // Keep the logo inside a fixed header box so it never dominates the page.
                 const logoBoxWidth = 80;
@@ -107,7 +105,6 @@ async function generatePDFContent(doc) {
 
                 doc.addImage(img, format, imgX, imgY, imgWidth, imgHeight);
                 yPos += imgHeight + 6;
-                console.log('Logo added to PDF successfully');
             } catch (logoError) {
                 console.warn('Could not load logo, using text instead:', logoError.message);
                 console.warn('Logo URL was:', reportLogo);

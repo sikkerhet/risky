@@ -199,7 +199,7 @@
             "en": "An employee with legitimate access intentionally abuses it"
           },
           "eksisterendeBeskyttelse": {
-            "no": "tilgang controls, loggføring",
+            "no": "Tilgangskontroller og loggføring",
             "en": "Access controls, logging"
           },
           "eksisterendeKontroll": {
@@ -211,14 +211,14 @@
           "T": 4,
           "sannsynlighet": 2,
           "foreslaatteTiltak": {
-            "no": "User behavior analytics (UBA), anomaly detection, privileged tilgang overvåking, psychological safety/reporting culture",
+            "no": "User behavior analytics (UBA), anomaly detection, overvåking av privilegert tilgang, psykologisk trygghet og rapporteringskultur",
             "en": "User behavior analytics (UBA), anomaly detection, privileged access monitoring, psychological safety/reporting culture"
           }
         },
         {
           "id": "insider-002",
           "risikoelement": {
-            "no": "Data exfiltration av ansatt som skal slutte",
+            "no": "Dataeksfiltrering fra ansatt som skal slutte",
             "en": "Data exfiltration by an employee who is leaving"
           },
           "saarbarhet": {
@@ -292,7 +292,7 @@
           "T": 4,
           "sannsynlighet": 2,
           "foreslaatteTiltak": {
-            "no": "Privileged tilgang Management (PAM), session recording, dual control for sensitive ops, continuous overvåking",
+            "no": "Privileged Access Management (PAM), session recording, dual control for sensitive ops og kontinuerlig overvåking",
             "en": "Privileged Access Management (PAM), session recording, dual control for sensitive ops, continuous monitoring"
           }
         },
@@ -833,7 +833,7 @@
             "en": "'Undo send' in email"
           },
           "eksisterendeKontroll": {
-            "no": "User awareness",
+            "no": "Brukerbevissthet",
             "en": "User awareness"
           },
           "K": 5,
@@ -887,7 +887,7 @@
             "en": "Process documentation"
           },
           "eksisterendeKontroll": {
-            "no": "Management oversight",
+            "no": "Ledelsesoppfølging",
             "en": "Management oversight"
           },
           "K": 3,

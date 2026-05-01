@@ -135,7 +135,7 @@
             "en": "Alarm fatigue, fire doors propped open, and weak enforcement"
           },
           "eksisterendeBeskyttelse": {
-            "no": "Door alarms",
+            "no": "Døralarmer",
             "en": "Door alarms"
           },
           "eksisterendeKontroll": {
@@ -198,11 +198,11 @@
             "en": "Rack units are not locked or bolted down, and alarms are missing"
           },
           "eksisterendeBeskyttelse": {
-            "no": "Locked server room",
+            "no": "Låst serverrom",
             "en": "Locked server room"
           },
           "eksisterendeKontroll": {
-            "no": "Inventory checks",
+            "no": "Inventarkontroller",
             "en": "Inventory checks"
           },
           "K": 5,
@@ -288,7 +288,7 @@
             "en": "Missing brannslokkingssystem, brennbare materialer"
           },
           "eksisterendeBeskyttelse": {
-            "no": "Smoke detectors",
+            "no": "Røykdetektorer",
             "en": "Smoke detectors"
           },
           "eksisterendeKontroll": {

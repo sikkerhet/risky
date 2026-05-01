@@ -5,7 +5,7 @@
     "en": "Integrations and System Interactions"
   },
   "beskrivelse": {
-    "no": "API-integrasjoner, meldingskøer, data pipelines, asynkron kommunikasjon, ESB/middleware og systemsamspill",
+    "no": "API-integrasjoner, meldingskøer, datapipelines, asynkron kommunikasjon, ESB/middleware og systemsamspill",
     "en": "API integrations, message queues, data pipelines, asynchronous communication, ESB/middleware, and system interactions"
   },
   "kategorier": [
@@ -73,7 +73,7 @@
         {
           "id": "sync-003",
           "risikoelement": {
-            "no": "API versioning ikke implementert",
+            "no": "API versioning er ikke implementert",
             "en": "API versioning is not implemented"
           },
           "saarbarhet": {
@@ -131,7 +131,7 @@
             "en": "Missing circuit breaker"
           },
           "saarbarhet": {
-            "no": "Fortsetter å kalle feilende tjeneste, forverrer situasjon, cascade failures, ingen graceful degradation",
+            "no": "Fortsetter å kalle en feilende tjeneste, forverrer situasjonen, gir cascade failures og mangler graceful degradation",
             "en": "The system continues to call a failing service, worsens the situation, causes cascading failures, and lacks graceful degradation"
           },
           "eksisterendeBeskyttelse": {
@@ -356,7 +356,7 @@
             "en": "Missing message schema validation"
           },
           "saarbarhet": {
-            "no": "Ugyldige meldinger aksepteres, schema changes bryter consumers, ingen versjonering av meldinger",
+            "no": "Ugyldige meldinger aksepteres, schema changes bryter consumers og meldinger mangler versjonering",
             "en": "Ugyldige messages aksepteres, schema changes bryter consumers, no versjonering of messages"
           },
           "eksisterendeBeskyttelse": {
@@ -372,7 +372,7 @@
           "T": 3,
           "sannsynlighet": 4,
           "foreslaatteTiltak": {
-            "no": "Schema registry (Avro, Protobuf), validering ved produce og consume, schema evolution rules (backward/forward compatible)",
+            "no": "Schema registry (Avro, Protobuf), validering ved produce og consume og regler for schema evolution (backward/forward compatible)",
             "en": "Schema registry (Avro, Protobuf), validation during produce and consume, schema evolution rules (backward/forward compatible)"
           }
         }
@@ -381,18 +381,18 @@
     {
       "id": "data-pipelines",
       "navn": {
-        "no": "Data pipelines og ETL",
+        "no": "Datapipelines og ETL",
         "en": "Data Pipelines"
       },
       "risikoer": [
         {
           "id": "etl-001",
           "risikoelement": {
-            "no": "Data transformasjonsfeil",
+            "no": "Feil i datatransformasjon",
             "en": "Data transformation errors"
           },
           "saarbarhet": {
-            "no": "Feil i mapping logic, nullverdier ikke håndtert, type casting feiler, data-korrupsjon",
+            "no": "Feil i mappinglogikk, nullverdier håndteres ikke, typekonvertering feiler og data korrumperes",
             "en": "Errors in mapping logic, nullverdier not handled, type casting fails, data-korrupsjon"
           },
           "eksisterendeBeskyttelse": {
@@ -408,7 +408,7 @@
           "T": 3,
           "sannsynlighet": 3,
           "foreslaatteTiltak": {
-            "no": "Comprehensive testing av transformasjoner, null-handling, type safety, data quality checks, reconciliation reports",
+            "no": "Omfattende testing av transformasjoner, null-håndtering, typesikkerhet, datakvalitetssjekker og avstemmingsrapporter",
             "en": "Comprehensive testing of transformasjoner, null-handling, type safety, data quality checks, reconciliation reports"
           }
         },
@@ -419,7 +419,7 @@
             "en": "Schema operations mellom systems"
           },
           "saarbarhet": {
-            "no": "Source system endrer schema uten varsel, pipelines feiler, data mappes feil, nye felter ignoreres",
+            "no": "Kildesystem endrer schema uten varsel, pipelines feiler, data mappes feil og nye felter ignoreres",
             "en": "The source system changes the schema without warning, pipelines fail, data is mapped incorrectly, and new fields are ignored"
           },
           "eksisterendeBeskyttelse": {
@@ -442,19 +442,19 @@
         {
           "id": "etl-003",
           "risikoelement": {
-            "no": "Data quality issues ikke oppdaget",
+            "no": "Datakvalitetsproblemer oppdages ikke",
             "en": "Data quality issues not oppdaget"
           },
           "saarbarhet": {
-            "no": "Duplikater, manglende data, ugyldig data prosesseres og lagres, ingen data quality gates",
+            "no": "Duplikater, manglende data og ugyldige data prosesseres og lagres uten data quality gates",
             "en": "Duplicate, missing, or invalid data is processed and stored because there are no data quality gates"
           },
           "eksisterendeBeskyttelse": {
-            "no": "Basic validation av required fields",
+            "no": "Enkel validering av påkrevde felter",
             "en": "Basic validation of required fields"
           },
           "eksisterendeKontroll": {
-            "no": "Ad-hoc data quality sjekker",
+            "no": "Ad hoc-datakvalitetssjekker",
             "en": "Ad-hoc data quality checker"
           },
           "K": 4,
@@ -462,7 +462,7 @@
           "T": 3,
           "sannsynlighet": 4,
           "foreslaatteTiltak": {
-            "no": "Implement a data quality framework (for example Great Expectations or Deequ), add automated quality checks, quarantine bad data, and track quality metrics",
+            "no": "Innfør et rammeverk for datakvalitet, for eksempel Great Expectations eller Deequ, legg til automatiserte kvalitetssjekker, sett dårlige data i karantene og følg kvalitetsmålinger",
             "en": "Implement a data quality framework such as Great Expectations or Deequ, add automated quality checks, quarantine bad data, and track quality metrics"
           }
         },
@@ -473,7 +473,7 @@
             "en": "Pipeline errors lead to incomplete data"
           },
           "saarbarhet": {
-            "no": "Pipeline feiler midt i kjøring, partial data loaded, ingen transaksjonalitet, vanskelig å gjenoppretting",
+            "no": "Pipeline feiler midt i kjøring, delvise data lastes inn, transaksjonalitet mangler og gjenoppretting er vanskelig",
             "en": "A pipeline fails midway through a run, partial data is loaded, there is no transactional control, and recovery is difficult"
           },
           "eksisterendeBeskyttelse": {
@@ -481,7 +481,7 @@
             "en": "Logging of pipeline status"
           },
           "eksisterendeKontroll": {
-            "no": "overvåking av pipeline completion",
+            "no": "Overvåking av fullført pipeline-kjøring",
             "en": "Monitoring of pipeline completion"
           },
           "K": 4,
@@ -811,7 +811,7 @@
         {
           "id": "resiliens-005",
           "risikoelement": {
-            "no": "Dependency failures kaskaderer",
+            "no": "Feil i avhengigheter forplanter seg",
             "en": "Dependency failures kaskaderer"
           },
           "saarbarhet": {
@@ -878,7 +878,7 @@
             "en": "ESB/middleware single point of failure"
           },
           "saarbarhet": {
-            "no": "All integrasjon går via én ESB/middleware, hvis denne feiler stopper all dataflyt",
+            "no": "All integrasjon går via én ESB/middleware, og hvis denne feiler stopper all dataflyt",
             "en": "All integrasjon goes via én ESB/middleware, hvis denne fails stopper all dataflyt"
           },
           "eksisterendeBeskyttelse": {
@@ -894,18 +894,18 @@
           "T": 4,
           "sannsynlighet": 2,
           "foreslaatteTiltak": {
-            "no": "High availability setup, clustering, vurdere å gå bort fra ESB til point-to-point eller service mesh",
+            "no": "High availability-oppsett, clustering og vurdering av overgang fra ESB til point-to-point eller service mesh",
             "en": "Use a highly available setup with clustering, and consider moving away from the ESB toward point-to-point integrations or a service mesh"
           }
         },
         {
           "id": "middleware-002",
           "risikoelement": {
-            "no": "Message transformation i middleware gir leverandør lock-in",
+            "no": "Message transformation i middleware gir leverandør-lock-in",
             "en": "Message transformation in middleware gives vendor lock-in"
           },
           "saarbarhet": {
-            "no": "Business logic i middleware-config, vanskelig å migrere, proprietær transformasjonslogikk",
+            "no": "Business logic i middleware-config gjør migrering vanskelig og skaper proprietær transformasjonslogikk",
             "en": "Business logic is embedded in middleware configuration, is difficult to migrate, and relies on proprietary transformation logic"
           },
           "eksisterendeBeskyttelse": {
@@ -921,7 +921,7 @@
           "T": 4,
           "sannsynlighet": 3,
           "foreslaatteTiltak": {
-            "no": "Flytte transformasjonslogikk til services, minimal logic i middleware, infrastructure as code for middleware config",
+            "no": "Flytte transformasjonslogikk til services, holde minimal logic i middleware og bruke infrastructure as code for middleware-config",
             "en": "Flytte transformasjonslogikk to services, minimal logic in middleware, infrastructure as code for middleware config"
           }
         },
@@ -932,7 +932,7 @@
             "en": "Performance bottleneck in integrasjonsplattform"
           },
           "saarbarhet": {
-            "no": "All trafikk går via middleware, begrenset throughput, latency øker, skaleringsutfordringer",
+            "no": "All trafikk går via middleware, throughput er begrenset, latency øker og skaleringsutfordringer oppstår",
             "en": "All trafikk goes via middleware, begrenset throughput, latency increases, skaleringsutfordringer"
           },
           "eksisterendeBeskyttelse": {
@@ -948,7 +948,7 @@
           "T": 3,
           "sannsynlighet": 3,
           "foreslaatteTiltak": {
-            "no": "Horizontal scaling av middleware, vurdere direct integration for high-volume, caching, async patterns",
+            "no": "Horizontal scaling av middleware, vurdere direct integration for high-volume, caching og async patterns",
             "en": "Horizontal scaling of middleware, assess direct integration for high-volume, caching, async patterns"
           }
         },
@@ -959,7 +959,7 @@
             "en": "Configuration operations in middleware"
           },
           "saarbarhet": {
-            "no": "Manuelle endringer i GUI, ikke versjonskontrollert, staging og prod ut-av-sync, ingen audit trail",
+            "no": "Manuelle endringer i GUI er ikke versjonskontrollert, staging og prod kommer ut av sync, og audit trail mangler",
             "en": "Manual GUI changes are not version-controlled, staging and production operations apart, and there is no audit trail"
           },
           "eksisterendeBeskyttelse": {
@@ -975,7 +975,7 @@
           "T": 4,
           "sannsynlighet": 4,
           "foreslaatteTiltak": {
-            "no": "Infrastructure as Code for middleware, versjonskontroll av config, automated utrulling, configuration validation",
+            "no": "Infrastructure as Code for middleware, versjonskontroll av config, automatisert utrulling og configuration validation",
             "en": "Use Infrastructure as Code for middleware, version control configuration, automate deployment, and validate configuration changes"
           }
         },
@@ -986,7 +986,7 @@
             "en": "Missing observability in integrasjonsflyt"
           },
           "saarbarhet": {
-            "no": "Melding går inn i middleware og forsvinner, vanskelig å trace end-to-end, debugging tar lang tid",
+            "no": "Meldinger går inn i middleware og forsvinner, er vanskelige å trace end-to-end, og debugging tar lang tid",
             "en": "Message goes inn in middleware and forsvinner, difficult to trace end-to-end, debugging tar lang time"
           },
           "eksisterendeBeskyttelse": {
@@ -1002,7 +1002,7 @@
           "T": 4,
           "sannsynlighet": 4,
           "foreslaatteTiltak": {
-            "no": "Distributed tracing (correlation IDs), end-to-end transaction overvåking, business prosess overvåking, integration flow visualization",
+            "no": "Distributed tracing (correlation IDs), end-to-end transaction-overvåking, business process-overvåking og visualisering av integrasjonsflyt",
             "en": "Distributed tracing (correlation IDs), end-to-end transaction monitoring, business process monitoring, integration flow visualization"
           }
         }

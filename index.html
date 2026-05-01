@@ -160,31 +160,22 @@
 
         function createNewAnalysis() {
             const id = generateUUID();
-            const now = new Date().toISOString();
-            const newAnalysis = {
-                id: id,
-                name: t('newAnalysisName'),
-                createdDate: now.split('T')[0],
-                lastModified: now,
-                metadata: {
-                    date: now.split('T')[0],
-                    service: '',
-                    performedBy: '',
-                    participants: '',
-                    serviceOwner: '',
-                    description: ''
-                },
-                risks: []
-            };
+            const newAnalysis = createBlankAnalysis(id);
 
-            const analyses = getAnalyses();
-            analyses.push(newAnalysis);
-            saveAnalyses(analyses);
+            upsertAnalysis(newAnalysis);
+            setPendingNewAnalysis(newAnalysis);
+            setAnalysisHandoff(newAnalysis);
 
-            window.location.href = `editor.html?id=${id}`;
+            window.location.href = `editor.html?id=${id}&new=1#${createAnalysisHandoffFragment(newAnalysis)}`;
         }
 
         function openAnalysis(id) {
+            const analysis = getAnalysisById(id);
+            if (analysis) {
+                setAnalysisHandoff(analysis);
+                window.location.href = `editor.html?id=${id}#${createAnalysisHandoffFragment(analysis)}`;
+                return;
+            }
             window.location.href = `editor.html?id=${id}`;
         }
 
@@ -554,6 +545,7 @@
             const analyses = getAnalyses();
             const filtered = analyses.filter(a => a.id !== id);
             saveAnalyses(filtered);
+            window.name = '';
             loadAnalysesList();
         }
 
@@ -615,23 +607,19 @@
         async function loadExampleAnalysis() {
             try {
                 const exampleAnalysis = await getExampleAnalysisData();
-                const analyses = getAnalyses();
+                const exampleId = exampleAnalysis.id;
+                const existing = getAnalysisById(exampleId);
 
                 // Sjekk om eksempelanalysen allerede finnes
-                const existing = analyses.findIndex(a => a.id === exampleAnalysis.id);
-                if (existing >= 0) {
+                if (existing) {
                     if (!confirm(t('exampleAnalysisExistsConfirm'))) {
                         return;
                     }
-                    analyses[existing] = exampleAnalysis;
-                } else {
-                    analyses.push(exampleAnalysis);
                 }
 
-                saveAnalyses(analyses);
-                loadAnalysesList();
-
-                alert(t('exampleAnalysisLoaded'));
+                upsertAnalysis(exampleAnalysis);
+                setAnalysisHandoff(exampleAnalysis);
+                window.location.href = `editor.html?id=${exampleId}#${createAnalysisHandoffFragment(exampleAnalysis)}`;
             } catch (err) {
                 alert(formatTranslation('exampleAnalysisLoadError', { message: err.message }));
                 console.error(err);

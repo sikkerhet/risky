@@ -1,7 +1,7 @@
 {
   "id": "governance",
   "navn": {
-    "no": "Governance og organisasjon",
+    "no": "Styring og organisasjon",
     "en": "Governance and Organization"
   },
   "beskrivelse": {
@@ -50,7 +50,7 @@
             "en": "No security strategy or overarching plan"
           },
           "saarbarhet": {
-            "no": "Ad-hoc sikkerhetstiltak, manglende helhetlig approach",
+            "no": "Ad hoc-sikkerhetstiltak og manglende helhetlig tilnærming",
             "en": "Ad hoc security measures and no holistic approach"
           },
           "eksisterendeBeskyttelse": {
@@ -93,7 +93,7 @@
           "T": 4,
           "sannsynlighet": 4,
           "foreslaatteTiltak": {
-            "no": "Risk-based budgettering, business case for sikkerhetsinvesteringer, sikkerhet som % av IT-budsjett",
+            "no": "Risikobasert budsjettering, business case for sikkerhetsinvesteringer og sikkerhet som andel av IT-budsjettet",
             "en": "Risk-based budgeting, business cases for security investments, and a defined security share of the IT budget"
           }
         },
@@ -273,7 +273,7 @@
     {
       "id": "policy-compliance",
       "navn": {
-        "no": "policy og compliance",
+        "no": "Policy og compliance",
         "en": "Policies and Compliance"
       },
       "risikoer": [
@@ -300,7 +300,7 @@
           "T": 2,
           "sannsynlighet": 4,
           "foreslaatteTiltak": {
-            "no": "policy framework (hierarki: policy->standard->procedure), årlig gjennomgang, versjonskontroll, godkjenningsprosess",
+            "no": "Policy framework (hierarki: policy->standard->procedure), årlig gjennomgang, versjonskontroll og godkjenningsprosess",
             "en": "Policy framework (hierarki: policy->standard->procedure), annual review, version control, approval process"
           }
         },
@@ -327,7 +327,7 @@
           "T": 2,
           "sannsynlighet": 4,
           "foreslaatteTiltak": {
-            "no": "policy acknowledgement (signering), awareness campaigns, konsekvenser ved brudd, spot-checks",
+            "no": "Policy acknowledgement (signering), awareness-kampanjer, konsekvenser ved brudd og stikkprøver",
             "en": "Policy acknowledgement (signering), awareness campaigns, konsekvenser during breaches, spot-checks"
           }
         },
@@ -381,7 +381,7 @@
           "T": 2,
           "sannsynlighet": 3,
           "foreslaatteTiltak": {
-            "no": "Continuous compliance overvåking, internal audit program, compliance testing automation, control attestation",
+            "no": "Kontinuerlig compliance-overvåking, internal audit-program, automatisert compliance-testing og control attestation",
             "en": "Continuous compliance monitoring, internal audit program, compliance testing automation, control attestation"
           }
         },
@@ -400,7 +400,7 @@
             "en": "Prosjektledere tar decisions"
           },
           "eksisterendeKontroll": {
-            "no": "Risk register",
+            "no": "Risikoregister",
             "en": "Risk register"
           },
           "K": 4,
@@ -408,7 +408,7 @@
           "T": 3,
           "sannsynlighet": 4,
           "foreslaatteTiltak": {
-            "no": "Formell risk acceptance framework, godkjenningsnivåer basert på risiko, risk register, time-boxed acceptances",
+            "no": "Formelt risk acceptance framework, godkjenningsnivåer basert på risiko, risikoregister og tidsavgrensede aksepter",
             "en": "Establish a formal risk acceptance framework, approval levels based on risk, a risk register, and time-boxed acceptances"
           }
         },
@@ -615,7 +615,7 @@
     {
       "id": "audit-tilsyn",
       "navn": {
-        "no": "Audit og tilsyn",
+        "no": "Revisjon og tilsyn",
         "en": "Audit and Oversight"
       },
       "risikoer": [
@@ -642,26 +642,26 @@
           "T": 2,
           "sannsynlighet": 3,
           "foreslaatteTiltak": {
-            "no": "Internal audit function, risk-based audit plan, independence, audit committee reporting",
+            "no": "Internal audit-funksjon, risikobasert revisjonsplan, uavhengighet og rapportering til revisjonsutvalg",
             "en": "Internal audit function, risk-based audit plan, independence, audit committee reporting"
           }
         },
         {
           "id": "audit-002",
           "risikoelement": {
-            "no": "Audit findings ikke fulgt opp",
+            "no": "Revisjonsfunn følges ikke opp",
             "en": "Audit findings not fulgt opp"
           },
           "saarbarhet": {
-            "no": "Issues identifisert men ikke remediert",
+            "no": "Funn er identifisert, men ikke utbedret",
             "en": "Issues identified men not remediert"
           },
           "eksisterendeBeskyttelse": {
-            "no": "Action items fra audit",
+            "no": "Tiltakspunkter fra revisjon",
             "en": "Action items from audit"
           },
           "eksisterendeKontroll": {
-            "no": "Management respons",
+            "no": "Ledelsens respons",
             "en": "Management response"
           },
           "K": 4,
@@ -669,7 +669,7 @@
           "T": 3,
           "sannsynlighet": 4,
           "foreslaatteTiltak": {
-            "no": "Audit finding tracker, remediation deadlines, escalation for overdue items, periodic status reporting",
+            "no": "Sporing av revisjonsfunn, frister for utbedring, eskalering av forsinkede tiltak og periodisk statusrapportering",
             "en": "Audit finding tracker, remediation deadlines, escalation for overdue items, periodic status reporting"
           }
         },
@@ -696,7 +696,7 @@
           "T": 1,
           "sannsynlighet": 3,
           "foreslaatteTiltak": {
-            "no": "Comprehensive audit loggføring, immutable logs, SIEM, long-term retention, log integrity protection",
+            "no": "Omfattende audit-loggføring, immutable logs, SIEM, langtidslagring og beskyttelse av loggintegritet",
             "en": "Comprehensive audit logging, immutable logs, SIEM, long-term retention, log integrity protection"
           }
         },
@@ -723,7 +723,7 @@
           "T": 2,
           "sannsynlighet": 3,
           "foreslaatteTiltak": {
-            "no": "Continuous compliance program, control testing schedule, evidence collection automation, mock audits",
+            "no": "Kontinuerlig compliance-program, plan for control testing, automatisert innsamling av bevis og mock audits",
             "en": "Continuous compliance program, control testing schedule, evidence collection automation, mock audits"
           }
         }
@@ -759,7 +759,7 @@
           "T": 4,
           "sannsynlighet": 4,
           "foreslaatteTiltak": {
-            "no": "dokumentasjon standards, gjennomgang cycles, version control, templates, dokumentasjon-as-code",
+            "no": "Dokumentasjonsstandarder, gjennomgangssykluser, versjonskontroll, maler og dokumentasjon-as-code",
             "en": "Documentation standards, review cycles, version control, templates, documentation-as-code"
           }
         },
@@ -786,7 +786,7 @@
           "T": 3,
           "sannsynlighet": 4,
           "foreslaatteTiltak": {
-            "no": "Comprehensive asset register, automated discovery, data mapping, classification, owner attribution",
+            "no": "Omfattende asset register, automatisert oppdagelse, datakartlegging, klassifisering og eiertildeling",
             "en": "Comprehensive asset register, automated discovery, data mapping, classification, owner attribution"
           }
         },
@@ -805,7 +805,7 @@
             "en": "NDA with employees"
           },
           "eksisterendeKontroll": {
-            "no": "tilgang controls",
+            "no": "Tilgangskontroller",
             "en": "Access controls"
           },
           "K": 5,
@@ -813,7 +813,7 @@
           "T": 3,
           "sannsynlighet": 2,
           "foreslaatteTiltak": {
-            "no": "IP register, protective markings, DLP, repository tilgang controls, invention assignment agreements",
+            "no": "IP-register, protective markings, DLP, tilgangskontroller for repository og avtaler om rettigheter til oppfinnelser",
             "en": "IP register, protective markings, DLP, repository access controls, invention assignment agreements"
           }
         },
@@ -840,7 +840,7 @@
           "T": 3,
           "sannsynlighet": 3,
           "foreslaatteTiltak": {
-            "no": "Records management policy, retention schedules, secure disposal, archive solution, legal hold procedures",
+            "no": "Records management-policy, retention-planer, sikker sletting, arkivløsning og legal hold-prosedyrer",
             "en": "Records management policy, retention schedules, secure disposal, archive solution, legal hold procedures"
           }
         }

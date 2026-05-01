@@ -19,7 +19,7 @@
         {
           "id": "tenant-001",
           "risikoelement": {
-            "no": "Data leakage mellom tenants (kundeorganisasjoner)",
+            "no": "Datalekkasje mellom tenants (kundeorganisasjoner)",
             "en": "Data leakage between tenants (customer organizations)"
           },
           "saarbarhet": {
@@ -46,7 +46,7 @@
         {
           "id": "tenant-002",
           "risikoelement": {
-            "no": "Privilege escalation på tvers av tenants",
+            "no": "Privilegieeskalering på tvers av tenants",
             "en": "Privilege escalation across tenants"
           },
           "saarbarhet": {
@@ -58,7 +58,7 @@
             "en": "RBAC with tenant scoping"
           },
           "eksisterendeKontroll": {
-            "no": "tilgang control testing",
+            "no": "Testing av tilgangskontroll",
             "en": "Access control testing"
           },
           "K": 5,
@@ -100,7 +100,7 @@
         {
           "id": "tenant-004",
           "risikoelement": {
-            "no": "loggføring/metrics eksponerer data fra andre tenants",
+            "no": "Loggføring og metrics eksponerer data fra andre tenants",
             "en": "Logging or metrics expose data from other tenants"
           },
           "saarbarhet": {
@@ -127,11 +127,11 @@
         {
           "id": "tenant-005",
           "risikoelement": {
-            "no": "Shared cache leakage mellom tenants",
+            "no": "Lekkasje via delt cache mellom tenants",
             "en": "Shared cache leakage between tenants"
           },
           "saarbarhet": {
-            "no": "Cache keys ikke tenant-aware, data bleed",
+            "no": "Cache keys er ikke tenant-aware, slik at data kan lekke mellom tenants",
             "en": "Cache keys not tenant-aware, data bleed"
           },
           "eksisterendeBeskyttelse": {
@@ -248,7 +248,7 @@
             "en": "Onboarding/offboarding of kunder not sikker"
           },
           "saarbarhet": {
-            "no": "Data ikke slettet ved churn, eller provisjonering har sikkerhetshull",
+            "no": "Data slettes ikke ved churn, eller provisjonering har sikkerhetshull",
             "en": "Data not erased during churn, or provisjonering har sikkerhetshull"
           },
           "eksisterendeBeskyttelse": {
@@ -473,7 +473,7 @@
             "en": "There is no backup of SaaS configurations"
           },
           "saarbarhet": {
-            "no": "OAuth tokens, webhooks, API keys ikke sikret",
+            "no": "OAuth tokens, webhooks og API keys er ikke sikret",
             "en": "OAuth tokens, webhooks, API keys not sikret"
           },
           "eksisterendeBeskyttelse": {
@@ -586,7 +586,7 @@
         {
           "id": "integration-001",
           "risikoelement": {
-            "no": "API keys eksponert i kode eller logs",
+            "no": "API keys eksponeres i kode eller logger",
             "en": "API keys eksponert in code or logs"
           },
           "saarbarhet": {
@@ -909,7 +909,7 @@
             "en": "Missing monitoring of SaaS response times"
           },
           "eksisterendeBeskyttelse": {
-            "no": "User complaints",
+            "no": "Brukerklager",
             "en": "User complaints"
           },
           "eksisterendeKontroll": {

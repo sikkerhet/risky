@@ -194,7 +194,7 @@
             "en": "Hardcoded credentials or secrets in firmware"
           },
           "saarbarhet": {
-            "no": "API keys, encryption keys, passwords embedded in binary",
+            "no": "API keys, krypteringsnøkler og passord er innebygd i binærfilen",
             "en": "API keys, encryption keys, passwords embedded in binary"
           },
           "eksisterendeBeskyttelse": {
@@ -292,7 +292,7 @@
             "en": "Air-gapped network"
           },
           "eksisterendeKontroll": {
-            "no": "Physical tilgang control",
+            "no": "Fysisk tilgangskontroll",
             "en": "Physical access control"
           },
           "K": 5,
@@ -534,7 +534,7 @@
     {
       "id": "supply-chain-iot",
       "navn": {
-        "no": "IoT Supply Chain",
+        "no": "IoT supply chain",
         "en": "IoT Supply Chain"
       },
       "risikoer": [
@@ -670,7 +670,7 @@
             "en": "Locked cabinets"
           },
           "eksisterendeKontroll": {
-            "no": "Physical checks",
+            "no": "Fysiske kontroller",
             "en": "Physical checks"
           },
           "K": 5,
@@ -693,7 +693,7 @@
             "en": "Models are deployed to edge environments without adequate protection"
           },
           "eksisterendeBeskyttelse": {
-            "no": "Model encryption",
+            "no": "Modellkryptering",
             "en": "Model encryption"
           },
           "eksisterendeKontroll": {
@@ -705,7 +705,7 @@
           "T": 2,
           "sannsynlighet": 2,
           "foreslaatteTiltak": {
-            "no": "Model encryption, TEE for inference, model watermarking, federated learning",
+            "no": "Modellkryptering, TEE for inference, model watermarking og federated learning",
             "en": "Model encryption, TEE for inference, model watermarking, federated learning"
           }
         }

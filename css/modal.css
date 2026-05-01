@@ -68,6 +68,36 @@
     flex: 1;
 }
 
+.bank-tools {
+    display: grid;
+    grid-template-columns: minmax(260px, 1fr) 180px auto;
+    gap: 14px;
+    align-items: end;
+    margin-bottom: 18px;
+}
+
+.bank-tools label {
+    display: block;
+    font-size: 13px;
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 5px;
+}
+
+.bank-checkbox {
+    display: flex !important;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 9px !important;
+    white-space: nowrap;
+}
+
+.risk-bank-result-meta {
+    margin: -8px 0 14px 0;
+    color: #666;
+    font-size: 13px;
+}
+
 /* Bank selector */
 .bank-selector {
     margin-bottom: 20px;
@@ -157,6 +187,13 @@
     font-weight: 600;
 }
 
+.risiko-source {
+    margin: -4px 0 10px 0;
+    color: #555;
+    font-size: 12px;
+    font-weight: 600;
+}
+
 .risiko-card .risiko-saarbarhet {
     font-size: 13px;
     color: #666;
@@ -172,6 +209,13 @@
     margin-top: 10px;
     padding-top: 10px;
     border-top: 1px solid #eee;
+}
+
+.btn-use-risk {
+    margin: 12px 0 0 0;
+    width: 100%;
+    padding: 8px 12px;
+    font-size: 13px;
 }
 
 .risiko-meta-item {
@@ -209,6 +253,14 @@
     .bank-selector {
         overflow-x: auto;
         flex-wrap: nowrap;
+    }
+
+    .bank-tools {
+        grid-template-columns: 1fr;
+    }
+
+    .bank-checkbox {
+        white-space: normal;
     }
 }
 

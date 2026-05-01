@@ -658,7 +658,7 @@
         {
           "id": "app-004",
           "risikoelement": {
-            "no": "Broken tilgang Control - horisontalt (IDOR)",
+            "no": "Broken Access Control - horisontalt (IDOR)",
             "en": "Broken Access Control - horisontalt (IDOR)"
           },
           "saarbarhet": {
@@ -720,7 +720,7 @@
             "en": "Stack traces, SQL errors sendt to klient"
           },
           "eksisterendeBeskyttelse": {
-            "no": "Production error handling",
+            "no": "Feilhåndtering i produksjon",
             "en": "Production error handling"
           },
           "eksisterendeKontroll": {
@@ -919,7 +919,7 @@
         {
           "id": "net-003",
           "risikoelement": {
-            "no": "Man-in-the-Middle angrep",
+            "no": "Man-in-the-Middle-angrep",
             "en": "Man-in-the-Middle angrep"
           },
           "saarbarhet": {
@@ -1036,7 +1036,7 @@
         {
           "id": "org-002",
           "risikoelement": {
-            "no": "Ingen hendelse respons plan",
+            "no": "Ingen incident response plan",
             "en": "No incident response plan"
           },
           "saarbarhet": {

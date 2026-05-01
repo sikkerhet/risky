@@ -184,6 +184,21 @@
         <!-- Risikotabell -->
         <section class="risks-section">
             <h2 data-i18n="riskSectionTitle">RISIKOER</h2>
+            <div class="risk-table-toolbar">
+                <label class="risk-table-toggle">
+                    <input type="checkbox" id="showAboveAcceptanceOnly">
+                    <span data-i18n="showAboveAcceptanceOnly">Vis kun risikoer over akseptansenivå</span>
+                </label>
+                <label class="risk-table-sort">
+                    <span data-i18n="sortRisksBy">Sorter</span>
+                    <select id="riskSortSelect" class="form-control">
+                        <option value="number" data-i18n="sortOriginal">Opprinnelig rekkefølge</option>
+                        <option value="risk-desc" data-i18n="sortRiskDesc">Høyeste risiko først</option>
+                        <option value="risk-asc" data-i18n="sortRiskAsc">Laveste risiko først</option>
+                    </select>
+                </label>
+                <span id="riskTableViewMeta" class="risk-table-view-meta"></span>
+            </div>
 
             <div class="table-container">
                 <table id="risksTable" class="risks-table">
@@ -314,8 +329,29 @@
                 <button class="modal-close" onclick="closeRisikobankModal()">×</button>
             </div>
             <div class="modal-body">
+                <div class="bank-tools">
+                    <div class="bank-search-wrap">
+                        <label for="bankSearchInput" data-i18n="riskBankSearchLabel">Søk i risikobank</label>
+                        <input type="search" id="bankSearchInput" class="form-control" data-i18n-placeholder="riskBankSearchPlaceholder" placeholder="Søk i risikoelement, sårbarhet eller tiltak">
+                    </div>
+                    <div class="bank-filter-wrap">
+                        <label for="bankRiskLevelFilter" data-i18n="riskBankLevelFilter">Risikonivå</label>
+                        <select id="bankRiskLevelFilter" class="form-control">
+                            <option value="all" data-i18n="allRiskLevels">Alle nivåer</option>
+                            <option value="critical" data-i18n="critical">Kritisk</option>
+                            <option value="high" data-i18n="high">Høy</option>
+                            <option value="medium" data-i18n="medium">Middels</option>
+                            <option value="low" data-i18n="low">Lav</option>
+                        </select>
+                    </div>
+                    <label class="bank-checkbox">
+                        <input type="checkbox" id="bankSearchAllBanks">
+                        <span data-i18n="searchAllBanks">Søk i alle banker</span>
+                    </label>
+                </div>
                 <div id="bankSelector" class="bank-selector"></div>
                 <div id="kategoriSelector" class="kategori-selector"></div>
+                <div id="riskBankResultMeta" class="risk-bank-result-meta"></div>
                 <div id="risikoListe" class="risiko-liste"></div>
             </div>
         </div>
@@ -422,7 +458,10 @@
                 return;
             }
 
-            loadAnalysis();
+            loadAnalysis().catch((error) => {
+                console.error('Could not load analysis:', error);
+                alert(formatTranslation('analysisLoadError', { message: error.message }));
+            });
 
             // Event listeners
             document.getElementById('backBtn').addEventListener('click', () => {
@@ -430,6 +469,14 @@
             });
 
             document.getElementById('addRiskBtn').addEventListener('click', addNewRisk);
+            document.getElementById('showAboveAcceptanceOnly').addEventListener('change', () => {
+                riskTableView.showAboveAcceptanceOnly = document.getElementById('showAboveAcceptanceOnly').checked;
+                renderRisksTable();
+            });
+            document.getElementById('riskSortSelect').addEventListener('change', () => {
+                riskTableView.sort = document.getElementById('riskSortSelect').value;
+                renderRisksTable();
+            });
             document.getElementById('importRisksBtn').addEventListener('click', openImportRisksModal);
             document.getElementById('exportJsonBtn').addEventListener('click', exportCurrentAnalysisJSON);
             document.getElementById('exportPdfBtn').addEventListener('click', exportToPDF);
@@ -701,14 +748,20 @@
                 metadata: currentAnalysis.metadata
             });
             updateAcceptanceLevelPreview();
+            renderRisksTable();
             showSavedIndicator();
+        }
+
+        function getRisksAboveAcceptance(level = null) {
+            const acceptanceLevel = level ?? Number(currentAnalysis?.metadata?.acceptanceLevel || 0);
+            return (currentAnalysis?.risks || []).filter(risk => (risk.riskLevel || 0) > acceptanceLevel);
         }
 
         function updateAcceptanceLevelPreview() {
             if (!currentAnalysis || !currentAnalysis.risks) return;
 
             const level = parseInt(document.getElementById('acceptanceLevel').value);
-            const risksAboveLevel = currentAnalysis.risks.filter(r => r.riskLevel > level);
+            const risksAboveLevel = getRisksAboveAcceptance(level);
             const preview = document.getElementById('acceptanceLevelPreview');
             preview.textContent = formatTranslation('acceptancePreview', {
                 count: risksAboveLevel.length,
@@ -723,7 +776,7 @@
             }
 
             const level = parseInt(document.getElementById('acceptanceLevel').value);
-            const risksAboveLevel = currentAnalysis.risks.filter(r => r.riskLevel > level);
+            const risksAboveLevel = getRisksAboveAcceptance(level);
 
             if (risksAboveLevel.length === 0) {
                 alert(formatTranslation('noRisksAboveAcceptance', { level }));
@@ -873,7 +926,12 @@
             const modal = document.getElementById('importRisksModal');
             const listContainer = document.getElementById('analysisListForImport');
 
-            listContainer.innerHTML = `<p style="text-align: center; color: #666;">${t('loading')}</p>`;
+            listContainer.textContent = '';
+            const loading = document.createElement('p');
+            loading.style.textAlign = 'center';
+            loading.style.color = '#666';
+            loading.textContent = t('loading');
+            listContainer.appendChild(loading);
             modal.style.display = 'flex';
 
             try {
@@ -890,7 +948,7 @@
                 };
 
                 // Render analysis list
-                listContainer.innerHTML = '';
+                listContainer.textContent = '';
 
                 // Add baselines section
                 if (baselines.length > 0) {
@@ -920,12 +978,22 @@
 
                 // If no options available
                 if (baselines.length === 0 && otherAnalyses.length === 0) {
-                    listContainer.innerHTML = `<p style="text-align: center; color: #666;">${t('noAnalysesAvailableForImport')}</p>`;
+                    listContainer.textContent = '';
+                    const empty = document.createElement('p');
+                    empty.style.textAlign = 'center';
+                    empty.style.color = '#666';
+                    empty.textContent = t('noAnalysesAvailableForImport');
+                    listContainer.appendChild(empty);
                 }
 
             } catch (error) {
                 console.error('Error loading baselines:', error);
-                listContainer.innerHTML = `<p style="text-align: center; color: #dc3545;">${t('couldNotLoadTemplates')}</p>`;
+                listContainer.textContent = '';
+                const errorMessage = document.createElement('p');
+                errorMessage.style.textAlign = 'center';
+                errorMessage.style.color = '#dc3545';
+                errorMessage.textContent = t('couldNotLoadTemplates');
+                listContainer.appendChild(errorMessage);
             }
         }
 
@@ -938,15 +1006,50 @@
             const serviceName = analysis.metadata.service || analysis.name || t('untitled');
             const description = analysis.metadata.description || '';
 
-            label.innerHTML = `
-                <input type="radio" name="selectedAnalysis" value="${valueId}" ${isChecked ? 'checked' : ''}>
-                <div class="analysis-import-content">
-                    <h4>${serviceName} <span class="risk-count">${riskCount} ${t('risks')}</span></h4>
-                    <p><strong>${t('dateLabel')}:</strong> ${date}</p>
-                    ${analysis.metadata.performedBy ? `<p><strong>${t('performedByLabel')}:</strong> ${analysis.metadata.performedBy}</p>` : ''}
-                    ${description ? `<p style="font-size: 13px; color: #666; font-style: italic;">${description}</p>` : ''}
-                </div>
-            `;
+            const radio = document.createElement('input');
+            radio.type = 'radio';
+            radio.name = 'selectedAnalysis';
+            radio.value = valueId;
+            radio.checked = isChecked;
+            label.appendChild(radio);
+
+            const content = document.createElement('div');
+            content.className = 'analysis-import-content';
+
+            const title = document.createElement('h4');
+            title.appendChild(document.createTextNode(`${serviceName} `));
+            const count = document.createElement('span');
+            count.className = 'risk-count';
+            count.textContent = `${riskCount} ${t('risks')}`;
+            title.appendChild(count);
+            content.appendChild(title);
+
+            const dateLine = document.createElement('p');
+            const dateLabel = document.createElement('strong');
+            dateLabel.textContent = `${t('dateLabel')}:`;
+            dateLine.appendChild(dateLabel);
+            dateLine.appendChild(document.createTextNode(` ${date}`));
+            content.appendChild(dateLine);
+
+            if (analysis.metadata.performedBy) {
+                const performedLine = document.createElement('p');
+                const performedLabel = document.createElement('strong');
+                performedLabel.textContent = `${t('performedByLabel')}:`;
+                performedLine.appendChild(performedLabel);
+                performedLine.appendChild(document.createTextNode(` ${analysis.metadata.performedBy}`));
+                content.appendChild(performedLine);
+            }
+
+            if (description) {
+                const descriptionLine = document.createElement('p');
+                descriptionLine.style.fontSize = '13px';
+                descriptionLine.style.color = '#666';
+                descriptionLine.style.fontStyle = 'italic';
+                descriptionLine.textContent = description;
+                content.appendChild(descriptionLine);
+            }
+
+            label.appendChild(content);
 
             return label;
         }
@@ -985,8 +1088,6 @@
 
         function importRisksFromAnalysis(sourceAnalysis) {
             try {
-                console.log('Import started', sourceAnalysis);
-
                 if (!sourceAnalysis.risks || sourceAnalysis.risks.length === 0) {
                     alert(t('importNoRisksInAnalysis'));
                     closeImportRisksModal();
@@ -1011,7 +1112,6 @@
 
                 // Deep copy the risks to avoid reference issues
                 const importedRisks = JSON.parse(JSON.stringify(sourceAnalysis.risks));
-                console.log('Imported risks:', importedRisks);
 
                 // Ensure currentAnalysis.risks is an array
                 if (!Array.isArray(currentAnalysis.risks)) {
@@ -1043,25 +1143,19 @@
                     risk.number = index + 1;
                 });
 
-                console.log('New risk count:', currentAnalysis.risks.length);
-                console.log('First 3 risks before save:', currentAnalysis.risks.slice(0, 3).map(r => `id:${r.id.slice(0,10)} number:${r.number}`));
-
                 // Save to localStorage
                 const updatedAnalysis = updateAnalysis(currentAnalysisId, { risks: currentAnalysis.risks });
                 if (updatedAnalysis) {
                     currentAnalysis = updatedAnalysis;
-                    console.log('Updated from localStorage, first 3 risks:', currentAnalysis.risks.slice(0, 3).map(r => `id:${r.id.slice(0,10)} number:${r.number}`));
                 } else {
                     console.error('updateAnalysis returned null!');
                 }
 
                 // Update UI
                 renderRisksTable();
-                console.log('Table rendered, tbody has', document.getElementById('risksTableBody').children.length, 'rows');
-
                 renderHeatmap();
                 renderStatistics();
-                console.log('Heatmap and statistics rendered');
+                renderKITTable();
 
                 closeImportRisksModal();
 
@@ -1385,6 +1479,8 @@
 
         // Override loadAnalysis to include custom banks rendering
         async function loadAnalysis() {
+            const currentUrlParams = new URLSearchParams(window.location.search);
+
             // Last risikobank først
             await loadRisikobank();
 
@@ -1392,11 +1488,40 @@
             setupRisikobankModal();
             setupCommentModal();
 
-            currentAnalysis = getAnalysisById(currentAnalysisId);
+            const handoffAnalysis = window.location.protocol === 'file:'
+                ? (consumeAnalysisHandoffFromHash(currentAnalysisId) || consumeAnalysisHandoff(currentAnalysisId))
+                : null;
+
+            if (handoffAnalysis) {
+                currentAnalysis = upsertAnalysis(handoffAnalysis);
+            } else {
+                currentAnalysis = getAnalysisById(currentAnalysisId);
+            }
+
             if (!currentAnalysis) {
-                alert(t('analysisNotFound'));
-                window.location.href = 'index.html';
-                return;
+                const pendingNewAnalysis = window.location.protocol === 'file:' &&
+                    currentUrlParams.get('new') === '1'
+                    ? consumePendingNewAnalysis(currentAnalysisId)
+                    : null;
+
+                if (pendingNewAnalysis) {
+                    currentAnalysis = upsertAnalysis(pendingNewAnalysis);
+                } else {
+                    alert(t('analysisNotFound'));
+                    window.location.href = 'index.html';
+                    return;
+                }
+            }
+
+            if (currentUrlParams.has('new')) {
+                currentUrlParams.delete('new');
+                try {
+                    const cleanQuery = currentUrlParams.toString();
+                    const cleanUrl = cleanQuery ? `${window.location.pathname}?${cleanQuery}` : window.location.pathname;
+                    window.history.replaceState({}, '', cleanUrl);
+                } catch (cleanupError) {
+                    // URL cleanup should never prevent rendering the editor.
+                }
             }
 
             // Populer metadata
@@ -1431,6 +1556,15 @@
             renderKITTable();
             renderComments();
 
+            requestAnimationFrame(() => {
+                currentAnalysis = getAnalysisById(currentAnalysisId) || currentAnalysis;
+                renderRisksTable();
+                renderHeatmap();
+                renderStatistics();
+                renderKITTable();
+                renderComments();
+            });
+
             // Aktiver heatmap klikk
             setupHeatmapClick();
 
@@ -1446,6 +1580,7 @@
 
             updateAcceptanceLevelPreview();
             updateCommentToggleLabels();
+            renderRisksTable();
             renderCustomBanks();
             renderComments();
             renderStatistics();

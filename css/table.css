@@ -10,6 +10,35 @@
     overflow-x: auto;
     margin-top: 20px;
     margin-bottom: 15px;
+    position: relative;
+}
+
+.risk-table-toolbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    flex-wrap: wrap;
+    margin: -8px 0 10px 0;
+}
+
+.risk-table-toggle,
+.risk-table-sort {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: #333;
+    font-size: 14px;
+}
+
+.risk-table-sort select {
+    min-width: 190px;
+}
+
+.risk-table-view-meta {
+    color: #666;
+    font-size: 13px;
+    margin-left: auto;
 }
 
 .add-risk-container {
@@ -90,6 +119,37 @@
 .risks-table th:nth-child(13), /* Handlinger */
 .risks-table td:nth-child(13) {
     width: 80px;
+}
+
+.risks-table th:nth-child(1),
+.risks-table td:nth-child(1) {
+    position: sticky;
+    left: 0;
+    z-index: 4;
+    background: inherit;
+}
+
+.risks-table th:nth-child(11),
+.risks-table td:nth-child(11) {
+    position: sticky;
+    right: 80px;
+    z-index: 4;
+}
+
+.risks-table th:nth-child(13),
+.risks-table td:nth-child(13) {
+    position: sticky;
+    right: 0;
+    z-index: 4;
+    background: inherit;
+    box-shadow: -1px 0 0 #e8e8e8;
+}
+
+.risks-table thead th:nth-child(1),
+.risks-table thead th:nth-child(11),
+.risks-table thead th:nth-child(13) {
+    z-index: 12;
+    background: #f8f8f8;
 }
 
 /* Handlinger grid 2x2 */
@@ -300,6 +360,10 @@
     vertical-align: middle;
 }
 
+.risks-table td.calculated-field {
+    background-color: #fafafa;
+}
+
 /* KIT-tabell */
 .kit-section {
     margin-top: 50px;
@@ -398,6 +462,15 @@
 
     .risks-table textarea {
         min-width: 80px;
+    }
+
+    .risk-table-toolbar {
+        align-items: stretch;
+        flex-direction: column;
+    }
+
+    .risk-table-view-meta {
+        margin-left: 0;
     }
 
     /* Stack metadata i én kolonne på mobil */

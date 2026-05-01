@@ -531,7 +531,24 @@ const translations = {
         medium: 'Middels',
         high: 'Høy',
         critical: 'Kritisk',
-        newAnalysisName: 'Ny ROS-analyse'
+        newAnalysisName: 'Ny ROS-analyse',
+        riskBankSearchLabel: 'Søk i risikobank',
+        riskBankSearchPlaceholder: 'Søk i risikoelement, sårbarhet eller tiltak',
+        riskBankLevelFilter: 'Risikonivå',
+        allRiskLevels: 'Alle nivåer',
+        searchAllBanks: 'Søk i alle banker',
+        riskBankResultCount: '{count} risikoer vises',
+        useRisk: 'Bruk denne risikoen',
+        replaceRiskFromBankConfirm: 'Denne risikoen har allerede innhold. Vil du erstatte alle feltene?\n\nVelg Avbryt for å bare fylle tomme felter.',
+        fillFromBank: 'Fyll fra risikobank',
+        showAboveAcceptanceOnly: 'Vis kun risikoer over akseptansenivå',
+        sortRisksBy: 'Sorter',
+        sortOriginal: 'Opprinnelig rekkefølge',
+        sortRiskDesc: 'Høyeste risiko først',
+        sortRiskAsc: 'Laveste risiko først',
+        riskTableViewMeta: 'Viser {visible} av {total}',
+        noRisksMatchCurrentView: 'Ingen risikoer matcher gjeldende visning.',
+        analysisLoadError: 'Kunne ikke laste analysen: {message}'
     },
     en: {
         appSubtitle: 'Risk and vulnerability analysis',
@@ -777,7 +794,24 @@ const translations = {
         medium: 'Medium',
         high: 'High',
         critical: 'Critical',
-        newAnalysisName: 'New ROS analysis'
+        newAnalysisName: 'New ROS analysis',
+        riskBankSearchLabel: 'Search risk bank',
+        riskBankSearchPlaceholder: 'Search risk element, vulnerability, or measures',
+        riskBankLevelFilter: 'Risk level',
+        allRiskLevels: 'All levels',
+        searchAllBanks: 'Search all banks',
+        riskBankResultCount: '{count} risks shown',
+        useRisk: 'Use this risk',
+        replaceRiskFromBankConfirm: 'This risk already has content. Do you want to replace all fields?\n\nChoose Cancel to fill only empty fields.',
+        fillFromBank: 'Fill from risk bank',
+        showAboveAcceptanceOnly: 'Show only risks above acceptance level',
+        sortRisksBy: 'Sort',
+        sortOriginal: 'Original order',
+        sortRiskDesc: 'Highest risk first',
+        sortRiskAsc: 'Lowest risk first',
+        riskTableViewMeta: 'Showing {visible} of {total}',
+        noRisksMatchCurrentView: 'No risks match the current view.',
+        analysisLoadError: 'Could not load the analysis: {message}'
     }
 };
 

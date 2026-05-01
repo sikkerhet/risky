@@ -1,6 +1,9 @@
 // Shared utilities for the ROS analysis tool
 
 const STORAGE_KEY = 'ros_analyses';
+const PENDING_NEW_ANALYSIS_KEY = 'ros_pending_new_analysis';
+const ANALYSIS_HANDOFF_KEY = 'ros_analysis_handoff';
+const ANALYSIS_HANDOFF_HASH_KEY = 'handoff';
 
 function generateUUID() {
     return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(char) {
@@ -91,6 +94,127 @@ function normalizeAnalysis(rawAnalysis = {}) {
     };
 }
 
+function createBlankAnalysis(id = generateUUID()) {
+    const now = new Date().toISOString();
+    return normalizeAnalysis({
+        id,
+        name: t('newAnalysisName'),
+        createdDate: now.split('T')[0],
+        lastModified: now,
+        metadata: {
+            date: now.split('T')[0],
+            service: '',
+            performedBy: '',
+            participants: '',
+            serviceOwner: '',
+            description: ''
+        },
+        risks: []
+    });
+}
+
+function setPendingNewAnalysis(analysis) {
+    sessionStorage.setItem(PENDING_NEW_ANALYSIS_KEY, JSON.stringify(serializeAnalysis(analysis)));
+}
+
+function consumePendingNewAnalysis(id) {
+    const stored = sessionStorage.getItem(PENDING_NEW_ANALYSIS_KEY);
+    if (!stored) return null;
+
+    try {
+        const pending = normalizeAnalysis(JSON.parse(stored));
+        if (pending.id !== id) {
+            return null;
+        }
+
+        sessionStorage.removeItem(PENDING_NEW_ANALYSIS_KEY);
+        return pending;
+    } catch (error) {
+        sessionStorage.removeItem(PENDING_NEW_ANALYSIS_KEY);
+        return null;
+    }
+}
+
+function setAnalysisHandoff(analysis) {
+    try {
+        window.name = JSON.stringify({
+            type: ANALYSIS_HANDOFF_KEY,
+            analysis: serializeAnalysis(analysis)
+        });
+    } catch (error) {
+        // Navigation still works when localStorage is shared; handoff is only a file:// fallback.
+    }
+}
+
+function createAnalysisHandoffFragment(analysis) {
+    const payload = {
+        type: ANALYSIS_HANDOFF_KEY,
+        analysis: serializeAnalysis(analysis)
+    };
+    const encoded = btoa(unescape(encodeURIComponent(JSON.stringify(payload))));
+    return `${ANALYSIS_HANDOFF_HASH_KEY}=${encodeURIComponent(encoded)}`;
+}
+
+function readAnalysisHandoffPayload(rawPayload) {
+    if (!rawPayload) return null;
+
+    const handoff = JSON.parse(decodeURIComponent(escape(atob(rawPayload))));
+    if (handoff.type !== ANALYSIS_HANDOFF_KEY || !handoff.analysis) {
+        return null;
+    }
+
+    return normalizeAnalysis(handoff.analysis);
+}
+
+function consumeAnalysisHandoffFromHash(id) {
+    if (!window.location.hash) return null;
+
+    const hashParams = new URLSearchParams(window.location.hash.slice(1));
+    const rawPayload = hashParams.get(ANALYSIS_HANDOFF_HASH_KEY);
+    if (!rawPayload) return null;
+
+    try {
+        const analysis = readAnalysisHandoffPayload(rawPayload);
+        if (!analysis || analysis.id !== id) {
+            return null;
+        }
+
+        hashParams.delete(ANALYSIS_HANDOFF_HASH_KEY);
+        try {
+            const query = window.location.search || '';
+            const hash = hashParams.toString();
+            const cleanUrl = `${window.location.pathname}${query}${hash ? `#${hash}` : ''}`;
+            window.history.replaceState({}, '', cleanUrl);
+        } catch (cleanupError) {
+            // URL cleanup is non-critical, especially for file://.
+        }
+        return analysis;
+    } catch (error) {
+        return null;
+    }
+}
+
+function consumeAnalysisHandoff(id) {
+    if (!window.name) return null;
+
+    try {
+        const handoff = JSON.parse(window.name);
+        if (handoff.type !== ANALYSIS_HANDOFF_KEY || !handoff.analysis) {
+            return null;
+        }
+
+        const analysis = normalizeAnalysis(handoff.analysis);
+        if (analysis.id !== id) {
+            return null;
+        }
+
+        window.name = '';
+        return analysis;
+    } catch (error) {
+        return null;
+    }
+}
+
 function serializeAnalysis(analysis) {
     const normalized = normalizeAnalysis(analysis);
     return {
@@ -120,6 +244,10 @@ async function loadJsonWithFallback(url, embeddedData = null) {
 
 async function getExampleAnalysisData() {
     const embeddedExample = window.EMBEDDED_EXAMPLE_ANALYSIS || null;
+    if (window.location.protocol === 'file:' && embeddedExample) {
+        return normalizeAnalysis(JSON.parse(JSON.stringify(embeddedExample)));
+    }
+
     const analysis = await loadJsonWithFallback('data/eksempel-analyse.json', embeddedExample);
     return normalizeAnalysis(analysis);
 }
@@ -170,6 +298,14 @@ function saveAnalyses(analyses) {
 function getAnalysisById(id) {
     const analyses = getAnalyses();
     return analyses.find((analysis) => analysis.id === id);
+}
+
+function upsertAnalysis(analysis) {
+    const normalized = normalizeAnalysis(analysis);
+    const analyses = getAnalyses().filter((item) => item.id !== normalized.id);
+    analyses.push(normalized);
+    saveAnalyses(analyses);
+    return normalized;
 }
 
 function updateAnalysis(id, updates) {
