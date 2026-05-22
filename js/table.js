@@ -2,8 +2,88 @@
 
 const riskTableView = {
     showAboveAcceptanceOnly: false,
-    sort: 'number'
+    sort: 'number',
+    collapsedGroups: new Set()
 };
+
+const RISK_GROUP_DATALIST_ID = 'riskGroupOptions';
+const UNGROUPED_RISK_GROUP_KEY = '__ungrouped__';
+
+function getRiskGroupOptions() {
+    if (!currentAnalysis || !Array.isArray(currentAnalysis.risks)) return [];
+
+    return [...new Set(currentAnalysis.risks
+        .map((risk) => (risk.riskGroup || '').trim())
+        .filter(Boolean))]
+        .sort((a, b) => a.localeCompare(b, getCurrentLanguage() === 'en' ? 'en' : 'no'));
+}
+
+function renderRiskGroupDatalist() {
+    let datalist = document.getElementById(RISK_GROUP_DATALIST_ID);
+
+    if (!datalist) {
+        datalist = document.createElement('datalist');
+        datalist.id = RISK_GROUP_DATALIST_ID;
+        document.body.appendChild(datalist);
+    }
+
+    datalist.textContent = '';
+    getRiskGroupOptions().forEach((group) => {
+        const option = document.createElement('option');
+        option.value = group;
+        datalist.appendChild(option);
+    });
+}
+
+function getRiskGroupKey(risk) {
+    const group = (risk.riskGroup || '').trim();
+    return group || UNGROUPED_RISK_GROUP_KEY;
+}
+
+function getRiskGroupLabelFromKey(groupKey) {
+    return groupKey === UNGROUPED_RISK_GROUP_KEY ? t('riskGroupUngrouped') : groupKey;
+}
+
+function compareRiskGroups(a, b) {
+    const aKey = getRiskGroupKey(a);
+    const bKey = getRiskGroupKey(b);
+
+    if (aKey === UNGROUPED_RISK_GROUP_KEY && bKey !== UNGROUPED_RISK_GROUP_KEY) return 1;
+    if (bKey === UNGROUPED_RISK_GROUP_KEY && aKey !== UNGROUPED_RISK_GROUP_KEY) return -1;
+
+    return getRiskGroupLabelFromKey(aKey).localeCompare(
+        getRiskGroupLabelFromKey(bKey),
+        getCurrentLanguage() === 'en' ? 'en' : 'no'
+    );
+}
+
+function getRisksInCurrentSortOrder(risks = currentAnalysis?.risks || []) {
+    const sortedRisks = [...risks];
+
+    if (riskTableView.sort === 'group') {
+        sortedRisks.sort((a, b) =>
+            compareRiskGroups(a, b) ||
+            (b.riskLevel || 0) - (a.riskLevel || 0) ||
+            (a.number || 0) - (b.number || 0)
+        );
+    } else if (riskTableView.sort === 'risk-desc') {
+        sortedRisks.sort((a, b) => (b.riskLevel || 0) - (a.riskLevel || 0) || (a.number || 0) - (b.number || 0));
+    } else if (riskTableView.sort === 'risk-asc') {
+        sortedRisks.sort((a, b) => (a.riskLevel || 0) - (b.riskLevel || 0) || (a.number || 0) - (b.number || 0));
+    }
+
+    return sortedRisks;
+}
+
+function getAnalysisInCurrentSortOrder(analysis = currentAnalysis) {
+    if (!analysis) return analysis;
+
+    return {
+        ...analysis,
+        metadata: { ...analysis.metadata },
+        risks: getRisksInCurrentSortOrder(analysis.risks || [])
+    };
+}
 
 function createIconButton(iconMarkup, label, className = 'btn-icon') {
     const button = document.createElement('button');
@@ -28,18 +108,14 @@ function renderRisksTable() {
         visibleRisks = visibleRisks.filter((risk) => (risk.riskLevel || 0) > acceptanceLevel);
     }
 
-    if (riskTableView.sort === 'risk-desc') {
-        visibleRisks.sort((a, b) => (b.riskLevel || 0) - (a.riskLevel || 0) || (a.number || 0) - (b.number || 0));
-    } else if (riskTableView.sort === 'risk-asc') {
-        visibleRisks.sort((a, b) => (a.riskLevel || 0) - (b.riskLevel || 0) || (a.number || 0) - (b.number || 0));
-    }
+    visibleRisks = getRisksInCurrentSortOrder(visibleRisks);
 
     updateRiskTableViewMeta(visibleRisks.length, currentAnalysis.risks.length);
 
     if (currentAnalysis.risks.length === 0 || visibleRisks.length === 0) {
         const emptyRow = document.createElement('tr');
         const emptyCell = document.createElement('td');
-        emptyCell.colSpan = 13;
+        emptyCell.colSpan = 14;
         emptyCell.textContent = currentAnalysis.risks.length === 0
             ? `${t('riskSectionTitle')}: 0`
             : t('noRisksMatchCurrentView');
@@ -50,6 +126,11 @@ function renderRisksTable() {
         return;
     }
 
+    if (riskTableView.sort === 'group') {
+        renderGroupedRisksTable(tbody, visibleRisks);
+        return;
+    }
+
     const canReorder = !riskTableView.showAboveAcceptanceOnly && riskTableView.sort === 'number';
 
     visibleRisks.forEach((risk) => {
@@ -57,6 +138,75 @@ function renderRisksTable() {
         const row = createRiskRow(risk, actualIndex, canReorder);
         tbody.appendChild(row);
     });
+}
+
+function renderGroupedRisksTable(tbody, visibleRisks) {
+    const groups = new Map();
+
+    visibleRisks.forEach((risk) => {
+        const groupKey = getRiskGroupKey(risk);
+        if (!groups.has(groupKey)) {
+            groups.set(groupKey, []);
+        }
+        groups.get(groupKey).push(risk);
+    });
+
+    groups.forEach((risks, groupKey) => {
+        const isCollapsed = riskTableView.collapsedGroups.has(groupKey);
+        tbody.appendChild(createRiskGroupHeaderRow(groupKey, risks, isCollapsed));
+
+        if (isCollapsed) return;
+
+        risks.forEach((risk) => {
+            const actualIndex = currentAnalysis.risks.findIndex((item) => item.id === risk.id);
+            const row = createRiskRow(risk, actualIndex, false);
+            tbody.appendChild(row);
+        });
+    });
+}
+
+function createRiskGroupHeaderRow(groupKey, risks, isCollapsed) {
+    const row = document.createElement('tr');
+    row.className = 'risk-group-row';
+    row.dataset.groupKey = groupKey;
+
+    const cell = document.createElement('td');
+    cell.colSpan = 14;
+
+    const button = document.createElement('button');
+    button.type = 'button';
+    button.className = 'risk-group-toggle';
+    button.setAttribute('aria-expanded', String(!isCollapsed));
+    button.addEventListener('click', () => toggleRiskGroup(groupKey));
+
+    const icon = document.createElement('span');
+    icon.className = 'risk-group-toggle-icon';
+    icon.textContent = isCollapsed ? '>' : 'v';
+    button.appendChild(icon);
+
+    const label = document.createElement('span');
+    label.className = 'risk-group-toggle-label';
+    label.textContent = getRiskGroupLabelFromKey(groupKey);
+    button.appendChild(label);
+
+    const count = document.createElement('span');
+    count.className = 'risk-group-toggle-count';
+    count.textContent = formatTranslation('riskGroupCount', { count: risks.length });
+    button.appendChild(count);
+
+    cell.appendChild(button);
+    row.appendChild(cell);
+    return row;
+}
+
+function toggleRiskGroup(groupKey) {
+    if (riskTableView.collapsedGroups.has(groupKey)) {
+        riskTableView.collapsedGroups.delete(groupKey);
+    } else {
+        riskTableView.collapsedGroups.add(groupKey);
+    }
+
+    renderRisksTable();
 }
 
 function updateRiskTableViewMeta(visibleCount, totalCount) {
@@ -77,6 +227,17 @@ function createRiskRow(risk, index, canReorder = true) {
     const nrCell = document.createElement('td');
     nrCell.textContent = risk.number;
     row.appendChild(nrCell);
+
+    // Gruppe
+    const groupCell = document.createElement('td');
+    const groupInput = document.createElement('input');
+    groupInput.type = 'text';
+    groupInput.value = risk.riskGroup || '';
+    groupInput.placeholder = t('riskGroupPlaceholder');
+    groupInput.setAttribute('list', RISK_GROUP_DATALIST_ID);
+    groupInput.addEventListener('blur', () => updateRisk(risk.id, 'riskGroup', groupInput.value.trim()));
+    groupCell.appendChild(groupInput);
+    row.appendChild(groupCell);
 
     // Risikoelement
     const elementCell = document.createElement('td');
@@ -242,6 +403,12 @@ function updateRisk(riskId, field, value) {
     if (riskIndex >= 0) {
         currentAnalysis.risks[riskIndex][field] = value;
         updateAnalysis(currentAnalysisId, { risks: currentAnalysis.risks });
+        if (field === 'riskGroup') {
+            renderRiskGroupDatalist();
+            if (riskTableView.sort === 'group') {
+                renderRisksTable();
+            }
+        }
         showSavedIndicator();
     }
 }
@@ -361,6 +528,7 @@ function setupTextareaAutoResize() {
 // Kall setupTextareaAutoResize når tabellen rendres
 const originalRenderRisksTable = renderRisksTable;
 renderRisksTable = function() {
+    renderRiskGroupDatalist();
     originalRenderRisksTable();
     // Delay for å sikre at DOM er oppdatert
     setTimeout(setupTextareaAutoResize, 0);

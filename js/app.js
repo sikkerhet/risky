@@ -32,6 +32,7 @@ function normalizeRisk(rawRisk = {}, index = 0) {
     const risk = {
         id: rawRisk.id || generateUUID(),
         number: firstDefined(rawRisk.number, rawRisk.nr, index + 1) || 0,
+        riskGroup: firstDefined(rawRisk.riskGroup, rawRisk.group, rawRisk.gruppe, ''),
         riskElement: firstDefined(rawRisk.riskElement, rawRisk.risikoelement, ''),
         vulnerability: firstDefined(rawRisk.vulnerability, rawRisk.saarbarhet, ''),
         existingProtection: firstDefined(rawRisk.existingProtection, rawRisk.eksisterendeBeskyttelse, ''),

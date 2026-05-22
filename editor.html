@@ -193,6 +193,7 @@
                     <span data-i18n="sortRisksBy">Sorter</span>
                     <select id="riskSortSelect" class="form-control">
                         <option value="number" data-i18n="sortOriginal">Opprinnelig rekkefølge</option>
+                        <option value="group" data-i18n="sortGroup">Gruppe</option>
                         <option value="risk-desc" data-i18n="sortRiskDesc">Høyeste risiko først</option>
                         <option value="risk-asc" data-i18n="sortRiskAsc">Laveste risiko først</option>
                     </select>
@@ -205,6 +206,7 @@
                     <thead>
                         <tr>
                             <th data-i18n="riskNumber">Nr</th>
+                            <th class="sortable-table-header" data-i18n="riskGroup" data-i18n-title="sortByGroupHint">Gruppe</th>
                             <th data-i18n="riskElement">Risikoelement</th>
                             <th data-i18n="vulnerabilityWeakness">Sårbarhet/svakhet</th>
                             <th data-i18n="existingProtectionHeader">Eksisterende beskyttelse</th>
@@ -477,6 +479,14 @@
                 riskTableView.sort = document.getElementById('riskSortSelect').value;
                 renderRisksTable();
             });
+            const riskGroupHeader = document.querySelector('th[data-i18n="riskGroup"]');
+            if (riskGroupHeader) {
+                riskGroupHeader.addEventListener('click', () => {
+                    document.getElementById('riskSortSelect').value = 'group';
+                    riskTableView.sort = 'group';
+                    renderRisksTable();
+                });
+            }
             document.getElementById('importRisksBtn').addEventListener('click', openImportRisksModal);
             document.getElementById('exportJsonBtn').addEventListener('click', exportCurrentAnalysisJSON);
             document.getElementById('exportPdfBtn').addEventListener('click', exportToPDF);
@@ -838,6 +848,9 @@
         function formatRiskMarkdown(risk, index) {
             let md = `#### ${index}. ${risk.riskElement} (RN: ${risk.riskLevel})\n\n`;
             md += `- **${t('vulnerabilityWeakness')}:** ${risk.vulnerability || t('notSpecified')}\n`;
+            if (risk.riskGroup) {
+                md += `- **${t('riskGroup')}:** ${risk.riskGroup}\n`;
+            }
             md += `- **${t('consequence')}:** ${risk.consequence} | **${t('probability')}:** ${risk.probability}\n`;
             md += `- **KIT:** K=${risk.K}, I=${risk.I}, T=${risk.T}\n`;
             md += `- **${t('existingProtectionHeader')}:** ${risk.existingProtection || t('none')}\n`;
@@ -859,6 +872,7 @@
             const newRisk = normalizeRisk({
                 id: generateUUID(),
                 number: currentAnalysis.risks.length + 1,
+                riskGroup: '',
                 riskElement: '',
                 vulnerability: '',
                 existingProtection: '',
@@ -911,7 +925,10 @@
         }
 
         function exportCurrentAnalysisJSON() {
-            const dataStr = JSON.stringify(currentAnalysis, null, 2);
+            const analysisForExport = typeof getAnalysisInCurrentSortOrder === 'function'
+                ? getAnalysisInCurrentSortOrder(currentAnalysis)
+                : currentAnalysis;
+            const dataStr = JSON.stringify(analysisForExport, null, 2);
             const dataUri = 'data:application/json;charset=utf-8,'+ encodeURIComponent(dataStr);
             const exportName = `Risky_${currentAnalysis.metadata.service || 'analyse'}_${currentAnalysis.createdDate}.json`;
 

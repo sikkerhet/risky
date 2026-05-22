@@ -71,53 +71,58 @@
     text-align: center;
 }
 
-.risks-table th:nth-child(2), /* Risikoelement */
+.risks-table th:nth-child(2), /* Gruppe */
 .risks-table td:nth-child(2) {
-    width: 14%;
-}
-
-.risks-table th:nth-child(3), /* Sårbarhet */
-.risks-table td:nth-child(3) {
-    width: 12%;
-}
-
-.risks-table th:nth-child(4), /* Beskyttelse */
-.risks-table td:nth-child(4) {
     width: 10%;
 }
 
-.risks-table th:nth-child(5), /* Kontroll */
+.risks-table th:nth-child(3), /* Risikoelement */
+.risks-table td:nth-child(3) {
+    width: 14%;
+}
+
+.risks-table th:nth-child(4), /* Sårbarhet */
+.risks-table td:nth-child(4) {
+    width: 12%;
+}
+
+.risks-table th:nth-child(5), /* Beskyttelse */
 .risks-table td:nth-child(5) {
     width: 10%;
 }
 
-.risks-table th:nth-child(6), /* K */
-.risks-table th:nth-child(7), /* I */
-.risks-table th:nth-child(8), /* T */
-.risks-table th:nth-child(10), /* S */
-.risks-table td:nth-child(6),
+.risks-table th:nth-child(6), /* Kontroll */
+.risks-table td:nth-child(6) {
+    width: 10%;
+}
+
+.risks-table th:nth-child(7), /* K */
+.risks-table th:nth-child(8), /* I */
+.risks-table th:nth-child(9), /* T */
+.risks-table th:nth-child(11), /* S */
 .risks-table td:nth-child(7),
 .risks-table td:nth-child(8),
-.risks-table td:nth-child(10) {
+.risks-table td:nth-child(9),
+.risks-table td:nth-child(11) {
     width: 45px;
     text-align: center;
 }
 
-.risks-table th:nth-child(9), /* K* */
-.risks-table th:nth-child(11), /* RN* */
-.risks-table td:nth-child(9),
-.risks-table td:nth-child(11) {
+.risks-table th:nth-child(10), /* K* */
+.risks-table th:nth-child(12), /* RN* */
+.risks-table td:nth-child(10),
+.risks-table td:nth-child(12) {
     width: 50px;
     text-align: center;
 }
 
-.risks-table th:nth-child(12), /* Tiltak */
-.risks-table td:nth-child(12) {
+.risks-table th:nth-child(13), /* Tiltak */
+.risks-table td:nth-child(13) {
     width: 12%;
 }
 
-.risks-table th:nth-child(13), /* Handlinger */
-.risks-table td:nth-child(13) {
+.risks-table th:nth-child(14), /* Handlinger */
+.risks-table td:nth-child(14) {
     width: 80px;
 }
 
@@ -129,15 +134,15 @@
     background: inherit;
 }
 
-.risks-table th:nth-child(11),
-.risks-table td:nth-child(11) {
+.risks-table th:nth-child(12),
+.risks-table td:nth-child(12) {
     position: sticky;
     right: 80px;
     z-index: 4;
 }
 
-.risks-table th:nth-child(13),
-.risks-table td:nth-child(13) {
+.risks-table th:nth-child(14),
+.risks-table td:nth-child(14) {
     position: sticky;
     right: 0;
     z-index: 4;
@@ -146,8 +151,8 @@
 }
 
 .risks-table thead th:nth-child(1),
-.risks-table thead th:nth-child(11),
-.risks-table thead th:nth-child(13) {
+.risks-table thead th:nth-child(12),
+.risks-table thead th:nth-child(14) {
     z-index: 12;
     background: #f8f8f8;
 }
@@ -192,6 +197,14 @@
     border-right: none;
 }
 
+.risks-table th.sortable-table-header {
+    cursor: pointer;
+}
+
+.risks-table th.sortable-table-header:hover {
+    background: #eef4fa;
+}
+
 .risks-table td {
     padding: 14px 12px;
     border: none;
@@ -201,12 +214,12 @@
 }
 
 /* Vertikal sentrering for tallkolonner (K, I, T, K*, S, RN*) */
-.risks-table td:nth-child(6),
 .risks-table td:nth-child(7),
 .risks-table td:nth-child(8),
 .risks-table td:nth-child(9),
 .risks-table td:nth-child(10),
-.risks-table td:nth-child(11) {
+.risks-table td:nth-child(11),
+.risks-table td:nth-child(12) {
     vertical-align: middle;
 }
 
@@ -242,14 +255,60 @@
     box-shadow: inset 0 0 0 2px #f4b400;
 }
 
+.risks-table .risk-group-row {
+    background: #eef4fa !important;
+}
+
+.risks-table .risk-group-row td {
+    position: sticky;
+    left: 0;
+    z-index: 5;
+    padding: 8px 10px;
+    border-top: 1px solid #c9d8e6;
+    border-bottom: 1px solid #c9d8e6;
+    background: #eef4fa;
+}
+
+.risk-group-toggle {
+    width: 100%;
+    border: 0;
+    background: transparent;
+    color: #1f2933;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 4px 0;
+    font: inherit;
+    text-align: left;
+}
+
+.risk-group-toggle-icon {
+    width: 18px;
+    color: #2e5f8e;
+    font-size: 11px;
+}
+
+.risk-group-toggle-label {
+    font-weight: 700;
+}
+
+.risk-group-toggle-count {
+    margin-left: auto;
+    color: #52606d;
+    font-size: 13px;
+    font-weight: 500;
+}
+
 /* Tomme felt med italic placeholder-hint */
-.risks-table tbody tr:not(:hover) textarea:not(:focus):placeholder-shown {
+.risks-table tbody tr:not(:hover) textarea:not(:focus):placeholder-shown,
+.risks-table tbody tr:not(:hover) input:not(:focus):placeholder-shown {
     color: #aaa;
 }
 
-.risks-table textarea {
+.risks-table textarea,
+.risks-table input[list] {
     width: 100%;
-    min-width: 150px;
     padding: 6px 8px;
     border: 1px solid transparent;
     border-radius: 2px;
@@ -264,21 +323,32 @@
     min-height: 22px;
 }
 
+.risks-table textarea {
+    min-width: 150px;
+}
+
+.risks-table input[list] {
+    min-width: 110px;
+}
+
 /* Standard tilstand - ser ut som ren tekst */
-.risks-table textarea:not(:focus):not(:hover) {
+.risks-table textarea:not(:focus):not(:hover),
+.risks-table input[list]:not(:focus):not(:hover) {
     border-color: transparent;
     background-color: transparent;
     cursor: default;
     overflow: hidden;
 }
 
-.risks-table textarea:hover {
+.risks-table textarea:hover,
+.risks-table input[list]:hover {
     background-color: rgba(0, 0, 0, 0.02);
     border-color: #e0e0e0;
     cursor: text;
 }
 
-.risks-table textarea:focus {
+.risks-table textarea:focus,
+.risks-table input[list]:focus {
     outline: none;
     border-color: #2e5f8e;
     background-color: #fff;
@@ -289,13 +359,15 @@
 }
 
 /* Placeholder styling */
-.risks-table textarea::placeholder {
+.risks-table textarea::placeholder,
+.risks-table input[list]::placeholder {
     color: #aaa;
     font-style: italic;
     opacity: 1;
 }
 
-.risks-table textarea:focus::placeholder {
+.risks-table textarea:focus::placeholder,
+.risks-table input[list]:focus::placeholder {
     color: #bbb;
 }
 

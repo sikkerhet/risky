@@ -296,8 +296,13 @@ async function generatePDFContent(doc) {
         yPos += 10;
 
         // Risikotabell
-        const tableData = currentAnalysis.risks.map(r => [
+        const sortedRisks = typeof getRisksInCurrentSortOrder === 'function'
+            ? getRisksInCurrentSortOrder(currentAnalysis.risks)
+            : currentAnalysis.risks;
+
+        const tableData = sortedRisks.map(r => [
             r.number || 0,
+            safeText(r.riskGroup),
             safeText(r.riskElement),
             safeText(r.vulnerability),
             safeText(r.existingProtection),
@@ -315,6 +320,7 @@ async function generatePDFContent(doc) {
             startY: yPos,
             head: [[
                 t('riskNumber'),
+                t('riskGroup'),
                 t('riskElement'),
                 t('vulnerabilityWeakness'),
                 t('existingProtectionHeader'),
@@ -333,16 +339,16 @@ async function generatePDFContent(doc) {
             rowPageBreak: 'avoid', // Unngå å dele risikoer over sideskift
             columnStyles: {
                 0: { cellWidth: 10 },
-                5: { cellWidth: 8 },
                 6: { cellWidth: 8 },
                 7: { cellWidth: 8 },
                 8: { cellWidth: 8 },
                 9: { cellWidth: 8 },
-                10: { cellWidth: 10, fontStyle: 'bold' }
+                10: { cellWidth: 8 },
+                11: { cellWidth: 10, fontStyle: 'bold' }
             },
             didParseCell: function(data) {
                 // Fargelegg risikonivå
-                if (data.column.index === 10 && data.section === 'body') {
+                if (data.column.index === 11 && data.section === 'body') {
                     const rn = parseInt(data.cell.text[0]) || 0;
                     if (rn >= 19) {
                         data.cell.styles.fillColor = [220, 53, 69];
@@ -450,7 +456,10 @@ async function generatePDFContent(doc) {
 
     // Legg til kommentarer - Filtrer basert på synlige typer
     try {
-        const risksWithComments = currentAnalysis.risks.filter(r => r.comments && r.comments.length > 0);
+        const sortedRisks = typeof getRisksInCurrentSortOrder === 'function'
+            ? getRisksInCurrentSortOrder(currentAnalysis.risks)
+            : currentAnalysis.risks;
+        const risksWithComments = sortedRisks.filter(r => r.comments && r.comments.length > 0);
 
         if (risksWithComments.length > 0) {
             // Sjekk om det finnes noen synlige kommentarer

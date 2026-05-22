@@ -57,6 +57,9 @@ function buildExcelWorkbook() {
 
     const wb = XLSX.utils.book_new();
     const risks = currentAnalysis.risks || [];
+    const sortedRisks = typeof getRisksInCurrentSortOrder === 'function'
+        ? getRisksInCurrentSortOrder(risks)
+        : risks;
     const total = risks.length;
 
     let green = 0, yellow = 0, orange = 0, red = 0;
@@ -245,6 +248,7 @@ function buildExcelWorkbook() {
     // Ark 4: Risikoer
     const risikoerHeaders = [
         t('riskNumber'),
+        t('riskGroup'),
         t('riskElement'),
         t('vulnerabilityWeakness'),
         t('existingProtectionHeader'),
@@ -259,8 +263,9 @@ function buildExcelWorkbook() {
         t('proposedMeasures')
     ];
 
-    const risikoerData = currentAnalysis.risks.map(r => [
+    const risikoerData = sortedRisks.map(r => [
         r.number || 0,
+        safeText(r.riskGroup),
         safeText(r.riskElement),
         safeText(r.vulnerability),
         safeText(r.existingProtection),
@@ -280,25 +285,26 @@ function buildExcelWorkbook() {
     // Column widths
     if (!wsRisikoer['!cols']) wsRisikoer['!cols'] = [];
     wsRisikoer['!cols'][0] = { wch: 5 };   // Nr
-    wsRisikoer['!cols'][1] = { wch: 40 };  // Risikoelement
-    wsRisikoer['!cols'][2] = { wch: 40 };  // Sårbarhet
-    wsRisikoer['!cols'][3] = { wch: 30 };  // Beskyttelse
-    wsRisikoer['!cols'][4] = { wch: 30 };  // Kontroll
-    wsRisikoer['!cols'][5] = { wch: 5 };   // K
-    wsRisikoer['!cols'][6] = { wch: 5 };   // I
-    wsRisikoer['!cols'][7] = { wch: 5 };   // T
-    wsRisikoer['!cols'][8] = { wch: 10 };  // Konsekvens
-    wsRisikoer['!cols'][9] = { wch: 12 };  // Sannsynlighet
-    wsRisikoer['!cols'][10] = { wch: 10 }; // Risikonivå
-    wsRisikoer['!cols'][11] = { wch: 14 }; // Kategori
-    wsRisikoer['!cols'][12] = { wch: 40 }; // Tiltak
+    wsRisikoer['!cols'][1] = { wch: 24 };  // Gruppe
+    wsRisikoer['!cols'][2] = { wch: 40 };  // Risikoelement
+    wsRisikoer['!cols'][3] = { wch: 40 };  // Sårbarhet
+    wsRisikoer['!cols'][4] = { wch: 30 };  // Beskyttelse
+    wsRisikoer['!cols'][5] = { wch: 30 };  // Kontroll
+    wsRisikoer['!cols'][6] = { wch: 5 };   // K
+    wsRisikoer['!cols'][7] = { wch: 5 };   // I
+    wsRisikoer['!cols'][8] = { wch: 5 };   // T
+    wsRisikoer['!cols'][9] = { wch: 10 };  // Konsekvens
+    wsRisikoer['!cols'][10] = { wch: 12 }; // Sannsynlighet
+    wsRisikoer['!cols'][11] = { wch: 10 }; // Risikonivå
+    wsRisikoer['!cols'][12] = { wch: 14 }; // Kategori
+    wsRisikoer['!cols'][13] = { wch: 40 }; // Tiltak
 
     // Freeze first row (header)
     wsRisikoer['!freeze'] = { xSplit: 0, ySplit: 1 };
     wsRisikoer['!autofilter'] = { ref: wsRisikoer['!ref'] };
 
     // Style header row - bold with blue background
-    const headerCells = ['A1', 'B1', 'C1', 'D1', 'E1', 'F1', 'G1', 'H1', 'I1', 'J1', 'K1', 'L1', 'M1'];
+    const headerCells = ['A1', 'B1', 'C1', 'D1', 'E1', 'F1', 'G1', 'H1', 'I1', 'J1', 'K1', 'L1', 'M1', 'N1'];
     headerCells.forEach(cell => {
         if (wsRisikoer[cell]) {
             wsRisikoer[cell].s = {
@@ -310,7 +316,7 @@ function buildExcelWorkbook() {
     // Improve readability for text-heavy columns
     const risikoRange = XLSX.utils.decode_range(wsRisikoer['!ref']);
     for (let R = 1; R <= risikoRange.e.r; ++R) {
-        ['B', 'C', 'D', 'E', 'M'].forEach((column) => {
+        ['B', 'C', 'D', 'E', 'F', 'N'].forEach((column) => {
             const cell = wsRisikoer[`${column}${R + 1}`];
             if (cell) {
                 cell.s = {
@@ -320,7 +326,7 @@ function buildExcelWorkbook() {
             }
         });
 
-        ['A', 'F', 'G', 'H', 'I', 'J', 'K', 'L'].forEach((column) => {
+        ['A', 'G', 'H', 'I', 'J', 'K', 'L', 'M'].forEach((column) => {
             const cell = wsRisikoer[`${column}${R + 1}`];
             if (cell) {
                 cell.s = {
@@ -331,10 +337,10 @@ function buildExcelWorkbook() {
         });
     }
 
-    // Apply conditional formatting to risk level column (K column)
+    // Apply conditional formatting to risk level column (L column)
     const range = XLSX.utils.decode_range(wsRisikoer['!ref']);
     for (let R = range.s.r + 1; R <= range.e.r; ++R) {
-        const cellAddress = XLSX.utils.encode_cell({ r: R, c: 10 }); // Column K (index 10)
+        const cellAddress = XLSX.utils.encode_cell({ r: R, c: 11 }); // Column L (index 11)
         const cell = wsRisikoer[cellAddress];
 
         if (cell && cell.v !== undefined) {
@@ -539,7 +545,7 @@ function buildExcelWorkbook() {
     }
 
     // Ark 8: Tiltak og kommentarer som tabell
-    const risksWithComments = currentAnalysis.risks.filter(r => r.comments && r.comments.length > 0);
+    const risksWithComments = sortedRisks.filter(r => r.comments && r.comments.length > 0);
 
     if (risksWithComments.length > 0) {
         try {

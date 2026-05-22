@@ -384,6 +384,8 @@ const translations = {
         noAnalysisIdFound: 'Ingen analyse-ID funnet',
         analysisNotFound: 'Analyse ikke funnet',
         riskNumber: 'Nr',
+        riskGroup: 'Gruppe',
+        riskGroupPlaceholder: 'F.eks. menneskelige faktorer',
         riskElement: 'Risikoelement',
         vulnerabilityWeakness: 'Sårbarhet/svakhet',
         existingProtectionHeader: 'Eksisterende beskyttelse',
@@ -544,10 +546,14 @@ const translations = {
         showAboveAcceptanceOnly: 'Vis kun risikoer over akseptansenivå',
         sortRisksBy: 'Sorter',
         sortOriginal: 'Opprinnelig rekkefølge',
+        sortGroup: 'Gruppe',
+        sortByGroupHint: 'Sorter og grupper etter gruppe',
         sortRiskDesc: 'Høyeste risiko først',
         sortRiskAsc: 'Laveste risiko først',
         riskTableViewMeta: 'Viser {visible} av {total}',
         noRisksMatchCurrentView: 'Ingen risikoer matcher gjeldende visning.',
+        riskGroupUngrouped: 'Uten gruppe',
+        riskGroupCount: '{count} risikoer',
         analysisLoadError: 'Kunne ikke laste analysen: {message}'
     },
     en: {
@@ -647,6 +653,8 @@ const translations = {
         noAnalysisIdFound: 'No analysis ID found',
         analysisNotFound: 'Analysis not found',
         riskNumber: 'No.',
+        riskGroup: 'Group',
+        riskGroupPlaceholder: 'E.g. human factors',
         riskElement: 'Risk element',
         vulnerabilityWeakness: 'Vulnerability/weakness',
         existingProtectionHeader: 'Existing protection',
@@ -807,10 +815,14 @@ const translations = {
         showAboveAcceptanceOnly: 'Show only risks above acceptance level',
         sortRisksBy: 'Sort',
         sortOriginal: 'Original order',
+        sortGroup: 'Group',
+        sortByGroupHint: 'Sort and group by group',
         sortRiskDesc: 'Highest risk first',
         sortRiskAsc: 'Lowest risk first',
         riskTableViewMeta: 'Showing {visible} of {total}',
         noRisksMatchCurrentView: 'No risks match the current view.',
+        riskGroupUngrouped: 'Ungrouped',
+        riskGroupCount: '{count} risks',
         analysisLoadError: 'Could not load the analysis: {message}'
     }
 };

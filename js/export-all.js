@@ -80,7 +80,10 @@ function getJSONFilename() {
 
 // Generer JSON blob
 function generateJSONBlob() {
-    const jsonString = JSON.stringify(currentAnalysis, null, 2);
+    const analysisForExport = typeof getAnalysisInCurrentSortOrder === 'function'
+        ? getAnalysisInCurrentSortOrder(currentAnalysis)
+        : currentAnalysis;
+    const jsonString = JSON.stringify(analysisForExport, null, 2);
     return new Blob([jsonString], { type: 'application/json' });
 }
 
@@ -144,9 +147,14 @@ async function generatePDFBlob() {
 
     yPos += 5;
 
+    const sortedRisks = typeof getRisksInCurrentSortOrder === 'function'
+        ? getRisksInCurrentSortOrder(currentAnalysis.risks)
+        : currentAnalysis.risks;
+
     // Risikotabell
-    const tableData = currentAnalysis.risks.map((risk, index) => [
-        (index + 1).toString(),
+    const tableData = sortedRisks.map((risk) => [
+        safeText(risk.number),
+        safeText(risk.riskGroup),
         safeText(risk.riskElement),
         safeText(risk.vulnerability),
         safeText(risk.existingProtection),
@@ -162,23 +170,24 @@ async function generatePDFBlob() {
 
     doc.autoTable({
         startY: yPos,
-        head: [[t('riskNumber'), t('riskElement'), t('vulnerabilityWeakness'), t('existingProtectionHeader'), t('existingControlHeader'), 'K', 'I', 'T', t('pdfConsequenceShort'), t('pdfProbabilityShort'), t('pdfRiskLevelShort'), t('proposedMeasures')]],
+        head: [[t('riskNumber'), t('riskGroup'), t('riskElement'), t('vulnerabilityWeakness'), t('existingProtectionHeader'), t('existingControlHeader'), 'K', 'I', 'T', t('pdfConsequenceShort'), t('pdfProbabilityShort'), t('pdfRiskLevelShort'), t('proposedMeasures')]],
         body: tableData,
         styles: { fontSize: 8, cellPadding: 2 },
         headStyles: { fillColor: [46, 95, 142], textColor: 255 },
         columnStyles: {
             0: { cellWidth: 10 },
-            1: { cellWidth: 35 },
-            2: { cellWidth: 35 },
-            3: { cellWidth: 30 },
-            4: { cellWidth: 30 },
-            5: { cellWidth: 8 },
+            1: { cellWidth: 22 },
+            2: { cellWidth: 32 },
+            3: { cellWidth: 32 },
+            4: { cellWidth: 26 },
+            5: { cellWidth: 26 },
             6: { cellWidth: 8 },
             7: { cellWidth: 8 },
-            8: { cellWidth: 10 },
+            8: { cellWidth: 8 },
             9: { cellWidth: 10 },
             10: { cellWidth: 10 },
-            11: { cellWidth: 35 }
+            11: { cellWidth: 10 },
+            12: { cellWidth: 32 }
         },
         margin: { left: 10, right: 10 },
         rowPageBreak: 'avoid'
@@ -186,7 +195,7 @@ async function generatePDFBlob() {
 
     // Kommentarer (hvis de finnes)
     try {
-        const risksWithComments = currentAnalysis.risks.filter(r =>
+        const risksWithComments = sortedRisks.filter(r =>
             r.comments && r.comments.some(c => !c.resolved)
         );
 
@@ -200,7 +209,7 @@ async function generatePDFBlob() {
                 const visibleComments = risk.comments.filter(c => !c.resolved);
                 if (visibleComments.length === 0) return;
 
-                const riskIndex = currentAnalysis.risks.indexOf(risk) + 1;
+                const riskIndex = risk.number || (sortedRisks.indexOf(risk) + 1);
 
                 if (yPosition > 180) {
                     doc.addPage();
