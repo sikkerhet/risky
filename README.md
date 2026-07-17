@@ -24,7 +24,7 @@ Risky runs entirely in the browser. No backend, no installation, and no server-s
 Risky includes **463 predefined risks**:
 
 - **14 modular risk banks** with **364 risks**
-- **12 baseline templates** with **99 risks**
+- **15 baseline templates** with **123 risks**
 
 ### Modular Risk Banks
 
@@ -57,6 +57,9 @@ Risky includes **463 predefined risks**:
 10. **Integrations** (8)
 11. **DevOps and CI/CD** (8)
 12. **SaaS** (8)
+13. **Suppliers and Third Parties** (8)
+14. **OT and ICS** (8)
+15. **Critical Service** (8)
 
 ## What Changed In This Major Release
 

@@ -1,5 +1,23 @@
 const LANGUAGE_STORAGE_KEY = 'ros_language';
 
+const BASELINE_LOCALIZATIONS = {
+    'baseline-it': { name: 'IT Service', description: 'General IT service risks covering identity, vulnerabilities, logging, backups, and operational resilience.' },
+    'baseline-identitet-tilgang': { name: 'Identity and Access', description: 'Identity lifecycle, privileged access, service accounts, federation, strong authentication, and reviews.' },
+    'baseline-sky': { name: 'Cloud Service', description: 'Cloud configuration, identity, data protection, availability, monitoring, and provider dependency.' },
+    'baseline-kontinuitet-beredskap': { name: 'Continuity and Preparedness', description: 'Continuity planning, crisis management, recovery, exercises, and critical dependencies.' },
+    'baseline-persondata': { name: 'Personal Data', description: 'Privacy, data processing, access, retention, data subject rights, and breach handling.' },
+    'baseline-saas': { name: 'SaaS Service', description: 'SaaS governance, tenant isolation, access, integrations, provider controls, and exit.' },
+    'baseline-ai': { name: 'AI Service', description: 'AI and agentic workflows covering data, model use, tool calls, governance, and human oversight.' },
+    'baseline-integrasjoner': { name: 'Integrations and APIs', description: 'API security, data flows, authentication, availability, validation, and integration dependencies.' },
+    'baseline-devops-cicd': { name: 'DevOps and CI/CD', description: 'Source code, pipelines, secrets, dependencies, release controls, and deployment security.' },
+    'baseline-webapp': { name: 'Web Application and API', description: 'Common web application and API risks, including input validation, sessions, access, and monitoring.' },
+    'baseline-database': { name: 'Database', description: 'Database access, integrity, backup, encryption, availability, and sensitive data exposure.' },
+    'baseline-mobile': { name: 'Mobile Application', description: 'Mobile application storage, authentication, transport, APIs, devices, and release security.' },
+    'baseline-leverandor': { name: 'Suppliers and Third Parties', description: 'Vendor due diligence, contracts, access, subcontractors, incidents, monitoring, and exit.' },
+    'baseline-ot-ics': { name: 'OT and ICS', description: 'Industrial control systems, safety, availability, segmentation, remote access, and controlled change.' },
+    'baseline-kritisk-tjeneste': { name: 'Critical Service', description: 'Resilience, dependencies, capacity, incident response, minimum service, and recovery.' }
+};
+
 const NORWEGIAN_TO_ENGLISH_REPLACEMENTS = [
     ['konfidensialitet', 'confidentiality'],
     ['tilgjengelighet', 'availability'],
@@ -306,6 +324,8 @@ const translations = {
         delete: 'Slett',
         backToOverview: 'Tilbake til oversikt',
         saved: 'Lagret',
+        saving: 'Lagrer...',
+        saveFailed: 'Kunne ikke lagre',
         analysisDate: 'Dato (ÅÅÅÅ-MM-DD)',
         serviceSystem: 'Tjeneste/system',
         performedBy: 'Utført av',
@@ -374,6 +394,16 @@ const translations = {
         importAnalysisSortRisks: 'Antall risikoer',
         importAnalysisResultCount: 'Viser {visible} av {total} analyser',
         noAnalysesMatchSearch: 'Ingen analyser samsvarer med søket.',
+        importModeLegend: 'Hva skal skje med eksisterende risikoer?',
+        importModeReplaceWarning: 'Eksisterende risikoer fjernes og erstattes av risikoene fra kilden.',
+        importModeAppendWarning: 'Risikoene fra kilden legges til etter de eksisterende risikoene.',
+        importPreviewTitle: 'Forhåndsvisning',
+        importPreviewRisks: 'Risikoer i kilden',
+        importPreviewMore: '… og {count} til',
+        analysisSourceTemplate: 'Baseline-mal',
+        analysisSourceUser: 'Min analyse',
+        duplicate: 'Dupliser',
+        duplicateAnalysisName: '{name} – kopi',
         noCustomBanks: 'Ingen egendefinerte risikobanker lastet opp.',
         customBanks: 'Egendefinerte risikobanker:',
         noRiskBanksAvailable: 'Ingen risikobanker er tilgjengelige.',
@@ -587,6 +617,8 @@ const translations = {
         delete: 'Delete',
         backToOverview: 'Back to overview',
         saved: 'Saved',
+        saving: 'Saving...',
+        saveFailed: 'Could not save',
         analysisDate: 'Date (YYYY-MM-DD)',
         serviceSystem: 'Service/system',
         performedBy: 'Performed by',
@@ -655,6 +687,16 @@ const translations = {
         importAnalysisSortRisks: 'Number of risks',
         importAnalysisResultCount: 'Showing {visible} of {total} analyses',
         noAnalysesMatchSearch: 'No analyses match the search.',
+        importModeLegend: 'What should happen to existing risks?',
+        importModeReplaceWarning: 'Existing risks will be removed and replaced by the risks from the source.',
+        importModeAppendWarning: 'The risks from the source will be added after the existing risks.',
+        importPreviewTitle: 'Preview',
+        importPreviewRisks: 'Risks in source',
+        importPreviewMore: '… and {count} more',
+        analysisSourceTemplate: 'Baseline template',
+        analysisSourceUser: 'My analysis',
+        duplicate: 'Duplicate',
+        duplicateAnalysisName: '{name} – copy',
         noCustomBanks: 'No custom risk banks uploaded.',
         customBanks: 'Custom risk banks:',
         noRiskBanksAvailable: 'No risk banks are available.',
@@ -919,6 +961,21 @@ function getLocalizedValue(value) {
     }
 
     return value || '';
+}
+
+function getLocalizedBaselineText(analysis, field = 'name') {
+    if (!analysis) return '';
+    if (getCurrentLanguage() !== 'en') {
+        return field === 'description'
+            ? (analysis.metadata?.description || '')
+            : (analysis.name || '');
+    }
+
+    const localized = BASELINE_LOCALIZATIONS[analysis.id];
+    if (!localized) return field === 'description'
+        ? (analysis.metadata?.description || '')
+        : (analysis.name || '');
+    return localized[field] || (field === 'description' ? analysis.metadata?.description : analysis.name) || '';
 }
 
 function applyTranslations() {

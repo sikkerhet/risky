@@ -328,7 +328,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h2 id="riskBankModalTitle" data-i18n="selectFromBank">Velg fra risikobank</h2>
-                <button class="modal-close" onclick="closeRisikobankModal()">×</button>
+                <button class="modal-close" onclick="closeRisikobankModal()" data-i18n-aria-label="close" aria-label="Lukk">×</button>
             </div>
             <div class="modal-body">
                 <div class="bank-tools">
@@ -364,7 +364,7 @@
         <div class="comment-modal-content">
             <div class="comment-modal-header">
                 <h3 id="commentModalTitle" data-i18n="addCommentModalTitle">Legg til tiltak/kommentar</h3>
-                <button class="modal-close" onclick="closeCommentModal()">×</button>
+                <button class="modal-close" onclick="closeCommentModal()" data-i18n-aria-label="close" aria-label="Lukk">×</button>
             </div>
             <div class="comment-modal-body">
                 <div class="comment-form">
@@ -405,7 +405,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h3 id="importRisksModalTitle" data-i18n="importDialogTitle">Importer risikoer fra analyse</h3>
-                <button class="modal-close" onclick="closeImportRisksModal()">×</button>
+                <button class="modal-close" onclick="closeImportRisksModal()" data-i18n-aria-label="close" aria-label="Lukk">×</button>
             </div>
             <div class="modal-body">
                 <p data-i18n="selectAnalysisToImport">Velg en analyse å importere risikoer fra:</p>
@@ -438,16 +438,23 @@
                     <!-- Analyser vil bli lagt til her -->
                 </div>
 
-                <div class="import-options" style="margin-top: 20px;">
-                    <label>
-                        <input type="radio" name="importMode" value="replace" checked>
+                <fieldset class="import-options" style="margin-top: 20px;" aria-describedby="importModeHint">
+                    <legend data-i18n="importModeLegend">Hva skal skje med eksisterende risikoer?</legend>
+                    <label for="importModeReplace">
+                        <input id="importModeReplace" type="radio" name="importMode" value="replace" checked>
                         <strong data-i18n="replaceModeTitle">Erstatt</strong> - <span data-i18n="replaceModeDescription">Fjern eksisterende risikoer og importer nye</span>
                     </label>
-                    <label>
-                        <input type="radio" name="importMode" value="append">
+                    <label for="importModeAppend">
+                        <input id="importModeAppend" type="radio" name="importMode" value="append">
                         <strong data-i18n="appendModeTitle">Legg til</strong> - <span data-i18n="appendModeDescription">Behold eksisterende og legg til importerte risikoer</span>
                     </label>
-                </div>
+                    <p id="importModeHint" class="import-mode-hint" aria-live="polite"></p>
+                </fieldset>
+
+                <section id="analysisImportPreview" class="analysis-import-preview" aria-live="polite" hidden>
+                    <h4 data-i18n="importPreviewTitle">Forhåndsvisning</h4>
+                    <div id="analysisImportPreviewContent"></div>
+                </section>
 
                 <div style="margin-top: 20px; text-align: right; display: flex; gap: 10px; justify-content: flex-end;">
                     <button class="btn btn-secondary" onclick="closeImportRisksModal()" data-i18n="cancel">Avbryt</button>
@@ -512,6 +519,7 @@
                 });
             }
             document.getElementById('importRisksBtn').addEventListener('click', openImportRisksModal);
+            setupImportModalAccessibility();
             document.getElementById('exportJsonBtn').addEventListener('click', exportCurrentAnalysisJSON);
             document.getElementById('exportPdfBtn').addEventListener('click', exportToPDF);
             document.getElementById('exportExcelBtn').addEventListener('click', exportToExcel);
@@ -964,9 +972,57 @@
 
         // Import risks from another analysis
         let importControlsBound = false;
+        let importModalPreviousFocus = null;
+        let importModalAccessibilityBound = false;
+
+        function setupImportModalAccessibility() {
+            if (importModalAccessibilityBound) return;
+            const modal = document.getElementById('importRisksModal');
+            if (!modal) return;
+
+            modal.addEventListener('click', (event) => {
+                if (event.target === modal) closeImportRisksModal();
+            });
+            document.addEventListener('keydown', (event) => {
+                if (!modal.classList.contains('active')) return;
+                if (event.key === 'Escape') {
+                    event.preventDefault();
+                    closeImportRisksModal();
+                    return;
+                }
+                if (event.key !== 'Tab') return;
+                const focusable = [...modal.querySelectorAll('button, input, select, [tabindex]:not([tabindex="-1"])')]
+                    .filter(element => !element.disabled && element.offsetParent !== null);
+                if (focusable.length === 0) return;
+                const first = focusable[0];
+                const last = focusable[focusable.length - 1];
+                if (event.shiftKey && document.activeElement === first) {
+                    event.preventDefault();
+                    last.focus();
+                } else if (!event.shiftKey && document.activeElement === last) {
+                    event.preventDefault();
+                    first.focus();
+                }
+            });
+            importModalAccessibilityBound = true;
+        }
 
         function getImportSourceTitle(source) {
+            if (source.kind === 'baseline') {
+                return getLocalizedBaselineText(source.analysis, 'name') || t('untitled');
+            }
             return source.analysis.metadata.service || source.analysis.name || t('untitled');
+        }
+
+        function getImportSourceDescription(source) {
+            if (source.kind === 'baseline') {
+                return getLocalizedBaselineText(source.analysis, 'description');
+            }
+            return source.analysis.metadata.description || '';
+        }
+
+        function getImportSourceType(source) {
+            return source.kind === 'baseline' ? t('analysisSourceTemplate') : t('analysisSourceUser');
         }
 
         function getImportSourceSearchText(source) {
@@ -975,7 +1031,7 @@
                 getImportSourceTitle(source),
                 analysis.name,
                 analysis.metadata.service,
-                analysis.metadata.description,
+                getImportSourceDescription(source),
                 analysis.metadata.performedBy,
                 source.kind === 'baseline' ? t('predefinedTemplates') : t('myAnalyses')
             ].filter(Boolean).join(' ').toLowerCase();
@@ -1001,6 +1057,16 @@
             ['analysisImportSearch', 'analysisImportSourceFilter', 'analysisImportSort'].forEach((id) => {
                 const control = document.getElementById(id);
                 if (control) control.addEventListener(control.tagName === 'INPUT' ? 'input' : 'change', renderImportSources);
+            });
+            document.querySelectorAll('input[name="importMode"]').forEach((control) => {
+                control.addEventListener('change', updateImportModeHint);
+            });
+            const list = document.getElementById('analysisListForImport');
+            if (list) list.addEventListener('change', (event) => {
+                if (event.target.matches('input[name="selectedAnalysis"]')) {
+                    updateImportPreview();
+                    updateImportModeHint();
+                }
             });
             importControlsBound = true;
         }
@@ -1053,13 +1119,15 @@
                 listContainer.appendChild(heading);
 
                 groupSources.forEach((source) => {
-                    const label = createAnalysisImportItem(source.analysis, source.valueId, false);
+                    const label = createAnalysisImportItem(source, false);
                     listContainer.appendChild(label);
                 });
             });
 
             const selected = listContainer.querySelector('input[name="selectedAnalysis"]');
             if (selected) selected.checked = true;
+            updateImportPreview();
+            updateImportModeHint();
         }
 
         async function openImportRisksModal() {
@@ -1073,6 +1141,8 @@
             loading.style.color = '#666';
             loading.textContent = t('loading');
             listContainer.appendChild(loading);
+            importModalPreviousFocus = document.activeElement;
+            modal.classList.add('active');
             modal.style.display = 'flex';
 
             try {
@@ -1088,6 +1158,7 @@
                     userAnalyses: otherAnalyses
                 };
                 renderImportSources();
+                document.getElementById('analysisImportSearch')?.focus();
 
             } catch (error) {
                 console.error('Error loading baselines:', error);
@@ -1100,14 +1171,16 @@
             }
         }
 
-        function createAnalysisImportItem(analysis, valueId, isChecked) {
+        function createAnalysisImportItem(source, isChecked) {
+            const analysis = source.analysis;
+            const valueId = source.valueId;
             const label = document.createElement('label');
             label.className = 'analysis-import-item';
 
             const riskCount = analysis.risks ? analysis.risks.length : 0;
             const date = analysis.metadata.date || analysis.createdDate || '';
-            const serviceName = analysis.metadata.service || analysis.name || t('untitled');
-            const description = analysis.metadata.description || '';
+            const serviceName = getImportSourceTitle(source);
+            const description = getImportSourceDescription(source);
 
             const radio = document.createElement('input');
             radio.type = 'radio';
@@ -1126,6 +1199,11 @@
             count.textContent = `${riskCount} ${t('risks')}`;
             title.appendChild(count);
             content.appendChild(title);
+
+            const type = document.createElement('span');
+            type.className = 'analysis-import-type';
+            type.textContent = getImportSourceType(source);
+            content.appendChild(type);
 
             const dateLine = document.createElement('p');
             const dateLabel = document.createElement('strong');
@@ -1157,6 +1235,64 @@
             return label;
         }
 
+        function getSelectedImportSource() {
+            const selectedRadio = document.querySelector('input[name="selectedAnalysis"]:checked');
+            if (!selectedRadio || !window._importSources) return null;
+            const sourceId = selectedRadio.value;
+            if (sourceId.startsWith('baseline-')) {
+                const id = sourceId.replace('baseline-', '');
+                const analysis = window._importSources.baselines.find(item => item.id === id);
+                return analysis ? { analysis, kind: 'baseline', valueId: sourceId } : null;
+            }
+            const id = sourceId.replace('user-', '');
+            const analysis = window._importSources.userAnalyses.find(item => item.id === id);
+            return analysis ? { analysis, kind: 'user', valueId: sourceId } : null;
+        }
+
+        function updateImportPreview() {
+            const preview = document.getElementById('analysisImportPreview');
+            const content = document.getElementById('analysisImportPreviewContent');
+            const source = getSelectedImportSource();
+            if (!preview || !content) return;
+            content.textContent = '';
+            if (!source) {
+                preview.hidden = true;
+                return;
+            }
+
+            preview.hidden = false;
+            const title = document.createElement('strong');
+            title.textContent = getImportSourceTitle(source);
+            content.appendChild(title);
+
+            const description = getImportSourceDescription(source);
+            if (description) {
+                const text = document.createElement('p');
+                text.textContent = description;
+                content.appendChild(text);
+            }
+
+            const list = document.createElement('ul');
+            const risks = source.analysis.risks || [];
+            risks.slice(0, 5).forEach((risk) => {
+                const item = document.createElement('li');
+                item.textContent = risk.riskElement || t('untitled');
+                list.appendChild(item);
+            });
+            if (risks.length > 5) {
+                const more = document.createElement('li');
+                more.textContent = formatTranslation('importPreviewMore', { count: risks.length - 5 });
+                list.appendChild(more);
+            }
+            content.appendChild(list);
+        }
+
+        function updateImportModeHint() {
+            const hint = document.getElementById('importModeHint');
+            const mode = document.querySelector('input[name="importMode"]:checked')?.value || 'replace';
+            if (hint) hint.textContent = t(mode === 'replace' ? 'importModeReplaceWarning' : 'importModeAppendWarning');
+        }
+
         function confirmImportRisks() {
             const selectedRadio = document.querySelector('input[name="selectedAnalysis"]:checked');
             if (!selectedRadio) {
@@ -1186,7 +1322,12 @@
 
         function closeImportRisksModal() {
             const modal = document.getElementById('importRisksModal');
+            modal.classList.remove('active');
             modal.style.display = 'none';
+            if (importModalPreviousFocus && typeof importModalPreviousFocus.focus === 'function') {
+                importModalPreviousFocus.focus();
+            }
+            importModalPreviousFocus = null;
         }
 
         function importRisksFromAnalysis(sourceAnalysis) {
@@ -1687,6 +1828,9 @@
             renderCustomBanks();
             renderComments();
             renderStatistics();
+            if (document.getElementById('importRisksModal')?.classList.contains('active')) {
+                renderImportSources();
+            }
         };
     </script>
 </body>

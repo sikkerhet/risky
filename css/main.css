@@ -260,6 +260,14 @@ header h1 {
     display: none;
 }
 
+.saved-indicator.saving {
+    color: #6c757d;
+}
+
+.saved-indicator.error {
+    color: #dc3545;
+}
+
 .language-switcher {
     display: inline-flex;
     align-items: center;

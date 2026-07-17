@@ -148,6 +148,12 @@
             exportBtn.onclick = () => exportAnalysis(analysis.id);
             actions.appendChild(exportBtn);
 
+            const duplicateBtn = document.createElement('button');
+            duplicateBtn.className = 'btn btn-secondary';
+            duplicateBtn.textContent = t('duplicate');
+            duplicateBtn.onclick = () => duplicateAnalysis(analysis.id);
+            actions.appendChild(duplicateBtn);
+
             const deleteBtn = document.createElement('button');
             deleteBtn.className = 'btn btn-danger';
             deleteBtn.textContent = t('delete');
@@ -168,6 +174,28 @@
             setAnalysisHandoff(newAnalysis);
 
             window.location.href = `editor.html?id=${id}&new=1#${createAnalysisHandoffFragment(newAnalysis)}`;
+        }
+
+        function duplicateAnalysis(id) {
+            const source = getAnalysisById(id);
+            if (!source) return;
+
+            const now = new Date().toISOString();
+            const duplicate = normalizeAnalysis(JSON.parse(JSON.stringify(source)));
+            duplicate.id = generateUUID();
+            duplicate.name = formatTranslation('duplicateAnalysisName', { name: source.name || t('newAnalysisName') });
+            duplicate.createdDate = now.split('T')[0];
+            duplicate.lastModified = now;
+            duplicate.risks = duplicate.risks.map((risk, index) => ({
+                ...risk,
+                id: generateUUID(),
+                number: index + 1,
+                comments: (risk.comments || []).map(comment => ({ ...comment, id: generateUUID() }))
+            }));
+
+            upsertAnalysis(duplicate);
+            setAnalysisHandoff(duplicate);
+            window.location.href = `editor.html?id=${duplicate.id}&new=1#${createAnalysisHandoffFragment(duplicate)}`;
         }
 
         function openAnalysis(id) {

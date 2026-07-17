@@ -1,5 +1,26 @@
 # Changelog
 
+## [2.5.0] - 2026-07-17
+
+### Added
+
+- Added baseline templates for suppliers and third parties, OT/ICS, and critical services.
+- Added analysis duplication with fresh analysis, risk and comment IDs.
+- Added import previews showing source descriptions and sample risks.
+
+### Changed
+
+- Improved the analysis import flow with search, filters, source badges, clearer Add/Replace choices and localized baseline names and descriptions.
+- Added visible save states for saving, saved and failed saves.
+- Improved modal accessibility with Escape and overlay closing, focus handling and accessible close buttons.
+- Updated the help and README documentation for the expanded baseline library.
+
+### Validation
+
+- Validated 15 baseline files and 123 risks, including unique IDs and scoring.
+- JavaScript and inline HTML scripts pass syntax checks.
+- `git diff --check` passes.
+
 ## [2.4.1] - 2026-07-17
 
 ### Changed

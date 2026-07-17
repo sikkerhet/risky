@@ -1,0 +1,95 @@
+{
+  "id": "baseline-leverandor",
+  "name": "Baseline - Leverandør og tredjepart",
+  "metadata": {
+    "tjeneste": "Baseline - Leverandør og tredjepart",
+    "dato": "2026-07-17",
+    "beskrivelse": "Startmal for tjenester som leveres av eller er avhengige av eksterne leverandører. Dekker due diligence, avtaler, tilgang, underleverandører, hendelser og exit.",
+    "utfortAv": "Risky",
+    "language": "no"
+  },
+  "createdDate": "2026-07-17",
+  "lastModified": "2026-07-17",
+  "risikoer": [
+    {
+      "id": "baseline-supplier-001",
+      "risikoelement": "Leverandørens sikkerhetsnivå er ikke tilstrekkelig vurdert",
+      "saarbarhet": "Leverandøren velges uten dokumentert vurdering av sikkerhet, personvern, tilgjengelighet og virksomhetens kritiske avhengigheter.",
+      "eksisterendeBeskyttelse": "Det gjennomføres en overordnet leverandørvurdering før kontraktsinngåelse.",
+      "eksisterendeKontroll": "Leverandøren følges opp gjennom ordinære møter.",
+      "K": 5, "I": 4, "T": 3, "konsekvens": 5, "sannsynlighet": 3, "risikonivaa": 15,
+      "foreslaatteTiltak": "Etabler due diligence basert på risiko, krev relevant dokumentasjon og dokumenter beslutningen om å bruke leverandøren.",
+      "kommentarer": []
+    },
+    {
+      "id": "baseline-supplier-002",
+      "risikoelement": "Avtalen gir ikke tilstrekkelig sikkerhet og kontroll",
+      "saarbarhet": "Krav til sikkerhet, personvern, logging, revisjon, varsling og underleverandører er uklare eller mangler i kontrakten.",
+      "eksisterendeBeskyttelse": "Det finnes en hovedavtale med leverandøren.",
+      "eksisterendeKontroll": "Avtalen gjennomgås ved større endringer.",
+      "K": 5, "I": 4, "T": 3, "konsekvens": 5, "sannsynlighet": 3, "risikonivaa": 15,
+      "foreslaatteTiltak": "Bruk tydelige security- og personvernkrav, målbare SLA-er, audit rights og krav om forhåndsvarsel ved vesentlige endringer.",
+      "kommentarer": []
+    },
+    {
+      "id": "baseline-supplier-003",
+      "risikoelement": "Leverandørens eller konsulenters tilganger blir for brede",
+      "saarbarhet": "Eksterne brukere har permanente, delte eller lite sporbare tilganger til systemer og data.",
+      "eksisterendeBeskyttelse": "Leverandørtilganger opprettes ved behov.",
+      "eksisterendeKontroll": "Tilganger fjernes manuelt når oppdrag avsluttes.",
+      "K": 5, "I": 4, "T": 2, "konsekvens": 5, "sannsynlighet": 4, "risikonivaa": 20,
+      "foreslaatteTiltak": "Krev named accounts, least privilege, tidsbegrensning, sterk autentisering og jevnlig access review for alle eksterne tilganger.",
+      "kommentarer": []
+    },
+    {
+      "id": "baseline-supplier-004",
+      "risikoelement": "Underleverandører eller endringer i leverandørkjeden gir uventet risiko",
+      "saarbarhet": "Virksomheten mangler oversikt over hvem som behandler data eller leverer kritiske deler av tjenesten.",
+      "eksisterendeBeskyttelse": "Leverandøren opplyser om noen sentrale underleverandører.",
+      "eksisterendeKontroll": "Endringer vurderes når de blir kjent.",
+      "K": 5, "I": 4, "T": 3, "konsekvens": 5, "sannsynlighet": 3, "risikonivaa": 15,
+      "foreslaatteTiltak": "Krev oversikt over underleverandører, risikovurder endringer og gi virksomheten rett til innsigelse eller alternativ kontroll.",
+      "kommentarer": []
+    },
+    {
+      "id": "baseline-supplier-005",
+      "risikoelement": "Sikkerhetshendelser hos leverandøren oppdages eller håndteres for sent",
+      "saarbarhet": "Varslingsfrister, kontaktpunkter, ansvar og tilgang til hendelsesinformasjon er ikke tydelig avtalt.",
+      "eksisterendeBeskyttelse": "Leverandøren har en generell incident-prosess.",
+      "eksisterendeKontroll": "Hendelser følges opp i leverandørmøter.",
+      "K": 5, "I": 5, "T": 3, "konsekvens": 5, "sannsynlighet": 3, "risikonivaa": 15,
+      "foreslaatteTiltak": "Avtal 24/7 kontakt ved kritiske hendelser, varslingsfrister, bevisbevaring, felles øvelser og tydelig ansvar for myndighets- og kundekommunikasjon.",
+      "kommentarer": []
+    },
+    {
+      "id": "baseline-supplier-006",
+      "risikoelement": "Leverandørens tjeneste er ikke tilstrekkelig overvåket",
+      "saarbarhet": "Virksomheten har lite innsyn i tilgjengelighet, sikkerhetskontroller, avvik og endringer i tjenesten.",
+      "eksisterendeBeskyttelse": "Leverandøren rapporterer enkelte driftsmåltall.",
+      "eksisterendeKontroll": "Tjenesteeier følger opp avvik når brukere melder dem.",
+      "K": 4, "I": 4, "T": 3, "konsekvens": 4, "sannsynlighet": 4, "risikonivaa": 16,
+      "foreslaatteTiltak": "Definer relevante service- og security metrics, krev rapportering og følg opp avvik med frister og eskalering.",
+      "kommentarer": []
+    },
+    {
+      "id": "baseline-supplier-007",
+      "risikoelement": "Data blir ikke slettet eller returnert når avtalen avsluttes",
+      "saarbarhet": "Det er uklart hvor kopier, logger, sikkerhetskopier og data hos underleverandører befinner seg etter avslutning.",
+      "eksisterendeBeskyttelse": "Avtalen beskriver overordnet håndtering av data ved opphør.",
+      "eksisterendeKontroll": "Sletting bekreftes manuelt ved behov.",
+      "K": 5, "I": 5, "T": 2, "konsekvens": 5, "sannsynlighet": 3, "risikonivaa": 15,
+      "foreslaatteTiltak": "Avtal format for dataeksport, frister, sletting og dokumentasjon, inkludert backup og data hos underleverandører.",
+      "kommentarer": []
+    },
+    {
+      "id": "baseline-supplier-008",
+      "risikoelement": "Virksomheten blir for avhengig av én leverandør",
+      "saarbarhet": "Manglende portabilitet, dokumentasjon eller alternative leverandører gjør et bytte dyrt og langsomt.",
+      "eksisterendeBeskyttelse": "Leverandørforholdet vurderes årlig.",
+      "eksisterendeKontroll": "Det finnes ingen testet exit-plan.",
+      "K": 5, "I": 4, "T": 4, "konsekvens": 5, "sannsynlighet": 3, "risikonivaa": 15,
+      "foreslaatteTiltak": "Dokumenter exit-strategi, test dataflytting og alternative arbeidsmåter og reduser binding til proprietære funksjoner der det er mulig.",
+      "kommentarer": []
+    }
+  ]
+}

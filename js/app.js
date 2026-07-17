@@ -279,7 +279,10 @@ async function getBaselineAnalysesData() {
         'baseline-devops-cicd.json',
         'baseline-webapp.json',
         'baseline-database.json',
-        'baseline-mobile.json'
+        'baseline-mobile.json',
+        'baseline-leverandor.json',
+        'baseline-ot-ics.json',
+        'baseline-kritisk-tjeneste.json'
     ];
 
     const loadedBaselines = await Promise.all(
@@ -353,7 +356,9 @@ function updateAnalysis(id, updates) {
         lastModified: new Date().toISOString()
     });
 
-    saveAnalyses(analyses);
+    setSaveStatus('saving');
+    const saved = saveAnalyses(analyses);
+    setSaveStatus(saved ? 'saved' : 'error');
     return analyses[index];
 }
 
@@ -420,12 +425,26 @@ function formatDate(dateStr) {
     return String(dateStr).split('T')[0];
 }
 
-function showSavedIndicator() {
+function setSaveStatus(status) {
     const indicator = document.getElementById('savedIndicator');
     if (!indicator) return;
 
+    const labels = {
+        saving: t('saving'),
+        saved: t('saved'),
+        error: t('saveFailed')
+    };
+    indicator.className = `saved-indicator ${status}`;
+    indicator.textContent = labels[status] || labels.saved;
     indicator.style.display = 'inline';
-    setTimeout(() => {
-        indicator.style.display = 'none';
-    }, 2000);
+    if (status !== 'saving') {
+        clearTimeout(window._saveStatusTimer);
+        window._saveStatusTimer = setTimeout(() => {
+            indicator.style.display = 'none';
+        }, status === 'error' ? 5000 : 2000);
+    }
+}
+
+function showSavedIndicator() {
+    setSaveStatus('saved');
 }
