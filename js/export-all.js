@@ -230,7 +230,7 @@ async function generatePDFBlob() {
                         yPosition = 20;
                     }
 
-                    const timestamp = comment.timestamp ? new Date(comment.timestamp).toLocaleString(getCurrentLanguage() === 'en' ? 'en-GB' : 'no-NO') : '';
+                    const timestamp = comment.created ? new Date(comment.created).toLocaleString(getCurrentLanguage() === 'en' ? 'en-GB' : 'no-NO') : '';
                     const commentText = `• [${timestamp}] ${safeText(comment.text)}`;
                     const splitText = doc.splitTextToSize(commentText, 250);
 

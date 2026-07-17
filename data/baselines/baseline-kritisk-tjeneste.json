@@ -1,0 +1,95 @@
+{
+  "id": "baseline-kritisk-tjeneste",
+  "name": "Baseline - Kritisk tjeneste",
+  "metadata": {
+    "tjeneste": "Baseline - Kritisk tjeneste",
+    "dato": "2026-07-17",
+    "beskrivelse": "Startmal for tjenester med høye krav til tilgjengelighet, motstandsdyktighet og gjenoppretting. Dekker avhengigheter, kapasitet, beredskap, endringer og kontinuitet.",
+    "utfortAv": "Risky",
+    "language": "no"
+  },
+  "createdDate": "2026-07-17",
+  "lastModified": "2026-07-17",
+  "risikoer": [
+    {
+      "id": "baseline-critical-001",
+      "risikoelement": "Tjenesten har ukjente single points of failure",
+      "saarbarhet": "En komponent, lokasjon, person eller leverandør kan stoppe tjenesten uten at det finnes en fungerende reserve.",
+      "eksisterendeBeskyttelse": "Kritiske komponenter er identifisert på et overordnet nivå.",
+      "eksisterendeKontroll": "Feil håndteres når de oppstår.",
+      "K": 5, "I": 5, "T": 5, "konsekvens": 5, "sannsynlighet": 4, "risikonivaa": 20,
+      "foreslaatteTiltak": "Kartlegg end-to-end avhengigheter, identifiser single points of failure og etabler redundans eller dokumenterte kompenserende tiltak.",
+      "kommentarer": []
+    },
+    {
+      "id": "baseline-critical-002",
+      "risikoelement": "Kapasiteten er ikke tilstrekkelig ved toppbelastning eller krise",
+      "saarbarhet": "Tjenesten er dimensjonert for normaldrift, men mangler marginer og testet skalering ved uventet belastning.",
+      "eksisterendeBeskyttelse": "Det finnes kapasitetsgrenser og noen alarmer.",
+      "eksisterendeKontroll": "Kapasitet vurderes ved planlagte utvidelser.",
+      "K": 4, "I": 5, "T": 4, "konsekvens": 5, "sannsynlighet": 3, "risikonivaa": 15,
+      "foreslaatteTiltak": "Definer capacity targets, overvåk marginer, test skalering og avklar prioritert tjeneste ved ressursmangel.",
+      "kommentarer": []
+    },
+    {
+      "id": "baseline-critical-003",
+      "risikoelement": "Gjenopprettingstiden er lengre enn virksomheten tåler",
+      "saarbarhet": "RTO, RPO og prioriteringer er uklare, eller gjenopprettingen avhenger av manuelle og uøvde aktiviteter.",
+      "eksisterendeBeskyttelse": "Det finnes sikkerhetskopier og en overordnet beredskapsplan.",
+      "eksisterendeKontroll": "Gjenoppretting testes sporadisk.",
+      "K": 5, "I": 5, "T": 4, "konsekvens": 5, "sannsynlighet": 3, "risikonivaa": 15,
+      "foreslaatteTiltak": "Fastsett og godkjenn RTO/RPO, dokumenter runbooks, automatiser der det er hensiktsmessig og gjennomfør realistiske recovery tests.",
+      "kommentarer": []
+    },
+    {
+      "id": "baseline-critical-004",
+      "risikoelement": "Avhengigheter mot andre tjenester svikter",
+      "saarbarhet": "Tjenesten er avhengig av nettverk, identitet, data, DNS, betaling, leverandører eller andre plattformer uten tydelig fallback.",
+      "eksisterendeBeskyttelse": "Noen avhengigheter er dokumentert i arkitekturmateriale.",
+      "eksisterendeKontroll": "Avhengigheter vurderes ved større endringer.",
+      "K": 5, "I": 5, "T": 4, "konsekvens": 5, "sannsynlighet": 4, "risikonivaa": 20,
+      "foreslaatteTiltak": "Vedlikehold dependency map, avtal mål med leverandører og bygg degradert drift, køer eller alternative arbeidsprosesser der det er mulig.",
+      "kommentarer": []
+    },
+    {
+      "id": "baseline-critical-005",
+      "risikoelement": "Endringer eller deploy fører til langvarig driftsavbrudd",
+      "saarbarhet": "Endringer testes ikke godt nok, eller rollback er ikke mulig når tjenesten er under belastning.",
+      "eksisterendeBeskyttelse": "Det finnes change- og release-prosess.",
+      "eksisterendeKontroll": "Endringer godkjennes før produksjonssetting.",
+      "K": 5, "I": 5, "T": 4, "konsekvens": 5, "sannsynlighet": 3, "risikonivaa": 15,
+      "foreslaatteTiltak": "Bruk risikobasert change control, canary eller staged rollout, overvåket deploy og testet rollback med tydelig beslutningsmyndighet.",
+      "kommentarer": []
+    },
+    {
+      "id": "baseline-critical-006",
+      "risikoelement": "Driftsforstyrrelser oppdages eller eskaleres for sent",
+      "saarbarhet": "Overvåkingen dekker ikke brukeropplevelse og avhengigheter, eller varsler når ikke riktig vakt og tjenesteeier.",
+      "eksisterendeBeskyttelse": "Tjenesten har tekniske health checks.",
+      "eksisterendeKontroll": "Drift følger opp alarmer i arbeidstiden.",
+      "K": 5, "I": 4, "T": 4, "konsekvens": 5, "sannsynlighet": 3, "risikonivaa": 15,
+      "foreslaatteTiltak": "Overvåk kritiske user journeys og avhengigheter, etabler vaktordning, tydelige SLO-er og eskaleringsrutiner.",
+      "kommentarer": []
+    },
+    {
+      "id": "baseline-critical-007",
+      "risikoelement": "Beredskapsroller og beslutningslinjer fungerer ikke under press",
+      "saarbarhet": "Ansvar, fullmakter, kontaktlister og kommunikasjon er uklare når flere team og leverandører må handle samtidig.",
+      "eksisterendeBeskyttelse": "Det finnes en incident-prosess og kontaktliste.",
+      "eksisterendeKontroll": "Alvorlige hendelser evalueres i etterkant.",
+      "K": 5, "I": 4, "T": 4, "konsekvens": 5, "sannsynlighet": 3, "risikonivaa": 15,
+      "foreslaatteTiltak": "Definer incident command, roller og fullmakter, hold kontaktinformasjon oppdatert og øv på tekniske, organisatoriske og eksterne avhengigheter.",
+      "kommentarer": []
+    },
+    {
+      "id": "baseline-critical-008",
+      "risikoelement": "Tjenesten kan ikke opprettholde et akseptabelt minimumsnivå ved større hendelser",
+      "saarbarhet": "Det er ikke definert hvilke funksjoner som skal prioriteres, eller hvordan virksomheten arbeider manuelt og kommuniserer med brukere.",
+      "eksisterendeBeskyttelse": "Tjenesten har noen manuelle rutiner.",
+      "eksisterendeKontroll": "Prioriteringer besluttes ad hoc under hendelser.",
+      "K": 5, "I": 5, "T": 5, "konsekvens": 5, "sannsynlighet": 3, "risikonivaa": 15,
+      "foreslaatteTiltak": "Definer minimum service, prioriterte brukere og manuelle workarounds, og test både intern og ekstern kommunikasjon ved langvarig bortfall.",
+      "kommentarer": []
+    }
+  ]
+}

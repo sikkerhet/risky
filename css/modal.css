@@ -62,6 +62,14 @@
     color: #333;
 }
 
+.modal-close:focus-visible,
+.modal-overlay button:focus-visible,
+.modal-overlay input:focus-visible,
+.modal-overlay select:focus-visible {
+    outline: 3px solid rgba(46, 95, 142, 0.45);
+    outline-offset: 2px;
+}
+
 .modal-body {
     padding: 20px 30px;
     overflow-y: auto;
@@ -265,8 +273,34 @@
 }
 
 /* Import Risks Modal */
+.analysis-import-tools {
+    display: grid;
+    grid-template-columns: minmax(220px, 2fr) minmax(150px, 1fr) minmax(150px, 1fr);
+    gap: 12px;
+    margin: 16px 0 8px;
+    padding: 12px;
+    background: #f7fafc;
+    border: 1px solid #d9e2ec;
+    border-radius: 8px;
+}
+
+.analysis-import-tools label {
+    display: block;
+    margin-bottom: 5px;
+    color: #334e68;
+    font-size: 0.88rem;
+    font-weight: 600;
+}
+
+.analysis-import-meta {
+    min-height: 1.3em;
+    margin: 8px 2px;
+    color: #52606d;
+    font-size: 0.9rem;
+}
+
 .analysis-import-list {
-    max-height: 400px;
+    max-height: 460px;
     overflow-y: auto;
     border: 1px solid #ddd;
     border-radius: 8px;
@@ -291,6 +325,12 @@
     background: #f0f7ff;
 }
 
+.analysis-import-item:has(input[type="radio"]:checked) {
+    border-color: #2e5f8e;
+    background: #eaf2ff;
+    box-shadow: 0 0 0 2px rgba(46, 95, 142, 0.12);
+}
+
 .analysis-import-item input[type="radio"] {
     margin-top: 3px;
     cursor: pointer;
@@ -305,6 +345,18 @@
 
 .analysis-import-content {
     flex: 1;
+}
+
+.analysis-import-section-title {
+    position: sticky;
+    top: -10px;
+    z-index: 1;
+    margin: 0 0 10px;
+    padding: 8px 10px;
+    background: #f0f7ff;
+    border-radius: 5px;
+    color: #2e5f8e;
+    font-size: 0.95rem;
 }
 
 .analysis-import-item h4 {
@@ -329,10 +381,62 @@
     margin-left: 10px;
 }
 
+.analysis-import-type {
+    display: inline-block;
+    margin: 0 0 5px;
+    padding: 2px 7px;
+    border-radius: 10px;
+    background: #eef3f8;
+    color: #2e5f8e;
+    font-size: 12px;
+    font-weight: 600;
+}
+
 .import-options {
     padding: 15px;
     background: #f9f9f9;
     border-radius: 8px;
+    border: 1px solid #e5e5e5;
+}
+
+.import-options legend {
+    padding: 0 5px;
+    font-weight: 700;
+}
+
+.import-options label {
+    display: block;
+    margin: 7px 0;
+    cursor: pointer;
+}
+
+.import-mode-hint {
+    margin: 10px 0 0;
+    color: #555;
+    font-size: 13px;
+}
+
+.analysis-import-preview {
+    margin-top: 16px;
+    padding: 14px 16px;
+    border: 1px solid #c9dced;
+    border-radius: 8px;
+    background: #f5f9fd;
+}
+
+.analysis-import-preview h4 {
+    margin: 0 0 8px;
+    color: #2e5f8e;
+}
+
+.analysis-import-preview p {
+    margin: 6px 0;
+    color: #555;
+}
+
+.analysis-import-preview ul {
+    margin: 8px 0 0 20px;
+    color: #333;
 }
 
 .import-options label {
@@ -350,4 +454,10 @@
 
 .import-options input[type="radio"] {
     margin-right: 10px;
+}
+
+@media (max-width: 768px) {
+    .analysis-import-tools {
+        grid-template-columns: 1fr;
+    }
 }

@@ -31,17 +31,29 @@ function buildExcelWorkbook() {
     const riskCategory = (riskLevel) => getRiskLevel(riskLevel || 0);
     const sectionHeaderStyle = {
         font: { bold: true, sz: 14, color: { rgb: '1F2933' } },
-        fill: { fgColor: { rgb: 'EAF2FF' } },
+        fill: { patternType: 'solid', fgColor: { rgb: 'EAF2FF' } },
         alignment: { horizontal: 'left', vertical: 'center' }
     };
     const tableHeaderStyle = {
         font: { bold: true, color: { rgb: 'FFFFFF' } },
-        fill: { fgColor: { rgb: '007BFF' } },
+        fill: { patternType: 'solid', fgColor: { rgb: '007BFF' } },
+        border: {
+            top: { style: 'thin', color: { rgb: 'D9E2EC' } },
+            bottom: { style: 'thin', color: { rgb: 'D9E2EC' } },
+            left: { style: 'thin', color: { rgb: 'D9E2EC' } },
+            right: { style: 'thin', color: { rgb: 'D9E2EC' } }
+        },
         alignment: { horizontal: 'center', vertical: 'center' }
     };
     const neutralTableHeaderStyle = {
         font: { bold: true, color: { rgb: 'FFFFFF' } },
-        fill: { fgColor: { rgb: '6C757D' } },
+        fill: { patternType: 'solid', fgColor: { rgb: '6C757D' } },
+        border: {
+            top: { style: 'thin', color: { rgb: 'D9E2EC' } },
+            bottom: { style: 'thin', color: { rgb: 'D9E2EC' } },
+            left: { style: 'thin', color: { rgb: 'D9E2EC' } },
+            right: { style: 'thin', color: { rgb: 'D9E2EC' } }
+        },
         alignment: { horizontal: 'center', vertical: 'center' }
     };
     const labelStyle = {
@@ -53,6 +65,45 @@ function buildExcelWorkbook() {
     };
     const centeredStyle = {
         alignment: { horizontal: 'center', vertical: 'center' }
+    };
+    const thinBorder = {
+        top: { style: 'thin', color: { rgb: 'D9E2EC' } },
+        bottom: { style: 'thin', color: { rgb: 'D9E2EC' } },
+        left: { style: 'thin', color: { rgb: 'D9E2EC' } },
+        right: { style: 'thin', color: { rgb: 'D9E2EC' } }
+    };
+
+    const mergeTitle = (sheet, lastColumn) => {
+        sheet['!merges'] = sheet['!merges'] || [];
+        sheet['!merges'].push({ s: { r: 0, c: 0 }, e: { r: 0, c: lastColumn } });
+        if (sheet['A1']) {
+            sheet['A1'].s = { ...sectionHeaderStyle, border: thinBorder };
+        }
+        sheet['!rows'] = sheet['!rows'] || [];
+        sheet['!rows'][0] = { hpt: 25 };
+    };
+
+    const estimateRowHeight = (values, minimum = 28, maximum = 90) => {
+        const longest = values.reduce((length, value) => Math.max(length, safeText(value).length), 0);
+        return Math.min(maximum, Math.max(minimum, 18 + Math.ceil(longest / 90) * 12));
+    };
+
+    const configureReportSheet = (sheet, orientation = 'landscape') => {
+        sheet['!pageSetup'] = {
+            orientation,
+            fitToWidth: 1,
+            fitToHeight: 0,
+            paperSize: 9
+        };
+        sheet['!printOptions'] = { gridLines: false, headings: false };
+        sheet['!margins'] = {
+            left: 0.25,
+            right: 0.25,
+            top: 0.5,
+            bottom: 0.5,
+            header: 0.2,
+            footer: 0.2
+        };
     };
 
     const wb = XLSX.utils.book_new();
@@ -122,6 +173,7 @@ function buildExcelWorkbook() {
     }
 
     const wsSummary = XLSX.utils.aoa_to_sheet(summaryData);
+    configureReportSheet(wsSummary);
     wsSummary['!cols'] = [
         { wch: 8 },
         { wch: 44 },
@@ -129,6 +181,7 @@ function buildExcelWorkbook() {
         { wch: 16 },
         { wch: 48 }
     ];
+    mergeTitle(wsSummary, 4);
 
     ['A1', 'A11', 'A19'].forEach((cell) => {
         if (wsSummary[cell]) wsSummary[cell].s = sectionHeaderStyle;
@@ -180,6 +233,7 @@ function buildExcelWorkbook() {
     );
 
     const wsMetadata = XLSX.utils.aoa_to_sheet(metadataData);
+    configureReportSheet(wsMetadata, 'portrait');
 
     // Styling for metadata
     if (!wsMetadata['!cols']) wsMetadata['!cols'] = [];
@@ -189,6 +243,8 @@ function buildExcelWorkbook() {
     // Style title if present
     if (reportTitle && wsMetadata['A1']) {
         wsMetadata['A1'].s = sectionHeaderStyle;
+        wsMetadata['!merges'] = [{ s: { r: 0, c: 0 }, e: { r: 0, c: 1 } }];
+        wsMetadata['!rows'] = [{ hpt: 25 }];
     }
 
     // Bold labels - calculate row offset based on whether title exists
@@ -219,6 +275,7 @@ function buildExcelWorkbook() {
     ];
 
     const wsStats = XLSX.utils.aoa_to_sheet(statsData);
+    configureReportSheet(wsStats, 'portrait');
 
     // Column widths
     if (!wsStats['!cols']) wsStats['!cols'] = [];
@@ -228,6 +285,7 @@ function buildExcelWorkbook() {
 
     // Style header
     if (wsStats['A1']) wsStats['A1'].s = sectionHeaderStyle;
+    mergeTitle(wsStats, 2);
 
     // Bold labels and add colors to risk categories
     const statsLabelCells = ['A3', 'A5', 'A6', 'A7', 'A8', 'A10'];
@@ -263,7 +321,7 @@ function buildExcelWorkbook() {
         t('proposedMeasures')
     ];
 
-    const risikoerData = sortedRisks.map(r => [
+    const risikoerRows = sortedRisks.map(r => [
         r.number || 0,
         safeText(r.riskGroup),
         safeText(r.riskElement),
@@ -280,7 +338,24 @@ function buildExcelWorkbook() {
         safeText(r.proposedMeasures)
     ]);
 
-    const wsRisikoer = XLSX.utils.aoa_to_sheet([risikoerHeaders, ...risikoerData]);
+    const riskSheetTitle = safeText(currentAnalysis.metadata.reportTitle) ||
+        safeText(currentAnalysis.name) || t('worksheetRisks');
+    const riskSheetMetadata = [
+        `${t('serviceSystemLabel')}: ${safeText(currentAnalysis.metadata.service) || t('notSpecified')}`,
+        `${t('dateLabel')}: ${safeText(currentAnalysis.metadata.date) || t('notSpecified')}`,
+        `${t('performedByLabel')}: ${safeText(currentAnalysis.metadata.performedBy) || t('notSpecified')}`
+    ].join('   |   ');
+    const risikoerData = [
+        [riskSheetTitle],
+        [formatTranslation('generatedWithRisky', { date: formatNorwegianDate(new Date().toISOString()) })],
+        [riskSheetMetadata],
+        [''],
+        risikoerHeaders,
+        ...risikoerRows
+    ];
+
+    const wsRisikoer = XLSX.utils.aoa_to_sheet(risikoerData);
+    configureReportSheet(wsRisikoer);
 
     // Column widths
     if (!wsRisikoer['!cols']) wsRisikoer['!cols'] = [];
@@ -299,12 +374,33 @@ function buildExcelWorkbook() {
     wsRisikoer['!cols'][12] = { wch: 14 }; // Kategori
     wsRisikoer['!cols'][13] = { wch: 40 }; // Tiltak
 
-    // Freeze first row (header)
-    wsRisikoer['!freeze'] = { xSplit: 0, ySplit: 1 };
-    wsRisikoer['!autofilter'] = { ref: wsRisikoer['!ref'] };
+    // Freeze the report preamble and table header.
+    wsRisikoer['!freeze'] = { xSplit: 0, ySplit: 5 };
+    wsRisikoer['!views'] = [{ state: 'frozen', ySplit: 5 }];
+    wsRisikoer['!autofilter'] = { ref: `A5:N${risikoerRows.length + 5}` };
+    wsRisikoer['!rows'] = [
+        { hpt: 28 },
+        { hpt: 20 },
+        { hpt: 22 },
+        { hpt: 8 },
+        { hpt: 32 }
+    ];
+    mergeTitle(wsRisikoer, 13);
+    if (wsRisikoer['A2']) {
+        wsRisikoer['A2'].s = {
+            font: { italic: true, color: { rgb: '52606D' } },
+            alignment: { vertical: 'center' }
+        };
+    }
+    if (wsRisikoer['A3']) {
+        wsRisikoer['A3'].s = {
+            font: { color: { rgb: '334E68' } },
+            alignment: { vertical: 'center' }
+        };
+    }
 
     // Style header row - bold with blue background
-    const headerCells = ['A1', 'B1', 'C1', 'D1', 'E1', 'F1', 'G1', 'H1', 'I1', 'J1', 'K1', 'L1', 'M1', 'N1'];
+    const headerCells = ['A5', 'B5', 'C5', 'D5', 'E5', 'F5', 'G5', 'H5', 'I5', 'J5', 'K5', 'L5', 'M5', 'N5'];
     headerCells.forEach(cell => {
         if (wsRisikoer[cell]) {
             wsRisikoer[cell].s = {
@@ -315,22 +411,69 @@ function buildExcelWorkbook() {
 
     // Improve readability for text-heavy columns
     const risikoRange = XLSX.utils.decode_range(wsRisikoer['!ref']);
-    for (let R = 1; R <= risikoRange.e.r; ++R) {
+    for (let R = 5; R <= risikoRange.e.r; ++R) {
+        const risk = sortedRisks[R - 5];
+        const rowFill = (R - 5) % 2 === 0 ? 'FFFFFF' : 'F7FAFC';
+        for (let C = 0; C <= 13; C += 1) {
+            const cell = wsRisikoer[XLSX.utils.encode_cell({ r: R, c: C })];
+            if (cell) {
+                cell.s = {
+                    ...(cell.s || {}),
+                    fill: cell.s?.fill || { patternType: 'solid', fgColor: { rgb: rowFill } },
+                    border: thinBorder
+                };
+            }
+        }
+        wsRisikoer['!rows'][R] = {
+            hpt: estimateRowHeight([
+                risk?.riskGroup,
+                risk?.riskElement,
+                risk?.vulnerability,
+                risk?.existingProtection,
+                risk?.existingControl,
+                risk?.proposedMeasures
+            ])
+        };
         ['B', 'C', 'D', 'E', 'F', 'N'].forEach((column) => {
             const cell = wsRisikoer[`${column}${R + 1}`];
             if (cell) {
                 cell.s = {
                     ...(cell.s || {}),
+                    border: thinBorder,
                     alignment: { wrapText: true, vertical: 'top' }
                 };
             }
         });
+
+        // Keep the exported risk sheet recalculable when a user edits K/I/T/S in Excel.
+        const consequenceCell = wsRisikoer[`J${R + 1}`];
+        const riskLevelCell = wsRisikoer[`L${R + 1}`];
+        if (consequenceCell && riskLevelCell) {
+            consequenceCell.f = `MAX(G${R + 1}:I${R + 1})`;
+            consequenceCell.t = 'n';
+            consequenceCell.v = sortedRisks[R - 5]?.consequence || 0;
+            riskLevelCell.f = `J${R + 1}*K${R + 1}`;
+            riskLevelCell.t = 'n';
+            riskLevelCell.v = sortedRisks[R - 5]?.riskLevel || 0;
+
+            const categoryCell = wsRisikoer[`M${R + 1}`];
+            if (categoryCell) {
+                const critical = JSON.stringify(t('critical'));
+                const high = JSON.stringify(t('high'));
+                const medium = JSON.stringify(t('medium'));
+                const low = JSON.stringify(t('low'));
+                categoryCell.f = `IF(L${R + 1}>=19,${critical},IF(L${R + 1}>=13,${high},IF(L${R + 1}>=7,${medium},${low})))`;
+                categoryCell.t = 's';
+                categoryCell.v = riskCategory(sortedRisks[R - 5]?.riskLevel);
+            }
+        }
 
         ['A', 'G', 'H', 'I', 'J', 'K', 'L', 'M'].forEach((column) => {
             const cell = wsRisikoer[`${column}${R + 1}`];
             if (cell) {
                 cell.s = {
                     ...(cell.s || {}),
+                    border: thinBorder,
                     alignment: { horizontal: 'center', vertical: 'center' }
                 };
             }
@@ -339,7 +482,7 @@ function buildExcelWorkbook() {
 
     // Apply conditional formatting to risk level column (L column)
     const range = XLSX.utils.decode_range(wsRisikoer['!ref']);
-    for (let R = range.s.r + 1; R <= range.e.r; ++R) {
+    for (let R = 5; R <= range.e.r; ++R) {
         const cellAddress = XLSX.utils.encode_cell({ r: R, c: 11 }); // Column L (index 11)
         const cell = wsRisikoer[cellAddress];
 
@@ -364,7 +507,8 @@ function buildExcelWorkbook() {
             if (fillColor) {
                 cell.s = {
                     font: { bold: true, color: { rgb: fontColor } },
-                    fill: { fgColor: { rgb: fillColor } },
+                    fill: { patternType: 'solid', fgColor: { rgb: fillColor } },
+                    border: thinBorder,
                     alignment: { horizontal: 'center', vertical: 'center' }
                 };
             }
@@ -392,6 +536,7 @@ function buildExcelWorkbook() {
     ];
 
     const wsKit = XLSX.utils.aoa_to_sheet(kitData);
+    configureReportSheet(wsKit, 'portrait');
 
     if (!wsKit['!cols']) wsKit['!cols'] = [];
     wsKit['!cols'][0] = { wch: 30 };
@@ -399,6 +544,7 @@ function buildExcelWorkbook() {
 
     // Style header
     if (wsKit['A1']) wsKit['A1'].s = sectionHeaderStyle;
+    mergeTitle(wsKit, 1);
 
     if (wsKit['A2']) {
         wsKit['A2'].s = {
@@ -447,6 +593,7 @@ function buildExcelWorkbook() {
     }
 
     const wsHeatmap = XLSX.utils.aoa_to_sheet(heatmapData);
+    configureReportSheet(wsHeatmap, 'landscape');
 
     if (!wsHeatmap['!cols']) wsHeatmap['!cols'] = [];
     wsHeatmap['!cols'][0] = { wch: 25 };
@@ -456,6 +603,7 @@ function buildExcelWorkbook() {
 
     // Style header
     if (wsHeatmap['A1']) wsHeatmap['A1'].s = sectionHeaderStyle;
+    mergeTitle(wsHeatmap, 5);
 
     // Style table headers
     ['A3', 'B3', 'C3', 'D3', 'E3', 'F3'].forEach(cell => {
@@ -492,7 +640,7 @@ function buildExcelWorkbook() {
 
                 cell.s = {
                     font: { bold: true, color: { rgb: fontColor } },
-                    fill: { fgColor: { rgb: fillColor } },
+                    fill: { patternType: 'solid', fgColor: { rgb: fillColor } },
                     alignment: { horizontal: 'center', vertical: 'center' }
                 };
             }
@@ -522,6 +670,7 @@ function buildExcelWorkbook() {
         ];
 
         const wsCustomText = XLSX.utils.aoa_to_sheet(customTextData);
+        configureReportSheet(wsCustomText, 'portrait');
 
         if (!wsCustomText['!cols']) wsCustomText['!cols'] = [];
         wsCustomText['!cols'][0] = { wch: 100 };
@@ -569,7 +718,7 @@ function buildExcelWorkbook() {
             const commentsRows = [];
             risksWithComments.forEach((risk) => {
                 risk.comments.forEach((comment) => {
-                    if (!isCommentTypeVisible(comment.type) || comment.visible === false) {
+                    if ((typeof isCommentTypeVisible === 'function' && !isCommentTypeVisible(comment.type)) || comment.visible === false) {
                         return;
                     }
 
@@ -598,7 +747,16 @@ function buildExcelWorkbook() {
             });
 
             if (commentsRows.length > 0) {
-                const wsComments = XLSX.utils.aoa_to_sheet([commentsHeaders, ...commentsRows]);
+                const commentsTitle = currentAnalysis.metadata.commentsSectionTitle || t('actionsAndCommentsDefaultTitle');
+                const commentsData = [
+                    [commentsTitle],
+                    [formatTranslation('generatedWithRisky', { date: formatNorwegianDate(new Date().toISOString()) })],
+                    [''],
+                    commentsHeaders,
+                    ...commentsRows
+                ];
+                const wsComments = XLSX.utils.aoa_to_sheet(commentsData);
+                configureReportSheet(wsComments);
 
                 if (!wsComments['!cols']) wsComments['!cols'] = [];
                 wsComments['!cols'][0] = { wch: 10 };
@@ -608,22 +766,36 @@ function buildExcelWorkbook() {
                 wsComments['!cols'][4] = { wch: 20 };
                 wsComments['!cols'][5] = { wch: 14 };
                 wsComments['!cols'][6] = { wch: 50 };
-                wsComments['!freeze'] = { xSplit: 0, ySplit: 1 };
-                wsComments['!autofilter'] = { ref: wsComments['!ref'] };
+                wsComments['!freeze'] = { xSplit: 0, ySplit: 4 };
+                wsComments['!views'] = [{ state: 'frozen', ySplit: 4 }];
+                wsComments['!autofilter'] = { ref: `A4:G${commentsRows.length + 4}` };
+                wsComments['!rows'] = [{ hpt: 28 }, { hpt: 20 }, { hpt: 8 }, { hpt: 30 }];
+                mergeTitle(wsComments, 6);
+                if (wsComments['A2']) {
+                    wsComments['A2'].s = {
+                        font: { italic: true, color: { rgb: '52606D' } },
+                        alignment: { vertical: 'center' }
+                    };
+                }
 
-                ['A1', 'B1', 'C1', 'D1', 'E1', 'F1', 'G1'].forEach((cell) => {
+                ['A4', 'B4', 'C4', 'D4', 'E4', 'F4', 'G4'].forEach((cell) => {
                     if (wsComments[cell]) {
                         wsComments[cell].s = neutralTableHeaderStyle;
                     }
                 });
 
                 const commentsRange = XLSX.utils.decode_range(wsComments['!ref']);
-                for (let R = 1; R <= commentsRange.e.r; ++R) {
-                    ['B', 'D', 'G'].forEach((column) => {
+                for (let R = 4; R <= commentsRange.e.r; ++R) {
+                    const commentRow = commentsRows[R - 4];
+                    wsComments['!rows'][R] = {
+                        hpt: estimateRowHeight(commentRow, 28, 90)
+                    };
+                    ['A', 'B', 'C', 'D', 'E', 'F', 'G'].forEach((column) => {
                         const cell = wsComments[`${column}${R + 1}`];
                         if (cell) {
                             cell.s = {
                                 ...(cell.s || {}),
+                                border: thinBorder,
                                 alignment: { wrapText: true, vertical: 'top' }
                             };
                         }

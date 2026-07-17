@@ -17,7 +17,7 @@
       },
       "risikoer": [
         {
-          "id": "iot-001",
+          "id": "iot-embedded-iot-001",
           "risikoelement": {
             "no": "IoT-enheter med default credentials",
             "en": "IoT-devices with default credentials"
@@ -41,10 +41,11 @@
           "foreslaatteTiltak": {
             "no": "Force password change ved first boot, unique per-enhet credentials, certificate-based auth",
             "en": "Force password change during first boot, unique per-device credentials, certificate-based auth"
-          }
+          },
+          "legacyId": "iot-001"
         },
         {
-          "id": "iot-002",
+          "id": "iot-embedded-iot-002",
           "risikoelement": {
             "no": "Manglende firmware-oppdateringer på IoT-enheter",
             "en": "Missing firmware-updates on IoT-devices"
@@ -68,10 +69,11 @@
           "foreslaatteTiltak": {
             "no": "Automated OTA updates, signed firmware, rollback mechanism, update overvåking",
             "en": "Automated OTA updates, signed firmware, rollback mechanism, update monitoring"
-          }
+          },
+          "legacyId": "iot-002"
         },
         {
-          "id": "iot-003",
+          "id": "iot-embedded-iot-003",
           "risikoelement": {
             "no": "Ukryptert kommunikasjon fra IoT-enhet til backend",
             "en": "unencrypted communications from IoT-device to backend"
@@ -93,12 +95,13 @@
           "T": 2,
           "sannsynlighet": 4,
           "foreslaatteTiltak": {
-            "no": "Mandatory TLS/DTLS, certificate pinning, encrypted MQTT (TLS), VPN for legacy enheter",
+            "no": "Obligatorisk TLS/DTLS, certificate pinning, kryptert MQTT (TLS) og VPN for eldre enheter",
             "en": "Mandatory TLS/DTLS, certificate pinning, encrypted MQTT (TLS), VPN for legacy devices"
-          }
+          },
+          "legacyId": "iot-003"
         },
         {
-          "id": "iot-004",
+          "id": "iot-embedded-iot-004",
           "risikoelement": {
             "no": "Fysisk tilgang til enhet gir full kontroll",
             "en": "Physical access to the device provides full control"
@@ -122,10 +125,11 @@
           "foreslaatteTiltak": {
             "no": "Secure boot, encrypted storage, disabled debug ports, tamper detection",
             "en": "Secure boot, encrypted storage, disabled debug ports, tamper detection"
-          }
+          },
+          "legacyId": "iot-004"
         },
         {
-          "id": "iot-005",
+          "id": "iot-embedded-iot-005",
           "risikoelement": {
             "no": "Enhet kan brukes som inngangsport til OT-nettverk",
             "en": "A device can be used as an entry point into the OT network"
@@ -149,7 +153,8 @@
           "foreslaatteTiltak": {
             "no": "Air-gapped OT nettverk, industrial DMZ, IDS/IPS, micro-segmentation",
             "en": "Air-gapped OT network, industrial DMZ, IDS/IPS, micro-segmentation"
-          }
+          },
+          "legacyId": "iot-005"
         }
       ]
     },
@@ -161,7 +166,7 @@
       },
       "risikoer": [
         {
-          "id": "fw-001",
+          "id": "iot-embedded-fw-001",
           "risikoelement": {
             "no": "Usignert eller uverifisert firmware kan installeres",
             "en": "Usignert or uverifisert firmware can installeres"
@@ -183,12 +188,13 @@
           "T": 4,
           "sannsynlighet": 3,
           "foreslaatteTiltak": {
-            "no": "Mandatory code signing, secure boot chain, hardware root of trust (TPM/TEE)",
+            "no": "Obligatorisk code signing, secure boot chain og hardware root of trust (TPM/TEE)",
             "en": "Mandatory code signing, secure boot chain, hardware root of trust (TPM/TEE)"
-          }
+          },
+          "legacyId": "fw-001"
         },
         {
-          "id": "fw-002",
+          "id": "iot-embedded-fw-002",
           "risikoelement": {
             "no": "Hardkodede credentials eller secrets i firmware",
             "en": "Hardcoded credentials or secrets in firmware"
@@ -212,10 +218,11 @@
           "foreslaatteTiltak": {
             "no": "Secure element for key storage, runtime key injection, no hardcoded secrets",
             "en": "Secure element for key storage, runtime key injection, no hardcoded secrets"
-          }
+          },
+          "legacyId": "fw-002"
         },
         {
-          "id": "fw-003",
+          "id": "iot-embedded-fw-003",
           "risikoelement": {
             "no": "Buffer overflow eller memory corruption i embedded kode",
             "en": "Buffer overflow or memory corruption in embedded code"
@@ -229,7 +236,7 @@
             "en": "Code review"
           },
           "eksisterendeKontroll": {
-            "no": "manuell testing",
+            "no": "Manuell testing",
             "en": "Manual testing"
           },
           "K": 5,
@@ -239,10 +246,11 @@
           "foreslaatteTiltak": {
             "no": "Memory-safe languages (Rust), ASLR, stack canaries, fuzzing, SAST",
             "en": "Memory-safe languages (Rust), ASLR, stack canaries, fuzzing, SAST"
-          }
+          },
+          "legacyId": "fw-003"
         },
         {
-          "id": "fw-004",
+          "id": "iot-embedded-fw-004",
           "risikoelement": {
             "no": "Firmware kan dumpes og reverse engineeres",
             "en": "Firmware can dumpes and reverse engineeres"
@@ -266,7 +274,8 @@
           "foreslaatteTiltak": {
             "no": "Encrypted firmware, code obfuscation, strip debug symbols, IP protection",
             "en": "Encrypted firmware, code obfuscation, strip debug symbols, IP protection"
-          }
+          },
+          "legacyId": "fw-004"
         }
       ]
     },
@@ -278,7 +287,7 @@
       },
       "risikoer": [
         {
-          "id": "ot-001",
+          "id": "iot-embedded-ot-001",
           "risikoelement": {
             "no": "Legacy OT-system uten sikkerhetsoppdateringer",
             "en": "Legacy OT-system without security patches"
@@ -302,10 +311,11 @@
           "foreslaatteTiltak": {
             "no": "Virtual patching, nettverk isolation, compensating controls, upgrade path",
             "en": "Virtual patching, network isolation, compensating controls, upgrade path"
-          }
+          },
+          "legacyId": "ot-001"
         },
         {
-          "id": "ot-002",
+          "id": "iot-embedded-ot-002",
           "risikoelement": {
             "no": "USB eller removable media introduserer malware til OT",
             "en": "USB or removable media introduserer malware to OT"
@@ -329,10 +339,11 @@
           "foreslaatteTiltak": {
             "no": "USB port blocking, kiosk mode, media sanitization station, endpoint protection",
             "en": "USB port blocking, kiosk mode, media sanitization station, endpoint protection"
-          }
+          },
+          "legacyId": "ot-002"
         },
         {
-          "id": "ot-003",
+          "id": "iot-embedded-ot-003",
           "risikoelement": {
             "no": "Ukrypterte industrielle protokoller (Modbus, DNP3)",
             "en": "Ukrypterte industrielle protokoller (Modbus, DNP3)"
@@ -356,10 +367,11 @@
           "foreslaatteTiltak": {
             "no": "Protocol gateways, VPN overlays, IDS signatures, Purdue model segmentation",
             "en": "Protocol gateways, VPN overlays, IDS signatures, Purdue model segmentation"
-          }
+          },
+          "legacyId": "ot-003"
         },
         {
-          "id": "ot-004",
+          "id": "iot-embedded-ot-004",
           "risikoelement": {
             "no": "IT/OT convergence introduserer nye angrepsvektorer",
             "en": "IT/OT convergence introduserer nye angrepsvektorer"
@@ -383,10 +395,11 @@
           "foreslaatteTiltak": {
             "no": "Industrial DMZ, unidirectional gateways, jump hosts, anomaly detection",
             "en": "Industrial DMZ, unidirectional gateways, jump hosts, anomaly detection"
-          }
+          },
+          "legacyId": "ot-004"
         },
         {
-          "id": "ot-005",
+          "id": "iot-embedded-ot-005",
           "risikoelement": {
             "no": "Utilsiktet shutdown av kritisk infrastruktur",
             "en": "Accidental shutdown of critical infrastruktur"
@@ -410,7 +423,8 @@
           "foreslaatteTiltak": {
             "no": "Digital twins for testing, staged rollouts, emergency stop procedures",
             "en": "Digital twins for testing, staged rollouts, emergency stop procedures"
-          }
+          },
+          "legacyId": "ot-005"
         }
       ]
     },
@@ -422,7 +436,7 @@
       },
       "risikoer": [
         {
-          "id": "cloud-iot-001",
+          "id": "iot-embedded-cloud-iot-001",
           "risikoelement": {
             "no": "IoT sky platform kompromittert",
             "en": "IoT cloud platform kompromittert"
@@ -446,10 +460,11 @@
           "foreslaatteTiltak": {
             "no": "Zero trust architecture, enhet authentication, encrypted commands, audit loggføring",
             "en": "Zero trust architecture, device authentication, encrypted commands, audit logging"
-          }
+          },
+          "legacyId": "cloud-iot-001"
         },
         {
-          "id": "cloud-iot-002",
+          "id": "iot-embedded-cloud-iot-002",
           "risikoelement": {
             "no": "DDoS-angrep fra botnet av kompromitterte IoT-enheter",
             "en": "DDoS-angrep from botnet of kompromitterte IoT-devices"
@@ -473,10 +488,11 @@
           "foreslaatteTiltak": {
             "no": "enhet health overvåking, anomaly detection, kill switch, DDoS mitigation",
             "en": "Device health monitoring, anomaly detection, kill switch, DDoS mitigation"
-          }
+          },
+          "legacyId": "cloud-iot-002"
         },
         {
-          "id": "cloud-iot-003",
+          "id": "iot-embedded-cloud-iot-003",
           "risikoelement": {
             "no": "Sårbart IoT API eksponert på internett",
             "en": "A vulnerable IoT API is exposed on the internet"
@@ -500,10 +516,11 @@
           "foreslaatteTiltak": {
             "no": "API gateway, rate limiting, OAuth scopes, input validation, WAF",
             "en": "API gateway, rate limiting, OAuth scopes, input validation, WAF"
-          }
+          },
+          "legacyId": "cloud-iot-003"
         },
         {
-          "id": "cloud-iot-004",
+          "id": "iot-embedded-cloud-iot-004",
           "risikoelement": {
             "no": "Datalekkasje fra telemetri/sensor data",
             "en": "Datalekkasje from telemetri/sensor data"
@@ -513,7 +530,7 @@
             "en": "Sensitive data in telemetry, personal data from sensorer"
           },
           "eksisterendeBeskyttelse": {
-            "no": "Data classification",
+            "no": "Dataklassifisering",
             "en": "Data classification"
           },
           "eksisterendeKontroll": {
@@ -527,7 +544,8 @@
           "foreslaatteTiltak": {
             "no": "Data minimization, edge processing, anonymization, encryption at rest",
             "en": "Data minimization, edge processing, anonymization, encryption at rest"
-          }
+          },
+          "legacyId": "cloud-iot-004"
         }
       ]
     },
@@ -539,7 +557,7 @@
       },
       "risikoer": [
         {
-          "id": "iot-supply-001",
+          "id": "iot-embedded-iot-supply-001",
           "risikoelement": {
             "no": "Kompromitterte enheter fra produsent",
             "en": "Kompromitterte devices from produsent"
@@ -563,10 +581,11 @@
           "foreslaatteTiltak": {
             "no": "Sikkerhetsrevisjon av leverandør, firmwarevalidering, sikker leverandørkjede og attestering",
             "en": "Vendor security audit, firmware validation, secure supply chain, attestation"
-          }
+          },
+          "legacyId": "iot-supply-001"
         },
         {
-          "id": "iot-supply-002",
+          "id": "iot-embedded-iot-supply-002",
           "risikoelement": {
             "no": "Counterfeit eller cloned IoT-enheter",
             "en": "Counterfeit or cloned IoT-devices"
@@ -590,10 +609,11 @@
           "foreslaatteTiltak": {
             "no": "Hardware attestation, unique enhet IDs, secure elements, supply chain verification",
             "en": "Hardware attestation, unique device IDs, secure elements, supply chain verification"
-          }
+          },
+          "legacyId": "iot-supply-002"
         },
         {
-          "id": "iot-supply-003",
+          "id": "iot-embedded-iot-supply-003",
           "risikoelement": {
             "no": "Mangel på firmware- og sikkerhetsoppdateringer etter EOL",
             "en": "Mangel on firmware/security updates after EOL"
@@ -617,7 +637,8 @@
           "foreslaatteTiltak": {
             "no": "Lifecycle planning, replacement budget, open-source firmware option, long-term support agreements",
             "en": "Lifecycle planning, replacement budget, open-source firmware option, long-term support agreements"
-          }
+          },
+          "legacyId": "iot-supply-003"
         }
       ]
     },
@@ -629,7 +650,7 @@
       },
       "risikoer": [
         {
-          "id": "edge-001",
+          "id": "iot-embedded-edge-001",
           "risikoelement": {
             "no": "Kompromittert edge gateway gir tilgang til alle downstream enheter",
             "en": "A compromised edge gateway provides access to all downstream devices"
@@ -653,10 +674,11 @@
           "foreslaatteTiltak": {
             "no": "Micro-segmentation, least privilege, attestation, anomaly detection",
             "en": "Micro-segmentation, least privilege, attestation, anomaly detection"
-          }
+          },
+          "legacyId": "edge-001"
         },
         {
-          "id": "edge-002",
+          "id": "iot-embedded-edge-002",
           "risikoelement": {
             "no": "Fysisk tilgang til edge-enhet i usikret lokasjon",
             "en": "Physical access to an edge device in an unsecured location"
@@ -680,10 +702,11 @@
           "foreslaatteTiltak": {
             "no": "Encrypted storage, tamper detection, secure boot, remote wipe capability",
             "en": "Encrypted storage, tamper detection, secure boot, remote wipe capability"
-          }
+          },
+          "legacyId": "edge-002"
         },
         {
-          "id": "edge-003",
+          "id": "iot-embedded-edge-003",
           "risikoelement": {
             "no": "Edge ML-modeller kan bli stjålet eller poisoned",
             "en": "Edge ML-modeller can bli stolen or poisoned"
@@ -707,7 +730,8 @@
           "foreslaatteTiltak": {
             "no": "Modellkryptering, TEE for inference, model watermarking og federated learning",
             "en": "Model encryption, TEE for inference, model watermarking, federated learning"
-          }
+          },
+          "legacyId": "edge-003"
         }
       ]
     }

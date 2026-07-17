@@ -1,0 +1,95 @@
+{
+  "id": "baseline-ot-ics",
+  "name": "Baseline - OT og ICS",
+  "metadata": {
+    "tjeneste": "Baseline - OT og ICS",
+    "dato": "2026-07-17",
+    "beskrivelse": "Startmal for industrielle kontrollsystemer, OT-miljøer og bygg- eller produksjonsautomasjon. Vektlegger safety, tilgjengelighet, segmentering og kontrollert endring.",
+    "utfortAv": "Risky",
+    "language": "no"
+  },
+  "createdDate": "2026-07-17",
+  "lastModified": "2026-07-17",
+  "risikoer": [
+    {
+      "id": "baseline-ot-001",
+      "risikoelement": "Uvedkommende får tilgang til kontrollsystemer eller engineering-stasjoner",
+      "saarbarhet": "OT-nettverket er eksponert, kontoer deles eller fjernaksess er ikke tilstrekkelig sikret.",
+      "eksisterendeBeskyttelse": "Tilgang til kontrollmiljøet er begrenset til driftspersonell.",
+      "eksisterendeKontroll": "Fjernaksess åpnes manuelt ved behov.",
+      "K": 5, "I": 5, "T": 5, "konsekvens": 5, "sannsynlighet": 3, "risikonivaa": 15,
+      "foreslaatteTiltak": "Segmenter OT, bruk jump host, sterk autentisering, named accounts og tidsbegrenset fjernaksess med full logging.",
+      "kommentarer": []
+    },
+    {
+      "id": "baseline-ot-002",
+      "risikoelement": "Uautorisert endring av PLC-, SCADA- eller automasjonslogikk",
+      "saarbarhet": "Endringer kan gjøres direkte i produksjon uten godkjenning, versjonskontroll eller mulighet for sikker rollback.",
+      "eksisterendeBeskyttelse": "Endringer utføres av autoriserte fagpersoner.",
+      "eksisterendeKontroll": "Operatører kontrollerer anlegget etter endringer.",
+      "K": 5, "I": 5, "T": 4, "konsekvens": 5, "sannsynlighet": 3, "risikonivaa": 15,
+      "foreslaatteTiltak": "Innfør change control, backup av konfigurasjon, peer review, testing i separat miljø og dokumentert rollback.",
+      "kommentarer": []
+    },
+    {
+      "id": "baseline-ot-003",
+      "risikoelement": "Mangler og sårbarheter i OT-utstyr blir ikke oppdaget",
+      "saarbarhet": "Inventar, firmware, støttestatus og sårbarheter er ufullstendig kartlagt, og aktiv scanning kan være risikabelt.",
+      "eksisterendeBeskyttelse": "Leverandører varsler om enkelte kritiske feil.",
+      "eksisterendeKontroll": "Utstyr oppdateres ved planlagte vedlikeholdsvinduer.",
+      "K": 4, "I": 5, "T": 4, "konsekvens": 5, "sannsynlighet": 3, "risikonivaa": 15,
+      "foreslaatteTiltak": "Etabler passiv asset discovery, risikobasert patching, kompenserende tiltak og oversikt over unsupported equipment.",
+      "kommentarer": []
+    },
+    {
+      "id": "baseline-ot-004",
+      "risikoelement": "IT- og OT-nettverk påvirker hverandre uønsket",
+      "saarbarhet": "Manglende sonedeling, flate nettverk eller usikre integrasjoner gjør at et angrep kan spre seg til kontrollmiljøet.",
+      "eksisterendeBeskyttelse": "Noen systemer er plassert i separate nettverk.",
+      "eksisterendeKontroll": "Brannmurregler gjennomgås ved større endringer.",
+      "K": 5, "I": 5, "T": 4, "konsekvens": 5, "sannsynlighet": 3, "risikonivaa": 15,
+      "foreslaatteTiltak": "Definer soner og conduits, begrens trafikk til nødvendige forbindelser og overvåk overgangene mellom IT, OT og leverandørnett.",
+      "kommentarer": []
+    },
+    {
+      "id": "baseline-ot-005",
+      "risikoelement": "Sikkerhetskontroller reduserer safety eller stabil drift",
+      "saarbarhet": "Tiltak testes ikke mot prosesskrav, tidskritiske funksjoner og sikker tilstand før de aktiveres i produksjon.",
+      "eksisterendeBeskyttelse": "Drift og safety vurderes ved planlagte endringer.",
+      "eksisterendeKontroll": "Operatører følger med på alarmer etter endringer.",
+      "K": 5, "I": 5, "T": 5, "konsekvens": 5, "sannsynlighet": 2, "risikonivaa": 10,
+      "foreslaatteTiltak": "Test cybersecurity-tiltak i et representativt miljø, involver safety- og driftspersonell og dokumenter sikker fallback ved feil.",
+      "kommentarer": []
+    },
+    {
+      "id": "baseline-ot-006",
+      "risikoelement": "Hendelser oppdages for sent i kontrollmiljøet",
+      "saarbarhet": "Logger, alarmer og nettverkssignaler samles ikke eller tolkes ikke av personell som kjenner prosessen.",
+      "eksisterendeBeskyttelse": "Kontrollsystemet viser driftsalarmer.",
+      "eksisterendeKontroll": "Operatører vurderer alarmer i arbeidstiden.",
+      "K": 5, "I": 4, "T": 4, "konsekvens": 5, "sannsynlighet": 3, "risikonivaa": 15,
+      "foreslaatteTiltak": "Samle relevante logger uten å påvirke prosessen, etabler OT-aware monitoring og definer varsling og døgnkontinuitet for kritiske signaler.",
+      "kommentarer": []
+    },
+    {
+      "id": "baseline-ot-007",
+      "risikoelement": "Manglende eller utestet manuell drift ved bortfall av automasjon",
+      "saarbarhet": "Prosedyrene er utdaterte, personavhengige eller ikke øvd i situasjoner med tap av strøm, nettverk eller kontrollsystem.",
+      "eksisterendeBeskyttelse": "Det finnes enkelte lokale nødprosedyrer.",
+      "eksisterendeKontroll": "Beredskap gjennomgås etter alvorlige hendelser.",
+      "K": 5, "I": 5, "T": 5, "konsekvens": 5, "sannsynlighet": 3, "risikonivaa": 15,
+      "foreslaatteTiltak": "Dokumenter safe state og manuelle prosedyrer, øv med drift og beredskap og verifiser at kritiske reservedeler og kompetanse er tilgjengelig.",
+      "kommentarer": []
+    },
+    {
+      "id": "baseline-ot-008",
+      "risikoelement": "Leverandøravhengighet hindrer rask respons og gjenoppretting",
+      "saarbarhet": "Kun leverandøren har nødvendig kompetanse, tilgang, dokumentasjon eller reservedeler ved feil og hendelser.",
+      "eksisterendeBeskyttelse": "Det finnes supportavtale med systemleverandøren.",
+      "eksisterendeKontroll": "Leverandøren kontaktes ved større feil.",
+      "K": 5, "I": 5, "T": 4, "konsekvens": 5, "sannsynlighet": 3, "risikonivaa": 15,
+      "foreslaatteTiltak": "Avtal responstid, beredskap og fjernaksess, behold nødvendig dokumentasjon og bygg intern kompetanse og alternative gjenopprettingsmuligheter.",
+      "kommentarer": []
+    }
+  ]
+}

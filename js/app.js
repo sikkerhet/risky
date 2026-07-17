@@ -13,6 +13,16 @@ function generateUUID() {
     });
 }
 
+function toScore(value) {
+    const score = Number(value);
+    return Number.isFinite(score) ? Math.min(5, Math.max(0, score)) : 0;
+}
+
+function toRiskLevel(value) {
+    const level = Number(value);
+    return Number.isFinite(level) ? Math.min(25, Math.max(0, level)) : 0;
+}
+
 function firstDefined(...values) {
     return values.find((value) => value !== undefined && value !== null);
 }
@@ -23,7 +33,8 @@ function normalizeComment(comment = {}) {
         type: comment.type || 'kommentar',
         text: comment.text || comment.tekst || '',
         links: Array.isArray(comment.links) ? comment.links : [],
-        created: comment.created || comment.opprettet || new Date().toISOString(),
+        created: comment.created || comment.timestamp || comment.opprettet || new Date().toISOString(),
+        author: comment.author || comment.forfatter || '',
         visible: comment.visible !== false
     };
 }
@@ -31,18 +42,19 @@ function normalizeComment(comment = {}) {
 function normalizeRisk(rawRisk = {}, index = 0) {
     const risk = {
         id: rawRisk.id || generateUUID(),
+        legacyId: rawRisk.legacyId || '',
         number: firstDefined(rawRisk.number, rawRisk.nr, index + 1) || 0,
         riskGroup: firstDefined(rawRisk.riskGroup, rawRisk.group, rawRisk.gruppe, ''),
         riskElement: firstDefined(rawRisk.riskElement, rawRisk.risikoelement, ''),
         vulnerability: firstDefined(rawRisk.vulnerability, rawRisk.saarbarhet, ''),
         existingProtection: firstDefined(rawRisk.existingProtection, rawRisk.eksisterendeBeskyttelse, ''),
         existingControl: firstDefined(rawRisk.existingControl, rawRisk.eksisterendeKontroll, ''),
-        K: Number(firstDefined(rawRisk.K, 0)),
-        I: Number(firstDefined(rawRisk.I, 0)),
-        T: Number(firstDefined(rawRisk.T, 0)),
-        consequence: Number(firstDefined(rawRisk.consequence, rawRisk.konsekvens, 0)),
-        probability: Number(firstDefined(rawRisk.probability, rawRisk.sannsynlighet, 0)),
-        riskLevel: Number(firstDefined(rawRisk.riskLevel, rawRisk.risikonivaa, 0)),
+        K: toScore(firstDefined(rawRisk.K, 0)),
+        I: toScore(firstDefined(rawRisk.I, 0)),
+        T: toScore(firstDefined(rawRisk.T, 0)),
+        consequence: toScore(firstDefined(rawRisk.consequence, rawRisk.konsekvens, 0)),
+        probability: toScore(firstDefined(rawRisk.probability, rawRisk.sannsynlighet, 0)),
+        riskLevel: toRiskLevel(firstDefined(rawRisk.riskLevel, rawRisk.risikonivaa, 0)),
         proposedMeasures: firstDefined(rawRisk.proposedMeasures, rawRisk.foreslaatteTiltak, ''),
         comments: Array.isArray(rawRisk.comments || rawRisk.kommentarer)
             ? (rawRisk.comments || rawRisk.kommentarer).map(normalizeComment)
@@ -267,7 +279,10 @@ async function getBaselineAnalysesData() {
         'baseline-devops-cicd.json',
         'baseline-webapp.json',
         'baseline-database.json',
-        'baseline-mobile.json'
+        'baseline-mobile.json',
+        'baseline-leverandor.json',
+        'baseline-ot-ics.json',
+        'baseline-kritisk-tjeneste.json'
     ];
 
     const loadedBaselines = await Promise.all(
@@ -287,13 +302,24 @@ async function getBaselineAnalysesData() {
 }
 
 function getAnalyses() {
-    const stored = localStorage.getItem(STORAGE_KEY);
-    const analyses = stored ? JSON.parse(stored) : [];
-    return analyses.map(normalizeAnalysis);
+    try {
+        const stored = localStorage.getItem(STORAGE_KEY);
+        const analyses = stored ? JSON.parse(stored) : [];
+        return Array.isArray(analyses) ? analyses.map(normalizeAnalysis) : [];
+    } catch (error) {
+        console.warn('Could not read saved analyses; ignoring invalid browser data.', error);
+        return [];
+    }
 }
 
 function saveAnalyses(analyses) {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(analyses.map(serializeAnalysis)));
+    try {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(analyses.map(serializeAnalysis)));
+        return true;
+    } catch (error) {
+        console.error('Could not save analyses to browser storage.', error);
+        return false;
+    }
 }
 
 function getAnalysisById(id) {
@@ -330,7 +356,9 @@ function updateAnalysis(id, updates) {
         lastModified: new Date().toISOString()
     });
 
-    saveAnalyses(analyses);
+    setSaveStatus('saving');
+    const saved = saveAnalyses(analyses);
+    setSaveStatus(saved ? 'saved' : 'error');
     return analyses[index];
 }
 
@@ -397,12 +425,26 @@ function formatDate(dateStr) {
     return String(dateStr).split('T')[0];
 }
 
-function showSavedIndicator() {
+function setSaveStatus(status) {
     const indicator = document.getElementById('savedIndicator');
     if (!indicator) return;
 
+    const labels = {
+        saving: t('saving'),
+        saved: t('saved'),
+        error: t('saveFailed')
+    };
+    indicator.className = `saved-indicator ${status}`;
+    indicator.textContent = labels[status] || labels.saved;
     indicator.style.display = 'inline';
-    setTimeout(() => {
-        indicator.style.display = 'none';
-    }, 2000);
+    if (status !== 'saving') {
+        clearTimeout(window._saveStatusTimer);
+        window._saveStatusTimer = setTimeout(() => {
+            indicator.style.display = 'none';
+        }, status === 'error' ? 5000 : 2000);
+    }
+}
+
+function showSavedIndicator() {
+    setSaveStatus('saved');
 }

@@ -17,7 +17,7 @@
       },
       "risikoer": [
         {
-          "id": "bcp-001",
+          "id": "kontinuitet-bcp-001",
           "risikoelement": {
             "no": "Manglende eller utdatert BCP/DR-plan",
             "en": "Missing or outdated BCP/DR plan"
@@ -41,10 +41,11 @@
           "foreslaatteTiltak": {
             "no": "Utarbeide formell BCP/DR-plan med årlig revisjon, inkludere alle kritiske systemer og tjenester",
             "en": "Prepare a formal BCP/DR plan, review it annually, and include all critical systems and services"
-          }
+          },
+          "legacyId": "bcp-001"
         },
         {
-          "id": "bcp-002",
+          "id": "kontinuitet-bcp-002",
           "risikoelement": {
             "no": "Ukjente eller udokumenterte avhengigheter",
             "en": "Unknown or undocumented dependencies"
@@ -68,10 +69,11 @@
           "foreslaatteTiltak": {
             "no": "Gjennomføre Business Impact Analysis (BIA) med avhengighetskartlegging og vedlikeholde avhengighetskart",
             "en": "Conduct a Business Impact Analysis (BIA) with dependency mapping and maintain a dependency map"
-          }
+          },
+          "legacyId": "bcp-002"
         },
         {
-          "id": "bcp-003",
+          "id": "kontinuitet-bcp-003",
           "risikoelement": {
             "no": "Manglende RTO/RPO-definering",
             "en": "Missing RTO/RPO definitions"
@@ -95,10 +97,11 @@
           "foreslaatteTiltak": {
             "no": "Definere RTO/RPO per system basert på BIA, forankre i SLA og backup-strategi",
             "en": "Define RTO and RPO per system based on the BIA, and anchor them in SLAs and the backup strategy"
-          }
+          },
+          "legacyId": "bcp-003"
         },
         {
-          "id": "bcp-004",
+          "id": "kontinuitet-bcp-004",
           "risikoelement": {
             "no": "BCP dekker ikke alle kritiske tjenester",
             "en": "The BCP does not cover all critical services"
@@ -122,10 +125,11 @@
           "foreslaatteTiltak": {
             "no": "Regelmessig oppdatering av systemkatalog, inkludere nye systemer i BCP-prosess",
             "en": "Update the system inventory regularly and include new systems in the BCP process"
-          }
+          },
+          "legacyId": "bcp-004"
         },
         {
-          "id": "bcp-005",
+          "id": "kontinuitet-bcp-005",
           "risikoelement": {
             "no": "Kritisk infrastruktur er ikke geografisk tilstrekkelig spredt",
             "en": "Critical infrastructure is not geographically distributed sufficiently"
@@ -149,7 +153,8 @@
           "foreslaatteTiltak": {
             "no": "Sikre geografisk spredning av kritisk infrastruktur over ulike regioner, multi-region strategi for skytjenester",
             "en": "Ensure geographic separation of critical infrastructure across regions and use a multi-region strategy for cloud services"
-          }
+          },
+          "legacyId": "bcp-005"
         }
       ]
     },
@@ -161,7 +166,7 @@
       },
       "risikoer": [
         {
-          "id": "backup-001",
+          "id": "kontinuitet-backup-001",
           "risikoelement": {
             "no": "backup feiler uten varsling",
             "en": "Backup fails without alerting"
@@ -185,10 +190,11 @@
           "foreslaatteTiltak": {
             "no": "Implementere automatisk monitorering av backup-status med umiddelbar varsling ved feil, success/failure metrics",
             "en": "Implement automatic monitoring of backup status with immediate alerts on failure, and track both success and failure metrics"
-          }
+          },
+          "legacyId": "backup-001"
         },
         {
-          "id": "backup-002",
+          "id": "kontinuitet-backup-002",
           "risikoelement": {
             "no": "backup aldri testet for gjenoppretting",
             "en": "Backups are never tested for recovery"
@@ -212,10 +218,11 @@
           "foreslaatteTiltak": {
             "no": "Kvartalsvis restore-test i isolert miljø, dokumentere restore-tid og prosedyre",
             "en": "Run quarterly restore tests in an isolated environment and document restore time and procedure"
-          }
+          },
+          "legacyId": "backup-002"
         },
         {
-          "id": "backup-003",
+          "id": "kontinuitet-backup-003",
           "risikoelement": {
             "no": "backup-retention oppfyller ikke krav",
             "en": "Backup retention does not meet requirements"
@@ -239,10 +246,11 @@
           "foreslaatteTiltak": {
             "no": "Definere retention-policy basert på compliance-krav, implementere lifecycle management",
             "en": "Define a retention policy based on compliance requirements and implement lifecycle management"
-          }
+          },
+          "legacyId": "backup-003"
         },
         {
-          "id": "backup-004",
+          "id": "kontinuitet-backup-004",
           "risikoelement": {
             "no": "backup-data kan eksponeres fordi de ikke er godt nok beskyttet",
             "en": "Backup data can be exposed because it is not adequately protected"
@@ -266,10 +274,11 @@
           "foreslaatteTiltak": {
             "no": "Kryptere alle backups at-rest og in-transit, sikker nøkkelhåndtering, immutable backups mot ransomware",
             "en": "Encrypt all backups at rest and in transit, use secure key management, and maintain immutable backups against ransomware"
-          }
+          },
+          "legacyId": "backup-004"
         },
         {
-          "id": "backup-005",
+          "id": "kontinuitet-backup-005",
           "risikoelement": {
             "no": "Manglende offline/air-gapped backup",
             "en": "Missing offline/air-gapped backup"
@@ -293,10 +302,11 @@
           "foreslaatteTiltak": {
             "no": "Implementere 3-2-1 backup-strategi med offline eller air-gapped kopi, immutable backups",
             "en": "Implement a 3-2-1 backup strategy with an offline or air-gapped copy and immutable backups"
-          }
+          },
+          "legacyId": "backup-005"
         },
         {
-          "id": "backup-006",
+          "id": "kontinuitet-backup-006",
           "risikoelement": {
             "no": "Konfigurasjoner og hemmeligheter sikkerhetskopieres ikke tilstrekkelig",
             "en": "Configurations and secrets are not backed up sufficiently"
@@ -320,7 +330,8 @@
           "foreslaatteTiltak": {
             "no": "Inkludere konfigurasjoner, IaC state, secrets (kryptert) i backup-strategi, automatisere config backup",
             "en": "Include configurations, IaC state, and encrypted secrets in the backup strategy, and automate configuration backups"
-          }
+          },
+          "legacyId": "backup-006"
         }
       ]
     },
@@ -332,7 +343,7 @@
       },
       "risikoer": [
         {
-          "id": "krise-001",
+          "id": "kontinuitet-krise-001",
           "risikoelement": {
             "no": "Roller og ansvar kolliderer i en krisesituasjon",
             "en": "Roles and responsibilities collide during a crisis"
@@ -356,10 +367,11 @@
           "foreslaatteTiltak": {
             "no": "Etablere Crisis Management Team (CMT) med definerte roller (hendelse commander, kommunikasjon, teknisk), RACI for krisehåndtering",
             "en": "Establish a Crisis Management Team (CMT) with defined roles such as incident commander, communications, and technical lead, and maintain a RACI for crisis management"
-          }
+          },
+          "legacyId": "krise-001"
         },
         {
-          "id": "krise-002",
+          "id": "kontinuitet-krise-002",
           "risikoelement": {
             "no": "Mangelfull eller forsinket intern kommunikasjon",
             "en": "Mangelfull or forsinket intern communications"
@@ -383,10 +395,11 @@
           "foreslaatteTiltak": {
             "no": "Etablere kommunikasjonsplan for kriser, definere eskaleringsnivåer og kommunikasjonskanaler, pre-approved meldingsmaler",
             "en": "Establish a crisis communication plan, define escalation levels and communication channels, and prepare pre-approved message templates"
-          }
+          },
+          "legacyId": "krise-002"
         },
         {
-          "id": "krise-003",
+          "id": "kontinuitet-krise-003",
           "risikoelement": {
             "no": "Uforberedt ekstern kommunikasjon",
             "en": "Uforberedt external communications"
@@ -410,10 +423,11 @@
           "foreslaatteTiltak": {
             "no": "Utarbeide kommunikasjonsmaler for ulike hendelsestyper, definere godkjenningsprosess, media opplæring for nøkkelpersoner",
             "en": "Prepare communication templates for different incident types, define an approval process, and provide media training for key personnel"
-          }
+          },
+          "legacyId": "krise-003"
         },
         {
-          "id": "krise-004",
+          "id": "kontinuitet-krise-004",
           "risikoelement": {
             "no": "Manglende beslutningskompetanse utenfor arbeidstid",
             "en": "Missing beslutningskompetanse outside arbeidstid"
@@ -437,10 +451,11 @@
           "foreslaatteTiltak": {
             "no": "Etablere delegert beslutningskompetanse for vaktlag, definere hva som krever lederinvolvering, 24/7 kontaktliste",
             "en": "establish delegert beslutningskompetanse for vaktlag, define what that krever lederinvolvering, 24/7 kontaktliste"
-          }
+          },
+          "legacyId": "krise-004"
         },
         {
-          "id": "krise-005",
+          "id": "kontinuitet-krise-005",
           "risikoelement": {
             "no": "Krisehåndteringen svikter fordi dokumentasjonen er for svak",
             "en": "Crisis handling fails because the documentation is too weak"
@@ -464,7 +479,8 @@
           "foreslaatteTiltak": {
             "no": "Etablere strukturert loggføring under hendelser (timeline, beslutninger, ansvarlige), bruke dedikert hendelse management tool",
             "en": "Establish structured logging during incidents, including a timeline, decisions, and responsible persons, and use a dedicated incident management tool"
-          }
+          },
+          "legacyId": "krise-005"
         }
       ]
     },
@@ -472,11 +488,11 @@
       "id": "testing-oving",
       "navn": {
         "no": "Testing og øving",
-        "en": "testing and Exercises"
+        "en": "Testing and Exercises"
       },
       "risikoer": [
         {
-          "id": "test-001",
+          "id": "kontinuitet-test-001",
           "risikoelement": {
             "no": "BCP/DR-plan aldri testet",
             "en": "The BCP/DR plan is never tested"
@@ -500,10 +516,11 @@
           "foreslaatteTiltak": {
             "no": "Gjennomføre årlig fullskala DR-test, halvårlige desktop exercises, dokumentere funn og forbedre plan",
             "en": "Conduct an annual full-scale disaster recovery test, semiannual tabletop exercises, document findings, and improve the plan"
-          }
+          },
+          "legacyId": "test-001"
         },
         {
-          "id": "test-002",
+          "id": "kontinuitet-test-002",
           "risikoelement": {
             "no": "Tabletop exercises aldri gjennomført",
             "en": "Tabletop exercises have never been conducted"
@@ -527,10 +544,11 @@
           "foreslaatteTiltak": {
             "no": "Gjennomføre kvartalsvise tabletop exercises med ulike scenarioer, involvere både teknisk og ledelse",
             "en": "Conduct quarterly tabletop exercises with different scenarios and involve both technical teams and management"
-          }
+          },
+          "legacyId": "test-002"
         },
         {
-          "id": "test-003",
+          "id": "kontinuitet-test-003",
           "risikoelement": {
             "no": "Funn fra tester ikke fulgt opp",
             "en": "Findings from exercises are not followed up"
@@ -554,10 +572,11 @@
           "foreslaatteTiltak": {
             "no": "Etablere formell oppfølgingsprosess for testfunn, tildele ansvarlige og deadlines, verifisere lukking",
             "en": "Establish a formal follow-up process for exercise findings, assign owners and deadlines, and verify closure"
-          }
+          },
+          "legacyId": "test-003"
         },
         {
-          "id": "test-004",
+          "id": "kontinuitet-test-004",
           "risikoelement": {
             "no": "Tester dekker ikke realistiske scenarioer",
             "en": "Exercises do not cover realistic scenarios"
@@ -581,10 +600,11 @@
           "foreslaatteTiltak": {
             "no": "Utvikle scenarioer basert på faktiske trusler (ransomware, leverandørbrudd, etc.), inkludere stress-testing av team",
             "en": "Develop scenarios based on real threats such as ransomware and vendor disruption, and include stress-testing of the team"
-          }
+          },
+          "legacyId": "test-004"
         },
         {
-          "id": "test-005",
+          "id": "kontinuitet-test-005",
           "risikoelement": {
             "no": "Nøkkelpersonell deltar ikke i øvelser",
             "en": "Key personnel do not participate in exercises"
@@ -608,7 +628,8 @@
           "foreslaatteTiltak": {
             "no": "Sikre deltagelse fra alle roller i CMT, rotere deltagere for å bygge bredere kompetanse",
             "en": "Ensure participation from all roles in the CMT and rotate participants to build broader expertise"
-          }
+          },
+          "legacyId": "test-005"
         }
       ]
     },
@@ -620,7 +641,7 @@
       },
       "risikoer": [
         {
-          "id": "lev-res-001",
+          "id": "kontinuitet-lev-res-001",
           "risikoelement": {
             "no": "Single point of failure hos kritisk leverandør",
             "en": "Single point of failure with a critical vendor"
@@ -644,10 +665,11 @@
           "foreslaatteTiltak": {
             "no": "Identifisere kritiske leverandører, etablere redundans eller exit-strategi, multi-leverandør for kritiske tjenester der mulig",
             "en": "Identify critical vendors, establish redundancy or exit strategies, and use multiple vendors for critical services where possible"
-          }
+          },
+          "legacyId": "lev-res-001"
         },
         {
-          "id": "lev-res-002",
+          "id": "kontinuitet-lev-res-002",
           "risikoelement": {
             "no": "Leverandørens BCP/DR tåler ikke et reelt avbrudd",
             "en": "The vendor's BCP/DR capability does not withstand a real disruption"
@@ -671,10 +693,11 @@
           "foreslaatteTiltak": {
             "no": "Kreve BCP/DR-dokumentasjon fra kritiske leverandører, inkludere i leverandør due diligence, årlig oppdatering",
             "en": "Require BCP/DR documentation from critical vendors, include it in vendor due diligence, and update it annually"
-          }
+          },
+          "legacyId": "lev-res-002"
         },
         {
-          "id": "lev-res-003",
+          "id": "kontinuitet-lev-res-003",
           "risikoelement": {
             "no": "Manglende varsling ved leverandørhendelser",
             "en": "Missing alerts for vendor incidents"
@@ -698,10 +721,11 @@
           "foreslaatteTiltak": {
             "no": "Kontraktsfeste varslingskrav, abonnere på status-varsler, etablere eskaleringspunkt hos leverandør",
             "en": "Contractually require notifications, subscribe to status alerts, and establish a clear escalation point with the vendor"
-          }
+          },
+          "legacyId": "lev-res-003"
         },
         {
-          "id": "lev-res-004",
+          "id": "kontinuitet-lev-res-004",
           "risikoelement": {
             "no": "Kaskadeeffekt fra underleverandør",
             "en": "Cascade effects from subcontractors"
@@ -725,10 +749,11 @@
           "foreslaatteTiltak": {
             "no": "Kreve transparens om kritiske underleverandører, inkludere i leverandør risk vurdering, 4th party disclosure",
             "en": "Require transparency about critical subcontractors, include them in vendor risk assessments, and require fourth-party disclosure"
-          }
+          },
+          "legacyId": "lev-res-004"
         },
         {
-          "id": "lev-res-005",
+          "id": "kontinuitet-lev-res-005",
           "risikoelement": {
             "no": "Leverandørkonkurs eller tjeneste nedlagt",
             "en": "Vendor bankruptcy or service shutdown"
@@ -752,7 +777,8 @@
           "foreslaatteTiltak": {
             "no": "Exit-strategi for kritiske leverandører, escrow-avtaler for kritisk kildekode, overvåke leverandørs finansielle situasjon",
             "en": "Define an exit strategy for critical vendors, use escrow agreements for critical source code, and monitor the vendor's financial situation"
-          }
+          },
+          "legacyId": "lev-res-005"
         }
       ]
     },
@@ -764,7 +790,7 @@
       },
       "risikoer": [
         {
-          "id": "ir-001",
+          "id": "kontinuitet-ir-001",
           "risikoelement": {
             "no": "Manglende incident response plan",
             "en": "Missing incident response plan"
@@ -788,10 +814,11 @@
           "foreslaatteTiltak": {
             "no": "Etablere formell incident response plan (IRP) basert på NIST/SANS og definere faser: forberedelse, deteksjon, containment, eradication, gjenoppretting og lessons learned",
             "en": "establish formell Incident Response plan (IRP) based on NIST/SANS, define faser: forberedelse, detection, containment, eradication, recovery, lessons learned"
-          }
+          },
+          "legacyId": "ir-001"
         },
         {
-          "id": "ir-002",
+          "id": "kontinuitet-ir-002",
           "risikoelement": {
             "no": "Langsom deteksjon av hendelser",
             "en": "Slow detection of incidents"
@@ -815,10 +842,11 @@
           "foreslaatteTiltak": {
             "no": "Implementere SIEM eller Security Analytics, definere brukstilfeller for deteksjon og etablere 24/7-overvåking eller SOC",
             "en": "Implement SIEM or security analytics, define concrete detection use cases, and establish 24/7 monitoring or a SOC"
-          }
+          },
+          "legacyId": "ir-002"
         },
         {
-          "id": "ir-003",
+          "id": "kontinuitet-ir-003",
           "risikoelement": {
             "no": "Digitale spor går tapt før de kan sikres",
             "en": "Digital evidence is lost before it can be secured"
@@ -842,10 +870,11 @@
           "foreslaatteTiltak": {
             "no": "Etablere digital etterforskningsberedskap med verktøy, kompetanse eller ekstern retainer, og dokumentere chain of custody-prosedyrer",
             "en": "Establish digital forensics readiness, including tools, competence, or an external retainer, and document chain-of-custody procedures"
-          }
+          },
+          "legacyId": "ir-003"
         },
         {
-          "id": "ir-004",
+          "id": "kontinuitet-ir-004",
           "risikoelement": {
             "no": "Manglende post-hendelse gjennomgang",
             "en": "Missing post-incident review"
@@ -869,10 +898,11 @@
           "foreslaatteTiltak": {
             "no": "Etablere obligatorisk post-hendelsegjennomgang (PIR) for alle P1/P2-hendelser, blameless post-mortem-kultur og sporbare tiltakspunkter",
             "en": "Establish mandatory post-incident reviews for all P1 and P2 incidents, use a blameless post-mortem culture, and track action items to closure"
-          }
+          },
+          "legacyId": "ir-004"
         },
         {
-          "id": "ir-005",
+          "id": "kontinuitet-ir-005",
           "risikoelement": {
             "no": "Ingen runbooks for vanlige hendelser",
             "en": "No runbooks for common incidents"
@@ -896,10 +926,11 @@
           "foreslaatteTiltak": {
             "no": "Utvikle runbooks for vanlige hendelser (DDoS, ransomware, databrudd), inkludere playbooks i IRP, holde oppdatert",
             "en": "Develop runbooks for common incidents such as DDoS, ransomware, and data breaches, include the playbooks in the incident response plan, and keep them updated"
-          }
+          },
+          "legacyId": "ir-005"
         },
         {
-          "id": "ir-006",
+          "id": "kontinuitet-ir-006",
           "risikoelement": {
             "no": "Manglende kapasitet ved storskala hendelse",
             "en": "Insufficient capacity during large-scale incidents"
@@ -923,7 +954,8 @@
           "foreslaatteTiltak": {
             "no": "Etablere surge capacity-plan med ekstra ressurser og eksterne konsulenter, retainer med IR-firma og kryssopplæring for bredere bemanning",
             "en": "Establish a surge capacity plan with additional resources and external consultants, maintain a retainer with an incident response firm, and cross-train staff for broader coverage"
-          }
+          },
+          "legacyId": "ir-006"
         }
       ]
     }
