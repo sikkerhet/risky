@@ -1,5 +1,18 @@
 # Changelog
 
+## [2.4.1] - 2026-07-17
+
+### Changed
+
+- Refined Excel exports to resemble the PDF report more closely.
+- Added report headers and metadata to the risks and comments sheets.
+- Added consistent print settings, margins, hidden gridlines and frozen report headers across worksheets.
+- Improved row striping, borders, text wrapping and automatic row heights for long risk descriptions.
+
+### Validation
+
+- Added a workbook-layout smoke test covering sheet structure, formulas and report headers.
+
 ## [2.4.0] - 2026-07-17
 
 ### Added
