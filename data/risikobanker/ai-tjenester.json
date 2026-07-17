@@ -17,7 +17,7 @@
       },
       "risikoer": [
         {
-          "id": "llm-001",
+          "id": "ai-tjenester-llm-001",
           "risikoelement": {
             "no": "Prompt injection - bruker manipulerer AI til uønsket oppførsel",
             "en": "Prompt injection causes the AI to produce unintended behavior"
@@ -41,10 +41,11 @@
           "foreslaatteTiltak": {
             "no": "Promptmaler, sanitering av input, separate bruker- og systemkontekster og validering av output",
             "en": "Prompt templating, input sanitization, separate user/system contexts, output validation"
-          }
+          },
+          "legacyId": "llm-001"
         },
         {
-          "id": "llm-002",
+          "id": "ai-tjenester-llm-002",
           "risikoelement": {
             "no": "Sensitive data lekker via treningsdata eller kontekst",
             "en": "Sensitive data leaks through training data or context"
@@ -68,10 +69,11 @@
           "foreslaatteTiltak": {
             "no": "Oppdagelse og sladding av PII, dataminimering og separate modeller for ulike sensitivitetsnivåer",
             "en": "PII detection/redaction, data minimization, separate models per sensitivity level"
-          }
+          },
+          "legacyId": "llm-002"
         },
         {
-          "id": "llm-003",
+          "id": "ai-tjenester-llm-003",
           "risikoelement": {
             "no": "Hallucinations - AI genererer falsk eller misvisende informasjon",
             "en": "Hallucinations cause the AI to generate false or misleading information"
@@ -95,10 +97,11 @@
           "foreslaatteTiltak": {
             "no": "Retrieval-Augmented Generation (RAG), lag for faktasjekk, konfidensskårer og menneskelig kontroll ved kritiske beslutninger",
             "en": "Retrieval-Augmented Generation (RAG), a fact-checking layer, confidence scores, and human review for critical decisions"
-          }
+          },
+          "legacyId": "llm-003"
         },
         {
-          "id": "llm-004",
+          "id": "ai-tjenester-llm-004",
           "risikoelement": {
             "no": "Model inversion - uthenting av treningsdata",
             "en": "Model inversion exposes training data"
@@ -122,10 +125,11 @@
           "foreslaatteTiltak": {
             "no": "Differential privacy i treningen, filtrering av output og testing for memorisering",
             "en": "Differential privacy in training, output filtering, memorization testing"
-          }
+          },
+          "legacyId": "llm-004"
         },
         {
-          "id": "llm-005",
+          "id": "ai-tjenester-llm-005",
           "risikoelement": {
             "no": "Indirekte prompt injection via eksternt innhold",
             "en": "Indirect prompt injection through external content"
@@ -149,10 +153,11 @@
           "foreslaatteTiltak": {
             "no": "Isoler eksternt innhold, skil mellom privilegier og krev eksplisitt bekreftelse for sensitive handlinger",
             "en": "Isolate external content, privilege separation, action confirmation for sensitive operations"
-          }
+          },
+          "legacyId": "llm-005"
         },
         {
-          "id": "llm-006",
+          "id": "ai-tjenester-llm-006",
           "risikoelement": {
             "no": "Modelleksfiltrasjon via API-kall",
             "en": "Model theft through API queries"
@@ -176,10 +181,11 @@
           "foreslaatteTiltak": {
             "no": "Deteksjon av spørringsmønstre, forstyrrelse av output, vannmerking og strenge frekvensgrenser",
             "en": "Query pattern detection, output perturbation, watermarking, strict rate limits"
-          }
+          },
+          "legacyId": "llm-006"
         },
         {
-          "id": "llm-007",
+          "id": "ai-tjenester-llm-007",
           "risikoelement": {
             "no": "Usikker håndtering av output gir XSS eller injeksjon via KI-generert innhold",
             "en": "Insecure output handling enables XSS or injection through AI output"
@@ -203,7 +209,8 @@
           "foreslaatteTiltak": {
             "no": "Rensing av output, CSP-headere, behandling av AI-output som ubetrodd og sikker parsing av markdown/HTML",
             "en": "Output sanitization, CSP headers, treat AI output as untrusted, markdown/HTML parsing security"
-          }
+          },
+          "legacyId": "llm-007"
         }
       ]
     },
@@ -215,7 +222,7 @@
       },
       "risikoer": [
         {
-          "id": "agent-001",
+          "id": "ai-tjenester-agent-001",
           "risikoelement": {
             "no": "Ukontrollerte handlinger - agent utfører destruktive operasjoner",
             "en": "Uncontrolled actions cause the agent to perform destructive operations"
@@ -239,10 +246,11 @@
           "foreslaatteTiltak": {
             "no": "Menneskelig godkjenning for destruktive operasjoner, tillatt- og blokklistede handlinger, tørrkjøringsmodus og mulighet for å angre",
             "en": "Human-in-the-loop for destructive ops, action whitelist/blacklist, dry-run mode, undo capability"
-          }
+          },
+          "legacyId": "agent-001"
         },
         {
-          "id": "agent-002",
+          "id": "ai-tjenester-agent-002",
           "risikoelement": {
             "no": "Privilegieeskalering - agenten får mer tilgang enn tiltenkt",
             "en": "Privilege escalation gives the agent more access than intended"
@@ -266,10 +274,11 @@
           "foreslaatteTiltak": {
             "no": "Minste privilegium per verktøy, kapabilitetsbasert sikkerhet, sandkassekjøring og handlingsbudsjetter",
             "en": "Least privilege per tool, capability-based security, sandbox execution, action budgets"
-          }
+          },
+          "legacyId": "agent-002"
         },
         {
-          "id": "agent-003",
+          "id": "ai-tjenester-agent-003",
           "risikoelement": {
             "no": "Uendelige løkker og ressursutmattelse",
             "en": "Endless loops and resource exhaustion"
@@ -293,10 +302,11 @@
           "foreslaatteTiltak": {
             "no": "Maksgrense for iterasjoner, stegbudsjett, circuit breakers, kostnadstak og loopdeteksjon",
             "en": "Max iterations limit, step budget, circuit breakers, cost caps, loop detection"
-          }
+          },
+          "legacyId": "agent-003"
         },
         {
-          "id": "agent-004",
+          "id": "ai-tjenester-agent-004",
           "risikoelement": {
             "no": "Målfeiljustering - agenten optimerer feil måltall",
             "en": "Goal misalignment causes the agent to optimize the wrong metric"
@@ -320,10 +330,11 @@
           "foreslaatteTiltak": {
             "no": "Inverse reward learning, multiobjektiv optimalisering, menneskelig tilbakemelding og prinsipper fra Constitutional AI",
             "en": "Inverse reward learning, multi-objective optimization, human feedback, constitutional AI principles"
-          }
+          },
+          "legacyId": "agent-004"
         },
         {
-          "id": "agent-005",
+          "id": "ai-tjenester-agent-005",
           "risikoelement": {
             "no": "Informasjonslekkasje gjennom bruk av verktøy",
             "en": "Information leakage via tool use"
@@ -347,10 +358,11 @@
           "foreslaatteTiltak": {
             "no": "DLP på verktøyinput, tillattliste for eksterne verktøy og revisjon av alle eksterne kall",
             "en": "Data loss prevention on tool inputs, allowlist of external tools, audit all external calls"
-          }
+          },
+          "legacyId": "agent-005"
         },
         {
-          "id": "agent-006",
+          "id": "ai-tjenester-agent-006",
           "risikoelement": {
             "no": "Agent-til-agent-angrep via kompromitterte agenter",
             "en": "Agent-to-agent attacks via compromised agents"
@@ -374,10 +386,11 @@
           "foreslaatteTiltak": {
             "no": "Verifisering av agentidentitet, meldingssignering, kapabilitetstokener og zero trust-arkitektur",
             "en": "Agent identity verification, message signing, capability tokens, zero-trust architecture"
-          }
+          },
+          "legacyId": "agent-006"
         },
         {
-          "id": "agent-007",
+          "id": "ai-tjenester-agent-007",
           "risikoelement": {
             "no": "Fremvoksende motstridig atferd",
             "en": "Emergent adversarial behavior"
@@ -401,10 +414,11 @@
           "foreslaatteTiltak": {
             "no": "Simulering og testing av multiagentløsninger, atferdsbegrensninger, koordineringsprotokoller og kill switch",
             "en": "Multi-agent simulation/testing, behavioral constraints, coordination protocols, kill switches"
-          }
+          },
+          "legacyId": "agent-007"
         },
         {
-          "id": "agent-008",
+          "id": "ai-tjenester-agent-008",
           "risikoelement": {
             "no": "Jailbreaking via manipulering av chain-of-thought",
             "en": "Jailbreaking via chain-of-thought manipulation"
@@ -428,7 +442,8 @@
           "foreslaatteTiltak": {
             "no": "Constitutional AI, refleksjonsmekanismer, trinnvis sikkerhetsvalidering og kritikk-lag",
             "en": "Constitutional AI, reflection mechanisms, step-by-step safety validation, critique layers"
-          }
+          },
+          "legacyId": "agent-008"
         }
       ]
     },
@@ -440,7 +455,7 @@
       },
       "risikoer": [
         {
-          "id": "model-001",
+          "id": "ai-tjenester-model-001",
           "risikoelement": {
             "no": "Adversarial examples - spesiallaget input får modellen til å feile",
             "en": "Adversarial examples - crafted input fails modellen"
@@ -464,10 +479,11 @@
           "foreslaatteTiltak": {
             "no": "Adversarial trening, forhåndsbehandling av input, ensemblemetoder og avviksdeteksjon",
             "en": "Adversarial training, input preprocessing, ensemble methods, anomaly detection"
-          }
+          },
+          "legacyId": "model-001"
         },
         {
-          "id": "model-002",
+          "id": "ai-tjenester-model-002",
           "risikoelement": {
             "no": "Data poisoning - treningsdata er kompromittert",
             "en": "Data poisoning compromises training data"
@@ -491,10 +507,11 @@
           "foreslaatteTiltak": {
             "no": "Sporing av dataopprinnelse, avviksdeteksjon, robust trening og datavalideringsløp",
             "en": "Data provenance tracking, outlier detection, robust training, data validation pipelines"
-          }
+          },
+          "legacyId": "model-002"
         },
         {
-          "id": "model-003",
+          "id": "ai-tjenester-model-003",
           "risikoelement": {
             "no": "Model drift - treffsikkerheten svekkes over tid",
             "en": "Model drift reduces accuracy over time"
@@ -518,10 +535,11 @@
           "foreslaatteTiltak": {
             "no": "Kontinuerlig overvåking, drift-deteksjon, automatisert retrening, A/B-testing og kanariutrulling",
             "en": "Continuous monitoring, drift detection, automated retraining, A/B testing, and canary deployments"
-          }
+          },
+          "legacyId": "model-003"
         },
         {
-          "id": "model-004",
+          "id": "ai-tjenester-model-004",
           "risikoelement": {
             "no": "Angrep via leverandørkjeden gjennom ML-avhengigheter",
             "en": "Supply chain attacks via ML dependencies"
@@ -545,10 +563,11 @@
           "foreslaatteTiltak": {
             "no": "Verifisering av modellopprinnelse, SBOM for ML, pålitelige modellregistre og validering av sjekksummer",
             "en": "Model provenance verification, SBOM for ML, trusted model registries, checksum validation"
-          }
+          },
+          "legacyId": "model-004"
         },
         {
-          "id": "model-005",
+          "id": "ai-tjenester-model-005",
           "risikoelement": {
             "no": "Infrastruktur for modellservering er kompromittert",
             "en": "Model serving infrastructure is compromised"
@@ -572,7 +591,8 @@
           "foreslaatteTiltak": {
             "no": "Modellkryptering i hvile og under overføring, sikre enklaver (TEE), tilgangskontroller og uforanderlige utrullinger",
             "en": "Model encryption at rest/transit, secure enclaves (TEE), access controls, immutable deployments"
-          }
+          },
+          "legacyId": "model-005"
         }
       ]
     },
@@ -584,7 +604,7 @@
       },
       "risikoer": [
         {
-          "id": "data-001",
+          "id": "ai-tjenester-data-001",
           "risikoelement": {
             "no": "Memorisering av sensitive treningsdata",
             "en": "Memorization of sensitive training data"
@@ -606,12 +626,13 @@
           "T": 1,
           "sannsynlighet": 3,
           "foreslaatteTiltak": {
-            "no": "Differential privacy, deduplisering av data, mål for memorisering og kanaritokener",
+            "no": "Differential privacy, deduplisering av data, mål for memorisering og canary tokens",
             "en": "Differential privacy, data deduplication, memorization metrics, canary tokens"
-          }
+          },
+          "legacyId": "data-001"
         },
         {
-          "id": "data-002",
+          "id": "ai-tjenester-data-002",
           "risikoelement": {
             "no": "Re-identifisering via modelloutput",
             "en": "Re-identification via model outputs"
@@ -635,10 +656,11 @@
           "foreslaatteTiltak": {
             "no": "Formelle personverngarantier, forstyrrelse av output, aggregeringsterskler og GDPR-etterlevelse by design",
             "en": "Formal privacy guarantees, output perturbation, aggregation thresholds, GDPR compliance by design"
-          }
+          },
+          "legacyId": "data-002"
         },
         {
-          "id": "data-003",
+          "id": "ai-tjenester-data-003",
           "risikoelement": {
             "no": "Medlemskapsinferens - avdekke hvem som var i treningssettet",
             "en": "Membership inference reveals whether someone was in the training set"
@@ -662,10 +684,11 @@
           "foreslaatteTiltak": {
             "no": "Differential privacy, regularisering, grenser for spørringsbudsjett og konfidensgrenser",
             "en": "Differential privacy, regularization, query budget limits, confidence thresholds"
-          }
+          },
+          "legacyId": "data-003"
         },
         {
-          "id": "data-004",
+          "id": "ai-tjenester-data-004",
           "risikoelement": {
             "no": "Treningsdata blir ikke slettet på forespørsel (GDPR)",
             "en": "Training data is not erased on request as required by GDPR"
@@ -689,10 +712,11 @@
           "foreslaatteTiltak": {
             "no": "Maskinell unlearning, modulær trening, sporing av datalinje og prosedyrer for retrening",
             "en": "Machine unlearning techniques, modular training, data lineage tracking, retraining procedures"
-          }
+          },
+          "legacyId": "data-004"
         },
         {
-          "id": "data-005",
+          "id": "ai-tjenester-data-005",
           "risikoelement": {
             "no": "Dataoverføring over landegrenser via KI-tjeneste",
             "en": "Cross-border data transfer via AI service"
@@ -716,7 +740,8 @@
           "foreslaatteTiltak": {
             "no": "Datalokalisering, on-premise-alternativer, SCC-er og personvernbevarende maskinlæring (federated learning)",
             "en": "Data localization, on-premise deployment options, SCCs, privacy-preserving ML (federated learning)"
-          }
+          },
+          "legacyId": "data-005"
         }
       ]
     },
@@ -728,7 +753,7 @@
       },
       "risikoer": [
         {
-          "id": "bias-001",
+          "id": "ai-tjenester-bias-001",
           "risikoelement": {
             "no": "Diskriminerende beslutninger på grunn av skjeve treningsdata",
             "en": "Discriminatory decisions are caused by biased training data"
@@ -752,10 +777,11 @@
           "foreslaatteTiltak": {
             "no": "Rettferdighetsmål som demografisk paritet og like feilrater, teknikker for å redusere skjevhet og varierte datasett",
             "en": "Fairness metrics (demographic parity, equalized odds), bias mitigation techniques, diverse datasets"
-          }
+          },
+          "legacyId": "bias-001"
         },
         {
-          "id": "bias-002",
+          "id": "ai-tjenester-bias-002",
           "risikoelement": {
             "no": "Tilbakekoblingssløyfer forsterker eksisterende skjevhet",
             "en": "Feedback loops reinforce existing bias"
@@ -779,10 +805,11 @@
           "foreslaatteTiltak": {
             "no": "Kontrafaktisk rettferdighet, intervensjonsstrategier og jevnlig retrening med korrigerte data",
             "en": "Counterfactual fairness, intervention strategies, regular retraining with corrected data"
-          }
+          },
+          "legacyId": "bias-002"
         },
         {
-          "id": "bias-003",
+          "id": "ai-tjenester-bias-003",
           "risikoelement": {
             "no": "Manglende representasjon av minoritetsgrupper",
             "en": "Insufficient representation of minority groups"
@@ -806,10 +833,11 @@
           "foreslaatteTiltak": {
             "no": "Stratifisert sampling, syntetisk oversampling av minoriteter, disaggregerte evalueringer og gruppespesifikke rettferdighetskrav",
             "en": "Stratified sampling, synthetic minority oversampling, disaggregated evaluation, group fairness constraints"
-          }
+          },
+          "legacyId": "bias-003"
         },
         {
-          "id": "bias-004",
+          "id": "ai-tjenester-bias-004",
           "risikoelement": {
             "no": "Manglende åpenhet om KI-beslutninger",
             "en": "Lack of transparency in AI decisions"
@@ -833,7 +861,8 @@
           "foreslaatteTiltak": {
             "no": "Forklarbar KI som SHAP og LIME, begrunnelser for beslutninger, klagemekanismer og modellkort",
             "en": "Explainable AI (SHAP, LIME), decision justifications, appeal mechanisms, model cards"
-          }
+          },
+          "legacyId": "bias-004"
         }
       ]
     },
@@ -845,7 +874,7 @@
       },
       "risikoer": [
         {
-          "id": "gov-001",
+          "id": "ai-tjenester-gov-001",
           "risikoelement": {
             "no": "Manglende etterlevelse av EU AI Act",
             "en": "Non-compliance with EU AI Act"
@@ -869,10 +898,11 @@
           "foreslaatteTiltak": {
             "no": "Rammeverk for etterlevelse av AI Act, konsekvensvurderinger, dokumentasjonskrav og samsvarsvurdering",
             "en": "AI Act compliance framework, impact assessments, documentation requirements, conformity assessment"
-          }
+          },
+          "legacyId": "gov-001"
         },
         {
-          "id": "gov-002",
+          "id": "ai-tjenester-gov-002",
           "risikoelement": {
             "no": "Manglende dokumentasjon av AI-modellen",
             "en": "Missing AI model documentation"
@@ -896,10 +926,11 @@
           "foreslaatteTiltak": {
             "no": "Modellkort, datasettbeskrivelser, systemkort, versjonering og revisjonsspor",
             "en": "Model cards, datasheets for datasets, system cards, versioning, audit trails"
-          }
+          },
+          "legacyId": "gov-002"
         },
         {
-          "id": "gov-003",
+          "id": "ai-tjenester-gov-003",
           "risikoelement": {
             "no": "Ansvar for AI-beslutninger er uklart",
             "en": "Accountability for AI decisions is unclear"
@@ -923,10 +954,11 @@
           "foreslaatteTiltak": {
             "no": "AI-styringsforum, tydelig RACI-matrise, prosedyrer for hendelseshåndtering og krav til menneskelig tilsyn",
             "en": "AI governance board, clear RACI matrix, incident response procedures, human oversight requirements"
-          }
+          },
+          "legacyId": "gov-003"
         },
         {
-          "id": "gov-004",
+          "id": "ai-tjenester-gov-004",
           "risikoelement": {
             "no": "Utilstrekkelig testing av AI-systemer før utrulling",
             "en": "Insufficient testing of AI systems before deployment"
@@ -950,10 +982,11 @@
           "foreslaatteTiltak": {
             "no": "KI-spesifikke testrammeverk, rødlagstesting, kaostesting for KI og trinnvis utrulling",
             "en": "AI-specific testing frameworks, red-teaming, chaos engineering for AI, staged rollouts"
-          }
+          },
+          "legacyId": "gov-004"
         },
         {
-          "id": "gov-005",
+          "id": "ai-tjenester-gov-005",
           "risikoelement": {
             "no": "Leverandørlåsing til proprietær AI-plattform",
             "en": "Vendor lock-in to proprietary AI platform"
@@ -977,7 +1010,8 @@
           "foreslaatteTiltak": {
             "no": "Multimodellstrategi, abstraksjonslag, åpen kildekode-alternativer, portabilitetstesting og exit-strategier",
             "en": "Multi-model strategy, abstraction layers, open-source alternatives, portability testing, exit strategies"
-          }
+          },
+          "legacyId": "gov-005"
         }
       ]
     }

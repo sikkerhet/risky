@@ -13,6 +13,10 @@ Systemet kommer med følgende banker:
 - **ai-tjenester.json** - KI-tjenester og Agentic AI (LLM-sikkerhet, autonome agenter, ML-modeller, bias, governance)
 - **saas.json** - SaaS-tjenester (multi-tenancy, vendor management, integrasjoner, data governance)
 - **integrasjoner.json** - Integrasjoner og systemsamspill (API, meldingskøer, ETL, asynkron kommunikasjon, middleware)
+- **devops-cicd.json** - DevOps og CI/CD (pipeline-, kode-, dependency-, container- og deployment-sikkerhet)
+- **supply-chain.json** - Supply chain (leverandører, avhengigheter, datadeling og exit)
+- **iot-embedded.json** - IoT og embedded (enheter, firmware, OT/SCADA og IoT-backend)
+- **fysisk-sikkerhet.json** - Fysisk sikkerhet (adgang, utstyr, miljø, overvåking og dokumenthåndtering)
 
 ### Compliance og personvern
 - **persondata.json** - Persondata/GDPR (behandlingsgrunnlag, registrertes rettigheter, etc.)
@@ -41,7 +45,8 @@ En risikobank må være en JSON-fil med følgende struktur:
       "navn": "Kategorinavn",
       "risikoer": [
         {
-          "id": "risiko-id",
+          "id": "bank-id-risiko-id",
+          "legacyId": "risiko-id",
           "risikoelement": "Hva som kan gå galt",
           "saarbarhet": "Hvorfor det kan gå galt",
           "eksisterendeBeskyttelse": "Hva som allerede gjøres",
@@ -61,6 +66,12 @@ En risikobank må være en JSON-fil med følgende struktur:
 ### Bruk EKSEMPEL-custom-bank.json som mal
 
 Kopier `EKSEMPEL-custom-bank.json` og tilpass den til dine behov.
+
+### Risiko-ID-er
+
+Standardbankene bruker globale risiko-ID-er med bankens ID som prefiks, for eksempel
+`ai-tjenester-data-001`. Feltet `legacyId` dokumenterer tidligere lokal ID og gjør
+det mulig å gjenkjenne eldre bankfiler. ID-er i eksisterende analyser endres ikke.
 
 ## manifest.json
 

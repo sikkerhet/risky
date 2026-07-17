@@ -17,7 +17,7 @@
       },
       "risikoer": [
         {
-          "id": "tilgang-001",
+          "id": "generell-tilgang-001",
           "risikoelement": {
             "no": "Brukere får ikke tilgang til systemet",
             "en": "Users cannot access the system"
@@ -41,10 +41,11 @@
           "foreslaatteTiltak": {
             "no": "Automatisere brukeradministrasjon, implementere selvbetjeningsportal",
             "en": "Automate user administration and implement a self-service portal"
-          }
+          },
+          "legacyId": "tilgang-001"
         },
         {
-          "id": "tilgang-002",
+          "id": "generell-tilgang-002",
           "risikoelement": {
             "no": "Bruker beholder tilgang etter at bruker har sluttet/endret stilling",
             "en": "A user retains access after leaving or changing role"
@@ -68,10 +69,11 @@
           "foreslaatteTiltak": {
             "no": "Automatisk deaktivering ved avslutning, full integrasjon med HR-system",
             "en": "Automatic deactivation during offboarding and full integration with the HR system"
-          }
+          },
+          "legacyId": "tilgang-002"
         },
         {
-          "id": "tilgang-003",
+          "id": "generell-tilgang-003",
           "risikoelement": {
             "no": "Bruker får flere tilganger enn nødvendig",
             "en": "A user receives more access than necessary"
@@ -95,10 +97,11 @@
           "foreslaatteTiltak": {
             "no": "Implementere roller-basert tilgangsstyring (RBAC), minste privilegium",
             "en": "Implement role-based access control (RBAC) and least privilege"
-          }
+          },
+          "legacyId": "tilgang-003"
         },
         {
-          "id": "tilgang-004",
+          "id": "generell-tilgang-004",
           "risikoelement": {
             "no": "Uvedkommende får tilgang pga. passord på avveie",
             "en": "Unauthorized parties gain access because of compromised passwords"
@@ -122,10 +125,11 @@
           "foreslaatteTiltak": {
             "no": "Passkeys/FIDO2, obligatorisk tofaktor for alle",
             "en": "Passkeys/FIDO2 and mandatory MFA for all users"
-          }
+          },
+          "legacyId": "tilgang-004"
         },
         {
-          "id": "tilgang-005",
+          "id": "generell-tilgang-005",
           "risikoelement": {
             "no": "Delte brukerkontoer gjør sporing umulig",
             "en": "Shared user accounts make traceability impossible"
@@ -149,10 +153,11 @@
           "foreslaatteTiltak": {
             "no": "Personlige kontoer for alle, PAM-løsning, sporbarhet i logger",
             "en": "Individual accounts for all users, a PAM solution, and traceability in logs"
-          }
+          },
+          "legacyId": "tilgang-005"
         },
         {
-          "id": "tilgang-006",
+          "id": "generell-tilgang-006",
           "risikoelement": {
             "no": "Service accounts med permanente credentials",
             "en": "Service accounts use permanent credentials"
@@ -176,10 +181,11 @@
           "foreslaatteTiltak": {
             "no": "Secrets management (Vault), automatisk rotasjon, short-lived tokens",
             "en": "Secrets management (Vault), automatic rotation, and short-lived tokens"
-          }
+          },
+          "legacyId": "tilgang-006"
         },
         {
-          "id": "tilgang-007",
+          "id": "generell-tilgang-007",
           "risikoelement": {
             "no": "API-nøkler eksponert i kode eller logger",
             "en": "API keys are exposed in code or logs"
@@ -203,10 +209,11 @@
           "foreslaatteTiltak": {
             "no": "Secret scanning (TruffleHog), secrets manager, pre-commit hooks",
             "en": "Secret scanning (TruffleHog), secrets manager, pre-commit hooks"
-          }
+          },
+          "legacyId": "tilgang-007"
         },
         {
-          "id": "tilgang-008",
+          "id": "generell-tilgang-008",
           "risikoelement": {
             "no": "SSO/federation feil låser ut mange brukere",
             "en": "SSO or federation failures lock out many users"
@@ -230,10 +237,11 @@
           "foreslaatteTiltak": {
             "no": "Redundans i federation, sertifikatovervåking, break-glass accounts utenfor SSO, dokumenterte gjenoppretting-prosedyrer",
             "en": "Redundancy in federation, certificate monitoring, break-glass accounts outside SSO, and documented recovery procedures"
-          }
+          },
+          "legacyId": "tilgang-008"
         },
         {
-          "id": "tilgang-009",
+          "id": "generell-tilgang-009",
           "risikoelement": {
             "no": "Foreldreløse kontoer uten eier",
             "en": "Orphaned accounts without an owner"
@@ -257,10 +265,11 @@
           "foreslaatteTiltak": {
             "no": "Automatisert identifisering av orphaned accounts, krav om eier for alle kontoer, automatisk deaktivering etter inaktivitet",
             "en": "Automated identification of orphaned accounts, owner requirements for all accounts, and automatic deactivation after inactivity"
-          }
+          },
+          "legacyId": "tilgang-009"
         },
         {
-          "id": "tilgang-010",
+          "id": "generell-tilgang-010",
           "risikoelement": {
             "no": "Manglende eller ineffektiv tilgang certification",
             "en": "Missing or ineffective access certification"
@@ -284,10 +293,11 @@
           "foreslaatteTiltak": {
             "no": "Implementere verktøy for identitetsstyring, risikobaserte gjennomganger og automatisk tilbakekalling ved manglende svar",
             "en": "Implement identity governance tooling, risk-based reviews for high-risk access, and automatic revocation on non-response"
-          }
+          },
+          "legacyId": "tilgang-010"
         },
         {
-          "id": "tilgang-011",
+          "id": "generell-tilgang-011",
           "risikoelement": {
             "no": "Privilegert tilgang styres ikke tilstrekkelig",
             "en": "Privileged access is not managed sufficiently"
@@ -311,10 +321,11 @@
           "foreslaatteTiltak": {
             "no": "Implementere PAM-løsning med session recording, privileged elevation arbeidsflyt, just-in-time admin tilgang",
             "en": "Implement a PAM solution with session recording, privileged elevation workflows, and just-in-time admin access"
-          }
+          },
+          "legacyId": "tilgang-011"
         },
         {
-          "id": "tilgang-012",
+          "id": "generell-tilgang-012",
           "risikoelement": {
             "no": "Manglende Just-In-Time (JIT) tilgang",
             "en": "Missing Just-In-Time (JIT) access"
@@ -338,10 +349,11 @@
           "foreslaatteTiltak": {
             "no": "Implementere JIT tilgang med automatisk utløp, self-service med godkjenning, time-boxed privileged tilgang",
             "en": "Implement JIT access with automatic expiry, self-service with approval, and time-boxed privileged access"
-          }
+          },
+          "legacyId": "tilgang-012"
         },
         {
-          "id": "tilgang-013",
+          "id": "generell-tilgang-013",
           "risikoelement": {
             "no": "Directory services synkroniseringsfeil",
             "en": "Directory service synchronization failures"
@@ -365,10 +377,11 @@
           "foreslaatteTiltak": {
             "no": "Overvåke sync-status kontinuerlig, varsling ved feil, reconciliation-rapporter, test sync i staging",
             "en": "Continuously monitor sync status, alert on failures, generate reconciliation reports, and test sync in staging"
-          }
+          },
+          "legacyId": "tilgang-013"
         },
         {
-          "id": "tilgang-014",
+          "id": "generell-tilgang-014",
           "risikoelement": {
             "no": "Eksterne identiteter får for mye tilgang eller feil livssyklus",
             "en": "External identities receive excessive access or are managed with the wrong lifecycle"
@@ -392,10 +405,11 @@
           "foreslaatteTiltak": {
             "no": "Dedikert external identity management, automatisk utløp, tydelig merking, attestation av sponsor",
             "en": "Dedicated external identity management, automatic expiry, clear labeling, and sponsor attestation"
-          }
+          },
+          "legacyId": "tilgang-014"
         },
         {
-          "id": "tilgang-015",
+          "id": "generell-tilgang-015",
           "risikoelement": {
             "no": "Break-glass-tilgang fungerer ikke når den trengs",
             "en": "Break-glass access does not work when it is needed"
@@ -419,7 +433,8 @@
           "foreslaatteTiltak": {
             "no": "Dokumenterte break-glass prosedyrer, test kvartalsvis, varsling ved bruk, rotasjon av credentials etter bruk",
             "en": "Documented break-glass procedures, quarterly testing, alerting on use, and credential rotation after use"
-          }
+          },
+          "legacyId": "tilgang-015"
         }
       ]
     },
@@ -431,7 +446,7 @@
       },
       "risikoer": [
         {
-          "id": "drift-001",
+          "id": "generell-drift-001",
           "risikoelement": {
             "no": "Systemet kan ikke gjenopprettes etter feil/krasj",
             "en": "The service cannot be restored after failures or crashes"
@@ -455,10 +470,11 @@
           "foreslaatteTiltak": {
             "no": "Automatisk backup-testing, dokumentere gjenopprettingsprosedyrer",
             "en": "Automatic backup testing and documented recovery procedures"
-          }
+          },
+          "legacyId": "drift-001"
         },
         {
-          "id": "drift-002",
+          "id": "generell-drift-002",
           "risikoelement": {
             "no": "Kritisk programvare blir utdatert og usikker",
             "en": "Critical software becomes outdated and insecure"
@@ -482,10 +498,11 @@
           "foreslaatteTiltak": {
             "no": "Automatisert patch-management, kritiske oppdateringer innen 24t",
             "en": "Automated patch management and critical updates within 24 hours"
-          }
+          },
+          "legacyId": "drift-002"
         },
         {
-          "id": "drift-003",
+          "id": "generell-drift-003",
           "risikoelement": {
             "no": "backup feiler uten at noen oppdager det",
             "en": "Backup fails without anyone noticing"
@@ -509,10 +526,11 @@
           "foreslaatteTiltak": {
             "no": "Automatisk overvåking, varsling ved feil, backup verification",
             "en": "Automatic monitoring, alerting on failures, and backup verification"
-          }
+          },
+          "legacyId": "drift-003"
         },
         {
-          "id": "drift-004",
+          "id": "generell-drift-004",
           "risikoelement": {
             "no": "Lang downtime ved gjenoppretting",
             "en": "Long downtime during recovery"
@@ -536,10 +554,11 @@
           "foreslaatteTiltak": {
             "no": "Inkrementell backup, hot standby, redusere RTO/RPO",
             "en": "Inkrementell backup, hot standby, reduce RTO/RPO"
-          }
+          },
+          "legacyId": "drift-004"
         },
         {
-          "id": "drift-005",
+          "id": "generell-drift-005",
           "risikoelement": {
             "no": "Nøkkelpersoner slutter - kunnskapstap",
             "en": "Key personnel slutter - kunnskapstap"
@@ -563,7 +582,8 @@
           "foreslaatteTiltak": {
             "no": "Runbooks, cross-opplæring, dokumentasjonsstandarder",
             "en": "Runbooks, cross-training, dokumentasjonsstandarder"
-          }
+          },
+          "legacyId": "drift-005"
         }
       ]
     },
@@ -575,7 +595,7 @@
       },
       "risikoer": [
         {
-          "id": "app-001",
+          "id": "generell-app-001",
           "risikoelement": {
             "no": "SQL injection gir uautorisert tilgang til database",
             "en": "SQL injection gives unauthorized access to the database"
@@ -590,7 +610,7 @@
           },
           "eksisterendeKontroll": {
             "no": "Årlig penetrasjonstest",
-            "en": "Annual penetrasjonstest"
+            "en": "Annual penetration test"
           },
           "K": 5,
           "I": 5,
@@ -599,10 +619,11 @@
           "foreslaatteTiltak": {
             "no": "Parameteriserte queries overalt, input-validering, WAF",
             "en": "Parameteriserte queries overalt, input-validation, WAF"
-          }
+          },
+          "legacyId": "app-001"
         },
         {
-          "id": "app-002",
+          "id": "generell-app-002",
           "risikoelement": {
             "no": "Cross-Site Scripting (XSS) angrep",
             "en": "Cross-Site Scripting (XSS) angrep"
@@ -626,10 +647,11 @@
           "foreslaatteTiltak": {
             "no": "Content Security Policy (CSP) og output-koding",
             "en": "Content Security Policy (CSP), output encoding"
-          }
+          },
+          "legacyId": "app-002"
         },
         {
-          "id": "app-003",
+          "id": "generell-app-003",
           "risikoelement": {
             "no": "Avhengigheter med kjente sårbarheter",
             "en": "Avhengigheter with known vulnerabilities"
@@ -653,10 +675,11 @@
           "foreslaatteTiltak": {
             "no": "Automatisk dependency scanning i CI/CD, patch innen 7 dager",
             "en": "Automatic dependency scanning in CI/CD, patch innen 7 dager"
-          }
+          },
+          "legacyId": "app-003"
         },
         {
-          "id": "app-004",
+          "id": "generell-app-004",
           "risikoelement": {
             "no": "Broken Access Control - horisontalt (IDOR)",
             "en": "Broken Access Control - horisontalt (IDOR)"
@@ -680,10 +703,11 @@
           "foreslaatteTiltak": {
             "no": "Autorisasjon på alle endepunkter, IDOR-testing, session-based tilgang",
             "en": "Authorization on all endpoints, IDOR testing, and session-based access control"
-          }
+          },
+          "legacyId": "app-004"
         },
         {
-          "id": "app-005",
+          "id": "generell-app-005",
           "risikoelement": {
             "no": "Cross-Site Request Forgery (CSRF)",
             "en": "Cross-Site Request Forgery (CSRF)"
@@ -707,10 +731,11 @@
           "foreslaatteTiltak": {
             "no": "CSRF tokens, SameSite=Strict, double submit pattern",
             "en": "CSRF tokens, SameSite=Strict, double submit pattern"
-          }
+          },
+          "legacyId": "app-005"
         },
         {
-          "id": "app-006",
+          "id": "generell-app-006",
           "risikoelement": {
             "no": "Sensitive data i error messages",
             "en": "Sensitive data in error messages"
@@ -734,10 +759,11 @@
           "foreslaatteTiltak": {
             "no": "Generiske error messages, detaljert loggføring kun server-side",
             "en": "Generic error messages, detaljert logging only server-side"
-          }
+          },
+          "legacyId": "app-006"
         },
         {
-          "id": "app-007",
+          "id": "generell-app-007",
           "risikoelement": {
             "no": "Manglende rate limiting på API",
             "en": "Missing rate limiting on API"
@@ -761,7 +787,8 @@
           "foreslaatteTiltak": {
             "no": "Rate limiting per bruker/IP, CAPTCHA ved misbruk, WAF",
             "en": "Rate limiting per user/IP, CAPTCHA during misbruk, WAF"
-          }
+          },
+          "legacyId": "app-007"
         }
       ]
     },
@@ -773,7 +800,7 @@
       },
       "risikoer": [
         {
-          "id": "log-001",
+          "id": "generell-log-001",
           "risikoelement": {
             "no": "Sensitive data logges i klartekst",
             "en": "Sensitive data logges in plaintext"
@@ -797,10 +824,11 @@
           "foreslaatteTiltak": {
             "no": "Log sanitering, maskering av sensitive felt, kryptering",
             "en": "Log sanitization, maskering of sensitive felt, encryption"
-          }
+          },
+          "legacyId": "log-001"
         },
         {
-          "id": "log-002",
+          "id": "generell-log-002",
           "risikoelement": {
             "no": "Sikkerhetshendelser logges ikke tilstrekkelig",
             "en": "Security events are not logged sufficiently"
@@ -824,10 +852,11 @@
           "foreslaatteTiltak": {
             "no": "Comprehensive audit loggføring, SIEM correlation, alerting",
             "en": "Comprehensive audit logging, SIEM correlation, alerting"
-          }
+          },
+          "legacyId": "log-002"
         },
         {
-          "id": "log-003",
+          "id": "generell-log-003",
           "risikoelement": {
             "no": "Logger kan slettes eller manipuleres",
             "en": "Logs can slettes or manipuleres"
@@ -851,7 +880,8 @@
           "foreslaatteTiltak": {
             "no": "Immutable logs, write-once storage, log signing",
             "en": "Immutable logs, write-once storage, log signing"
-          }
+          },
+          "legacyId": "log-003"
         }
       ]
     },
@@ -863,7 +893,7 @@
       },
       "risikoer": [
         {
-          "id": "net-001",
+          "id": "generell-net-001",
           "risikoelement": {
             "no": "Data avlyttes under overføring",
             "en": "Data is intercepted during transmission"
@@ -887,10 +917,11 @@
           "foreslaatteTiltak": {
             "no": "TLS 1.3, end-to-end encryption, VPN for sensitiv trafikk",
             "en": "TLS 1.3, end-to-end encryption, VPN for sensitiv trafikk"
-          }
+          },
+          "legacyId": "net-001"
         },
         {
-          "id": "net-002",
+          "id": "generell-net-002",
           "risikoelement": {
             "no": "DDoS-angrep gjør tjenesten utilgjengelig",
             "en": "DDoS-angrep makes the service utilgjengelig"
@@ -914,10 +945,11 @@
           "foreslaatteTiltak": {
             "no": "DDoS-beskyttelse (Cloudflare/Akamai), CDN og automatisk skalering",
             "en": "DDoS protection (CloudFlare/Akamai), CDN, auto-scaling"
-          }
+          },
+          "legacyId": "net-002"
         },
         {
-          "id": "net-003",
+          "id": "generell-net-003",
           "risikoelement": {
             "no": "Man-in-the-Middle-angrep",
             "en": "Man-in-the-Middle angrep"
@@ -941,10 +973,11 @@
           "foreslaatteTiltak": {
             "no": "Certificate pinning, HSTS, mutual TLS",
             "en": "Certificate pinning, HSTS, mutual TLS"
-          }
+          },
+          "legacyId": "net-003"
         },
         {
-          "id": "net-004",
+          "id": "generell-net-004",
           "risikoelement": {
             "no": "DNS hijacking/poisoning",
             "en": "DNS hijacking/poisoning"
@@ -968,10 +1001,11 @@
           "foreslaatteTiltak": {
             "no": "DNSSEC, registrar 2FA, DNS overvåking",
             "en": "DNSSEC, registrar 2FA, DNS monitoring"
-          }
+          },
+          "legacyId": "net-004"
         },
         {
-          "id": "net-005",
+          "id": "generell-net-005",
           "risikoelement": {
             "no": "Nettverkssegmentering mangler - lateral movement",
             "en": "Network segmentation is missing, enabling lateral movement"
@@ -995,7 +1029,8 @@
           "foreslaatteTiltak": {
             "no": "Mikrosegmentering, VLAN separation, zero trust, IDS/IPS",
             "en": "Mikrosegmentering, VLAN separation, zero trust, IDS/IPS"
-          }
+          },
+          "legacyId": "net-005"
         }
       ]
     },
@@ -1007,7 +1042,7 @@
       },
       "risikoer": [
         {
-          "id": "org-001",
+          "id": "generell-org-001",
           "risikoelement": {
             "no": "Manglende sikkerhetskompetanse i teamet",
             "en": "Missing sikkerhetskompetanse in teamet"
@@ -1031,10 +1066,11 @@
           "foreslaatteTiltak": {
             "no": "Obligatorisk sikkerhetsopplæring, retningslinjer for sikker koding og security champions",
             "en": "Mandatory sikkerhetstrening, secure coding guidelines, security champions"
-          }
+          },
+          "legacyId": "org-001"
         },
         {
-          "id": "org-002",
+          "id": "generell-org-002",
           "risikoelement": {
             "no": "Ingen incident response plan",
             "en": "No incident response plan"
@@ -1058,10 +1094,11 @@
           "foreslaatteTiltak": {
             "no": "IR-team, playbooks, tabletop exercises, eskaleringsprosedyrer",
             "en": "IR team, playbooks, tabletop exercises, and escalation procedures"
-          }
+          },
+          "legacyId": "org-002"
         },
         {
-          "id": "org-003",
+          "id": "generell-org-003",
           "risikoelement": {
             "no": "Manglende sikkerhetsbevissthet hos ansatte",
             "en": "Missing security awareness hos employees"
@@ -1085,10 +1122,11 @@
           "foreslaatteTiltak": {
             "no": "Regelmessig bevisstgjøringsopplæring, phishing-testing og sikkerhetskultur",
             "en": "Regelmessig awareness training, phishing testing, security culture"
-          }
+          },
+          "legacyId": "org-003"
         },
         {
-          "id": "org-004",
+          "id": "generell-org-004",
           "risikoelement": {
             "no": "Shadow IT - uautoriserte tjenester",
             "en": "Shadow IT - uautoriserte services"
@@ -1112,7 +1150,8 @@
           "foreslaatteTiltak": {
             "no": "CASB, approved SaaS catalog, DLP, user education",
             "en": "CASB, approved SaaS catalog, DLP, user education"
-          }
+          },
+          "legacyId": "org-004"
         }
       ]
     }

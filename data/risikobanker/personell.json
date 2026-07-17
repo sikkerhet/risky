@@ -17,7 +17,7 @@
       },
       "risikoer": [
         {
-          "id": "hr-001",
+          "id": "personell-hr-001",
           "risikoelement": {
             "no": "Manglende background checks ved ansettelse",
             "en": "Missing background checks during hiring"
@@ -41,10 +41,11 @@
           "foreslaatteTiltak": {
             "no": "Retningslinjer for bakgrunnssjekk, politiattest for sensitive roller, verifisering av utdanning og kontroll av ansettelseshistorikk",
             "en": "Establish a background screening policy, require criminal record checks where lawful and relevant, verify education, and verify employment history"
-          }
+          },
+          "legacyId": "hr-001"
         },
         {
-          "id": "hr-002",
+          "id": "personell-hr-002",
           "risikoelement": {
             "no": "Nye ansatte får tilgang før de forstår sikkerhetskravene",
             "en": "New employees receive access before they understand the security requirements"
@@ -68,10 +69,11 @@
           "foreslaatteTiltak": {
             "no": "Obligatorisk sikkerhetsintroduksjon før systemtilgang, signering av taushetserklæring, policybekreftelse og sikkerhetsquiz",
             "en": "Require security induction before system access, signed confidentiality commitments, policy acknowledgement, and a basic security quiz"
-          }
+          },
+          "legacyId": "hr-002"
         },
         {
-          "id": "hr-003",
+          "id": "personell-hr-003",
           "risikoelement": {
             "no": "Tilganger ikke fjernet ved offboarding",
             "en": "Access rights are not removed during offboarding"
@@ -96,10 +98,11 @@
           "eksisterendeBeskyttelse": {
             "no": "HR melder fra til IT ved avslutning av arbeidsforhold",
             "en": "HR notifies IT when employment ends"
-          }
+          },
+          "legacyId": "hr-003"
         },
         {
-          "id": "hr-004",
+          "id": "personell-hr-004",
           "risikoelement": {
             "no": "Ingen exit interviews eller offboarding-samtaler",
             "en": "No exit interviews or offboarding meetings"
@@ -123,10 +126,11 @@
           "foreslaatteTiltak": {
             "no": "Structured exit interview, threat vurdering, graduated offboarding for high-risk terminations, overvåking post-termination",
             "en": "Structured exit interview, threat assessment, graduated offboarding for high-risk terminations, monitoring post-termination"
-          }
+          },
+          "legacyId": "hr-004"
         },
         {
-          "id": "hr-005",
+          "id": "personell-hr-005",
           "risikoelement": {
             "no": "Rolleendringer ikke reflektert i tilganger",
             "en": "Role changes are not reflected in access rights"
@@ -150,10 +154,11 @@
           "foreslaatteTiltak": {
             "no": "HR trigger for tilgang gjennomgang ved rolleendring, birthright tilgang per rolle, automated deprovisioning of old role",
             "en": "Trigger an access review when roles change, define birthright access per role, and automatically remove access from the old role"
-          }
+          },
+          "legacyId": "hr-005"
         },
         {
-          "id": "hr-006",
+          "id": "personell-hr-006",
           "risikoelement": {
             "no": "Konsulenter og innleide styres ikke som ansatte",
             "en": "Contractors and consultants are not governed with the same security controls as employees"
@@ -177,7 +182,8 @@
           "foreslaatteTiltak": {
             "no": "Policy for håndtering av konsulenter, samme screening som for ansatte, tidsbegrenset tilgang, separat identitetslivssyklus og krav om taushetserklæring",
             "en": "Contractor management policy, same screening as employees, time-limited access, separate identity lifecycle, NDA requirements"
-          }
+          },
+          "legacyId": "hr-006"
         }
       ]
     },
@@ -189,7 +195,7 @@
       },
       "risikoer": [
         {
-          "id": "insider-001",
+          "id": "personell-insider-001",
           "risikoelement": {
             "no": "Ondsinnet innsider (malicious insider)",
             "en": "Malicious insider"
@@ -213,10 +219,11 @@
           "foreslaatteTiltak": {
             "no": "User behavior analytics (UBA), anomaly detection, overvåking av privilegert tilgang, psykologisk trygghet og rapporteringskultur",
             "en": "User behavior analytics (UBA), anomaly detection, privileged access monitoring, psychological safety/reporting culture"
-          }
+          },
+          "legacyId": "insider-001"
         },
         {
-          "id": "insider-002",
+          "id": "personell-insider-002",
           "risikoelement": {
             "no": "Dataeksfiltrering fra ansatt som skal slutte",
             "en": "Data exfiltration by an employee who is leaving"
@@ -240,10 +247,11 @@
           "foreslaatteTiltak": {
             "no": "Pre-termination overvåking, DLP alerts, USB blocking, sky upload overvåking, graduated tilgang removal",
             "en": "Pre-termination monitoring, DLP alerts, USB blocking, cloud upload monitoring, graduated access removal"
-          }
+          },
+          "legacyId": "insider-002"
         },
         {
-          "id": "insider-003",
+          "id": "personell-insider-003",
           "risikoelement": {
             "no": "Interessekonflikter ikke håndtert",
             "en": "Conflicts of interest are not handled"
@@ -267,10 +275,11 @@
           "foreslaatteTiltak": {
             "no": "Conflict of interest disclosure, periodic attestation, overvåking av sensitive roller, ethics opplæring",
             "en": "Conflict of interest disclosure, periodic attestation, monitoring of sensitive roles, ethics training"
-          }
+          },
+          "legacyId": "insider-003"
         },
         {
-          "id": "insider-004",
+          "id": "personell-insider-004",
           "risikoelement": {
             "no": "Privileged users ikke ekstra overvåket",
             "en": "Privileged users are not subject to enhanced monitoring"
@@ -294,10 +303,11 @@
           "foreslaatteTiltak": {
             "no": "Privileged Access Management (PAM), session recording, dual control for sensitive ops og kontinuerlig overvåking",
             "en": "Privileged Access Management (PAM), session recording, dual control for sensitive ops, continuous monitoring"
-          }
+          },
+          "legacyId": "insider-004"
         },
         {
-          "id": "insider-005",
+          "id": "personell-insider-005",
           "risikoelement": {
             "no": "Ukultur eller mistrivsel øker risikoen for innsiderhandlinger",
             "en": "Poor culture or dissatisfaction increases the risk of insider actions"
@@ -321,7 +331,8 @@
           "foreslaatteTiltak": {
             "no": "Positiv sikkerhetskultur, varslingsmekanismer, HR-risikoindikatorer, psykologisk trygghet og analyse av exitsamtaler",
             "en": "Positive security culture, whistleblower mechanisms, HR risk indicators, psychological safety, exit interview analysis"
-          }
+          },
+          "legacyId": "insider-005"
         }
       ]
     },
@@ -333,7 +344,7 @@
       },
       "risikoer": [
         {
-          "id": "aware-001",
+          "id": "personell-aware-001",
           "risikoelement": {
             "no": "Ansatte mangler grunnleggende sikkerhetsbevissthet",
             "en": "Employees lack fundamental security awareness"
@@ -357,10 +368,11 @@
           "foreslaatteTiltak": {
             "no": "Kontinuerlig bevisstgjøringsprogram, mikrolæring, gamification, rollebasert opplæring og security champions",
             "en": "Continuous awareness program, micro-learning, gamification, role-based training, security champions"
-          }
+          },
+          "legacyId": "aware-001"
         },
         {
-          "id": "aware-002",
+          "id": "personell-aware-002",
           "risikoelement": {
             "no": "Ansatte faller for phishing-angrep",
             "en": "Employees faller for phishing-angrep"
@@ -384,10 +396,11 @@
           "foreslaatteTiltak": {
             "no": "Frequent phishing simulations, immediate feedback, targeted opplæring for clickers, reporting mechanisms, MFA",
             "en": "Frequent phishing simulations, immediate feedback, targeted training for clickers, reporting mechanisms, MFA"
-          }
+          },
+          "legacyId": "aware-002"
         },
         {
-          "id": "aware-003",
+          "id": "personell-aware-003",
           "risikoelement": {
             "no": "Social engineering og pretexting",
             "en": "Social engineering and pretexting"
@@ -411,10 +424,11 @@
           "foreslaatteTiltak": {
             "no": "Social engineering awareness, verification procedures, challenge culture, callback verification for sensitive requests",
             "en": "Social engineering awareness, verification procedures, challenge culture, callback verification for sensitive requests"
-          }
+          },
+          "legacyId": "aware-003"
         },
         {
-          "id": "aware-004",
+          "id": "personell-aware-004",
           "risikoelement": {
             "no": "Passordpraksis gjør kontoer lette å kompromittere",
             "en": "Password practices make accounts easy to compromise"
@@ -438,10 +452,11 @@
           "foreslaatteTiltak": {
             "no": "Passordmanager, passkeys/FIDO2, MFA enforcement, compromised password detection, passwordless authentication",
             "en": "Passordmanager, passkeys/FIDO2, MFA enforcement, compromised password detection, passwordless authentication"
-          }
+          },
+          "legacyId": "aware-004"
         },
         {
-          "id": "aware-005",
+          "id": "personell-aware-005",
           "risikoelement": {
             "no": "Ansatte rapporterer ikke sikkerhetshendelser",
             "en": "Employees do not report security incidents"
@@ -465,7 +480,8 @@
           "foreslaatteTiltak": {
             "no": "No-blame reporting culture, easy reporting mechanisms, phish report button, recognition for reporting, transparency",
             "en": "No-blame reporting culture, easy reporting mechanisms, phish report button, recognition for reporting, transparency"
-          }
+          },
+          "legacyId": "aware-005"
         }
       ]
     },
@@ -477,7 +493,7 @@
       },
       "risikoer": [
         {
-          "id": "remote-001",
+          "id": "personell-remote-001",
           "risikoelement": {
             "no": "Usikrede hjemmekontor / remote work",
             "en": "Insecure home offices and remote work"
@@ -501,10 +517,11 @@
           "foreslaatteTiltak": {
             "no": "Retningslinjer for sikkerhet på hjemmekontor, VPN, zero trust, enhetsstyring og sikkerhetsvurderinger av hjemmekontor",
             "en": "Home office security guidelines, VPN, zero trust, device management, security assessments for home office"
-          }
+          },
+          "legacyId": "remote-001"
         },
         {
-          "id": "remote-002",
+          "id": "personell-remote-002",
           "risikoelement": {
             "no": "BYOD (Bring Your Own enhet) ikke styrt",
             "en": "BYOD (Bring Your Own Device) not styrt"
@@ -528,10 +545,11 @@
           "foreslaatteTiltak": {
             "no": "MDM/MAM for BYOD, containerization, conditional tilgang, app-based tilgang (not enhet), data separation",
             "en": "MDM/MAM for BYOD, containerization, conditional access, app-based access (not device), data separation"
-          }
+          },
+          "legacyId": "remote-002"
         },
         {
-          "id": "remote-003",
+          "id": "personell-remote-003",
           "risikoelement": {
             "no": "Offentlige wifi-nettverk kompromitterer data",
             "en": "Offentlige wifi-network kompromitterer data"
@@ -555,10 +573,11 @@
           "foreslaatteTiltak": {
             "no": "Always-on VPN, zero trust nettverk tilgang (ZTNA), HTTPS everywhere, public wifi awareness",
             "en": "Always-on VPN, zero trust network access (ZTNA), HTTPS everywhere, public wifi awareness"
-          }
+          },
+          "legacyId": "remote-003"
         },
         {
-          "id": "remote-004",
+          "id": "personell-remote-004",
           "risikoelement": {
             "no": "Arbeidsenheter deles med familie eller andre i hjemmet",
             "en": "Work devices are shared with family members"
@@ -582,10 +601,11 @@
           "foreslaatteTiltak": {
             "no": "Retningslinjer for enhetstildeling, separate brukerkontoer, bevisstgjøring, tekniske kontroller uten administratorrettigheter og håndheving gjennom MDM",
             "en": "Device assignment policy, separate user accounts, awareness, technical controls (no admin rights), MDM enforcement"
-          }
+          },
+          "legacyId": "remote-004"
         },
         {
-          "id": "remote-005",
+          "id": "personell-remote-005",
           "risikoelement": {
             "no": "Manglende fysisk sikring ved fjernarbeid",
             "en": "Insufficient physical security during remote work"
@@ -609,10 +629,11 @@
           "foreslaatteTiltak": {
             "no": "personvern screens, screen timeout, encryption, cable locks, clear desk for home office, camera covers",
             "en": "Privacy screens, screen timeout, encryption, cable locks, clear desk for home office, camera covers"
-          }
+          },
+          "legacyId": "remote-005"
         },
         {
-          "id": "remote-006",
+          "id": "personell-remote-006",
           "risikoelement": {
             "no": "Hybridkontor skaper sikkerhetsgap",
             "en": "Hybridkontor create sikkerhetsgap"
@@ -636,7 +657,8 @@
           "foreslaatteTiltak": {
             "no": "Zero trust-arkitektur, enhetsbasert sikkerhet fremfor lokasjonsbasert sikkerhet, konsistente policyer og retningslinjer for fleksible arbeidsplasser",
             "en": "Zero trust architecture, device-based security (not location), consistent policies, hot-desking guidelines"
-          }
+          },
+          "legacyId": "remote-006"
         }
       ]
     },
@@ -648,7 +670,7 @@
       },
       "risikoer": [
         {
-          "id": "fysisk-001",
+          "id": "personell-fysisk-001",
           "risikoelement": {
             "no": "Clean desk / clear screen ikke praktisert",
             "en": "Clean desk / clear screen not praktisert"
@@ -672,10 +694,11 @@
           "foreslaatteTiltak": {
             "no": "Håndheving, tilgjengelige makuleringsmaskiner, automatisk skjermlås etter tre minutter, låste skuffer og sikkerhetspåminnelser",
             "en": "Enforcement, shredders tilgjengelig, auto screen lock (3 min), locked drawers, security reminders"
-          }
+          },
+          "legacyId": "fysisk-001"
         },
         {
-          "id": "fysisk-002",
+          "id": "personell-fysisk-002",
           "risikoelement": {
             "no": "Besøkende ikke eskorter eller overvåket",
             "en": "Visitors are not escorted or monitored adequately"
@@ -699,10 +722,11 @@
           "foreslaatteTiltak": {
             "no": "Obligatorisk ledsagerordning, synlige besøkskort, tilgangsbegrensninger for besøkende, krav om legitimasjon og besøkslogg",
             "en": "Mandatory escort policy, visible visitor badges, access restrictions for visitors, photo ID requirement, logbook"
-          }
+          },
+          "legacyId": "fysisk-002"
         },
         {
-          "id": "fysisk-003",
+          "id": "personell-fysisk-003",
           "risikoelement": {
             "no": "Tailgating / piggy-backing inn i sikrede områder",
             "en": "Tailgating or piggybacking into secured areas"
@@ -726,10 +750,11 @@
           "foreslaatteTiltak": {
             "no": "Bevisstgjøring mot tailgating, mantraps i områder med høyt sikkerhetsnivå, kultur for å be om badge og sikkerhetsskilting",
             "en": "Anti-tailgating awareness, mantraps for high-security areas, badge challenge culture, security signage"
-          }
+          },
+          "legacyId": "fysisk-003"
         },
         {
-          "id": "fysisk-004",
+          "id": "personell-fysisk-004",
           "risikoelement": {
             "no": "Møteromssikkerhet - sensitive diskusjoner overhøres",
             "en": "Meeting room security is insufficient and sensitive discussions can be overheard"
@@ -753,10 +778,11 @@
           "foreslaatteTiltak": {
             "no": "Classified meeting room ratings, soundproofing, whiteboard protocols, confidential waste bins, room sweeps",
             "en": "Classified meeting room ratings, soundproofing, whiteboard protocols, confidential waste bins, room sweeps"
-          }
+          },
+          "legacyId": "fysisk-004"
         },
         {
-          "id": "fysisk-005",
+          "id": "personell-fysisk-005",
           "risikoelement": {
             "no": "USB drops / baiting attacks",
             "en": "USB drops / baiting attacks"
@@ -780,10 +806,11 @@
           "foreslaatteTiltak": {
             "no": "USB blocking (technical), awareness opplæring, safe USB check procedures, alternative sharing methods",
             "en": "USB blocking (technical), awareness training, safe USB check procedures, alternative sharing methods"
-          }
+          },
+          "legacyId": "fysisk-005"
         },
         {
-          "id": "fysisk-006",
+          "id": "personell-fysisk-006",
           "risikoelement": {
             "no": "Dumpster diving - sensitive dokumenter ikke destruert",
             "en": "Dumpster diving exposes sensitive documents that were not securely destroyed"
@@ -807,7 +834,8 @@
           "foreslaatteTiltak": {
             "no": "Obligatorisk makulering av konfidensielle dokumenter, sikre avfallsbeholdere, sertifisert destruksjonstjeneste og digital-først-retningslinjer",
             "en": "Mandatory shredding for confidential, secure disposal bins, certified destruction service, digital-first policies"
-          }
+          },
+          "legacyId": "fysisk-006"
         }
       ]
     },
@@ -819,7 +847,7 @@
       },
       "risikoer": [
         {
-          "id": "human-001",
+          "id": "personell-human-001",
           "risikoelement": {
             "no": "Utilsiktet datalekkasje (human error)",
             "en": "Accidental datalekkasje (human error)"
@@ -843,10 +871,11 @@
           "foreslaatteTiltak": {
             "no": "DLP warnings, external email banners, sharing confirmations, classification labels, double-check culture",
             "en": "DLP warnings, external email banners, sharing confirmations, classification labels, double-check culture"
-          }
+          },
+          "legacyId": "human-001"
         },
         {
-          "id": "human-002",
+          "id": "personell-human-002",
           "risikoelement": {
             "no": "Feilkonfigurasjoner av sikkerhetskontroller",
             "en": "Misconfigurations of security controls"
@@ -870,10 +899,11 @@
           "foreslaatteTiltak": {
             "no": "Infrastructure as code, konfigurasjonsvalidering, sikkerhetslinting, endringstesting, rollback-prosedyrer og konfigurasjonsgrunnlinjer",
             "en": "Infrastructure-as-code, config validation, security linting, change testing, rollback procedures, config baselines"
-          }
+          },
+          "legacyId": "human-002"
         },
         {
-          "id": "human-003",
+          "id": "personell-human-003",
           "risikoelement": {
             "no": "Stress og tidspress gir snarveier",
             "en": "Stress and tidspress gives snarveier"
@@ -897,10 +927,11 @@
           "foreslaatteTiltak": {
             "no": "Automated controls (not manuell), realistic deadlines, psychological safety to raise concerns, technical debt sporing",
             "en": "Automated controls (not manual), realistic deadlines, psychological safety to raise concerns, technical debt tracking"
-          }
+          },
+          "legacyId": "human-003"
         },
         {
-          "id": "human-004",
+          "id": "personell-human-004",
           "risikoelement": {
             "no": "Manglende sikkerhetskompetanse i utviklingsteam",
             "en": "Missing sikkerhetskompetanse in utviklingsteam"
@@ -924,10 +955,11 @@
           "foreslaatteTiltak": {
             "no": "Opplæring i sikker koding, OWASP Top 10-bevissthet, security champions, SAST-verktøy og opplæring i threat modeling",
             "en": "Secure coding training, OWASP Top 10 awareness, security champions, SAST tools, threat modeling training"
-          }
+          },
+          "legacyId": "human-004"
         },
         {
-          "id": "human-005",
+          "id": "personell-human-005",
           "risikoelement": {
             "no": "Alert fatigue - sikkerhetsvarsler ignoreres",
             "en": "Alert fatigue - sikkerhetsvarsler ignoreres"
@@ -951,7 +983,8 @@
           "foreslaatteTiltak": {
             "no": "Alert tuning, reducing false positives, risk-based prioritization, automation, meaningful alert context",
             "en": "Alert tuning, reducing false positives, risk-based prioritization, automation, meaningful alert context"
-          }
+          },
+          "legacyId": "human-005"
         }
       ]
     }

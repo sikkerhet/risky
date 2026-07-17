@@ -17,7 +17,7 @@
       },
       "risikoer": [
         {
-          "id": "lokal-fys-001",
+          "id": "lokal-server-lokal-fys-001",
           "risikoelement": {
             "no": "Uvedkommende får fysisk tilgang til servere",
             "en": "Unauthorized parties gain physical access to servers"
@@ -41,10 +41,11 @@
           "foreslaatteTiltak": {
             "no": "Biometrisk tilgangskontroll, alarmsystem, disk-kryptering",
             "en": "Strengthen physical access control with layered barriers, alarms, CCTV, and disk encryption on critical systems"
-          }
+          },
+          "legacyId": "lokal-fys-001"
         },
         {
-          "id": "lokal-fys-002",
+          "id": "lokal-server-lokal-fys-002",
           "risikoelement": {
             "no": "Servere ødelagt av brann/vann/strømbrudd",
             "en": "Servers are damaged by fire, water, or power outages"
@@ -68,10 +69,11 @@
           "foreslaatteTiltak": {
             "no": "Geografisk redundans, offsite backup, DR-plan",
             "en": "Establish geographic redundancy, offsite backups, and a tested disaster recovery plan"
-          }
+          },
+          "legacyId": "lokal-fys-002"
         },
         {
-          "id": "lokal-fys-003",
+          "id": "lokal-server-lokal-fys-003",
           "risikoelement": {
             "no": "Servere/utstyr blir stjålet",
             "en": "Servers or equipment are stolen"
@@ -95,10 +97,11 @@
           "foreslaatteTiltak": {
             "no": "Full disk-kryptering, GPS-sporing, bedre fysisk sikring",
             "en": "Full-disk encryption, asset tracking where appropriate, and stronger physical security"
-          }
+          },
+          "legacyId": "lokal-fys-003"
         },
         {
-          "id": "lokal-fys-004",
+          "id": "lokal-server-lokal-fys-004",
           "risikoelement": {
             "no": "Uvedkommende får tilgang via dumpster diving",
             "en": "Unauthorized parties gain access through dumpster diving"
@@ -122,7 +125,8 @@
           "foreslaatteTiltak": {
             "no": "Sertifisert destruksjon, shredding, disk wiping",
             "en": "Certified destruction, shredding, and secure disk wiping"
-          }
+          },
+          "legacyId": "lokal-fys-004"
         }
       ]
     },
@@ -134,7 +138,7 @@
       },
       "risikoer": [
         {
-          "id": "lokal-drift-001",
+          "id": "lokal-server-lokal-drift-001",
           "risikoelement": {
             "no": "Manglende kapasitet/vedlikehold av hardware",
             "en": "Insufficient capacity planning and hardware maintenance"
@@ -158,10 +162,11 @@
           "foreslaatteTiltak": {
             "no": "Hardware refresh-syklus, redundante komponenter, monitorering",
             "en": "Plan hardware refresh cycles, use redundant components, and monitor capacity and hardware health continuously"
-          }
+          },
+          "legacyId": "lokal-drift-001"
         },
         {
-          "id": "lokal-drift-002",
+          "id": "lokal-server-lokal-drift-002",
           "risikoelement": {
             "no": "Data kommer på avveie via gammel hardware",
             "en": "Data is exposed through old hardware"
@@ -185,10 +190,11 @@
           "foreslaatteTiltak": {
             "no": "Sertifisert destruksjon av disker, disk-kryptering, loggføring",
             "en": "Certified disk destruction, disk encryption, and logging"
-          }
+          },
+          "legacyId": "lokal-drift-002"
         },
         {
-          "id": "lokal-drift-003",
+          "id": "lokal-server-lokal-drift-003",
           "risikoelement": {
             "no": "Manglende kapasitetsplanlegging",
             "en": "Missing capacity planning"
@@ -212,10 +218,11 @@
           "foreslaatteTiltak": {
             "no": "Hardware refresh-syklus, redundante komponenter, capacity overvåking",
             "en": "A hardware refresh cycle, redundant components, and capacity monitoring"
-          }
+          },
+          "legacyId": "lokal-drift-003"
         },
         {
-          "id": "lokal-drift-004",
+          "id": "lokal-server-lokal-drift-004",
           "risikoelement": {
             "no": "Ingen change management - uautoriserte endringer",
             "en": "No change management and unauthorized changes"
@@ -239,7 +246,8 @@
           "foreslaatteTiltak": {
             "no": "Formal change management, CAB, approval arbeidsflyt, rollback procedures",
             "en": "Formal change management, CAB, approval workflow, rollback procedures"
-          }
+          },
+          "legacyId": "lokal-drift-004"
         }
       ]
     },
@@ -251,7 +259,7 @@
       },
       "risikoer": [
         {
-          "id": "lokal-net-001",
+          "id": "lokal-server-lokal-net-001",
           "risikoelement": {
             "no": "Intern angriper på lokalt nettverk",
             "en": "An internal attacker operates on the local network"
@@ -275,10 +283,11 @@
           "foreslaatteTiltak": {
             "no": "Mikrosegmentering, VLAN-separasjon, IDS/IPS",
             "en": "Mikrosegmentering, VLAN-separasjon, IDS/IPS"
-          }
+          },
+          "legacyId": "lokal-net-001"
         },
         {
-          "id": "lokal-net-002",
+          "id": "lokal-server-lokal-net-002",
           "risikoelement": {
             "no": "Nettverksutstyr blir utdatert og usikkert",
             "en": "network equipment becomes outdated and usikkert"
@@ -302,7 +311,8 @@
           "foreslaatteTiltak": {
             "no": "Regelmessig firmware-oppdatering, lifecycle management",
             "en": "Regelmessig firmware-updating, lifecycle management"
-          }
+          },
+          "legacyId": "lokal-net-002"
         }
       ]
     }

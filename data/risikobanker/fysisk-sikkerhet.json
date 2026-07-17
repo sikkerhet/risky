@@ -17,7 +17,7 @@
       },
       "risikoer": [
         {
-          "id": "physical-001",
+          "id": "fysisk-sikkerhet-physical-001",
           "risikoelement": {
             "no": "Uautorisert fysisk tilgang til datasenter/serverrom",
             "en": "Unauthorized physical access to the data center or server room"
@@ -41,10 +41,11 @@
           "foreslaatteTiltak": {
             "no": "Biometrisk tilgang, mantrap/airlock, vakthold, CCTV og tailgate-deteksjon",
             "en": "Biometric access, mantrap/airlock, security guards, CCTV, tailgate detection"
-          }
+          },
+          "legacyId": "physical-001"
         },
         {
-          "id": "physical-002",
+          "id": "fysisk-sikkerhet-physical-002",
           "risikoelement": {
             "no": "Tapte eller stjålne adgangskort ikke deaktivert",
             "en": "Lost or stolen access cards are not deactivated"
@@ -68,10 +69,11 @@
           "foreslaatteTiltak": {
             "no": "Instant card deactivation, 24/7 helpdesk, automatic expiry, multi-factor physical tilgang",
             "en": "Instant card deactivation, 24/7 helpdesk, automatic expiry, multi-factor physical access"
-          }
+          },
+          "legacyId": "physical-002"
         },
         {
-          "id": "physical-003",
+          "id": "fysisk-sikkerhet-physical-003",
           "risikoelement": {
             "no": "Besøkende får ukontrollert tilgang til sensitive områder",
             "en": "Visitors gain uncontrolled access to sensitive areas"
@@ -93,12 +95,13 @@
           "T": 3,
           "sannsynlighet": 4,
           "foreslaatteTiltak": {
-            "no": "Mandatory escort, visitor badges (time-limited), dedicated visitor areas, sign-in/out",
+            "no": "Obligatorisk ledsager, tidsbegrensede besøkskort, egne besøksområder og inn-/utsjekking",
             "en": "Mandatory escort, visitor badges (time-limited), dedicated visitor areas, sign-in/out"
-          }
+          },
+          "legacyId": "physical-003"
         },
         {
-          "id": "physical-004",
+          "id": "fysisk-sikkerhet-physical-004",
           "risikoelement": {
             "no": "Adgang utenom arbeidstid ikke logget eller overvåket",
             "en": "Access outside working hours is not logged or monitored"
@@ -122,10 +125,11 @@
           "foreslaatteTiltak": {
             "no": "Real-time alerts for after-hours tilgang, CCTV integration, SOC overvåking",
             "en": "Real-time alerts for after-hours access, CCTV integration, SOC monitoring"
-          }
+          },
+          "legacyId": "physical-004"
         },
         {
-          "id": "physical-005",
+          "id": "fysisk-sikkerhet-physical-005",
           "risikoelement": {
             "no": "Nødflukt-dører brukes som ordinær inngang (bypasser kontroll)",
             "en": "Emergency exits are used as normal entrances and bypass access control"
@@ -149,7 +153,8 @@
           "foreslaatteTiltak": {
             "no": "Delayed egress, instant SOC notification, door position sensors, video verification",
             "en": "Delayed egress, instant SOC notification, door position sensors, video verification"
-          }
+          },
+          "legacyId": "physical-005"
         }
       ]
     },
@@ -161,7 +166,7 @@
       },
       "risikoer": [
         {
-          "id": "equip-001",
+          "id": "fysisk-sikkerhet-equip-001",
           "risikoelement": {
             "no": "Tyveri av bærbare enheter (laptops, telefoner, tablets)",
             "en": "Portable devices such as laptops, phones, and tablets are stolen"
@@ -183,12 +188,13 @@
           "T": 3,
           "sannsynlighet": 4,
           "foreslaatteTiltak": {
-            "no": "Full disk encryption (mandatory), cable locks, clean desk policy, LoJack/enhet sporing",
+            "no": "Full diskkryptering (obligatorisk), kabellåser, clean desk-policy og sporing av enheter",
             "en": "Full disk encryption (mandatory), cable locks, clean desk policy, LoJack/device tracking"
-          }
+          },
+          "legacyId": "equip-001"
         },
         {
-          "id": "equip-002",
+          "id": "fysisk-sikkerhet-equip-002",
           "risikoelement": {
             "no": "Servere eller nettverksutstyr stjålet fra datasenter",
             "en": "Servers or network equipment are stolen from the data center"
@@ -212,10 +218,11 @@
           "foreslaatteTiltak": {
             "no": "Rack locks, chassis locks, asset tags with alarms, cage/colocation security",
             "en": "Rack locks, chassis locks, asset tags with alarms, cage/colocation security"
-          }
+          },
+          "legacyId": "equip-002"
         },
         {
-          "id": "equip-003",
+          "id": "fysisk-sikkerhet-equip-003",
           "risikoelement": {
             "no": "USB eller physical enheter brukes for data exfiltration",
             "en": "USB devices or other physical media are used for data exfiltration"
@@ -239,10 +246,11 @@
           "foreslaatteTiltak": {
             "no": "Blokker USB-porter der det er mulig, bruk DLP, godkjent enhetsliste og moderne endepunktsbeskyttelse",
             "en": "USB port blocking, DLP, approved device whitelist, endpoint protection"
-          }
+          },
+          "legacyId": "equip-003"
         },
         {
-          "id": "equip-004",
+          "id": "fysisk-sikkerhet-equip-004",
           "risikoelement": {
             "no": "Manglende destruksjon av utstyr ved avhending",
             "en": "Missing secure destruction of equipment during disposal"
@@ -266,7 +274,8 @@
           "foreslaatteTiltak": {
             "no": "Certified data destruction (NIST 800-88), degaussing, physical destruction, chain of custody",
             "en": "Certified data destruction (NIST 800-88), degaussing, physical destruction, chain of custody"
-          }
+          },
+          "legacyId": "equip-004"
         }
       ]
     },
@@ -278,7 +287,7 @@
       },
       "risikoer": [
         {
-          "id": "env-001",
+          "id": "fysisk-sikkerhet-env-001",
           "risikoelement": {
             "no": "Brann i datasenter ødelegger kritisk utstyr",
             "en": "Fire in the data center destroys critical equipment"
@@ -302,10 +311,11 @@
           "foreslaatteTiltak": {
             "no": "FM-200/Inergen suppression, early warning detection, redundant sites, fire-resistant construction",
             "en": "FM-200/Inergen suppression, early warning detection, redundant sites, fire-resistant construction"
-          }
+          },
+          "legacyId": "env-001"
         },
         {
-          "id": "env-002",
+          "id": "fysisk-sikkerhet-env-002",
           "risikoelement": {
             "no": "Vannlekkasje fra tak/rør ødelegger servere",
             "en": "Water leakage from roofs or pipes damages servers"
@@ -329,10 +339,11 @@
           "foreslaatteTiltak": {
             "no": "Water leak detection sensors, raised floors, no pipes above racks, drainage",
             "en": "Water leak detection sensors, raised floors, no pipes above racks, drainage"
-          }
+          },
+          "legacyId": "env-002"
         },
         {
-          "id": "env-003",
+          "id": "fysisk-sikkerhet-env-003",
           "risikoelement": {
             "no": "Overoppheting/kjølesvikt fører til shutdown",
             "en": "Overheating or cooling failure leads to shutdown"
@@ -356,10 +367,11 @@
           "foreslaatteTiltak": {
             "no": "Redundant HVAC (N+1), hot/cold aisle containment, temp/humidity alarms, emergency cooling",
             "en": "Redundant HVAC (N+1), hot/cold aisle containment, temp/humidity alarms, emergency cooling"
-          }
+          },
+          "legacyId": "env-003"
         },
         {
-          "id": "env-004",
+          "id": "fysisk-sikkerhet-env-004",
           "risikoelement": {
             "no": "Strømbrudd uten tilstrekkelig backup",
             "en": "Power outages occur without sufficient backup capacity"
@@ -383,10 +395,11 @@
           "foreslaatteTiltak": {
             "no": "Redundant power (A+B feeds), generator backup, extended UPS runtime, automatic failover",
             "en": "Redundant power (A+B feeds), generator backup, extended UPS runtime, automatic failover"
-          }
+          },
+          "legacyId": "env-004"
         },
         {
-          "id": "env-005",
+          "id": "fysisk-sikkerhet-env-005",
           "risikoelement": {
             "no": "Naturkatastrofe (flom, jordskjelv, storm) ødelegger fasiliteter",
             "en": "Natural disasters such as floods, earthquakes, or storms damage facilities"
@@ -410,7 +423,8 @@
           "foreslaatteTiltak": {
             "no": "Geographically distributed datacenters, disaster gjenoppretting sites, regular DR testing",
             "en": "Geographically distributed datacenters, disaster recovery sites, regular DR testing"
-          }
+          },
+          "legacyId": "env-005"
         }
       ]
     },
@@ -422,7 +436,7 @@
       },
       "risikoer": [
         {
-          "id": "surv-001",
+          "id": "fysisk-sikkerhet-surv-001",
           "risikoelement": {
             "no": "Manglende CCTV-dekning av kritiske områder",
             "en": "Missing CCTV-dekning of critical areas"
@@ -446,10 +460,11 @@
           "foreslaatteTiltak": {
             "no": "Full coverage CCTV, HD cameras, motion detection, 90-day retention, SOC integration",
             "en": "Full coverage CCTV, HD cameras, motion detection, 90-day retention, SOC integration"
-          }
+          },
+          "legacyId": "surv-001"
         },
         {
-          "id": "surv-002",
+          "id": "fysisk-sikkerhet-surv-002",
           "risikoelement": {
             "no": "CCTV-opptak ikke lagret eller tilgjengelig ved hendelse",
             "en": "CCTV footage is not stored or available during an incident"
@@ -473,10 +488,11 @@
           "foreslaatteTiltak": {
             "no": "90+ dagers lagringstid, redundant lagring, krypterte sikkerhetskopier og manipulasjonssikring",
             "en": "90+ day retention, redundant storage, encrypted backups, tamper-evident"
-          }
+          },
+          "legacyId": "surv-002"
         },
         {
-          "id": "surv-003",
+          "id": "fysisk-sikkerhet-surv-003",
           "risikoelement": {
             "no": "Ingen varsling ved sikkerhetshendelser (uautorisert adgang)",
             "en": "No alerting during security incidents such as unauthorized physical access"
@@ -490,7 +506,7 @@
             "en": "Local alarms"
           },
           "eksisterendeKontroll": {
-            "no": "Weekly alarm tests",
+            "no": "Ukentlig alarmtesting",
             "en": "Weekly alarm tests"
           },
           "K": 4,
@@ -500,10 +516,11 @@
           "foreslaatteTiltak": {
             "no": "24/7 SOC-overvåking, umiddelbare varsler, respons fra vekter og integrasjon med SIEM",
             "en": "24/7 SOC monitoring, instant alerts, security guard response, integration with SIEM"
-          }
+          },
+          "legacyId": "surv-003"
         },
         {
-          "id": "surv-004",
+          "id": "fysisk-sikkerhet-surv-004",
           "risikoelement": {
             "no": "CCTV-system selv kompromittert",
             "en": "CCTV-system selv kompromittert"
@@ -527,7 +544,8 @@
           "foreslaatteTiltak": {
             "no": "Segmented nettverk, strong auth, firmware updates, encrypted streams, VPN tilgang only",
             "en": "Segmented network, strong auth, firmware updates, encrypted streams, VPN access only"
-          }
+          },
+          "legacyId": "surv-004"
         }
       ]
     },
@@ -539,7 +557,7 @@
       },
       "risikoer": [
         {
-          "id": "doc-001",
+          "id": "fysisk-sikkerhet-doc-001",
           "risikoelement": {
             "no": "Sensitive dokumenter etterlatt på skrivere/printere",
             "en": "Sensitive documents are left on printers"
@@ -563,10 +581,11 @@
           "foreslaatteTiltak": {
             "no": "Pull printing (PIN/badge), automatic document shredding, clean desk enforcement",
             "en": "Pull printing (PIN/badge), automatic document shredding, clean desk enforcement"
-          }
+          },
+          "legacyId": "doc-001"
         },
         {
-          "id": "doc-002",
+          "id": "fysisk-sikkerhet-doc-002",
           "risikoelement": {
             "no": "Papirdokumenter destrueres ikke forsvarlig",
             "en": "Paper documents are not destroyed securely"
@@ -590,10 +609,11 @@
           "foreslaatteTiltak": {
             "no": "Cross-cut shredders (DIN P-4+), certified destruction service, locked disposal bins",
             "en": "Cross-cut shredders (DIN P-4+), certified destruction service, locked disposal bins"
-          }
+          },
+          "legacyId": "doc-002"
         },
         {
-          "id": "doc-003",
+          "id": "fysisk-sikkerhet-doc-003",
           "risikoelement": {
             "no": "Whiteboards med sensitive info synlig gjennom vinduer",
             "en": "Whiteboards with sensitive information are visible through windows"
@@ -617,7 +637,8 @@
           "foreslaatteTiltak": {
             "no": "personvernfilm på vinduer, innvendige møterom, clean whiteboard-policy og digitale tavler",
             "en": "Privacy film on windows, interior meeting rooms, clean whiteboard policy, digital whiteboards"
-          }
+          },
+          "legacyId": "doc-003"
         }
       ]
     },
@@ -629,7 +650,7 @@
       },
       "risikoer": [
         {
-          "id": "reception-001",
+          "id": "fysisk-sikkerhet-reception-001",
           "risikoelement": {
             "no": "Social engineering ved resepsjon gir uautorisert adgang",
             "en": "Social engineering at reception provides unauthorized access"
@@ -653,10 +674,11 @@
           "foreslaatteTiltak": {
             "no": "Regelmessige øvelser i sosial manipulering, tydelige eskaleringsprosedyrer og sikkerhetskultur",
             "en": "Regular social engineering drills, clear escalation procedures, security culture"
-          }
+          },
+          "legacyId": "reception-001"
         },
         {
-          "id": "reception-002",
+          "id": "fysisk-sikkerhet-reception-002",
           "risikoelement": {
             "no": "Pakker eller leveranser inneholder skjult utstyr (bugs, enheter)",
             "en": "Packages or deliveries contain hidden equipment such as bugs or other devices"
@@ -680,10 +702,11 @@
           "foreslaatteTiltak": {
             "no": "Røntgenscreening i områder med høyt sikkerhetsnivå, policy for verifiserte avsendere og rutiner for postmottak",
             "en": "Use X-ray screening in high-security areas, require verified senders, and establish mail-room procedures"
-          }
+          },
+          "legacyId": "reception-002"
         },
         {
-          "id": "reception-003",
+          "id": "fysisk-sikkerhet-reception-003",
           "risikoelement": {
             "no": "Piggybacking/tailgating ved hovedinngang",
             "en": "Piggybacking or tailgating at the main entrance"
@@ -707,7 +730,8 @@
           "foreslaatteTiltak": {
             "no": "Sluser, mantraps, anti-tailgate-sensorer og kampanjer for sikkerhetskultur",
             "en": "Turnstiles, mantraps, anti-tailgate sensors, security culture campaigns"
-          }
+          },
+          "legacyId": "reception-003"
         }
       ]
     },
@@ -719,7 +743,7 @@
       },
       "risikoer": [
         {
-          "id": "remote-001",
+          "id": "fysisk-sikkerhet-remote-001",
           "risikoelement": {
             "no": "Mindre kontorer kan lettere bli kompromittert fysisk",
             "en": "Smaller offices are more easily compromised physically"
@@ -743,10 +767,11 @@
           "foreslaatteTiltak": {
             "no": "Felles sikkerhetsstandarder for alle lokasjoner, sentral overvåking og risikobaserte kontroller",
             "en": "Corporate security standards for all sites, central monitoring, risk-based controls"
-          }
+          },
+          "legacyId": "remote-001"
         },
         {
-          "id": "remote-002",
+          "id": "fysisk-sikkerhet-remote-002",
           "risikoelement": {
             "no": "Remote datacom closets/IDF usikret",
             "en": "Remote data communication closets and IDF rooms are unsecured"
@@ -770,10 +795,11 @@
           "foreslaatteTiltak": {
             "no": "Korttilgang til IDF-rom, nettverkstilgangskontroll (802.1X), portsikkerhet og alarmer",
             "en": "Card access on IDF rooms, network access control (802.1X), port security, alarms"
-          }
+          },
+          "legacyId": "remote-002"
         },
         {
-          "id": "remote-003",
+          "id": "fysisk-sikkerhet-remote-003",
           "risikoelement": {
             "no": "Hjemmekontor mangler fysisk sikkerhet",
             "en": "Hjemmekontor lacks Physical security"
@@ -797,7 +823,8 @@
           "foreslaatteTiltak": {
             "no": "Endepunktsikkerhet (EDR), full diskkryptering, personvernfilter, kabellåser og obligatorisk VPN",
             "en": "Endpoint security (EDR), full disk encryption, privacy screens, cable locks, VPN mandatory"
-          }
+          },
+          "legacyId": "remote-003"
         }
       ]
     }

@@ -17,7 +17,7 @@
       },
       "risikoer": [
         {
-          "id": "sky-001",
+          "id": "skytjeneste-sky-001",
           "risikoelement": {
             "no": "Feilkonfigurerte IAM-roller gir for omfattende tilgang",
             "en": "Misconfigured IAM roles grant excessive access"
@@ -41,10 +41,11 @@
           "foreslaatteTiltak": {
             "no": "policy-as-code, automatisert etterlevelsesskanning og minste privilegium",
             "en": "Policy-as-code, automated compliance scanning, least privilege"
-          }
+          },
+          "legacyId": "sky-001"
         },
         {
-          "id": "sky-002",
+          "id": "skytjeneste-sky-002",
           "risikoelement": {
             "no": "Rot-kontoer/admin-tilgang kompromittert",
             "en": "Root or admin access is compromised"
@@ -68,10 +69,11 @@
           "foreslaatteTiltak": {
             "no": "Hardware MFA for rot-konto, begrenset bruk, break-glass prosedyrer",
             "en": "Hardware MFA for the root account, restricted use, and break-glass procedures"
-          }
+          },
+          "legacyId": "sky-002"
         },
         {
-          "id": "sky-003",
+          "id": "skytjeneste-sky-003",
           "risikoelement": {
             "no": "Utilsiktet offentlig eksponering av ressurser (S3, storage)",
             "en": "Accidental public exposure of resources such as S3 buckets or storage accounts"
@@ -95,10 +97,11 @@
           "foreslaatteTiltak": {
             "no": "Block public tilgang som standard, automated remediation",
             "en": "Block public access by default, automated remediation"
-          }
+          },
+          "legacyId": "sky-003"
         },
         {
-          "id": "sky-004",
+          "id": "skytjeneste-sky-004",
           "risikoelement": {
             "no": "Credential stuffing på sky admin accounts",
             "en": "Credential stuffing on cloud admin accounts"
@@ -122,7 +125,8 @@
           "foreslaatteTiltak": {
             "no": "Hardware MFA, conditional tilgang, passwordless authentication",
             "en": "Hardware MFA, conditional access, passwordless authentication"
-          }
+          },
+          "legacyId": "sky-004"
         }
       ]
     },
@@ -134,7 +138,7 @@
       },
       "risikoer": [
         {
-          "id": "sky-net-001",
+          "id": "skytjeneste-sky-net-001",
           "risikoelement": {
             "no": "Feilkonfigurerte security groups eller brannmurer",
             "en": "Misconfigured security groups/firewalls"
@@ -158,10 +162,11 @@
           "foreslaatteTiltak": {
             "no": "Automatisk deteksjon av for åpne regler, mikrosegmentering",
             "en": "Automatic detection of overly open rules and micro-segmentation"
-          }
+          },
+          "legacyId": "sky-net-001"
         },
         {
-          "id": "sky-net-002",
+          "id": "skytjeneste-sky-net-002",
           "risikoelement": {
             "no": "Manglende kryptering av data i transit mellom tjenester",
             "en": "Missing encryption of data in transit between services"
@@ -185,10 +190,11 @@
           "foreslaatteTiltak": {
             "no": "MTLS for all intern kommunikasjon, service mesh",
             "en": "mTLS for all internal communication and a service mesh"
-          }
+          },
+          "legacyId": "sky-net-002"
         },
         {
-          "id": "sky-net-003",
+          "id": "skytjeneste-sky-net-003",
           "risikoelement": {
             "no": "Ukryptert inter-service kommunikasjon",
             "en": "Unencrypted inter-service communication"
@@ -212,7 +218,8 @@
           "foreslaatteTiltak": {
             "no": "Service mesh (Istio), mTLS enforcement, zero trust",
             "en": "Service mesh (Istio), mTLS enforcement, zero trust"
-          }
+          },
+          "legacyId": "sky-net-003"
         }
       ]
     },
@@ -224,7 +231,7 @@
       },
       "risikoer": [
         {
-          "id": "sky-data-001",
+          "id": "skytjeneste-sky-data-001",
           "risikoelement": {
             "no": "Ukrypterte databaser/lagringstjenester",
             "en": "Ukrypterte databaser/lagringstjenester"
@@ -248,10 +255,11 @@
           "foreslaatteTiltak": {
             "no": "Encryption-at-rest som standard, KMS key management",
             "en": "Encryption-at-rest by default, KMS key management"
-          }
+          },
+          "legacyId": "sky-data-001"
         },
         {
-          "id": "sky-data-002",
+          "id": "skytjeneste-sky-data-002",
           "risikoelement": {
             "no": "Manglende backup eller gjenoppretting i sky",
             "en": "Missing backup or recovery capability in the cloud"
@@ -275,10 +283,11 @@
           "foreslaatteTiltak": {
             "no": "Multi-region backup, automated disaster gjenoppretting testing",
             "en": "Multi-region backup, automated disaster recovery testing"
-          }
+          },
+          "legacyId": "sky-data-002"
         },
         {
-          "id": "sky-data-003",
+          "id": "skytjeneste-sky-data-003",
           "risikoelement": {
             "no": "Data residency krav ikke oppfylt",
             "en": "Data residency requirements not fulfilled"
@@ -302,7 +311,8 @@
           "foreslaatteTiltak": {
             "no": "Regionlåser, retningslinjer for datalokasjon og GDPR-etterlevelse",
             "en": "Region locks, data residency policies, GDPR compliance"
-          }
+          },
+          "legacyId": "sky-data-003"
         }
       ]
     },
@@ -314,7 +324,7 @@
       },
       "risikoer": [
         {
-          "id": "sky-cost-001",
+          "id": "skytjeneste-sky-cost-001",
           "risikoelement": {
             "no": "Ukontrollert ressurs-forbruk fører til høye kostnader",
             "en": "Uncontrolled resource consumption leads to high costs"
@@ -338,7 +348,8 @@
           "foreslaatteTiltak": {
             "no": "Budget alerts, resource quotas, auto-shutdown av dev/test",
             "en": "Budget alerts, resource quotas, auto-shutdown of dev/test"
-          }
+          },
+          "legacyId": "sky-cost-001"
         }
       ]
     },
@@ -350,7 +361,7 @@
       },
       "risikoer": [
         {
-          "id": "sky-comp-001",
+          "id": "skytjeneste-sky-comp-001",
           "risikoelement": {
             "no": "sky-ressurser er ikke fullstendig kartlagt",
             "en": "Cloud resources are not mapped completely"
@@ -374,10 +385,11 @@
           "foreslaatteTiltak": {
             "no": "Resource tagging policy, automated discovery, CMDB",
             "en": "Resource tagging policy, automated discovery, CMDB"
-          }
+          },
+          "legacyId": "sky-comp-001"
         },
         {
-          "id": "sky-comp-002",
+          "id": "skytjeneste-sky-comp-002",
           "risikoelement": {
             "no": "Compliance violations ikke oppdaget",
             "en": "Compliance violations not oppdaget"
@@ -401,7 +413,8 @@
           "foreslaatteTiltak": {
             "no": "Cloud Security Posture Management (CSPM) og automatisert utbedring",
             "en": "Cloud Security Posture Management (CSPM), automated remediation"
-          }
+          },
+          "legacyId": "sky-comp-002"
         }
       ]
     }

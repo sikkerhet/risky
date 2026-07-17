@@ -15,7 +15,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.31/jspdf.plugin.autotable.min.js"></script>
 
     <!-- Excel Export -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/xlsx-js-style@1.2.1/dist/xlsx.bundle.js"></script>
 
     <!-- ZIP Export -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
@@ -205,20 +205,20 @@
                 <table id="risksTable" class="risks-table">
                     <thead>
                         <tr>
-                            <th data-i18n="riskNumber">Nr</th>
-                            <th class="sortable-table-header" data-i18n="riskGroup" data-i18n-title="sortByGroupHint">Gruppe</th>
-                            <th data-i18n="riskElement">Risikoelement</th>
-                            <th data-i18n="vulnerabilityWeakness">Sårbarhet/svakhet</th>
-                            <th data-i18n="existingProtectionHeader">Eksisterende beskyttelse</th>
-                            <th data-i18n="existingControlHeader">Eksisterende kontroll</th>
-                            <th>K</th>
-                            <th>I</th>
-                            <th>T</th>
-                            <th>K*</th>
-                            <th>S*</th>
-                            <th>RN*</th>
-                            <th data-i18n="proposedMeasures">Foreslåtte tiltak</th>
-                            <th data-i18n="actions">Handlinger</th>
+                            <th scope="col" data-i18n="riskNumber">Nr</th>
+                            <th scope="col" class="sortable-table-header" data-i18n="riskGroup" data-i18n-title="sortByGroupHint">Gruppe</th>
+                            <th scope="col" data-i18n="riskElement">Risikoelement</th>
+                            <th scope="col" data-i18n="vulnerabilityWeakness">Sårbarhet/svakhet</th>
+                            <th scope="col" data-i18n="existingProtectionHeader">Eksisterende beskyttelse</th>
+                            <th scope="col" data-i18n="existingControlHeader">Eksisterende kontroll</th>
+                            <th scope="col">K</th>
+                            <th scope="col">I</th>
+                            <th scope="col">T</th>
+                            <th scope="col">K*</th>
+                            <th scope="col">S*</th>
+                            <th scope="col">RN*</th>
+                            <th scope="col" data-i18n="proposedMeasures">Foreslåtte tiltak</th>
+                            <th scope="col" data-i18n="actions">Handlinger</th>
                         </tr>
                     </thead>
                     <tbody id="risksTableBody">
@@ -240,8 +240,8 @@
             <table class="kit-table">
                 <thead>
                     <tr>
-                        <th data-i18n="combination">Kombinasjon</th>
-                        <th data-i18n="numberOfRisks">Antall risikoer</th>
+                        <th scope="col" data-i18n="combination">Kombinasjon</th>
+                        <th scope="col" data-i18n="numberOfRisks">Antall risikoer</th>
                     </tr>
                 </thead>
                 <tbody id="kitTableBody">
@@ -324,10 +324,10 @@
     </div>
 
     <!-- Risikobank Modal -->
-    <div id="risikobankModal" class="modal-overlay">
+    <div id="risikobankModal" class="modal-overlay" role="dialog" aria-modal="true" aria-labelledby="riskBankModalTitle">
         <div class="modal-content">
             <div class="modal-header">
-                <h2 data-i18n="selectFromBank">Velg fra risikobank</h2>
+                <h2 id="riskBankModalTitle" data-i18n="selectFromBank">Velg fra risikobank</h2>
                 <button class="modal-close" onclick="closeRisikobankModal()">×</button>
             </div>
             <div class="modal-body">
@@ -360,10 +360,10 @@
     </div>
 
     <!-- Kommentar Modal -->
-    <div id="commentModal" class="comment-modal">
+    <div id="commentModal" class="comment-modal" role="dialog" aria-modal="true" aria-labelledby="commentModalTitle">
         <div class="comment-modal-content">
             <div class="comment-modal-header">
-                <h3 data-i18n="addCommentModalTitle">Legg til tiltak/kommentar</h3>
+                <h3 id="commentModalTitle" data-i18n="addCommentModalTitle">Legg til tiltak/kommentar</h3>
                 <button class="modal-close" onclick="closeCommentModal()">×</button>
             </div>
             <div class="comment-modal-body">
@@ -401,10 +401,10 @@
     </div>
 
     <!-- Import Risks Modal -->
-    <div id="importRisksModal" class="modal-overlay" style="display: none;">
+    <div id="importRisksModal" class="modal-overlay" role="dialog" aria-modal="true" aria-labelledby="importRisksModalTitle" style="display: none;">
         <div class="modal-content">
             <div class="modal-header">
-                <h3 data-i18n="importDialogTitle">Importer risikoer fra analyse</h3>
+                <h3 id="importRisksModalTitle" data-i18n="importDialogTitle">Importer risikoer fra analyse</h3>
                 <button class="modal-close" onclick="closeImportRisksModal()">×</button>
             </div>
             <div class="modal-body">

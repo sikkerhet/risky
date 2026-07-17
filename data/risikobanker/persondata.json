@@ -17,7 +17,7 @@
       },
       "risikoer": [
         {
-          "id": "gdpr-001",
+          "id": "persondata-gdpr-001",
           "risikoelement": {
             "no": "Manglende eller ugyldig behandlingsgrunnlag",
             "en": "Missing or invalid legal basis for processing"
@@ -41,10 +41,11 @@
           "foreslaatteTiltak": {
             "no": "Dokumentere behandlingsgrunnlag, samtykkeløsning, legal gjennomgang",
             "en": "Document the legal basis for processing, implement a consent solution, and perform legal review"
-          }
+          },
+          "legacyId": "gdpr-001"
         },
         {
-          "id": "gdpr-002",
+          "id": "persondata-gdpr-002",
           "risikoelement": {
             "no": "Persondata brukes til andre formål enn opprinnelig",
             "en": "Personal data is used for purposes other than the original purpose"
@@ -68,10 +69,11 @@
           "foreslaatteTiltak": {
             "no": "Formålsbegrensning i system, data minimization",
             "en": "Purpose limitation in the system and data minimization"
-          }
+          },
+          "legacyId": "gdpr-002"
         },
         {
-          "id": "gdpr-003",
+          "id": "persondata-gdpr-003",
           "risikoelement": {
             "no": "Data minimization ikke oppfylt",
             "en": "Data minimization is not fulfilled"
@@ -95,7 +97,8 @@
           "foreslaatteTiltak": {
             "no": "Data minimization by design, regular data inventory gjennomgang",
             "en": "Data minimization by design, regular data inventory review"
-          }
+          },
+          "legacyId": "gdpr-003"
         }
       ]
     },
@@ -107,7 +110,7 @@
       },
       "risikoer": [
         {
-          "id": "gdpr-rett-001",
+          "id": "persondata-gdpr-rett-001",
           "risikoelement": {
             "no": "Kan ikke oppfylle rett til sletting",
             "en": "Cannot fulfill the right to erasure"
@@ -131,10 +134,11 @@
           "foreslaatteTiltak": {
             "no": "Data inventory, sentralisert slettingsfunksjon, testing",
             "en": "Data inventory, centralized deletion functionality, and testing"
-          }
+          },
+          "legacyId": "gdpr-rett-001"
         },
         {
-          "id": "gdpr-rett-002",
+          "id": "persondata-gdpr-rett-002",
           "risikoelement": {
             "no": "Kan ikke oppfylle rett til dataportabilitet",
             "en": "Cannot fulfill the right to data portability"
@@ -158,10 +162,11 @@
           "foreslaatteTiltak": {
             "no": "Automatisk eksport i strukturert format (JSON/CSV)",
             "en": "Automatic export in a structured format (JSON/CSV)"
-          }
+          },
+          "legacyId": "gdpr-rett-002"
         },
         {
-          "id": "gdpr-rett-003",
+          "id": "persondata-gdpr-rett-003",
           "risikoelement": {
             "no": "Kan ikke identifisere all data om en person",
             "en": "Cannot identify all data about an individual"
@@ -185,7 +190,8 @@
           "foreslaatteTiltak": {
             "no": "Complete data inventory, data lineage sporing, tagging",
             "en": "Complete data inventory, data lineage tracking, tagging"
-          }
+          },
+          "legacyId": "gdpr-rett-003"
         }
       ]
     },
@@ -197,7 +203,7 @@
       },
       "risikoer": [
         {
-          "id": "gdpr-del-001",
+          "id": "persondata-gdpr-del-001",
           "risikoelement": {
             "no": "Persondata deles uten databehandleravtale",
             "en": "Personal data is shared without a data processing agreement"
@@ -221,10 +227,11 @@
           "foreslaatteTiltak": {
             "no": "Register over databehandlere, avtalemal, leverandør management",
             "en": "Register of data processors, agreement templates, and vendor management"
-          }
+          },
+          "legacyId": "gdpr-del-001"
         },
         {
-          "id": "gdpr-del-002",
+          "id": "persondata-gdpr-del-002",
           "risikoelement": {
             "no": "Overføring til tredjeland uten grunnlag",
             "en": "Transfers to third countries take place without a valid legal basis"
@@ -248,10 +255,11 @@
           "foreslaatteTiltak": {
             "no": "Data residency-krav, EU-region for sky, SCC",
             "en": "Define data residency requirements, use EU regions for cloud services where necessary, and put SCCs in place where transfers require them"
-          }
+          },
+          "legacyId": "gdpr-del-002"
         },
         {
-          "id": "gdpr-del-003",
+          "id": "persondata-gdpr-del-003",
           "risikoelement": {
             "no": "Sub-processorer ikke dokumentert",
             "en": "Sub-processorer not documented"
@@ -275,7 +283,8 @@
           "foreslaatteTiltak": {
             "no": "Sub-processor register, notification requirements, audit rights",
             "en": "Sub-processor register, notification requirements, audit rights"
-          }
+          },
+          "legacyId": "gdpr-del-003"
         }
       ]
     },
@@ -287,7 +296,7 @@
       },
       "risikoer": [
         {
-          "id": "gdpr-sik-001",
+          "id": "persondata-gdpr-sik-001",
           "risikoelement": {
             "no": "Manglende kryptering av persondata",
             "en": "Missing encryption of personal data"
@@ -311,10 +320,11 @@
           "foreslaatteTiltak": {
             "no": "Encryption at rest, TLS 1.3, field-level encryption for sensitive data",
             "en": "Encryption at rest, TLS 1.3, field-level encryption for sensitive data"
-          }
+          },
+          "legacyId": "gdpr-sik-001"
         },
         {
-          "id": "gdpr-sik-002",
+          "id": "persondata-gdpr-sik-002",
           "risikoelement": {
             "no": "Ingen pseudonymisering eller anonymisering",
             "en": "No pseudonymisering or anonymisering"
@@ -338,10 +348,11 @@
           "foreslaatteTiltak": {
             "no": "Pseudonymization for analytics, anonymization techniques, k-anonymity",
             "en": "Pseudonymization for analytics, anonymization techniques, k-anonymity"
-          }
+          },
+          "legacyId": "gdpr-sik-002"
         },
         {
-          "id": "gdpr-sik-003",
+          "id": "persondata-gdpr-sik-003",
           "risikoelement": {
             "no": "Manglende data breach notification prosedyre",
             "en": "Missing data breach notification procedure"
@@ -365,7 +376,8 @@
           "foreslaatteTiltak": {
             "no": "Breach notification playbook, pre-drafted templates, DPO involvement",
             "en": "Breach notification playbook, pre-drafted templates, DPO involvement"
-          }
+          },
+          "legacyId": "gdpr-sik-003"
         }
       ]
     }

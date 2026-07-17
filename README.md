@@ -21,10 +21,10 @@ Risky runs entirely in the browser. No backend, no installation, and no server-s
 
 ## Risk Library
 
-Risky includes **415 predefined risks**:
+Risky includes **463 predefined risks**:
 
 - **14 modular risk banks** with **364 risks**
-- **6 baseline templates** with **51 risks**
+- **12 baseline templates** with **99 risks**
 
 ### Modular Risk Banks
 
@@ -51,6 +51,12 @@ Risky includes **415 predefined risks**:
 4. **Web App / API** (10)
 5. **Database** (7)
 6. **Mobile App** (8)
+7. **Identity and Access** (8)
+8. **Continuity and Preparedness** (8)
+9. **AI Service** (8)
+10. **Integrations** (8)
+11. **DevOps and CI/CD** (8)
+12. **SaaS** (8)
 
 ## What Changed In This Major Release
 
@@ -101,7 +107,7 @@ risky/
 ├── css/
 ├── js/
 └── data/
-    ├── baselines/
+    ├── baselines/       # 12 baseline templates
     ├── risikobanker/
     └── eksempel-analyse.json
 ```
@@ -112,7 +118,7 @@ risky/
 - HTML5 Canvas
 - `localStorage`
 - jsPDF + jsPDF-AutoTable
-- SheetJS / xlsx.js
+- xlsx-js-style (SheetJS-compatible Excel export with cell styling)
 - CSS Grid and Flexbox
 
 ## Data And Privacy

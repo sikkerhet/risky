@@ -17,7 +17,7 @@
       },
       "risikoer": [
         {
-          "id": "ledelse-001",
+          "id": "governance-ledelse-001",
           "risikoelement": {
             "no": "Manglende ledelsesforankring av informasjonssikkerhet",
             "en": "Missing executive sponsorship for information security"
@@ -41,10 +41,11 @@
           "foreslaatteTiltak": {
             "no": "Sikkerhet fast på ledergruppens agenda, CISO i ledergruppen, styresrapportering, KPI-er for sikkerhet",
             "en": "Security is a standing item on the leadership team agenda, the CISO is part of the leadership team, board reporting is in place, and security KPIs are tracked"
-          }
+          },
+          "legacyId": "ledelse-001"
         },
         {
-          "id": "ledelse-002",
+          "id": "governance-ledelse-002",
           "risikoelement": {
             "no": "Ingen sikkerhetsstrategi eller overordnet plan",
             "en": "No security strategy or overarching plan"
@@ -68,10 +69,11 @@
           "foreslaatteTiltak": {
             "no": "Utarbeide sikkerhetsstrategi godkjent av ledelsen, treårig veikart, målsettinger og suksesskriterier",
             "en": "Develop a security strategy approved by executive management, with a three-year roadmap, clear goals, and success criteria"
-          }
+          },
+          "legacyId": "ledelse-002"
         },
         {
-          "id": "ledelse-003",
+          "id": "governance-ledelse-003",
           "risikoelement": {
             "no": "Sikkerhetsarbeidet er underfinansiert og underbemannet",
             "en": "Security work is underfunded and understaffed"
@@ -95,10 +97,11 @@
           "foreslaatteTiltak": {
             "no": "Risikobasert budsjettering, business case for sikkerhetsinvesteringer og sikkerhet som andel av IT-budsjettet",
             "en": "Risk-based budgeting, business cases for security investments, and a defined security share of the IT budget"
-          }
+          },
+          "legacyId": "ledelse-003"
         },
         {
-          "id": "ledelse-004",
+          "id": "governance-ledelse-004",
           "risikoelement": {
             "no": "Ingen sikkerhetsstyring / governance board",
             "en": "No dedicated security governance board"
@@ -122,10 +125,11 @@
           "foreslaatteTiltak": {
             "no": "Etablere et sikkerhetsstyringsforum med mandat, vedtaksmyndighet og fast møtefrekvens",
             "en": "Establish a Security Steering Committee with a clear mandate, decision-making authority, and a fixed meeting cadence"
-          }
+          },
+          "legacyId": "ledelse-004"
         },
         {
-          "id": "ledelse-005",
+          "id": "governance-ledelse-005",
           "risikoelement": {
             "no": "Sikkerhet ikke integrert i prosjekt- og endringsstyring",
             "en": "Security is not integrated into project and change management"
@@ -149,7 +153,8 @@
           "foreslaatteTiltak": {
             "no": "Security by design, obligatorisk threat modeling, en security champion i alle prosjekter og SSDLC",
             "en": "Security by design, mandatory threat modeling, a security champion in every project, and an SSDLC"
-          }
+          },
+          "legacyId": "ledelse-005"
         }
       ]
     },
@@ -161,7 +166,7 @@
       },
       "risikoer": [
         {
-          "id": "roller-001",
+          "id": "governance-roller-001",
           "risikoelement": {
             "no": "Informasjonsverdier står uten tydelig eier",
             "en": "Information assets are left without a clear owner"
@@ -185,10 +190,11 @@
           "foreslaatteTiltak": {
             "no": "Modell for dataeierskap (dataeier, dataforvalter og databehandler), RACI-matrise og eiendelsregister",
             "en": "Data ownership model (data owners, data stewards, data custodians), RACI matrix, asset register"
-          }
+          },
+          "legacyId": "roller-001"
         },
         {
-          "id": "roller-002",
+          "id": "governance-roller-002",
           "risikoelement": {
             "no": "Manglende segregation of duties (SoD)",
             "en": "Missing segregation of duties (SoD)"
@@ -212,10 +218,11 @@
           "foreslaatteTiltak": {
             "no": "SoD matrix, automated SoD controls, maker-checker for kritiske operasjoner, SoD violation overvåking",
             "en": "An SoD matrix, automated SoD controls, maker-checker for critical operations, and monitoring of SoD violations"
-          }
+          },
+          "legacyId": "roller-002"
         },
         {
-          "id": "roller-003",
+          "id": "governance-roller-003",
           "risikoelement": {
             "no": "Sikkerhetsroller og ansvar blir misforstått eller overlappende",
             "en": "Security roles and responsibilities are misunderstood or overlap"
@@ -239,10 +246,11 @@
           "foreslaatteTiltak": {
             "no": "Detaljert RACI for sikkerhetsprosesser, sikkerhetsroller i stillingsbeskrivelser og årlig RACI-gjennomgang",
             "en": "Define a detailed RACI for security processes, include security roles in job descriptions, and review the RACI annually"
-          }
+          },
+          "legacyId": "roller-003"
         },
         {
-          "id": "roller-004",
+          "id": "governance-roller-004",
           "risikoelement": {
             "no": "Ingen dedikert sikkerhetsressurs / CISO",
             "en": "There is no dedicated security resource or CISO"
@@ -266,7 +274,8 @@
           "foreslaatteTiltak": {
             "no": "Dedikert CISO eller sikkerhetsleder, sikkerhetsteam og program for security champions",
             "en": "Dedikert CISO or security lead, security team, security champions program"
-          }
+          },
+          "legacyId": "roller-004"
         }
       ]
     },
@@ -278,7 +287,7 @@
       },
       "risikoer": [
         {
-          "id": "policy-001",
+          "id": "governance-policy-001",
           "risikoelement": {
             "no": "Sikkerhetspolicyer mangler eller er utdaterte",
             "en": "Security policies are missing or outdated"
@@ -302,10 +311,11 @@
           "foreslaatteTiltak": {
             "no": "Policy framework (hierarki: policy->standard->procedure), årlig gjennomgang, versjonskontroll og godkjenningsprosess",
             "en": "Policy framework (hierarki: policy->standard->procedure), annual review, version control, approval process"
-          }
+          },
+          "legacyId": "policy-001"
         },
         {
-          "id": "policy-002",
+          "id": "governance-policy-002",
           "risikoelement": {
             "no": "Policyer ikke kommunisert eller håndhevet",
             "en": "Policies are not communicated or enforced"
@@ -329,10 +339,11 @@
           "foreslaatteTiltak": {
             "no": "Policy acknowledgement (signering), awareness-kampanjer, konsekvenser ved brudd og stikkprøver",
             "en": "Policy acknowledgement (signering), awareness campaigns, konsekvenser during breaches, spot-checks"
-          }
+          },
+          "legacyId": "policy-002"
         },
         {
-          "id": "policy-003",
+          "id": "governance-policy-003",
           "risikoelement": {
             "no": "Manglende compliance-oversikt (regulatorisk)",
             "en": "Missing compliance-overview (regulatorisk)"
@@ -356,13 +367,14 @@
           "foreslaatteTiltak": {
             "no": "Register for etterlevelse, overvåking av regulatoriske endringer, vurderinger av etterlevelseskonsekvenser og involvering av juridisk rådgiver",
             "en": "Compliance register, regulatory change monitoring, compliance impact assessments, legal counsel involvement"
-          }
+          },
+          "legacyId": "policy-003"
         },
         {
-          "id": "policy-004",
+          "id": "governance-policy-004",
           "risikoelement": {
             "no": "Ingen systematisk compliance-testing",
-            "en": "No systematisk compliance-testing"
+            "en": "No systematic compliance testing"
           },
           "saarbarhet": {
             "no": "Vet ikke om vi faktisk følger krav og policyer",
@@ -383,10 +395,11 @@
           "foreslaatteTiltak": {
             "no": "Kontinuerlig compliance-overvåking, internal audit-program, automatisert compliance-testing og control attestation",
             "en": "Continuous compliance monitoring, internal audit program, compliance testing automation, control attestation"
-          }
+          },
+          "legacyId": "policy-004"
         },
         {
-          "id": "policy-005",
+          "id": "governance-policy-005",
           "risikoelement": {
             "no": "Manglende risikoaksept-prosess",
             "en": "Missing risikoaksept-process"
@@ -410,10 +423,11 @@
           "foreslaatteTiltak": {
             "no": "Formelt risk acceptance framework, godkjenningsnivåer basert på risiko, risikoregister og tidsavgrensede aksepter",
             "en": "Establish a formal risk acceptance framework, approval levels based on risk, a risk register, and time-boxed acceptances"
-          }
+          },
+          "legacyId": "policy-005"
         },
         {
-          "id": "policy-006",
+          "id": "governance-policy-006",
           "risikoelement": {
             "no": "Informasjonsklassifisering ikke implementert",
             "en": "Informasjonsklassifisering not implemented"
@@ -437,7 +451,8 @@
           "foreslaatteTiltak": {
             "no": "Classification scheme (Public, Internal, Confidential, Restricted), labeling, handling requirements per class, DLP integration",
             "en": "Classification scheme (Public, Internal, Confidential, Restricted), labeling, handling requirements per class, DLP integration"
-          }
+          },
+          "legacyId": "policy-006"
         }
       ]
     },
@@ -449,7 +464,7 @@
       },
       "risikoer": [
         {
-          "id": "vendor-001",
+          "id": "governance-vendor-001",
           "risikoelement": {
             "no": "Ingen systematisk leverandørrisiko-vurdering",
             "en": "There is no systematic vendor risk assessment"
@@ -473,10 +488,11 @@
           "foreslaatteTiltak": {
             "no": "Rammeverk for leverandørrisikovurdering, sikkerhetsspørreskjemaer, kategorisering av leverandører og due diligence",
             "en": "Vendor risk assessment framework, security questionnaires, tiering of vendors, due diligence"
-          }
+          },
+          "legacyId": "vendor-001"
         },
         {
-          "id": "vendor-002",
+          "id": "governance-vendor-002",
           "risikoelement": {
             "no": "Kritiske leverandører blir ikke sikkerhetsvurdert godt nok",
             "en": "Critical vendors are not assessed thoroughly enough for security risk"
@@ -500,10 +516,11 @@
           "foreslaatteTiltak": {
             "no": "Critical leverandør identification, business impact analysis per leverandør, alternative leverandører, contingency plans",
             "en": "Critical vendor identification, business impact analysis per vendor, alternative vendors, contingency plans"
-          }
+          },
+          "legacyId": "vendor-002"
         },
         {
-          "id": "vendor-003",
+          "id": "governance-vendor-003",
           "risikoelement": {
             "no": "Kontrakter mangler tydelige sikkerhetskrav",
             "en": "Contracts lack clear security requirements"
@@ -527,10 +544,11 @@
           "foreslaatteTiltak": {
             "no": "Mal for sikkerhetstillegg, SLA for sikkerhet, klausuler for varsling om brudd, revisjonsrettigheter og ansvarsbestemmelser",
             "en": "Security addendum template, SLA for security, breach notification clauses, audit rights, liability terms"
-          }
+          },
+          "legacyId": "vendor-003"
         },
         {
-          "id": "vendor-004",
+          "id": "governance-vendor-004",
           "risikoelement": {
             "no": "Ikke ongoing overvåking av leverandører",
             "en": "Not ongoing monitoring of vendors"
@@ -554,10 +572,11 @@
           "foreslaatteTiltak": {
             "no": "Kontinuerlig leverandørovervåking, periodiske revurderinger, sporing av varsel om brudd og ytelsesgjennomganger",
             "en": "Continuous vendor monitoring, periodic reassessments, breach notification tracking, performance reviews"
-          }
+          },
+          "legacyId": "vendor-004"
         },
         {
-          "id": "vendor-005",
+          "id": "governance-vendor-005",
           "risikoelement": {
             "no": "Underleverandører (4th party) ikke styrt",
             "en": "Subcontractors (4th party) not styrt"
@@ -581,10 +600,11 @@
           "foreslaatteTiltak": {
             "no": "Styring av 4.-partsrisiko, godkjenningsrett for underleverandører, videreføringsklausuler og kartlegging av leverandørkjeden",
             "en": "4th party risk management, approval rights for subcontractors, flow-down clauses, supply chain mapping"
-          }
+          },
+          "legacyId": "vendor-005"
         },
         {
-          "id": "vendor-006",
+          "id": "governance-vendor-006",
           "risikoelement": {
             "no": "Leverandører fases ikke ut på en kontrollert måte",
             "en": "Vendors are not offboarded in a controlled manner"
@@ -608,7 +628,8 @@
           "foreslaatteTiltak": {
             "no": "leverandør offboarding sjekkliste, data return/destruction verification, tilgang revocation, kontrakt closeout procedures",
             "en": "Vendor offboarding checklist, data return/destruction verification, access revocation, contract closeout procedures"
-          }
+          },
+          "legacyId": "vendor-006"
         }
       ]
     },
@@ -620,7 +641,7 @@
       },
       "risikoer": [
         {
-          "id": "audit-001",
+          "id": "governance-audit-001",
           "risikoelement": {
             "no": "Ingen internrevisjon / internal audit",
             "en": "No internrevisjon / internal audit"
@@ -644,10 +665,11 @@
           "foreslaatteTiltak": {
             "no": "Internal audit-funksjon, risikobasert revisjonsplan, uavhengighet og rapportering til revisjonsutvalg",
             "en": "Internal audit function, risk-based audit plan, independence, audit committee reporting"
-          }
+          },
+          "legacyId": "audit-001"
         },
         {
-          "id": "audit-002",
+          "id": "governance-audit-002",
           "risikoelement": {
             "no": "Revisjonsfunn følges ikke opp",
             "en": "Audit findings not fulgt opp"
@@ -671,10 +693,11 @@
           "foreslaatteTiltak": {
             "no": "Sporing av revisjonsfunn, frister for utbedring, eskalering av forsinkede tiltak og periodisk statusrapportering",
             "en": "Audit finding tracker, remediation deadlines, escalation for overdue items, periodic status reporting"
-          }
+          },
+          "legacyId": "audit-002"
         },
         {
-          "id": "audit-003",
+          "id": "governance-audit-003",
           "risikoelement": {
             "no": "Manglende audit trail / sporbarhet",
             "en": "Missing audit trail / traceability"
@@ -698,10 +721,11 @@
           "foreslaatteTiltak": {
             "no": "Omfattende audit-loggføring, immutable logs, SIEM, langtidslagring og beskyttelse av loggintegritet",
             "en": "Comprehensive audit logging, immutable logs, SIEM, long-term retention, log integrity protection"
-          }
+          },
+          "legacyId": "audit-003"
         },
         {
-          "id": "audit-004",
+          "id": "governance-audit-004",
           "risikoelement": {
             "no": "Sertifiseringer ikke opprettholdt (ISO27001, SOC2)",
             "en": "Sertifiseringer not opprettholdt (ISO27001, SOC2)"
@@ -725,7 +749,8 @@
           "foreslaatteTiltak": {
             "no": "Kontinuerlig compliance-program, plan for control testing, automatisert innsamling av bevis og mock audits",
             "en": "Continuous compliance program, control testing schedule, evidence collection automation, mock audits"
-          }
+          },
+          "legacyId": "audit-004"
         }
       ]
     },
@@ -737,7 +762,7 @@
       },
       "risikoer": [
         {
-          "id": "dok-001",
+          "id": "governance-dok-001",
           "risikoelement": {
             "no": "Kritisk dokumentasjon mangler eller er utdatert",
             "en": "Critical documentation lacks or is outdated"
@@ -761,10 +786,11 @@
           "foreslaatteTiltak": {
             "no": "Dokumentasjonsstandarder, gjennomgangssykluser, versjonskontroll, maler og dokumentasjon-as-code",
             "en": "Documentation standards, review cycles, version control, templates, documentation-as-code"
-          }
+          },
+          "legacyId": "dok-001"
         },
         {
-          "id": "dok-002",
+          "id": "governance-dok-002",
           "risikoelement": {
             "no": "Ingen oversikt over informasjonsverdier / asset register",
             "en": "No overview over information assets / asset register"
@@ -788,10 +814,11 @@
           "foreslaatteTiltak": {
             "no": "Omfattende asset register, automatisert oppdagelse, datakartlegging, klassifisering og eiertildeling",
             "en": "Comprehensive asset register, automated discovery, data mapping, classification, owner attribution"
-          }
+          },
+          "legacyId": "dok-002"
         },
         {
-          "id": "dok-003",
+          "id": "governance-dok-003",
           "risikoelement": {
             "no": "Intellectual property ikke beskyttet",
             "en": "Intellectual property is not adequately protected"
@@ -815,10 +842,11 @@
           "foreslaatteTiltak": {
             "no": "IP-register, protective markings, DLP, tilgangskontroller for repository og avtaler om rettigheter til oppfinnelser",
             "en": "IP register, protective markings, DLP, repository access controls, invention assignment agreements"
-          }
+          },
+          "legacyId": "dok-003"
         },
         {
-          "id": "dok-004",
+          "id": "governance-dok-004",
           "risikoelement": {
             "no": "Records management og arkivering ikke ivaretatt",
             "en": "Records management and arkivering not ivaretatt"
@@ -842,7 +870,8 @@
           "foreslaatteTiltak": {
             "no": "Records management-policy, retention-planer, sikker sletting, arkivløsning og legal hold-prosedyrer",
             "en": "Records management policy, retention schedules, secure disposal, archive solution, legal hold procedures"
-          }
+          },
+          "legacyId": "dok-004"
         }
       ]
     }

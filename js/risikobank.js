@@ -322,8 +322,14 @@ async function loadRisikobank() {
 
 // Custom bank management
 function getCustomBanks() {
-    const stored = localStorage.getItem(CUSTOM_BANKS_KEY);
-    return stored ? JSON.parse(stored) : [];
+    try {
+        const stored = localStorage.getItem(CUSTOM_BANKS_KEY);
+        const banks = stored ? JSON.parse(stored) : [];
+        return Array.isArray(banks) ? banks : [];
+    } catch (error) {
+        console.warn('Could not read custom risk banks; ignoring invalid browser data.', error);
+        return [];
+    }
 }
 
 function saveCustomBank(bank) {

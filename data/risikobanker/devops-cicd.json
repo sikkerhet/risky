@@ -17,7 +17,7 @@
       },
       "risikoer": [
         {
-          "id": "cicd-001",
+          "id": "devops-cicd-cicd-001",
           "risikoelement": {
             "no": "Kompromittert CI/CD-pipeline injiserer ondsinnet kode",
             "en": "A compromised CI/CD pipeline injects malicious code"
@@ -41,10 +41,11 @@
           "foreslaatteTiltak": {
             "no": "Code signing, artifact attestation, SLSA Level 3+, immutable build environments",
             "en": "Code signing, artifact attestation, SLSA Level 3+, immutable build environments"
-          }
+          },
+          "legacyId": "cicd-001"
         },
         {
-          "id": "cicd-002",
+          "id": "devops-cicd-cicd-002",
           "risikoelement": {
             "no": "Secrets eksponert i CI/CD logs eller environment variables",
             "en": "Secrets are exposed in CI/CD logs or environment variables"
@@ -68,10 +69,11 @@
           "foreslaatteTiltak": {
             "no": "Secret managers (Vault, AWS Secrets Manager), secret rotation, mask secrets in logs",
             "en": "Secret managers (Vault, AWS Secrets Manager), secret rotation, mask secrets in logs"
-          }
+          },
+          "legacyId": "cicd-002"
         },
         {
-          "id": "cicd-003",
+          "id": "devops-cicd-cicd-003",
           "risikoelement": {
             "no": "Ukontrollert utrulling til produksjon",
             "en": "Uncontrolled deployment to production"
@@ -95,10 +97,11 @@
           "foreslaatteTiltak": {
             "no": "4-eyes principle, automated testing gates, canary utrullinger, rollback plan",
             "en": "4-eyes principle, automated testing gates, canary deployments, rollback plan"
-          }
+          },
+          "legacyId": "cicd-003"
         },
         {
-          "id": "cicd-004",
+          "id": "devops-cicd-cicd-004",
           "risikoelement": {
             "no": "Drift av usignerte eller uverifiserte artifacts",
             "en": "Unsigned or unverified artifacts are deployed"
@@ -122,10 +125,11 @@
           "foreslaatteTiltak": {
             "no": "Sigstore/Cosign, SLSA provenance, artifact verification before utrulling",
             "en": "Sigstore/Cosign, SLSA provenance, artifact verification before deployment"
-          }
+          },
+          "legacyId": "cicd-004"
         },
         {
-          "id": "cicd-005",
+          "id": "devops-cicd-cicd-005",
           "risikoelement": {
             "no": "Lateral movement fra kompromittert build agent",
             "en": "Lateral movement from a compromised build agent"
@@ -149,7 +153,8 @@
           "foreslaatteTiltak": {
             "no": "Ephemeral build agents, workload identity, zero trust networking",
             "en": "Ephemeral build agents, workload identity, zero trust networking"
-          }
+          },
+          "legacyId": "cicd-005"
         }
       ]
     },
@@ -161,7 +166,7 @@
       },
       "risikoer": [
         {
-          "id": "code-001",
+          "id": "devops-cicd-code-001",
           "risikoelement": {
             "no": "Secrets commitet til source control (API keys, passwords)",
             "en": "Secrets committed to source control (API keys, passwords)"
@@ -185,10 +190,11 @@
           "foreslaatteTiltak": {
             "no": "Gitleaks/TruffleHog, automated secret rotation ved leak, developer opplæring",
             "en": "Gitleaks/TruffleHog, automated secret rotation during leak, developer training"
-          }
+          },
+          "legacyId": "code-001"
         },
         {
-          "id": "code-002",
+          "id": "devops-cicd-code-002",
           "risikoelement": {
             "no": "Code gjennomgang fanger ikke opp sikkerhetsfeil",
             "en": "Code review does not detect security issues"
@@ -198,7 +204,7 @@
             "en": "Missing security focus in reviews and time pressure"
           },
           "eksisterendeBeskyttelse": {
-            "no": "Mandatory code gjennomgang",
+            "no": "Obligatorisk code review",
             "en": "Mandatory code review"
           },
           "eksisterendeKontroll": {
@@ -212,10 +218,11 @@
           "foreslaatteTiltak": {
             "no": "Program for security champions, SAST i PR-flyt og sikkerhetssjekklister",
             "en": "Security champions program, SAST in PR-flow, security checklists"
-          }
+          },
+          "legacyId": "code-002"
         },
         {
-          "id": "code-003",
+          "id": "devops-cicd-code-003",
           "risikoelement": {
             "no": "Manglende branch protection tillater force push til main",
             "en": "Missing branch protection allows force-pushes to the main branch"
@@ -239,10 +246,11 @@
           "foreslaatteTiltak": {
             "no": "Enforce branch protection, require signed commits, linear history",
             "en": "Enforce branch protection, require signed commits, linear history"
-          }
+          },
+          "legacyId": "code-003"
         },
         {
-          "id": "code-004",
+          "id": "devops-cicd-code-004",
           "risikoelement": {
             "no": "Kompromittert utviklerkonto gir tilgang til alle repos",
             "en": "A compromised developer account provides access to all repositories"
@@ -266,7 +274,8 @@
           "foreslaatteTiltak": {
             "no": "Hardware keys (YubiKey), FIDO2, just-in-time tilgang, PAM for source control",
             "en": "Hardware keys (YubiKey), FIDO2, just-in-time access, PAM for source control"
-          }
+          },
+          "legacyId": "code-004"
         }
       ]
     },
@@ -278,7 +287,7 @@
       },
       "risikoer": [
         {
-          "id": "dep-001",
+          "id": "devops-cicd-dep-001",
           "risikoelement": {
             "no": "Kjente sårbarheter i dependencies (CVE-er)",
             "en": "known vulnerabilities in dependencies (CVE-is)"
@@ -302,10 +311,11 @@
           "foreslaatteTiltak": {
             "no": "Automated dependency updates, SCA scanning, SBOM generation",
             "en": "Automated dependency updates, SCA scanning, SBOM generation"
-          }
+          },
+          "legacyId": "dep-001"
         },
         {
-          "id": "dep-002",
+          "id": "devops-cicd-dep-002",
           "risikoelement": {
             "no": "Dependency confusion / typosquatting attack",
             "en": "Dependency confusion / typosquatting attack"
@@ -329,10 +339,11 @@
           "foreslaatteTiltak": {
             "no": "Private registry først, namespace reservation, checksum verification",
             "en": "Use a private registry first, reserve namespaces, and verify checksums"
-          }
+          },
+          "legacyId": "dep-002"
         },
         {
-          "id": "dep-003",
+          "id": "devops-cicd-dep-003",
           "risikoelement": {
             "no": "Ondsinnet package installert fra kompromittert registry",
             "en": "Ondsinnet package installert from kompromittert registry"
@@ -356,10 +367,11 @@
           "foreslaatteTiltak": {
             "no": "Package signing verification, air-gapped builds, vendoring dependencies",
             "en": "Package signing verification, air-gapped builds, vendoring dependencies"
-          }
+          },
+          "legacyId": "dep-003"
         },
         {
-          "id": "dep-004",
+          "id": "devops-cicd-dep-004",
           "risikoelement": {
             "no": "Transitive dependencies inneholder malware",
             "en": "Transitive dependencies inneholder malware"
@@ -383,7 +395,8 @@
           "foreslaatteTiltak": {
             "no": "Deep SCA scanning, dependency tree visualization, minimize dependencies",
             "en": "Deep SCA scanning, dependency tree visualization, minimize dependencies"
-          }
+          },
+          "legacyId": "dep-004"
         }
       ]
     },
@@ -395,7 +408,7 @@
       },
       "risikoer": [
         {
-          "id": "iac-001",
+          "id": "devops-cicd-iac-001",
           "risikoelement": {
             "no": "Feilkonfigurert infrastructure via IaC",
             "en": "Misconfigured infrastructure via IaC"
@@ -418,11 +431,12 @@
           "sannsynlighet": 3,
           "foreslaatteTiltak": {
             "no": "policy-as-code (OPA, Sentinel), automated testing, drift-deteksjon",
-            "en": "Policy-as-code (OPA, Sentinel), automated testing, operations detection"
-          }
+            "en": "Policy-as-code (OPA, Sentinel), automated testing, drift detection"
+          },
+          "legacyId": "iac-001"
         },
         {
-          "id": "iac-002",
+          "id": "devops-cicd-iac-002",
           "risikoelement": {
             "no": "Secrets i IaC templates",
             "en": "Secrets in IaC templates"
@@ -446,10 +460,11 @@
           "foreslaatteTiltak": {
             "no": "External secret stores, dynamic credentials, state file encryption",
             "en": "External secret stores, dynamic credentials, state file encryption"
-          }
+          },
+          "legacyId": "iac-002"
         },
         {
-          "id": "iac-003",
+          "id": "devops-cicd-iac-003",
           "risikoelement": {
             "no": "Uautoriserte endringer i produksjon-infrastruktur",
             "en": "Uautoriserte endringer in production-infrastruktur"
@@ -464,7 +479,7 @@
           },
           "eksisterendeKontroll": {
             "no": "drift-deteksjon tools",
-            "en": "operations detection tools"
+            "en": "drift detection tools"
           },
           "K": 3,
           "I": 5,
@@ -473,7 +488,8 @@
           "foreslaatteTiltak": {
             "no": "Read-only console, automation-only changes, drift remediation",
             "en": "Read-only console, automation-only changes, operations remediation"
-          }
+          },
+          "legacyId": "iac-003"
         }
       ]
     },
@@ -485,7 +501,7 @@
       },
       "risikoer": [
         {
-          "id": "container-001",
+          "id": "devops-cicd-container-001",
           "risikoelement": {
             "no": "Sårbarheter i container images",
             "en": "Vulnerabilities in container images"
@@ -509,10 +525,11 @@
           "foreslaatteTiltak": {
             "no": "Distroless images, automated scanning (Trivy, Grype), image signing",
             "en": "Distroless images, automated scanning (Trivy, Grype), image signing"
-          }
+          },
+          "legacyId": "container-001"
         },
         {
-          "id": "container-002",
+          "id": "devops-cicd-container-002",
           "risikoelement": {
             "no": "Privileged containers eller root execution",
             "en": "Privileged containers or root execution"
@@ -536,10 +553,11 @@
           "foreslaatteTiltak": {
             "no": "Ikke-root-brukere, fjerning av capabilities og Pod Security Standards",
             "en": "Non-root users, drop capabilities, Pod Security Standards"
-          }
+          },
+          "legacyId": "container-002"
         },
         {
-          "id": "container-003",
+          "id": "devops-cicd-container-003",
           "risikoelement": {
             "no": "Kompromittert container registry",
             "en": "Kompromittert container registry"
@@ -563,7 +581,8 @@
           "foreslaatteTiltak": {
             "no": "Image signing (Cosign), admission webhooks, registry scanning",
             "en": "Image signing (Cosign), admission webhooks, registry scanning"
-          }
+          },
+          "legacyId": "container-003"
         }
       ]
     },
@@ -575,7 +594,7 @@
       },
       "risikoer": [
         {
-          "id": "deploy-001",
+          "id": "devops-cicd-deploy-001",
           "risikoelement": {
             "no": "Mislykket utrulling uten rollback-mulighet",
             "en": "Mislykket deployment without rollback-mulighet"
@@ -599,10 +618,11 @@
           "foreslaatteTiltak": {
             "no": "Automated rollback, feature flags, database migrations versioned",
             "en": "Automated rollback, feature flags, database migrations versioned"
-          }
+          },
+          "legacyId": "deploy-001"
         },
         {
-          "id": "deploy-002",
+          "id": "devops-cicd-deploy-002",
           "risikoelement": {
             "no": "Ukoordinert utrulling av avhengige tjenester",
             "en": "Ukoordinert deployment of avhengige services"
@@ -616,7 +636,7 @@
             "en": "Deployment windows"
           },
           "eksisterendeKontroll": {
-            "no": "Integration tests",
+            "no": "Integrasjonstester",
             "en": "Integration tests"
           },
           "K": 2,
@@ -626,10 +646,11 @@
           "foreslaatteTiltak": {
             "no": "API versioning, backward compatibility, orchestrated utrullinger",
             "en": "API versioning, backward compatibility, orchestrated deployments"
-          }
+          },
+          "legacyId": "deploy-002"
         },
         {
-          "id": "deploy-003",
+          "id": "devops-cicd-deploy-003",
           "risikoelement": {
             "no": "Manglende observability etter utrulling",
             "en": "Missing observability after deployment"
@@ -653,7 +674,8 @@
           "foreslaatteTiltak": {
             "no": "Distributed tracing, utrulling markers, SLO overvåking, canary metrics",
             "en": "Distributed tracing, deployment markers, SLO monitoring, canary metrics"
-          }
+          },
+          "legacyId": "deploy-003"
         }
       ]
     }

@@ -17,7 +17,7 @@
       },
       "risikoer": [
         {
-          "id": "vendor-001",
+          "id": "supply-chain-vendor-001",
           "risikoelement": {
             "no": "Kritisk avhengighet av én leverandør (single point of failure)",
             "en": "Critical dependency of én vendor (single point of failure)"
@@ -41,10 +41,11 @@
           "foreslaatteTiltak": {
             "no": "Multi-leverandør strategi, exit plan, alternative leverandører identifisert",
             "en": "Multi-vendor strategy, exit plan, alternative vendors identified"
-          }
+          },
+          "legacyId": "vendor-001"
         },
         {
-          "id": "vendor-002",
+          "id": "supply-chain-vendor-002",
           "risikoelement": {
             "no": "Leverandøren beskytter ikke tjenesten godt nok",
             "en": "The vendor does not protect the service well enough"
@@ -68,10 +69,11 @@
           "foreslaatteTiltak": {
             "no": "Sikkerhetsvurderinger av leverandør, krav om SOC 2/ISO 27001 og revisjonsrettigheter i kontrakten",
             "en": "Vendor security assessments, SOC 2/ISO 27001 requirements, audit rights in kontrakt"
-          }
+          },
+          "legacyId": "vendor-002"
         },
         {
-          "id": "vendor-003",
+          "id": "supply-chain-vendor-003",
           "risikoelement": {
             "no": "Avtaleverket gir for liten motstandskraft ved avbrudd",
             "en": "The contractual setup provides too little resilience during service disruption"
@@ -95,10 +97,11 @@
           "foreslaatteTiltak": {
             "no": "Tydelige SLA-er med penalties, eskaleringsmatrise, backup-løsning",
             "en": "Define clear SLAs with penalties, an escalation matrix, and backup solutions"
-          }
+          },
+          "legacyId": "vendor-003"
         },
         {
-          "id": "vendor-004",
+          "id": "supply-chain-vendor-004",
           "risikoelement": {
             "no": "Leverandør går konkurs eller avslutter tjeneste",
             "en": "Vendor goes bankrupt or avslutter service"
@@ -122,10 +125,11 @@
           "foreslaatteTiltak": {
             "no": "Source code escrow, data portability, migrasjonsplan",
             "en": "Source code escrow, data portability, migrasjonsplan"
-          }
+          },
+          "legacyId": "vendor-004"
         },
         {
-          "id": "vendor-005",
+          "id": "supply-chain-vendor-005",
           "risikoelement": {
             "no": "Underleverandør (subprocessor) uten avtale",
             "en": "Subcontractor (subprocessor) without avtale"
@@ -149,10 +153,11 @@
           "foreslaatteTiltak": {
             "no": "Preapproval av subprocessors, GDPR Article 28 compliance, subprocessor list",
             "en": "Preapproval of subprocessors, GDPR Article 28 compliance, subprocessor list"
-          }
+          },
+          "legacyId": "vendor-005"
         },
         {
-          "id": "vendor-006",
+          "id": "supply-chain-vendor-006",
           "risikoelement": {
             "no": "Virksomheten mangler oversikt over alle leverandører (shadow IT)",
             "en": "The organization lacks an overview of all vendors (shadow IT)"
@@ -176,7 +181,8 @@
           "foreslaatteTiltak": {
             "no": "CASB, SaaS discovery tools, SSO enforcement, leverandør management system",
             "en": "CASB, SaaS discovery tools, SSO enforcement, vendor management system"
-          }
+          },
+          "legacyId": "vendor-006"
         }
       ]
     },
@@ -188,7 +194,7 @@
       },
       "risikoer": [
         {
-          "id": "data-001",
+          "id": "supply-chain-data-001",
           "risikoelement": {
             "no": "Overdeling av data til leverandør (over-privileging)",
             "en": "Overdeling of data to vendor (over-privileging)"
@@ -198,7 +204,7 @@
             "en": "Vendor gain access to mer data than necessary"
           },
           "eksisterendeBeskyttelse": {
-            "no": "Data classification",
+            "no": "Dataklassifisering",
             "en": "Data classification"
           },
           "eksisterendeKontroll": {
@@ -212,10 +218,11 @@
           "foreslaatteTiltak": {
             "no": "Dataminimering, need-to-know basis og API-avgrenset tilgang",
             "en": "Data minimization, need-to-know basis, API-scoped access"
-          }
+          },
+          "legacyId": "data-001"
         },
         {
-          "id": "data-002",
+          "id": "supply-chain-data-002",
           "risikoelement": {
             "no": "Ukryptert datatransfer til leverandør",
             "en": "unencrypted datatransfer to vendor"
@@ -239,10 +246,11 @@
           "foreslaatteTiltak": {
             "no": "End-to-end encryption, TLS 1.3+, encrypted file transfers (SFTP/GPG)",
             "en": "End-to-end encryption, TLS 1.3+, encrypted file transfers (SFTP/GPG)"
-          }
+          },
+          "legacyId": "data-002"
         },
         {
-          "id": "data-003",
+          "id": "supply-chain-data-003",
           "risikoelement": {
             "no": "Leverandør bruker data til uautoriserte formål",
             "en": "Vendor user data to uautoriserte purpose"
@@ -266,10 +274,11 @@
           "foreslaatteTiltak": {
             "no": "Clear DPA terms, audit rights, data usage overvåking, GDPR Article 28",
             "en": "Clear DPA terms, audit rights, data usage monitoring, GDPR Article 28"
-          }
+          },
+          "legacyId": "data-003"
         },
         {
-          "id": "data-004",
+          "id": "supply-chain-data-004",
           "risikoelement": {
             "no": "Data lagres hos leverandør etter kontraktsavslutning",
             "en": "Data is stored hos vendor after kontraktsavslutning"
@@ -293,7 +302,8 @@
           "foreslaatteTiltak": {
             "no": "Automated data deletion, verified deletion certificate, escrow for transition",
             "en": "Automated data deletion, verified deletion certificate, escrow for transition"
-          }
+          },
+          "legacyId": "data-004"
         }
       ]
     },
@@ -305,7 +315,7 @@
       },
       "risikoer": [
         {
-          "id": "api-vendor-001",
+          "id": "supply-chain-api-vendor-001",
           "risikoelement": {
             "no": "Ukontrollert tilgang via API-nøkler til tredjeparter",
             "en": "Uncontrolled access through API keys to third parties"
@@ -329,10 +339,11 @@
           "foreslaatteTiltak": {
             "no": "OAuth 2.0 med scopes, short-lived tokens, automated rotation",
             "en": "OAuth 2.0 with scopes, short-lived tokens, automated rotation"
-          }
+          },
+          "legacyId": "api-vendor-001"
         },
         {
-          "id": "api-vendor-002",
+          "id": "supply-chain-api-vendor-002",
           "risikoelement": {
             "no": "Leverandørens API kompromittert eller nedlagt",
             "en": "The vendor's API is compromised or shut down"
@@ -356,10 +367,11 @@
           "foreslaatteTiltak": {
             "no": "Circuit breakers, graceful degradation, local caching, API versioning",
             "en": "Circuit breakers, graceful degradation, local caching, API versioning"
-          }
+          },
+          "legacyId": "api-vendor-002"
         },
         {
-          "id": "api-vendor-003",
+          "id": "supply-chain-api-vendor-003",
           "risikoelement": {
             "no": "Manglende rate limiting på integrasjoner",
             "en": "Missing rate limiting on integrations"
@@ -383,7 +395,8 @@
           "foreslaatteTiltak": {
             "no": "Bidirectional rate limiting, backpressure, queue-based integration",
             "en": "Bidirectional rate limiting, backpressure, queue-based integration"
-          }
+          },
+          "legacyId": "api-vendor-003"
         }
       ]
     },
@@ -395,7 +408,7 @@
       },
       "risikoer": [
         {
-          "id": "oss-001",
+          "id": "supply-chain-oss-001",
           "risikoelement": {
             "no": "Kritisk OSS-prosjekt ikke lenger vedlikeholdt",
             "en": "Critical OSS-project not lenger vedlikeholdt"
@@ -419,10 +432,11 @@
           "foreslaatteTiltak": {
             "no": "Overvåke prosjektets helse, vurdere forking, kommersiell støtte og alternative biblioteker",
             "en": "Monitor project health, consider forking, commercial support, alternative libraries"
-          }
+          },
+          "legacyId": "oss-001"
         },
         {
-          "id": "oss-002",
+          "id": "supply-chain-oss-002",
           "risikoelement": {
             "no": "Ondsinnet takeover av OSS-prosjekt",
             "en": "Ondsinnet takeover of OSS-project"
@@ -446,10 +460,11 @@
           "foreslaatteTiltak": {
             "no": "Lås eksakte versjoner, verifiser signaturer, SBOM-sporing og overvåking av security.txt",
             "en": "Pin exact versions, verify signatures, SBOM tracking, security.txt monitoring"
-          }
+          },
+          "legacyId": "oss-002"
         },
         {
-          "id": "oss-003",
+          "id": "supply-chain-oss-003",
           "risikoelement": {
             "no": "Lisensendringer i OSS-dependencies",
             "en": "Lisensendringer in OSS-dependencies"
@@ -473,10 +488,11 @@
           "foreslaatteTiltak": {
             "no": "Automated license sporing, legal gjennomgang of critical deps, pin versions",
             "en": "Automated license tracking, legal review of critical deps, pin versions"
-          }
+          },
+          "legacyId": "oss-003"
         },
         {
-          "id": "oss-004",
+          "id": "supply-chain-oss-004",
           "risikoelement": {
             "no": "Zero-day i critical OSS dependency",
             "en": "Zero-day in critical OSS dependency"
@@ -500,7 +516,8 @@
           "foreslaatteTiltak": {
             "no": "Runtime protection (RASP), virtual patching, rask patch cycle og SBOM for incident response",
             "en": "Runtime protection (RASP), virtual patching, fast patch cycle, SBOM for incident response"
-          }
+          },
+          "legacyId": "oss-004"
         }
       ]
     },
@@ -512,7 +529,7 @@
       },
       "risikoer": [
         {
-          "id": "offboard-001",
+          "id": "supply-chain-offboard-001",
           "risikoelement": {
             "no": "Leverandør beholder tilgang etter kontraktsavslutning",
             "en": "Vendor retains access after kontraktsavslutning"
@@ -536,10 +553,11 @@
           "foreslaatteTiltak": {
             "no": "Automated offboarding arbeidsflyt, tilgang expiration dates, full audit trail",
             "en": "Automated offboarding workflow, access expiration dates, full audit trail"
-          }
+          },
+          "legacyId": "offboard-001"
         },
         {
-          "id": "offboard-002",
+          "id": "supply-chain-offboard-002",
           "risikoelement": {
             "no": "Kunnskapsoverføring til ny leverandør mislykkes",
             "en": "Knowledge transfer to a new vendor fails"
@@ -561,12 +579,13 @@
           "T": 5,
           "sannsynlighet": 3,
           "foreslaatteTiltak": {
-            "no": "Mandatory dokumentasjon, knowledge base, transition plan, shadowing period",
+            "no": "Obligatorisk dokumentasjon, knowledge base, overgangsplan og shadowing-periode",
             "en": "Mandatory documentation, knowledge base, transition plan, shadowing period"
-          }
+          },
+          "legacyId": "offboard-002"
         },
         {
-          "id": "offboard-003",
+          "id": "supply-chain-offboard-003",
           "risikoelement": {
             "no": "IP-rettigheter skaper konflikt ved leverandørskifte",
             "en": "IP rights create conflict during a vendor transition"
@@ -576,11 +595,11 @@
             "en": "Uklare IP clauses in kontrakt, custom development ownership"
           },
           "eksisterendeBeskyttelse": {
-            "no": "Standard IP terms",
+            "no": "Standardiserte IP-vilkår",
             "en": "Standard IP terms"
           },
           "eksisterendeKontroll": {
-            "no": "Legal gjennomgang at termination",
+            "no": "Juridisk gjennomgang ved avslutning",
             "en": "Legal review at termination"
           },
           "K": 3,
@@ -588,9 +607,10 @@
           "T": 4,
           "sannsynlighet": 2,
           "foreslaatteTiltak": {
-            "no": "Clear IP eierskap clauses, work-for-hire agreements, source code escrow",
+            "no": "Tydelige klausuler om IP-eierskap, work-for-hire-avtaler og source code escrow",
             "en": "Clear IP ownership clauses, work-for-hire agreements, source code escrow"
-          }
+          },
+          "legacyId": "offboard-003"
         }
       ]
     }

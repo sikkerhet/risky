@@ -11,7 +11,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.31/jspdf.plugin.autotable.min.js"></script>
 
     <!-- Excel Export -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/xlsx-js-style@1.2.1/dist/xlsx.bundle.js"></script>
 
     <!-- ZIP Export -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
@@ -57,6 +57,7 @@
 
     <script src="js/i18n.js"></script>
     <script src="js/app.js"></script>
+    <script src="js/export-excel.js"></script>
     <script src="js/baseline-data.js"></script>
     <script>
         // Initialiser startskjerm
@@ -323,7 +324,7 @@
                                 yPosition = 20;
                             }
 
-                            const timestamp = comment.timestamp ? new Date(comment.timestamp).toLocaleString('no-NO') : '';
+                            const timestamp = comment.created ? new Date(comment.created).toLocaleString('no-NO') : '';
                             const commentText = `• [${timestamp}] ${safeText(comment.text)}`;
                             const splitText = doc.splitTextToSize(commentText, 250);
 
@@ -444,7 +445,7 @@
                             if (visibleComments.length > 0) {
                                 hasAnyVisibleComments = true;
                                 visibleComments.forEach(comment => {
-                                    const timestamp = comment.timestamp ? new Date(comment.timestamp).toLocaleString('no-NO') : '';
+                                    const timestamp = comment.created ? new Date(comment.created).toLocaleString('no-NO') : '';
                                     const commentText = `[${timestamp}] ${safeText(comment.text)}`;
                                     commentsData.push([
                                         index + 1,
@@ -475,6 +476,27 @@
             return new Blob([wbout], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
         }
 
+        // Reuse the same styled workbook builder as the editor export.
+        // The overview page does not keep a currentAnalysis global, so provide
+        // the selected analysis only while the workbook is being built.
+        function generateStyledExcelForAnalysis(analysis) {
+            const previousAnalysis = window.currentAnalysis;
+            window.currentAnalysis = analysis;
+            try {
+                const workbook = buildExcelWorkbook();
+                const workbookBytes = XLSX.write(workbook, { type: 'array', bookType: 'xlsx' });
+                return new Blob([workbookBytes], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
+            } finally {
+                if (previousAnalysis === undefined) {
+                    delete window.currentAnalysis;
+                } else {
+                    window.currentAnalysis = previousAnalysis;
+                }
+            }
+        }
+
+        generateExcelForAnalysis = generateStyledExcelForAnalysis;
+
         async function exportAllAnalyses() {
             const analyses = getAnalyses();
             if (analyses.length === 0) {
@@ -503,9 +525,9 @@
                     const baseName = sanitizeFileName(analysis.metadata.service || 'analyse');
                     const date = analysis.createdDate || 'ukjent';
 
-                    folder.file(`Risky_${baseName}_${dato}.pdf`, pdfBlob);
-                    folder.file(`Risky_${baseName}_${dato}.xlsx`, excelBlob);
-                    folder.file(`Risky_${baseName}_${dato}.json`, jsonBlob);
+                    folder.file(`Risky_${baseName}_${date}.pdf`, pdfBlob);
+                    folder.file(`Risky_${baseName}_${date}.xlsx`, excelBlob);
+                    folder.file(`Risky_${baseName}_${date}.json`, jsonBlob);
                 }
 
                 // Generer og last ned ZIP
@@ -567,10 +589,10 @@
                                 const existing = analyses.findIndex(a => a.id === analysis.id);
                                 if (existing >= 0) {
                                     if (confirm(formatTranslation('analysisExistsOverwriteConfirm', { name: analysis.name }))) {
-                                        analyses[existing] = analysis;
+                                        analyses[existing] = normalizeAnalysis(analysis);
                                     }
                                 } else {
-                                    analyses.push(analysis);
+                                    analyses.push(normalizeAnalysis(analysis));
                                 }
                             }
                         });
@@ -580,10 +602,10 @@
                             const existing = analyses.findIndex(a => a.id === imported.id);
                             if (existing >= 0) {
                                 if (confirm(formatTranslation('analysisExistsOverwriteConfirm', { name: imported.name }))) {
-                                    analyses[existing] = imported;
+                                    analyses[existing] = normalizeAnalysis(imported);
                                 }
                             } else {
-                                analyses.push(imported);
+                                analyses.push(normalizeAnalysis(imported));
                             }
                         } else {
                             alert(t('invalidAnalysisFile'));
