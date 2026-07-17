@@ -410,6 +410,30 @@
             <div class="modal-body">
                 <p data-i18n="selectAnalysisToImport">Velg en analyse å importere risikoer fra:</p>
 
+                <div class="analysis-import-tools">
+                    <div>
+                        <label for="analysisImportSearch" data-i18n="importAnalysisSearchLabel">Søk i analyser</label>
+                        <input type="search" id="analysisImportSearch" class="form-control" data-i18n-placeholder="importAnalysisSearchPlaceholder" placeholder="Søk etter navn, tjeneste eller beskrivelse">
+                    </div>
+                    <div>
+                        <label for="analysisImportSourceFilter" data-i18n="importAnalysisFilterLabel">Vis</label>
+                        <select id="analysisImportSourceFilter" class="form-control">
+                            <option value="all" data-i18n="importAnalysisFilterAll">Alle analyser</option>
+                            <option value="user" data-i18n="importAnalysisFilterUser">Mine analyser</option>
+                            <option value="baseline" data-i18n="importAnalysisFilterBaseline">Maler</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label for="analysisImportSort" data-i18n="importAnalysisSortLabel">Sorter</label>
+                        <select id="analysisImportSort" class="form-control">
+                            <option value="recent" data-i18n="importAnalysisSortRecent">Sist endret</option>
+                            <option value="name" data-i18n="importAnalysisSortName">Navn</option>
+                            <option value="risks" data-i18n="importAnalysisSortRisks">Antall risikoer</option>
+                        </select>
+                    </div>
+                </div>
+                <div id="analysisImportMeta" class="analysis-import-meta" aria-live="polite"></div>
+
                 <div id="analysisListForImport" class="analysis-import-list">
                     <!-- Analyser vil bli lagt til her -->
                 </div>
@@ -939,10 +963,110 @@
         }
 
         // Import risks from another analysis
+        let importControlsBound = false;
+
+        function getImportSourceTitle(source) {
+            return source.analysis.metadata.service || source.analysis.name || t('untitled');
+        }
+
+        function getImportSourceSearchText(source) {
+            const analysis = source.analysis;
+            return [
+                getImportSourceTitle(source),
+                analysis.name,
+                analysis.metadata.service,
+                analysis.metadata.description,
+                analysis.metadata.performedBy,
+                source.kind === 'baseline' ? t('predefinedTemplates') : t('myAnalyses')
+            ].filter(Boolean).join(' ').toLowerCase();
+        }
+
+        function sortImportSources(sources, sortMode) {
+            return [...sources].sort((a, b) => {
+                if (sortMode === 'name') {
+                    return getImportSourceTitle(a).localeCompare(getImportSourceTitle(b), getCurrentLanguage() === 'en' ? 'en' : 'no');
+                }
+                if (sortMode === 'risks') {
+                    return (b.analysis.risks?.length || 0) - (a.analysis.risks?.length || 0) ||
+                        getImportSourceTitle(a).localeCompare(getImportSourceTitle(b));
+                }
+                return new Date(b.analysis.lastModified || b.analysis.createdDate || 0) -
+                    new Date(a.analysis.lastModified || a.analysis.createdDate || 0);
+            });
+        }
+
+        function bindImportControls() {
+            if (importControlsBound) return;
+
+            ['analysisImportSearch', 'analysisImportSourceFilter', 'analysisImportSort'].forEach((id) => {
+                const control = document.getElementById(id);
+                if (control) control.addEventListener(control.tagName === 'INPUT' ? 'input' : 'change', renderImportSources);
+            });
+            importControlsBound = true;
+        }
+
+        function renderImportSources() {
+            const sources = window._importSources;
+            const listContainer = document.getElementById('analysisListForImport');
+            const meta = document.getElementById('analysisImportMeta');
+            if (!sources || !listContainer) return;
+
+            const search = (document.getElementById('analysisImportSearch')?.value || '').trim().toLowerCase();
+            const filter = document.getElementById('analysisImportSourceFilter')?.value || 'all';
+            const sortMode = document.getElementById('analysisImportSort')?.value || 'recent';
+            const allSources = [
+                ...sources.baselines.map(analysis => ({ analysis, kind: 'baseline', valueId: `baseline-${analysis.id}` })),
+                ...sources.userAnalyses.map(analysis => ({ analysis, kind: 'user', valueId: `user-${analysis.id}` }))
+            ];
+            const filtered = sortImportSources(allSources.filter((source) =>
+                (filter === 'all' || source.kind === filter) &&
+                (!search || getImportSourceSearchText(source).includes(search))
+            ), sortMode);
+
+            listContainer.textContent = '';
+            if (meta) {
+                meta.textContent = formatTranslation('importAnalysisResultCount', {
+                    visible: filtered.length,
+                    total: allSources.length
+                });
+            }
+
+            if (filtered.length === 0) {
+                const empty = document.createElement('p');
+                empty.className = 'empty-state-modal';
+                empty.textContent = search ? t('noAnalysesMatchSearch') : t('noAnalysesAvailableForImport');
+                listContainer.appendChild(empty);
+                return;
+            }
+
+            const groups = filter === 'all'
+                ? [['baseline', t('predefinedTemplates')], ['user', t('myAnalyses')]]
+                : [[filter, filter === 'baseline' ? t('predefinedTemplates') : t('myAnalyses')]];
+
+            groups.forEach(([kind, headingText]) => {
+                const groupSources = filtered.filter(source => source.kind === kind);
+                if (groupSources.length === 0) return;
+
+                const heading = document.createElement('h4');
+                heading.className = 'analysis-import-section-title';
+                heading.textContent = headingText;
+                listContainer.appendChild(heading);
+
+                groupSources.forEach((source) => {
+                    const label = createAnalysisImportItem(source.analysis, source.valueId, false);
+                    listContainer.appendChild(label);
+                });
+            });
+
+            const selected = listContainer.querySelector('input[name="selectedAnalysis"]');
+            if (selected) selected.checked = true;
+        }
+
         async function openImportRisksModal() {
             const modal = document.getElementById('importRisksModal');
             const listContainer = document.getElementById('analysisListForImport');
 
+            bindImportControls();
             listContainer.textContent = '';
             const loading = document.createElement('p');
             loading.style.textAlign = 'center';
@@ -958,50 +1082,12 @@
                 const allAnalyses = getAnalyses();
                 const otherAnalyses = allAnalyses.filter(a => a.id !== currentAnalysis.id);
 
-                // Store all sources for later retrieval
+                // Store all sources for later retrieval and client-side filtering.
                 window._importSources = {
                     baselines: baselines,
                     userAnalyses: otherAnalyses
                 };
-
-                // Render analysis list
-                listContainer.textContent = '';
-
-                // Add baselines section
-                if (baselines.length > 0) {
-                    const baselinesHeader = document.createElement('h4');
-                    baselinesHeader.textContent = t('predefinedTemplates');
-                    baselinesHeader.style.cssText = 'margin: 10px 0; padding: 10px; background: #f0f7ff; border-radius: 4px; color: #2e5f8e;';
-                    listContainer.appendChild(baselinesHeader);
-
-                    baselines.forEach((baseline, index) => {
-                        const label = createAnalysisImportItem(baseline, `baseline-${baseline.id}`, index === 0);
-                        listContainer.appendChild(label);
-                    });
-                }
-
-                // Add user analyses section
-                if (otherAnalyses.length > 0) {
-                    const userHeader = document.createElement('h4');
-                    userHeader.textContent = t('myAnalyses');
-                    userHeader.style.cssText = 'margin: 20px 0 10px 0; padding: 10px; background: #f0f7ff; border-radius: 4px; color: #2e5f8e;';
-                    listContainer.appendChild(userHeader);
-
-                    otherAnalyses.forEach((analysis) => {
-                        const label = createAnalysisImportItem(analysis, `user-${analysis.id}`, false);
-                        listContainer.appendChild(label);
-                    });
-                }
-
-                // If no options available
-                if (baselines.length === 0 && otherAnalyses.length === 0) {
-                    listContainer.textContent = '';
-                    const empty = document.createElement('p');
-                    empty.style.textAlign = 'center';
-                    empty.style.color = '#666';
-                    empty.textContent = t('noAnalysesAvailableForImport');
-                    listContainer.appendChild(empty);
-                }
+                renderImportSources();
 
             } catch (error) {
                 console.error('Error loading baselines:', error);
